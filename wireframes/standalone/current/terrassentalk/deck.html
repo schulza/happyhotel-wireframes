@@ -382,11 +382,12 @@ body {
   flex: 1;
   display: grid;
   grid-template-columns: clamp(48px, 5vw, 80px) repeat(7, 1fr);
-  grid-template-rows: auto repeat(5, 1fr);
+  grid-template-rows: auto clamp(18px, 1.8vw, 28px) repeat(6, 1fr);
   gap: clamp(3px, 0.4vw, 6px);
   min-height: 0;
 }
 .cal-rowlabel {
+  grid-column: 1;
   font-family: var(--font-sans);
   font-size: clamp(9px, 0.8vw, 12px);
   color: var(--muted);
@@ -409,18 +410,60 @@ body {
   background: #f0efe8;
   border-radius: clamp(3px, 0.4vw, 5px);
   min-height: clamp(18px, 2vw, 32px);
+  font-family: var(--font-sans);
+  font-size: clamp(7px, 0.7vw, 10px);
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.01em;
 }
 /* Ampel · Belegungs-Heatmap wie im Original happyhotel */
 .cal-cell.xs { background: #b8dca9; }   /* ausgebucht · sage green */
 .cal-cell.s  { background: #d4e8b8; }   /* gut · light green */
 .cal-cell.m  { background: #fbf2b0; }   /* mittel · yellow */
 .cal-cell.w  { background: #fdd4a8; }   /* schwach · orange */
-.cal-cell.event {
-  background: #e3e89c;                  /* lime-khaki · wie Osterferien */
-  border-radius: 0;
+/* Events-Banner · spannt durchgehend über mehrere Tage (überdeckt grid-gaps) */
+.cal-event-banner {
+  background: #e3e89c;
+  border-radius: clamp(3px, 0.4vw, 5px);
+  font-family: var(--font-sans);
+  font-size: clamp(8px, 0.75vw, 11px);
+  font-weight: 500;
+  font-style: italic;
+  color: #5c5c2f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.005em;
 }
-.cal-cell.event.first { border-radius: clamp(3px, 0.4vw, 5px) 0 0 clamp(3px, 0.4vw, 5px); }
-.cal-cell.event.last  { border-radius: 0 clamp(3px, 0.4vw, 5px) clamp(3px, 0.4vw, 5px) 0; }
+
+/* Dein-Preis-Row · Vergleichs-Pills (kein Hintergrund auf der Zelle, Pill inside) */
+.cal-cell.pill-row {
+  background: transparent;
+}
+.cal-pill {
+  font-family: var(--font-sans);
+  font-size: clamp(7px, 0.7vw, 10px);
+  font-weight: 600;
+  padding: 1px 5px 2px;
+  border-radius: 99px;
+  background: #b8dca9;
+  color: #2d4a1f;
+  letter-spacing: -0.01em;
+}
+.cal-pill.s  { background: #d4e8b8; color: #3a5a2a; }
+.cal-pill.m  { background: #fbf2b0; color: #6b5a14; }
+.cal-pill.w  { background: #fdd4a8; color: #7a4a1c; }
+.cal-pill.bad { background: #f9c4b8; color: #7a2f1c; }
+.cal-cell.sold {
+  background: transparent;
+  font-size: clamp(7px, 0.65vw, 9px);
+  color: var(--muted);
+  font-style: italic;
+}
 
 /* Today marker · accent bar above today column header */
 .cal-dow.today {
@@ -1239,6 +1282,7 @@ body {
 
 /* ─── Hint overlay (first load) ──────────────────────── */
 .hint {
+  display: none;
   position: fixed;
   bottom: 64px;
   left: 50%;
@@ -1928,55 +1972,69 @@ body {
           <span class="cal-dow">Mo</span>
           <span class="cal-dow">Di</span>
 
-          <!-- Events row -->
+          <!-- Events row · ein durchgehender Banner Mi–So -->
           <span class="cal-rowlabel">Events</span>
-          <span class="cal-cell event first"></span>
-          <span class="cal-cell event"></span>
-          <span class="cal-cell event"></span>
-          <span class="cal-cell event"></span>
-          <span class="cal-cell event last"></span>
-          <span class="cal-cell w" style="visibility:hidden"></span>
-          <span class="cal-cell w" style="visibility:hidden"></span>
+          <span class="cal-event-banner" style="grid-column: 2 / 7;">Osterferien</span>
 
-          <!-- Belegung row · heute grün, Wochenende stark, Wochenmitte schwach -->
+          <!-- Belegung -->
           <span class="cal-rowlabel">Belegung</span>
-          <span class="cal-cell xs"></span>
-          <span class="cal-cell w"></span>
-          <span class="cal-cell w"></span>
-          <span class="cal-cell m"></span>
-          <span class="cal-cell s"></span>
-          <span class="cal-cell m"></span>
-          <span class="cal-cell w"></span>
+          <span class="cal-cell s">17</span>
+          <span class="cal-cell w">9</span>
+          <span class="cal-cell w">10</span>
+          <span class="cal-cell xs">20</span>
+          <span class="cal-cell xs">19</span>
+          <span class="cal-cell m">12</span>
+          <span class="cal-cell w">8</span>
 
-          <!-- Auslastung row · ähnliches Muster, ein bisschen versetzt -->
+          <!-- Umsatz -->
+          <span class="cal-rowlabel">Umsatz</span>
+          <span class="cal-cell s">1.076 €</span>
+          <span class="cal-cell w">566 €</span>
+          <span class="cal-cell w">595 €</span>
+          <span class="cal-cell xs">1.400 €</span>
+          <span class="cal-cell xs">1.290 €</span>
+          <span class="cal-cell m">711 €</span>
+          <span class="cal-cell w">438 €</span>
+
+          <!-- Auslastung -->
           <span class="cal-rowlabel">Auslastung</span>
-          <span class="cal-cell s"></span>
-          <span class="cal-cell w"></span>
-          <span class="cal-cell w"></span>
-          <span class="cal-cell s"></span>
-          <span class="cal-cell xs"></span>
-          <span class="cal-cell m"></span>
-          <span class="cal-cell w"></span>
+          <span class="cal-cell s">85 %</span>
+          <span class="cal-cell w">45 %</span>
+          <span class="cal-cell w">50 %</span>
+          <span class="cal-cell xs">100 %</span>
+          <span class="cal-cell xs">95 %</span>
+          <span class="cal-cell m">60 %</span>
+          <span class="cal-cell w">40 %</span>
 
-          <!-- Single Room row -->
+          <!-- Dein Preis auf booking.com · Vergleichs-Pills -->
+          <span class="cal-rowlabel">Dein Preis</span>
+          <span class="cal-cell pill-row"><span class="cal-pill">49 %</span></span>
+          <span class="cal-cell pill-row"><span class="cal-pill s">7 %</span></span>
+          <span class="cal-cell pill-row"><span class="cal-pill s">1 %</span></span>
+          <span class="cal-cell sold">ausverkauft</span>
+          <span class="cal-cell sold">ausverkauft</span>
+          <span class="cal-cell pill-row"><span class="cal-pill s">9 %</span></span>
+          <span class="cal-cell pill-row"><span class="cal-pill bad">−8 %</span></span>
+
+          <!-- Single Room · Preise · gleiche Tagesfarbe wie Auslastung -->
           <span class="cal-rowlabel">Single</span>
-          <span class="cal-cell m"></span>
-          <span class="cal-cell w"></span>
-          <span class="cal-cell w"></span>
-          <span class="cal-cell s"></span>
-          <span class="cal-cell m"></span>
-          <span class="cal-cell s"></span>
-          <span class="cal-cell w"></span>
+          <span class="cal-cell s">127 €</span>
+          <span class="cal-cell w">110 €</span>
+          <span class="cal-cell w">140 €</span>
+          <span class="cal-cell xs">140 €</span>
+          <span class="cal-cell xs">100 €</span>
+          <span class="cal-cell m">129 €</span>
+          <span class="cal-cell w">129 €</span>
 
-          <!-- Double Room row -->
+          <!-- Double Room · Preise · gleiche Tagesfarbe wie Auslastung -->
           <span class="cal-rowlabel">Double</span>
-          <span class="cal-cell s"></span>
-          <span class="cal-cell w"></span>
-          <span class="cal-cell m"></span>
-          <span class="cal-cell s"></span>
-          <span class="cal-cell w"></span>
-          <span class="cal-cell m"></span>
-          <span class="cal-cell w"></span>
+          <span class="cal-cell s">135 €</span>
+          <span class="cal-cell w">120 €</span>
+          <span class="cal-cell w">150 €</span>
+          <span class="cal-cell xs">150 €</span>
+          <span class="cal-cell xs">110 €</span>
+          <span class="cal-cell m">142 €</span>
+          <span class="cal-cell w">138 €</span>
         </div>
 
         <!-- Legend strip -->
@@ -1985,7 +2043,6 @@ body {
           <span class="cl-item"><span class="cl-sw s"></span> stark</span>
           <span class="cl-item"><span class="cl-sw m"></span> mittel</span>
           <span class="cl-item"><span class="cl-sw w"></span> schwach</span>
-          <span class="cl-item"><span class="cl-sw ev"></span> Event</span>
         </div>
       </div>
 
