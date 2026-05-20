@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>AI Revenue Manager — Dashboard + Sidekick [Wireframe v3]</title>
+<style>
+:root {
+  --bg:           #f5f7fa;
+  --surface:      #ffffff;
+  --surface-2:    #f0f2f6;
+  --surface-ai:   #fefcf7;
+  --border:       #e2e6ed;
+  --border-2:     #c8cdd8;
+  --text:         #1a1d27;
+  --muted:        #68717e;
+  --subtle:       #9ba3b2;
+  --accent:       #2563eb;
+  --accent-soft:  #eff4ff;
+  --accent-mid:   #bdd0ff;
+  --ai:           #b45309;
+  --ai-soft:      #fff8ed;
+  --ai-border:    #fcd68a;
+  --good:         #15803d;
+  --good-soft:    #f0fdf4;
+  --bad:          #dc2626;
+  --bad-soft:     #fef2f2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Page Intro ─────────────────────────────────────── */
+.page-intro {
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 40px 32px 28px;
+}
+.page-intro .meta {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--subtle);
+  margin-bottom: 10px;
+}
+.page-intro h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.page-intro .desc {
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 680px;
+  line-height: 1.65;
+}
+.tag-row {
+  margin-top: 14px;
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.tag {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid var(--border-2);
+  color: var(--muted);
+  background: var(--surface);
+}
+.tag.accent { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-mid); }
+.tag.ai-tag { background: var(--ai-soft); color: var(--ai); border-color: var(--ai-border); }
+
+/* ─── App Wrap ───────────────────────────────────────── */
+.app-wrap {
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 0 32px 56px;
+}
+.app-frame {
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+  background: var(--surface);
+}
+
+/* ─── Topbar ─────────────────────────────────────────── */
+.topbar {
+  height: 48px;
+  background: #1e293b;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 14px;
+  color: #fff;
+}
+.topbar-brand {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.topbar-sep {
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,0.18);
+  flex-shrink: 0;
+}
+.topbar-hotel {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+}
+.topbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tier-pill {
+  background: rgba(37,99,235,0.85);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.icon-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  font-size: 15px;
+  position: relative;
+}
+.notif-dot {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 7px;
+  height: 7px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 1.5px solid #1e293b;
+}
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Body Grid ──────────────────────────────────────── */
+.body-grid {
+  display: grid;
+  grid-template-columns: 68px 1fr 364px;
+  min-height: 1360px;
+}
+
+/* ─── Left Nav ───────────────────────────────────────── */
+.left-nav {
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 9px 4px;
+  border-radius: 7px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  position: relative;
+}
+.nav-item .nav-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+.nav-item:hover { background: var(--surface); color: var(--text); }
+.nav-item.active { background: var(--accent-soft); color: var(--accent); }
+.nav-badge {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+  background: var(--bad);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  min-width: 15px;
+  height: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+.nav-spacer { flex: 1; }
+
+/* ─── Main Content ───────────────────────────────────── */
+.main-content {
+  padding: 24px 28px 72px;
+  overflow-y: auto;
+}
+
+/* Greeting */
+.greet-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.greet-row h2 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.date-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.sub-greet {
+  font-size: 12px;
+  color: var(--subtle);
+  margin-bottom: 22px;
+}
+
+/* Hero Story Card */
+.hero-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  display: grid;
+  grid-template-columns: 1fr 148px;
+  gap: 28px;
+  align-items: start;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--subtle);
+  margin-bottom: 8px;
+}
+.hero-story {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+  max-width: 500px;
+}
+.hero-story .money {
+  color: var(--accent);
+  font-weight: 700;
+}
+.hero-story strong { font-weight: 700; }
+.ai-chip {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--ai);
+  font-weight: 500;
+  padding: 4px 11px;
+  border: 1px solid var(--ai-border);
+  border-radius: 100px;
+  background: var(--ai-soft);
+  cursor: pointer;
+  font-family: inherit;
+}
+.ai-chip:hover { background: #fef3c7; }
+.hero-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.hero-stat {
+  text-align: right;
+}
+.hero-stat .stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--subtle);
+  margin-bottom: 3px;
+}
+.hero-stat .stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.hero-stat .stat-delta {
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 3px;
+}
+.stat-delta.up { color: var(--good); }
+.stat-delta.neutral { color: var(--muted); }
+
+/* KPI Strip */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.kpi-card {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 14px 16px;
+  background: var(--surface);
+}
+.kpi-card.is-ai {
+  border-color: var(--ai-border);
+  background: var(--ai-soft);
+}
+.kpi-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.kpi-card.is-ai .kpi-label { color: var(--ai); }
+.kpi-value {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.kpi-delta { font-size: 11px; font-weight: 600; }
+.kpi-delta.up { color: var(--good); }
+.kpi-delta.ai  { color: var(--ai); }
+.kpi-delta.dim { color: var(--muted); }
+
+/* Section Header */
+.section-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.section-hd h3 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.count-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bad);
+}
+.section-wrap { margin-bottom: 32px; }
+
+/* AI Button (section-level) */
+.ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border: 1px solid var(--ai-border);
+  border-radius: 100px;
+  background: var(--ai-soft);
+  color: var(--ai);
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.ai-btn:hover { background: #fef3c7; }
+
+/* ─── 7-Day Cards ────────────────────────────────────── */
+.week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+.day-card {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 11px 10px 10px;
+  background: var(--surface);
+  min-height: 144px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.day-card.weekend  { background: var(--surface-2); }
+.day-card.has-event {
+  border-color: var(--accent-mid);
+  background: var(--accent-soft);
+}
+.day-dow {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.day-num {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 3px 0 9px;
+}
+.occ-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+.occ-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.day-card.has-event .occ-fill { background: var(--accent); }
+.occ-label {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: auto;
+}
+.price-row {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.price-val {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.price-delta {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--good);
+  background: var(--good-soft);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.ai-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 10px;
+  color: var(--ai);
+  font-weight: 600;
+}
+.event-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Two-col Perf + Comp ────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 14px;
+}
+.info-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  background: var(--surface);
+}
+.card-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+/* Perf narrative box */
+.perf-story {
+  font-size: 13px;
+  line-height: 1.65;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+.perf-story strong { font-weight: 700; }
+
+/* Chart */
+.chart-area {
+  height: 114px;
+  border: 1px dashed var(--border-2);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.chart-area svg { width: 100%; height: 100%; display: block; }
+.chart-legend {
+  display: flex;
+  gap: 14px;
+  margin-top: 9px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-line {
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* Comp-set */
+.comp-price {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.comp-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+  background: var(--good-soft);
+  color: var(--good);
+}
+.position-scale {
+  height: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 7px;
+  overflow: visible;
+}
+.scale-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--good-soft) 0%, #fef9c3 50%, var(--bad-soft) 100%);
+  overflow: hidden;
+  border-radius: 4px;
+}
+.scale-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  z-index: 1;
+}
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--subtle);
+  font-weight: 500;
+}
+.anomaly-box {
+  margin-top: 14px;
+  padding: 10px 13px;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  background: var(--bad-soft);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.anomaly-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bad);
+  margin-bottom: 4px;
+}
+
+/* ─── Decisions ──────────────────────────────────────── */
+.decisions-list {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.decision-row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 14px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.decision-row:last-child { border-bottom: none; }
+.decision-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.decision-title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.decision-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.btn-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  line-height: 1;
+}
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn.primary:hover { background: #1d4ed8; }
+.btn:hover { background: var(--surface-2); }
+.btn.ghost { border-color: transparent; color: var(--muted); }
+.btn.ghost:hover { background: transparent; color: var(--text); }
+.btn.ai-action { border-color: var(--ai-border); background: var(--ai-soft); color: var(--ai); }
+.btn.ai-action:hover { background: #fef3c7; }
+.btn.sm { font-size: 11px; padding: 4px 10px; }
+
+/* ─── AI Sidekick Column ─────────────────────────────── */
+.sidekick-col {
+  border-left: 1px solid var(--border);
+  background: var(--surface-ai);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidekick header */
+.sidekick-header {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.rm-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.online-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 9px;
+  height: 9px;
+  background: #22c55e;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+.rm-info .rm-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.rm-info .rm-role {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+/* Sidekick scrollable body */
+.sidekick-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Side section label */
+.side-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--subtle);
+  margin-bottom: 9px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.side-count {
+  background: var(--ai-soft);
+  color: var(--ai);
+  border: 1px solid var(--ai-border);
+  border-radius: 100px;
+  padding: 0 6px;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+/* Focus narrative */
+.focus-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 14px 15px;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.focus-box .focus-hl {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+.focus-box strong { font-weight: 700; }
+.focus-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 6px;
+}
+
+/* Suggestion item */
+.suggestion {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.suggestion:last-child { border-bottom: none; }
+.suggest-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--ai-soft);
+  border: 1px solid var(--ai-border);
+  color: var(--ai);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.suggest-text {
+  font-size: 12px;
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.suggest-actions { display: flex; gap: 5px; }
+
+/* Chat */
+.chat-thread { display: flex; flex-direction: column; gap: 10px; }
+.chat-msg .msg-who {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--subtle);
+  margin-bottom: 3px;
+}
+.chat-msg.user .msg-who { text-align: right; }
+.msg-bubble {
+  font-size: 12px;
+  line-height: 1.55;
+  padding: 9px 12px;
+  border-radius: 8px;
+}
+.chat-msg.user .msg-bubble {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px 8px 2px 8px;
+}
+.chat-msg.ai .msg-bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px 8px 8px 2px;
+}
+.quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+.chip {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border: 1px solid var(--border-2);
+  border-radius: 100px;
+  color: var(--muted);
+  background: var(--surface);
+  cursor: pointer;
+  font-family: inherit;
+}
+.chip:hover { background: var(--surface-2); }
+
+/* Human-in-team */
+.human-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+}
+.human-av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #16a34a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.human-av .online-dot { bottom: 0; right: 0; width: 8px; height: 8px; border: 1.5px solid #fff; }
+.human-name { font-size: 12px; font-weight: 600; }
+.human-status { font-size: 11px; color: var(--muted); }
+.human-action { margin-left: auto; }
+
+/* Input */
+.sidekick-input {
+  border-top: 1px solid var(--border);
+  padding: 12px 14px;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.input-shell {
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+}
+.input-shell input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+}
+.input-shell input::placeholder { color: var(--subtle); }
+.send-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.hint-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+/* ─── Footer ─────────────────────────────────────────── */
+.page-footer {
+  text-align: center;
+  padding: 20px 32px;
+  font-size: 11px;
+  color: var(--subtle);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .body-grid { grid-template-columns: 68px 1fr; }
+  .sidekick-col { display: none; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .week-row { grid-template-columns: repeat(4, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ Page Intro ════════════════════════════════════════════════ -->
+<div class="page-intro">
+  <div class="meta">Wireframe · Wurf 3 · happyhotel AI Revenue Manager</div>
+  <h1>Dashboard-Evolution mit AI-Sidekick</h1>
+  <p class="desc">Bekannte happyhotel-Funktionen radikal vereinfacht — kein Fachjargon, keine 12-Spalten-Wand. Rechts ein permanenter AI-Sidekick, der proaktiv erklärt, vorschlägt und ausführt. Links Daten, rechts Kollege.</p>
+  <div class="tag-row">
+    <span class="tag accent">v3 · Clean Wireframe</span>
+    <span class="tag">Desktop</span>
+    <span class="tag">Owner / GM Perspektive</span>
+    <span class="tag ai-tag">✨ AI-Sidekick</span>
+  </div>
+</div>
+
+<!-- ═══ App Shell ═════════════════════════════════════════════════ -->
+<div class="app-wrap">
+<div class="app-frame">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <span class="topbar-brand">happyhotel</span>
+    <div class="topbar-sep"></div>
+    <span class="topbar-hotel">Hotel Seeblick · Berlin · 80 Zimmer</span>
+    <div class="topbar-right">
+      <span class="tier-pill">Senior RM</span>
+      <div class="icon-btn">🔔<span class="notif-dot"></span></div>
+      <div class="user-avatar">AB</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="body-grid">
+
+    <!-- ── Left Nav ── -->
+    <nav class="left-nav">
+      <div class="nav-item active">
+        <span class="nav-icon">⌂</span>
+        Heute
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">€</span>
+        Preise
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">⊞</span>
+        Kalender
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">↗</span>
+        Perf.
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">◎</span>
+        Markt
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">✓</span>
+        Entsch.
+        <span class="nav-badge">3</span>
+      </div>
+      <div class="nav-spacer"></div>
+      <div class="nav-item">
+        <span class="nav-icon">⚙</span>
+        Setup
+      </div>
+    </nav>
+
+    <!-- ── Main Content ── -->
+    <main class="main-content">
+
+      <!-- Greeting -->
+      <div class="greet-row">
+        <h2>Guten Morgen, Anna</h2>
+        <span class="date-label">Mi, 29. April 2026</span>
+      </div>
+      <p class="sub-greet">Dein Hotel auf einen Blick — dein AI-RM hat heute Nacht 23 Preise angepasst.</p>
+
+      <!-- Hero Story Card -->
+      <div class="hero-card">
+        <div>
+          <div class="hero-eyebrow">Mai 2026 — Zwischenstand</div>
+          <p class="hero-story">
+            Dein Hotel verdient diesen Monat <span class="money">28.420 €</span> — <strong>12 % mehr als im Mai 2025</strong> und 4 Punkte über deinem Plan. Hauptgrund war das Pfingstwochenende: nach Bestätigung der Frankfurter Messe habe ich die Preise nachts angehoben. Wenn das Tempo hält, schließen wir den Monat bei rund <span class="money">64.000 €</span> ab.
+          </p>
+          <button class="ai-chip">✨ Was hat gut funktioniert?</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-label">Mai-Belegung Forecast</span>
+            <span class="stat-value">62 %</span>
+            <span class="stat-delta up">↑ über Plan</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-label">Preis-Anpassungen Nacht</span>
+            <span class="stat-value">23</span>
+            <span class="stat-delta neutral">Automatisch</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Strip -->
+      <div class="kpi-strip">
+        <div class="kpi-card">
+          <div class="kpi-label">Heute Umsatz</div>
+          <div class="kpi-value">2.840 €</div>
+          <div class="kpi-delta up">↑ +12 %</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Belegung heute</div>
+          <div class="kpi-value">67 %</div>
+          <div class="kpi-delta up">↑ Plan: 65 %</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Ø Zimmerpreis</div>
+          <div class="kpi-value">142 €</div>
+          <div class="kpi-delta up">↑ +8 € vs. Markt</div>
+        </div>
+        <div class="kpi-card is-ai">
+          <div class="kpi-label">Preis-Anpassungen</div>
+          <div class="kpi-value">23</div>
+          <div class="kpi-delta ai">✨ AI · letzte Nacht</div>
+        </div>
+      </div>
+
+      <!-- Die nächsten 7 Tage -->
+      <div class="section-wrap">
+        <div class="section-hd">
+          <h3>Nächste 7 Tage</h3>
+          <button class="ai-btn">✨ Erkläre mir die Woche</button>
+        </div>
+        <div class="week-row">
+          <div class="day-card">
+            <span class="ai-check">✨</span>
+            <div class="day-dow">Do</div>
+            <div class="day-num">30.4</div>
+            <div class="occ-track"><div class="occ-fill" style="width:42%"></div></div>
+            <div class="occ-label">42 % gebucht</div>
+            <div class="price-row"><span class="price-val">109 €</span></div>
+          </div>
+          <div class="day-card weekend">
+            <span class="ai-check">✨</span>
+            <div class="day-dow">Fr</div>
+            <div class="day-num">1.5</div>
+            <div class="occ-track"><div class="occ-fill" style="width:58%"></div></div>
+            <div class="occ-label">58 % gebucht</div>
+            <div class="price-row">
+              <span class="price-val">152 €</span>
+              <span class="price-delta">+12</span>
+            </div>
+          </div>
+          <div class="day-card has-event">
+            <span class="ai-check">✨</span>
+            <div class="day-dow">Sa</div>
+            <div class="day-num">2.5</div>
+            <div class="occ-track"><div class="occ-fill" style="width:71%"></div></div>
+            <div class="occ-label">71 % gebucht</div>
+            <div class="price-row">
+              <span class="price-val">168 €</span>
+              <span class="price-delta">+24</span>
+            </div>
+            <span class="event-badge">Brücke</span>
+          </div>
+          <div class="day-card weekend">
+            <span class="ai-check">✨</span>
+            <div class="day-dow">So</div>
+            <div class="day-num">3.5</div>
+            <div class="occ-track"><div class="occ-fill" style="width:68%"></div></div>
+            <div class="occ-label">68 % gebucht</div>
+            <div class="price-row">
+              <span class="price-val">162 €</span>
+              <span class="price-delta">+18</span>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-dow">Mo</div>
+            <div class="day-num">4.5</div>
+            <div class="occ-track"><div class="occ-fill" style="width:35%"></div></div>
+            <div class="occ-label">35 % gebucht</div>
+            <div class="price-row"><span class="price-val">102 €</span></div>
+          </div>
+          <div class="day-card">
+            <div class="day-dow">Di</div>
+            <div class="day-num">5.5</div>
+            <div class="occ-track"><div class="occ-fill" style="width:28%"></div></div>
+            <div class="occ-label">28 % gebucht</div>
+            <div class="price-row"><span class="price-val">98 €</span></div>
+          </div>
+          <div class="day-card">
+            <div class="day-dow">Mi</div>
+            <div class="day-num">6.5</div>
+            <div class="occ-track"><div class="occ-fill" style="width:31%"></div></div>
+            <div class="occ-label">31 % gebucht</div>
+            <div class="price-row"><span class="price-val">99 €</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance & Markt -->
+      <div class="section-wrap">
+        <div class="section-hd">
+          <h3>Performance &amp; Markt</h3>
+        </div>
+        <div class="two-col">
+
+          <!-- Perf -->
+          <div class="info-card">
+            <div class="card-hd">
+              <span class="card-title">Wo stehen wir?</span>
+              <button class="ai-btn">✨ Tieferer Blick</button>
+            </div>
+            <div class="perf-story">
+              Du verdienst gerade <strong>+12 % mehr</strong> als im Mai 2025 und liegst <strong>+4 Punkte über deinem Plan</strong>. Hauptgrund: Pfingsten wurde gestern bestätigt — ich habe die Preise nachts angehoben.
+            </div>
+            <div class="chart-area">
+              <svg viewBox="0 0 400 114" preserveAspectRatio="none">
+                <rect width="400" height="114" fill="#f0f2f6"/>
+                <line x1="0" y1="28" x2="400" y2="28" stroke="#d1d5db" stroke-width="1"/>
+                <line x1="0" y1="57" x2="400" y2="57" stroke="#d1d5db" stroke-width="1"/>
+                <line x1="0" y1="86" x2="400" y2="86" stroke="#d1d5db" stroke-width="1"/>
+                <!-- Vorjahr dashed -->
+                <polyline fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="5,4"
+                  points="0,84 50,79 100,76 150,73 200,70 250,66 300,64 350,62 400,59"/>
+                <!-- Forecast -->
+                <polyline fill="none" stroke="#c8cdd8" stroke-width="1.5"
+                  points="0,74 50,70 100,65 150,61 200,58 250,55 300,52 350,50 400,48"/>
+                <!-- Aktuell -->
+                <polyline fill="none" stroke="#2563eb" stroke-width="2.5"
+                  points="0,70 50,63 100,56 150,50 200,44 250,39 300,34"/>
+                <circle cx="300" cy="34" r="5" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+                <text x="309" y="30" font-size="9" font-weight="600" fill="#2563eb" font-family="system-ui, sans-serif">HEUTE</text>
+              </svg>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-line" style="background:#2563eb;height:3px"></span>
+                Aktuell
+              </div>
+              <div class="legend-item">
+                <span class="legend-line" style="background:#c8cdd8;height:3px"></span>
+                Forecast
+              </div>
+              <div class="legend-item">
+                <span style="display:inline-block;width:16px;height:0;border-top:2px dashed #9ca3af"></span>
+                Vorjahr
+              </div>
+            </div>
+          </div>
+
+          <!-- Comp-set -->
+          <div class="info-card">
+            <div class="card-hd">
+              <span class="card-title">Position im Markt</span>
+              <button class="ai-btn">✨ Comp-Set Detail</button>
+            </div>
+            <div class="comp-price">142 €</div>
+            <span class="comp-badge">↑ +8 € über Markt-Median</span>
+            <div class="position-scale">
+              <div class="scale-track"></div>
+              <div class="scale-marker" style="left:62%"></div>
+            </div>
+            <div class="scale-labels">
+              <span>89 €</span>
+              <span>Median 134 €</span>
+              <span>218 €</span>
+            </div>
+            <div class="anomaly-box">
+              <div class="anomaly-label">⚠ Anomalie erkannt</div>
+              Hotel "Adler" seit 3 Tagen ungewöhnlich günstig — vermutlich Software-Panne. Ich ignoriere das in meinen Empfehlungen.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decisions -->
+      <div class="section-wrap">
+        <div class="section-hd">
+          <h3>Du musst entscheiden <span class="count-badge">3 offen</span></h3>
+          <button class="ai-btn">✨ Alle erklären</button>
+        </div>
+        <div class="decisions-list">
+
+          <div class="decision-row">
+            <div class="decision-num">1</div>
+            <div>
+              <div class="decision-title">Großgruppe Berlin · 3.–5. Juni · 24 Zimmer à 119 €</div>
+              <div class="decision-sub">+2.856 € Brutto, aber geschätzt −1.840 € Verdrängung bei regulären Gästen. Frist: heute 17:00 Uhr.</div>
+              <div class="btn-row">
+                <button class="btn primary sm">Annehmen</button>
+                <button class="btn sm">Ablehnen</button>
+                <button class="btn ai-action sm">✨ Marc fragen</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="decision-row">
+            <div class="decision-num">2</div>
+            <div>
+              <div class="decision-title">MinLOS 3 Nächte für Festwochenende 14.–17. August aktivieren?</div>
+              <div class="decision-sub">Mein Vorschlag — geschätzte Wirkung: +480 € mehr Umsatz. Gilt für alle Kanäle oder nur Booking.com.</div>
+              <div class="btn-row">
+                <button class="btn primary sm">Alle Kanäle aktivieren</button>
+                <button class="btn sm">Nur Booking.com</button>
+                <button class="btn ai-action sm">✨ Mehr erklären</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="decision-row">
+            <div class="decision-num">3</div>
+            <div>
+              <div class="decision-title">Sommer-Strategie-Review mit Marc — 15 Minuten</div>
+              <div class="decision-sub">Marc hat 3 Empfehlungen für höhere Direkt-Conversion vorbereitet.</div>
+              <div class="btn-row">
+                <button class="btn primary sm">Termin wählen</button>
+                <button class="btn ghost sm">Später</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main><!-- /main-content -->
+
+    <!-- ── AI Sidekick ── -->
+    <aside class="sidekick-col">
+
+      <div class="sidekick-header">
+        <div class="rm-avatar">
+          RM
+          <span class="online-dot"></span>
+        </div>
+        <div class="rm-info">
+          <div class="rm-name">Dein Revenue Manager</div>
+          <div class="rm-role">AI · Marc &amp; Lisa als Backup</div>
+        </div>
+      </div>
+
+      <div class="sidekick-body">
+
+        <!-- Fokus -->
+        <div>
+          <div class="side-label">✨ Heute im Fokus</div>
+          <div class="focus-box">
+            <div class="focus-hl">Pfingsten läuft sehr gut</div>
+            Ich habe heute Nacht <strong>23 Preise angepasst</strong> — die größte Bewegung war Pfingstmontag (+18 €), nachdem die Frankfurter Messe bestätigt wurde. Dein Pickup für das Wochenende ist <strong>3× über dem Schnitt</strong>.
+            <div class="focus-actions">
+              <button class="btn primary sm">Details anzeigen</button>
+              <button class="btn sm">Notiz hinterlassen</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vorschläge -->
+        <div>
+          <div class="side-label">Vorschläge <span class="side-count">2</span></div>
+          <div>
+            <div class="suggestion">
+              <div class="suggest-icon">€</div>
+              <div>
+                <div class="suggest-text">Frühbucher-Rabatt für Mo–Mi 4.–6. Mai anbieten? Geschätzte Wirkung: +8 Buchungen.</div>
+                <div class="suggest-actions">
+                  <button class="btn primary sm">Aktivieren</button>
+                  <button class="btn sm">Nicht jetzt</button>
+                </div>
+              </div>
+            </div>
+            <div class="suggestion">
+              <div class="suggest-icon">📋</div>
+              <div>
+                <div class="suggest-text">Monats-Bericht für deinen Owner vorbereiten? Dauert 30 Sekunden.</div>
+                <div class="suggest-actions">
+                  <button class="btn primary sm">Ja, erstellen</button>
+                  <button class="btn sm">Später</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Letztes Gespräch -->
+        <div>
+          <div class="side-label">Letztes Gespräch</div>
+          <div class="chat-thread">
+            <div class="chat-msg user">
+              <div class="msg-who">Du · gestern</div>
+              <div class="msg-bubble">Warum ist der Preis am 11.5. so hoch?</div>
+            </div>
+            <div class="chat-msg ai">
+              <div class="msg-who">Revenue Manager</div>
+              <div class="msg-bubble">11.5. ist Brückentag und dein Pickup für diese Woche zog stark an. Der Comp-Set lag bei 158 € — ich habe dich auf 168 € positioniert, weil deine Lage die Premium-Position rechtfertigt.</div>
+              <div class="quick-chips">
+                <button class="chip">Decision Log</button>
+                <button class="chip">Andere Tage</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensch im Team -->
+        <div>
+          <div class="side-label">Mensch im Team</div>
+          <div class="human-card">
+            <div class="human-av">
+              M
+              <span class="online-dot"></span>
+            </div>
+            <div>
+              <div class="human-name">Marc — heute online</div>
+              <div class="human-status">Sommer-Review-Termine offen</div>
+            </div>
+            <div class="human-action">
+              <button class="btn ai-action sm">Schreiben</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /sidekick-body -->
+
+      <!-- Input -->
+      <div class="sidekick-input">
+        <div class="input-shell">
+          <input type="text" placeholder="Frag mich oder gib mir eine Aufgabe…" />
+          <button class="send-btn">→</button>
+        </div>
+        <div class="hint-row">
+          <button class="chip">✨ Mai erklären</button>
+          <button class="chip">📋 Owner-Bericht</button>
+          <button class="chip">🎤 Voice</button>
+        </div>
+      </div>
+
+    </aside><!-- /sidekick-col -->
+
+  </div><!-- /body-grid -->
+
+</div><!-- /app-frame -->
+</div><!-- /app-wrap -->
+
+<div class="page-footer">
+  Wurf 3 · Clean Wireframe · Dashboard-Evolution mit AI-Sidekick · happyhotel AI Revenue Manager
+</div>
+
+</body>
+</html>

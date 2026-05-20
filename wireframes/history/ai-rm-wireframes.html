@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>AI Revenue Manager — Experience Wireframes</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #6b7280;
+    --line: #d1d5db;
+    --bg: #fafafa;
+    --panel: #ffffff;
+    --accent: #2563eb;
+    --soft: #f3f4f6;
+    --good: #16a34a;
+    --warn: #d97706;
+    --bad: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  header {
+    padding: 48px 48px 24px;
+    border-bottom: 1px solid var(--line);
+    background: white;
+  }
+  header h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  header p { margin: 0; color: var(--muted); max-width: 720px; }
+  header .meta { margin-top: 16px; font-size: 13px; color: var(--muted); }
+
+  nav {
+    position: sticky; top: 0;
+    background: white;
+    padding: 12px 48px;
+    border-bottom: 1px solid var(--line);
+    display: flex; gap: 4px;
+    overflow-x: auto;
+    z-index: 10;
+  }
+  nav a {
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  nav a:hover { background: var(--soft); color: var(--ink); }
+
+  main { padding: 48px; max-width: 1200px; margin: 0 auto; }
+
+  section { margin-bottom: 80px; }
+  section h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  section h3 {
+    font-size: 22px;
+    margin: 0 0 12px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  section .caption {
+    color: var(--muted);
+    max-width: 680px;
+    margin: 0 0 24px;
+    font-size: 14px;
+  }
+
+  /* Generic mock chrome */
+  .screen {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .topbar {
+    height: 40px;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    gap: 16px;
+  }
+  .topbar .logo { font-weight: 600; opacity: 0.95; }
+  .topbar .right { margin-left: auto; display: flex; gap: 16px; opacity: 0.85; font-size: 12px; }
+  .topbar .pill {
+    background: rgba(255,255,255,0.2);
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    min-height: 520px;
+  }
+  .sidebar {
+    background: var(--soft);
+    border-right: 1px solid var(--line);
+    padding: 16px 8px;
+    font-size: 13px;
+  }
+  .sidebar .item {
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .sidebar .item.active {
+    background: white;
+    color: var(--ink);
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .sidebar .item .dot {
+    display: inline-block; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%; margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .content { padding: 24px 32px; }
+
+  /* Briefing card */
+  .briefing-greeting { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+  .briefing-sub { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+
+  .summary-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; margin-bottom: 28px;
+  }
+  .stat {
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: white;
+  }
+  .stat .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat .value { font-size: 22px; font-weight: 600; margin-top: 2px; letter-spacing: -0.01em; }
+  .stat .delta { font-size: 12px; margin-top: 2px; }
+  .delta.up { color: var(--good); }
+  .delta.flat { color: var(--muted); }
+
+  .section-title {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--muted); margin: 24px 0 10px; font-weight: 600;
+  }
+
+  .timeline-item {
+    display: flex; gap: 12px; padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .timeline-icon.ai { background: #dbeafe; color: var(--accent); }
+  .timeline-icon.human { background: #dcfce7; color: var(--good); }
+  .timeline-icon.alert { background: #fef3c7; color: var(--warn); }
+  .timeline-content { flex: 1; }
+  .timeline-meta { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+  .timeline-text { font-size: 14px; }
+  .timeline-actions { margin-top: 8px; display: flex; gap: 8px; }
+
+  .btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    background: white;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+  .btn.ghost { background: transparent; border-color: transparent; color: var(--muted); }
+
+  /* Decision detail */
+  .price-hero {
+    display: flex; align-items: baseline; gap: 16px;
+    padding: 20px;
+    background: var(--soft);
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .price-hero .day { font-size: 14px; color: var(--muted); }
+  .price-hero .price { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; }
+  .price-hero .change { color: var(--good); font-size: 14px; font-weight: 500; }
+
+  .reason-list { margin: 0; padding: 0; list-style: none; }
+  .reason-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 24px 1fr auto;
+    gap: 12px; align-items: center; font-size: 14px;
+  }
+  .reason-list .check { color: var(--good); font-weight: 600; }
+  .reason-list .impact { font-size: 12px; color: var(--muted); }
+
+  /* Trust slider grid */
+  .trust-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 16px;
+  }
+  .trust-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .trust-card h4 { margin: 0 0 4px; font-size: 14px; font-weight: 600; }
+  .trust-card p { margin: 0 0 12px; font-size: 12px; color: var(--muted); }
+  .trust-bar {
+    display: flex; height: 32px;
+    border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+  }
+  .trust-bar .seg {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--muted);
+    border-right: 1px solid var(--line);
+  }
+  .trust-bar .seg:last-child { border-right: none; }
+  .trust-bar .seg.active {
+    background: var(--accent); color: white; font-weight: 500;
+  }
+
+  /* Tier banner */
+  .tier-banner {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white; padding: 16px 20px;
+    border-radius: 8px; margin-bottom: 20px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .tier-banner .l { }
+  .tier-banner .l .small { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.85; }
+  .tier-banner .l .big { font-size: 18px; font-weight: 600; }
+  .tier-banner .r { text-align: right; font-size: 12px; opacity: 0.9; }
+
+  /* Onboarding "Hiring" */
+  .hiring-step {
+    display: flex; gap: 16px; padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .hiring-step:last-child { border-bottom: none; }
+  .hiring-step .num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 13px; flex-shrink: 0;
+  }
+  .hiring-step.done .num { background: var(--good); }
+  .hiring-step.todo .num { background: var(--soft); color: var(--muted); }
+  .hiring-step .body { flex: 1; }
+  .hiring-step .title { font-weight: 500; font-size: 14px; }
+  .hiring-step .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Decision log table */
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead th {
+    text-align: left; padding: 10px 12px;
+    font-weight: 500; color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .badge {
+    display: inline-block; padding: 2px 8px;
+    border-radius: 999px; font-size: 11px; font-weight: 500;
+  }
+  .badge.auto { background: #dbeafe; color: #1e40af; }
+  .badge.human { background: #dcfce7; color: #166534; }
+  .badge.exec { background: #f3f4f6; color: #374151; }
+  .badge.review { background: #fef3c7; color: #92400e; }
+
+  .outcome { font-size: 12px; color: var(--muted); }
+  .outcome.win { color: var(--good); font-weight: 500; }
+
+  /* Chat — hybrid */
+  .chat { padding: 8px 0; }
+  .msg {
+    display: flex; gap: 12px; padding: 12px 0;
+  }
+  .msg .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .msg .avatar.ai { background: #dbeafe; color: var(--accent); }
+  .msg .avatar.human { background: #dcfce7; color: var(--good); }
+  .msg .avatar.user { background: #f3f4f6; color: var(--muted); }
+  .msg .body { flex: 1; }
+  .msg .who { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .msg .who .role { font-weight: 400; color: var(--muted); margin-left: 6px; }
+  .msg .text { font-size: 14px; line-height: 1.55; }
+
+  .input-row {
+    margin-top: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  footer {
+    text-align: center; padding: 32px;
+    color: var(--muted); font-size: 12px;
+    border-top: 1px solid var(--line);
+    background: white;
+    margin-top: 48px;
+  }
+
+  .principle-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 16px;
+  }
+  .principle {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: white;
+  }
+  .principle .num {
+    font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .principle h4 { margin: 4px 0 6px; font-size: 14px; font-weight: 600; }
+  .principle p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  @media (max-width: 720px) {
+    main { padding: 24px; }
+    header { padding: 24px; }
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .summary-row { grid-template-columns: 1fr 1fr; }
+    .principle-grid, .trust-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AI Revenue Manager — Experience Inspirations</h1>
+  <p>Sechs Wireframes als Richtungsskizze für die Cowork-/Conversation-first-Experience. Bewusst grob gehalten — geht um die Idee, nicht ums Pixel.</p>
+  <div class="meta">happyhotel · Strategie 2026 · Wireframes für die "neue Ära" · April 2026</div>
+</header>
+
+<nav>
+  <a href="#principles">0 · Prinzipien</a>
+  <a href="#briefing">1 · Morning Briefing</a>
+  <a href="#decision">2 · Warum dieser Preis?</a>
+  <a href="#inbox">3 · Decisions Inbox</a>
+  <a href="#trust">4 · Trust &amp; Tier-Settings</a>
+  <a href="#hybrid">5 · Hybrid-Chat (AI + Mensch)</a>
+  <a href="#log">6 · Decision Log</a>
+  <a href="#hiring">7 · Onboarding als Einstellung</a>
+</nav>
+
+<main>
+
+  <!-- 0 PRINCIPLES -->
+  <section id="principles">
+    <h2>0 · Leitprinzipien</h2>
+    <h3>Was alle Screens gemeinsam haben sollten</h3>
+    <p class="caption">Diese drei Prinzipien sollten jede Designentscheidung steuern — wenn ein Screen sie nicht erfüllt, ist er noch nicht fertig.</p>
+    <div class="principle-grid">
+      <div class="principle">
+        <div class="num">Prinzip 1</div>
+        <h4>Owner-Sprache, nicht RM-Jargon</h4>
+        <p>"Du hast 12.400 € verdient" statt "RevPAR Pickup +0,4". Jede Zahl wird in Geld, Wachstum und Aktion übersetzt.</p>
+      </div>
+      <div class="principle">
+        <div class="num">Prinzip 2</div>
+        <h4>Bringschuld, nicht Holschuld</h4>
+        <p>Das System kommt zum Hotelier — Briefing, Push, Inbox. Dashboards sind Drilldown, nie Front Door.</p>
+      </div>
+      <div class="principle">
+        <div class="num">Prinzip 3</div>
+        <h4>Jede Aktion hat ein "Warum"</h4>
+        <p>Erklärbar &gt; optimal. Logisch &gt; wissenschaftlich. Vertrauen entsteht nur, wenn der GM die Begründung versteht.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 BRIEFING -->
+  <section id="briefing">
+    <h2>Screen 1 · Front Door</h2>
+    <h3>Morning Briefing — die Schicht-Übergabe</h3>
+    <p class="caption">Statt "Dashboard öffnen und selbst suchen": Der AI-RM erzählt dir, was passiert ist, was er getan hat und wo er deine Entscheidung braucht. Gelesen in 60 Sekunden.</p>
+
+    <div class="screen">
+      <div class="topbar">
+        <span class="logo">happyhotel</span>
+        <span class="pill">Hotel Seeblick · Senior RM Tarif</span>
+        <div class="right">
+          <span>Anna Bauer (GM)</span>
+        </div>
+      </div>
+      <div class="layout">
+        <div class="sidebar">
+          <div class="item active"><span class="dot"></span>Briefing</div>
+          <div class="item">Decisions (3)</div>
+          <div class="item">Strategie</div>
+          <div class="item">Performance</div>
+          <div class="item">Preis &amp; Restriktionen</div>
+          <div class="item">Decision Log</div>
+          <div class="item">Mein Team</div>
+        </div>
+        <div class="content">
+          <div class="briefing-greeting">Guten Morgen Anna.</div>
+          <div class="briefing-sub">Mittwoch, 29. April · Letzte 24 Stunden im Überblick</div>
+
+          <div class="summary-row">
+            <div class="stat">
+              <div class="label">Umsatz heute</div>
+              <div class="value">2.840 €</div>
+              <div class="delta up">+12 % vs. Mi vor 1 Wo</div>
+            </div>
+            <div class="stat">
+              <div class="label">Belegung Mai</div>
+              <div class="value">62 %</div>
+              <div class="delta up">+4 Pkt vs. Forecast</div>
+            </div>
+            <div class="stat">
+              <div class="label">Ich habe entschieden</div>
+              <div class="value">23</div>
+              <div class="delta flat">Preisänderungen heute Nacht</div>
+            </div>
+            <div class="stat">
+              <div class="label">Du musst entscheiden</div>
+              <div class="value">3</div>
+              <div class="delta flat">Eskalationen unten</div>
+            </div>
+          </div>
+
+          <div class="section-title">Was ich heute Nacht getan habe</div>
+          <div class="timeline-item">
+            <div class="timeline-icon ai">AI</div>
+            <div class="timeline-content">
+              <div class="timeline-meta">03:42 · Auto-Execute</div>
+              <div class="timeline-text">Pfingstmontag (1. Juni) auf <b>189 €</b> angehoben (+18 €). Frankfurter Messe wurde gestern offiziell bestätigt — meine Pickup-Geschwindigkeit für das Wochenende ist 3× über dem Schnitt. <a href="#decision">Begründung →</a></div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon ai">AI</div>
+            <div class="timeline-content">
+              <div class="timeline-meta">03:42 · Auto-Execute</div>
+              <div class="timeline-text">Mitternachts-Wochenende 9.–11. Mai: 21 Preisänderungen, ø +6 €. Pickup-Trend seit Montag deutlich über dem Schnitt — Booking-Demand-Index für Berlin steigt.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon alert">!</div>
+            <div class="timeline-content">
+              <div class="timeline-meta">06:15 · Beobachtet, nicht reagiert</div>
+              <div class="timeline-text">"Hotel Adler" hat seit 3 Tagen alle Preise um −40 % gesenkt. <b>Vermutlich Software-Panne dort.</b> Ich ignoriere das in meinen Empfehlungen und beobachte. <button class="btn">Trotzdem matchen?</button></div>
+            </div>
+          </div>
+
+          <div class="section-title">Drei Sachen, bei denen ich dich brauche</div>
+          <div class="timeline-item">
+            <div class="timeline-icon alert">1</div>
+            <div class="timeline-content">
+              <div class="timeline-text"><b>Großgruppen-Anfrage Berliner Reisebüro</b> für 3.–5. Juni (24 Zimmer à 119 €). Passt nicht zu meinem Forecast — würde geschätzt 1.840 € Transient-Umsatz verdrängen.</div>
+              <div class="timeline-actions">
+                <button class="btn primary">Annehmen</button>
+                <button class="btn">Ablehnen</button>
+                <button class="btn ghost">Diskutieren</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon alert">2</div>
+            <div class="timeline-content">
+              <div class="timeline-text"><b>Restriktion vorgeschlagen:</b> MinLOS 3 für 14.–17. August (Festwochenende). Erwartete RevPAR-Steigerung +480 €. Bist du einverstanden?</div>
+              <div class="timeline-actions">
+                <button class="btn primary">Aktivieren</button>
+                <button class="btn">Nur für Booking</button>
+                <button class="btn ghost">Mehr erklären</button>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-icon human">M</div>
+            <div class="timeline-content">
+              <div class="timeline-text"><b>Marc, dein RM-Experte:</b> "Anna, ich habe deine Sommer-Strategie reviewt — 3 Empfehlungen für höhere Direkt-Conversion. Lust auf 15 Min nächste Woche?" <button class="btn">Termin wählen</button></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 DECISION DETAIL -->
+  <section id="decision">
+    <h2>Screen 2 · Reasoning sichtbar machen</h2>
+    <h3>"Warum dieser Preis?" — Click auf jede Zelle der Preistabelle</h3>
+    <p class="caption">Heute zeigt die Preistabelle nur Zahlen. Künftig: ein Klick und das System zeigt die Begründung in Klartext, mit konkreten Zahlen — und was passieren würde, wenn der GM den Preis ändert.</p>
+
+    <div class="screen">
+      <div class="topbar">
+        <span class="logo">happyhotel</span>
+        <span class="pill">Pfingstmontag · 1. Juni 2026 · Double Room</span>
+      </div>
+      <div style="padding: 32px;">
+        <div class="price-hero">
+          <div>
+            <div class="day">Mein Vorschlag</div>
+            <div class="price">189 €</div>
+            <div class="change">+18 € vs. Basispreis (171 €)</div>
+          </div>
+          <div style="margin-left: auto; text-align: right; font-size: 12px; color: var(--muted);">
+            Auto-Execute<br>03:42 Uhr · 28. April<br>Confidence: 87 %
+          </div>
+        </div>
+
+        <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 12px; font-weight: 600;">Meine Gründe</div>
+        <ul class="reason-list">
+          <li>
+            <span class="check">✓</span>
+            <span>Frankfurter Messe gestern bestätigt — historisch +24 € auf Pfingst-Wochenenden mit Großevent</span>
+            <span class="impact">+12 €</span>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <span>Pickup-Geschwindigkeit für 1. Juni: 3,1 Buchungen/Tag (Schnitt: 1,0). Markt zieht klar an.</span>
+            <span class="impact">+8 €</span>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <span>Comp-Set Median heute 184 € — du warst mit 171 € unter Markt, ohne Differenzierungsgrund</span>
+            <span class="impact">+5 €</span>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <span>Booking-Demand-Index Berlin Pfingsten: +28 % vs. Vorjahreswoche</span>
+            <span class="impact">verstärkt oben</span>
+          </li>
+          <li>
+            <span style="color: var(--muted);">~</span>
+            <span style="color: var(--muted);">Wettbewerber "Hotel Adler" mit −40 % ignoriert (vermutlich Software-Panne)</span>
+            <span class="impact">−</span>
+          </li>
+        </ul>
+
+        <div style="margin-top: 24px; padding: 16px; background: var(--soft); border-radius: 8px; font-size: 13px;">
+          <b>Was-wäre-wenn:</b> Wenn du den Preis auf 175 € senkst, erwarte ich −1.240 € RevPAR diesen Monat (geschätzt: 8 zusätzliche Buchungen · 24 verdrängte Higher-Yield-Buchungen).
+        </div>
+
+        <div style="margin-top: 24px; display: flex; gap: 12px;">
+          <button class="btn primary">Übernehmen</button>
+          <button class="btn">Manuell anpassen</button>
+          <button class="btn">Marc fragen</button>
+          <button class="btn ghost">Volle Datenherkunft anzeigen</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 INBOX -->
+  <section id="inbox">
+    <h2>Screen 3 · Exception Inbox</h2>
+    <h3>Alle Eskalationen an einem Ort — wie ein Posteingang</h3>
+    <p class="caption">Was die AI nicht alleine entscheiden darf, landet hier — sortiert nach Dringlichkeit und Geld-Impact. Der GM arbeitet eine Liste ab, statt im Chaos zu suchen.</p>
+
+    <div class="screen">
+      <div class="topbar">
+        <span class="logo">happyhotel</span>
+        <span class="pill">3 offene Entscheidungen · 2 in Bearbeitung durch Marc</span>
+      </div>
+      <div style="padding: 24px 32px;">
+
+        <table>
+          <thead>
+            <tr>
+              <th>Was</th>
+              <th>Geschätzter Impact</th>
+              <th>Wer entscheidet</th>
+              <th>Frist</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Großgruppe Reisebüro Berlin</b><br><span class="outcome">3.–5. Juni · 24 Zimmer · 119 €/Nacht</span></td>
+              <td>+2.856 € Brutto<br><span class="outcome">−1.840 € Verdrängung</span></td>
+              <td><span class="badge human">Du</span></td>
+              <td>Heute 17:00</td>
+              <td><button class="btn primary">Öffnen</button></td>
+            </tr>
+            <tr>
+              <td><b>MinLOS 3 für Festwochenende</b><br><span class="outcome">14.–17. August</span></td>
+              <td>+480 € RevPAR</td>
+              <td><span class="badge human">Du</span></td>
+              <td>Diese Woche</td>
+              <td><button class="btn primary">Öffnen</button></td>
+            </tr>
+            <tr>
+              <td><b>Strategie-Review Sommer</b><br><span class="outcome">Marc hat 3 Empfehlungen vorbereitet</span></td>
+              <td>geschätzt +2 % NetRevPAR</td>
+              <td><span class="badge human">Du + Marc</span></td>
+              <td>Termin wählen</td>
+              <td><button class="btn primary">Öffnen</button></td>
+            </tr>
+            <tr>
+              <td><b>PMS-Sync seit 2h aus</b><br><span class="outcome">Mews API meldet 503</span></td>
+              <td>—</td>
+              <td><span class="badge auto">Marc bearbeitet</span></td>
+              <td>seit 06:15</td>
+              <td><button class="btn">Status</button></td>
+            </tr>
+            <tr>
+              <td><b>Comp-Set Anomalie "Hotel Adler"</b><br><span class="outcome">−40 % seit 3 Tagen, vermutete Software-Panne</span></td>
+              <td>—</td>
+              <td><span class="badge auto">AI beobachtet</span></td>
+              <td>läuft</td>
+              <td><button class="btn">Eingreifen</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 TRUST -->
+  <section id="trust">
+    <h2>Screen 4 · Vertrauen schrittweise aufbauen</h2>
+    <h3>Trust-Stufen statt binärer Autopilot-Toggle</h3>
+    <p class="caption">Der heutige AUTOPILOT-Schalter ist zu grob. Hier sieht der GM, was sein AI-RM darf — pro Dimension. Default kommt aus dem gebuchten Tarif, kann aber feinjustiert werden.</p>
+
+    <div class="screen">
+      <div class="topbar">
+        <span class="logo">happyhotel</span>
+        <span class="pill">Trust &amp; Befugnisse</span>
+      </div>
+      <div style="padding: 24px 32px;">
+
+        <div class="tier-banner">
+          <div class="l">
+            <div class="small">Aktueller Tarif</div>
+            <div class="big">Senior Revenue Manager · 12 €/Zimmer/Mo</div>
+          </div>
+          <div class="r">
+            Nächste Stufe: Revenue Director<br>
+            <a href="#" style="color: white; text-decoration: underline;">Befugnisse erweitern →</a>
+          </div>
+        </div>
+
+        <div class="trust-grid">
+          <div class="trust-card">
+            <h4>Preise · 0–14 Tage Horizont</h4>
+            <p>Wie weit darf ich Preise ohne dich anpassen?</p>
+            <div class="trust-bar">
+              <div class="seg">Nur Vorschlag</div>
+              <div class="seg">±5 %</div>
+              <div class="seg active">±15 %</div>
+              <div class="seg">Frei</div>
+            </div>
+          </div>
+          <div class="trust-card">
+            <h4>Preise · 15+ Tage Horizont</h4>
+            <p>Bei langem Vorlauf bin ich vorsichtiger.</p>
+            <div class="trust-bar">
+              <div class="seg">Nur Vorschlag</div>
+              <div class="seg active">±10 %</div>
+              <div class="seg">±20 %</div>
+              <div class="seg">Frei</div>
+            </div>
+          </div>
+          <div class="trust-card">
+            <h4>Restriktionen (MinLOS, CTA)</h4>
+            <p>Darf ich Aufenthaltsbedingungen setzen?</p>
+            <div class="trust-bar">
+              <div class="seg">Aus</div>
+              <div class="seg active">Vorschlag</div>
+              <div class="seg">Auto in DACH</div>
+              <div class="seg">Voll auto</div>
+            </div>
+          </div>
+          <div class="trust-card">
+            <h4>Channel-Mix &amp; Promotions</h4>
+            <p>Soll ich Booking-Promos &amp; Direkt-Boost steuern?</p>
+            <div class="trust-bar">
+              <div class="seg">Aus</div>
+              <div class="seg active">Vorschlag</div>
+              <div class="seg">Auto bis 100 €</div>
+              <div class="seg">Voll auto</div>
+            </div>
+          </div>
+          <div class="trust-card">
+            <h4>Gruppenanfragen</h4>
+            <p>Wann darf ich alleine entscheiden?</p>
+            <div class="trust-bar">
+              <div class="seg active">Immer fragen</div>
+              <div class="seg">&lt; 10 Zi</div>
+              <div class="seg">&lt; 25 Zi</div>
+              <div class="seg">Voll auto</div>
+            </div>
+          </div>
+          <div class="trust-card">
+            <h4>Kanal-Verbindung &amp; Hygiene</h4>
+            <p>Parität, Verfügbarkeit, OTA-Sync.</p>
+            <div class="trust-bar">
+              <div class="seg">Aus</div>
+              <div class="seg">Alarm</div>
+              <div class="seg">Vorschlag</div>
+              <div class="seg active">Voll auto</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding: 16px; background: var(--soft); border-radius: 8px; font-size: 13px; color: var(--muted);">
+          💡 Tipp: Bei jedem Vorfall (z. B. überraschend hoher Preis) kannst du eine Stufe zurück — der AI lernt aus deinem Feedback.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 HYBRID CHAT -->
+  <section id="hybrid">
+    <h2>Screen 5 · "One System, One History"</h2>
+    <h3>AI und Mensch im selben Stream</h3>
+    <p class="caption">Wenn Marc oder Lisa aus dem RM-Expert-Team eingreifen, taucht das im selben Kontext auf wie die AI-Aktionen. Kein separater "Support-Chat". Das macht das Hybrid-Modell physisch erlebbar.</p>
+
+    <div class="screen">
+      <div class="topbar">
+        <span class="logo">happyhotel</span>
+        <span class="pill">Strategie-Gespräch · Sommer 2026</span>
+      </div>
+      <div style="padding: 24px 32px;">
+        <div class="chat">
+
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="body">
+              <div class="who">Revenue Manager <span class="role">· AI · gestern 22:15</span></div>
+              <div class="text">Anna, dein Forecast für Juli liegt aktuell bei 71 % Belegung — das ist 4 Punkte unter Vorjahr. Hauptgrund: schwächere Pickup für die Wochen 28+29. Ich habe drei Hebel identifiziert. Soll Marc das mit dir besprechen?</div>
+            </div>
+          </div>
+
+          <div class="msg">
+            <div class="avatar user">A</div>
+            <div class="body">
+              <div class="who">Anna Bauer <span class="role">· GM · heute 08:02</span></div>
+              <div class="text">Ja gerne. Aber kurz: was sind die drei Hebel?</div>
+            </div>
+          </div>
+
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="body">
+              <div class="who">Revenue Manager <span class="role">· AI · heute 08:02</span></div>
+              <div class="text">
+                1) Booking-Genius-Discount für KW 28+29 aktivieren (geschätzt +14 Buchungen) <br>
+                2) Direkt-Buchungs-Bonus 5 % für Frühbucher Juli (Margen-positiv) <br>
+                3) MinLOS 2 für die zwei betroffenen Mittwoche aufheben (heute aktiv durch alte Regel)
+              </div>
+            </div>
+          </div>
+
+          <div class="msg">
+            <div class="avatar human">M</div>
+            <div class="body">
+              <div class="who">Marc Schneider <span class="role">· Senior RM · happyhotel · heute 09:14</span></div>
+              <div class="text">Anna, ich habe gerade die drei Hebel angeschaut. Punkt 3 würde ich sofort machen — die MinLOS-Regel war für Hochsaison gedacht und passt jetzt nicht mehr. Punkt 1 vorsichtig, weil eure Conversion-Rate auf Booking schon hoch ist. Punkt 2 braucht eine Marketing-Abstimmung — soll ich das mit eurem Team aufsetzen? <br><br>
+              Habe für morgen 14 Uhr 15 Min in deinem Kalender geblockt, falls's passt.</div>
+              <div class="timeline-actions">
+                <button class="btn primary">Termin annehmen</button>
+                <button class="btn">Verschieben</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg">
+            <div class="avatar ai">AI</div>
+            <div class="body">
+              <div class="who">Revenue Manager <span class="role">· AI · heute 09:15</span></div>
+              <div class="text">📌 Notiert. Wenn Anna Punkt 3 freigibt, hebe ich die MinLOS-Regel sofort auf und passe die betroffenen Preise an.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="input-row">Frage stellen oder Aufgabe geben...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 LOG -->
+  <section id="log">
+    <h2>Screen 6 · Audit, Gedächtnis, Beweis</h2>
+    <h3>Decision Log — jede Entscheidung mit Begründung &amp; Outcome</h3>
+    <p class="caption">Das Decision Log ist nicht nur Audit-Trail, sondern das wichtigste Vertrauens-Werkzeug: "Hier sind die Entscheidungen, die letzten Monat 3.420 € gebracht haben — und die zwei, die wir nächstes Mal anders machen."</p>
+
+    <div class="screen">
+      <div class="topbar">
+        <span class="logo">happyhotel</span>
+        <span class="pill">Decision Log · Letzte 30 Tage · 642 Entscheidungen</span>
+      </div>
+      <div style="padding: 24px 32px;">
+
+        <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn">Alle (642)</button>
+          <button class="btn">Auto (598)</button>
+          <button class="btn">Mit Approval (32)</button>
+          <button class="btn">Marc/Lisa (12)</button>
+          <button class="btn">Größter Impact</button>
+          <button class="btn">Schlechteste Outcomes</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Entscheidung</th>
+              <th>Wer</th>
+              <th>Begründung (kurz)</th>
+              <th>Outcome 7T</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>15.04.</td>
+              <td>Pfingsten +18 €</td>
+              <td><span class="badge auto">AI</span></td>
+              <td>Messe + Pickup 3×</td>
+              <td><span class="outcome win">+1.240 €</span></td>
+            </tr>
+            <tr>
+              <td>14.04.</td>
+              <td>MinLOS 2 für KW 19</td>
+              <td><span class="badge human">Du + AI</span></td>
+              <td>Brückentag-Schutz</td>
+              <td><span class="outcome win">+480 €</span></td>
+            </tr>
+            <tr>
+              <td>12.04.</td>
+              <td>Comp-Set "Hotel Adler" entkoppelt</td>
+              <td><span class="badge auto">AI</span></td>
+              <td>Preise dort offensichtlich fehlerhaft</td>
+              <td><span class="outcome">stabil</span></td>
+            </tr>
+            <tr>
+              <td>10.04.</td>
+              <td>Direkt-Boost 5 % aktiviert</td>
+              <td><span class="badge human">Marc</span></td>
+              <td>Margenoptimierung Q2</td>
+              <td><span class="outcome win">+18 % Direkt</span></td>
+            </tr>
+            <tr>
+              <td>08.04.</td>
+              <td>Wochenende 9.5. um −12 € abgesenkt</td>
+              <td><span class="badge auto">AI</span></td>
+              <td>Pickup unter Schnitt, Comp-Set niedrig</td>
+              <td><span class="outcome">−180 €, kompensiert in Wochenmitte</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 24px; padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 13px;">
+          📊 <b>Quartalsbilanz Q1 2026:</b> 1.847 Entscheidungen, davon 94 % automatisch. Geschätzter RevPAR-Uplift vs. Rule-based Baseline: <b>+8.420 €</b>. Volle Auswertung im Strategie-Review am 5. Mai.
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 HIRING -->
+  <section id="hiring">
+    <h2>Screen 7 · Onboarding als Story</h2>
+    <h3>Du stellst keinen RMS ein — du stellst einen AI Revenue Manager ein</h3>
+    <p class="caption">Die Beförderungs-Metapher (Tarife = Seniorität) wird im Onboarding sichtbar. Erste 30/60/90 Tage = Probezeit. Quartalsweises Review = Mitarbeitergespräch. Das ist die Story, die kein RMS-Wettbewerber kopieren kann.</p>
+
+    <div class="screen">
+      <div class="topbar">
+        <span class="logo">happyhotel</span>
+        <span class="pill">Tag 1 · Dein neuer AI Revenue Manager</span>
+      </div>
+      <div style="padding: 32px;">
+
+        <div style="display: flex; gap: 24px; align-items: center; padding: 24px; background: var(--soft); border-radius: 12px; margin-bottom: 32px;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 600;">RM</div>
+          <div>
+            <div style="font-size: 20px; font-weight: 600;">Hi Anna — willkommen.</div>
+            <div style="color: var(--muted); margin-top: 4px;">Ich bin der Revenue Manager für Hotel Seeblick. Lass uns die ersten 30 Tage planen.</div>
+          </div>
+        </div>
+
+        <div class="hiring-step done">
+          <div class="num">✓</div>
+          <div class="body">
+            <div class="title">PMS &amp; Channel Manager verbunden</div>
+            <div class="sub">Mews · SiteMinder · Daten der letzten 24 Monate eingelesen</div>
+          </div>
+        </div>
+        <div class="hiring-step done">
+          <div class="num">✓</div>
+          <div class="body">
+            <div class="title">Comp-Set definiert (gemeinsam mit Marc)</div>
+            <div class="sub">5 vergleichbare Hotels in 2 km Radius, monatliche Review</div>
+          </div>
+        </div>
+        <div class="hiring-step">
+          <div class="num">3</div>
+          <div class="body">
+            <div class="title">Strategie-Workshop mit Marc · 60 Min</div>
+            <div class="sub">Saisonale Strategie · Direkt vs. OTA · Gruppen-Politik · Forecast-Ziele</div>
+          </div>
+        </div>
+        <div class="hiring-step">
+          <div class="num">4</div>
+          <div class="body">
+            <div class="title">Probezeit: erste 14 Tage nur Vorschläge</div>
+            <div class="sub">Du siehst, was ich vorschlage — entscheidest aber selbst. Vertrauen wächst mit jeder gemeinsamen Entscheidung.</div>
+          </div>
+        </div>
+        <div class="hiring-step todo">
+          <div class="num">5</div>
+          <div class="body">
+            <div class="title">30-Tage-Review: was hat sich bewährt?</div>
+            <div class="sub">Wir gehen die Entscheidungen gemeinsam durch und legen gemeinsam die nächsten Befugnisse fest.</div>
+          </div>
+        </div>
+        <div class="hiring-step todo">
+          <div class="num">6</div>
+          <div class="body">
+            <div class="title">Beförderung: Senior Revenue Manager</div>
+            <div class="sub">Wenn ihr zufrieden seid, übernehme ich Restriktionen, Distribution und multi-property Reporting.</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 32px; display: flex; gap: 12px;">
+          <button class="btn primary">Strategie-Workshop buchen</button>
+          <button class="btn">Marc anschreiben</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Wireframes — bewusst grob. Sechs Screens, eine Idee: der AI Revenue Manager ist kein Tool, sondern eine Rolle.
+</footer>
+
+</body>
+</html>

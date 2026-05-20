@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Persona · Kai · Experten-Mode</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+  --surface-3:    #efede6;
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 72px 32px 96px;
+}
+
+.mono-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.diamond {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+
+.headline {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin: 22px 0 22px;
+  color: var(--ink);
+  font-weight: 400;
+  max-width: 880px;
+}
+.headline em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.lede {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+.persona-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 40px;
+  margin-bottom: 32px;
+}
+.persona-card .head-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.persona-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 400;
+}
+.persona-card h2 {
+  font-family: "Instrument Serif", serif;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+.persona-card h2 em { font-style: italic; color: var(--accent); }
+.persona-card .role {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.persona-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-bottom: 14px;
+  max-width: 720px;
+}
+.persona-card p:last-child { margin-bottom: 0; }
+
+.label-line {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin: 32px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list-clean {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 720px;
+}
+.list-clean li {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  padding: 12px 0 12px 22px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.list-clean li:last-child { border-bottom: none; }
+.list-clean li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 19px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.list-clean li b { color: var(--ink); font-weight: 500; }
+
+.italic-pull {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.35;
+  color: var(--ink);
+  margin: 48px 0;
+  max-width: 800px;
+  letter-spacing: -0.005em;
+}
+.italic-pull span.acc { color: var(--accent); }
+.italic-pull .att {
+  display: block;
+  margin-top: 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.day-block {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-top: 32px;
+}
+.day-block .label-line { margin-top: 0; }
+.day-block .day-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 14px;
+}
+.day-block .day-row:last-child { border-bottom: none; }
+.day-block .day-row .ts {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding-top: 2px;
+}
+.day-block .day-row .what { color: var(--ink-2); line-height: 1.6; }
+.day-block .day-row .what b { color: var(--ink); font-weight: 500; }
+
+footer {
+  text-align: center;
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="mono-tag"><span class="diamond"></span> Kai · Experten-Mode · Persona</div>
+  <h1 class="headline">Volle Tiefe für den, der sie <em>kennt.</em></h1>
+  <p class="lede">Kai ist die zweite Persona, für die happyhotel den AI Revenue Manager baut. Nicht der Owner, nicht der Newcomer, sondern der professionelle Cluster-Revenue-Manager, der die Materie kennt, eingreifen können will, und Ray nicht als Erzähler, sondern als Junior-Kollegen behandelt. Diese Datei beschreibt, wer Kai ist, wie sein Tag funktioniert, was er von Ray erwartet, was ihn nervt.</p>
+
+  <div class="persona-card">
+    <div class="head-row">
+      <div class="persona-avatar">K</div>
+      <div>
+        <h2>Kai · Cluster Revenue <em>Manager</em></h2>
+        <div class="role">35, 4 Hotels (80–180 Zi), vorher IDeaS und Duetto</div>
+      </div>
+    </div>
+
+    <p>Kai betreut vier Häuser einer kleinen unabhängigen Hotelgruppe in Hannover. Seine Karriere begann an der Rezeption, dann Hotelfachschule, dann acht Jahre bei einer großen Kette mit IDeaS und Duetto im Tooling-Stack. Vor drei Jahren wechselte er zur jetzigen Gruppe, weil er Verantwortung wollte und nicht nur ein weiteres Excel-Sheet befüllen.</p>
+
+    <p>Kai kennt jeden RM-Hebel: Restriktionen, Displacement, Channel-Mix, Distribution, Forecasting. Er hat aber gelernt, dass tägliches Mikro-Management nicht skaliert. Vier Häuser × 365 Tage × manuelle Preise ergibt einen Burnout. Seit happyhotel delegiert er die Routine an Ray und konzentriert sich auf das, wofür er ausgebildet ist: Strategie, Cluster-Politik, Owner-Reporting, Ausnahmesituationen.</p>
+
+    <p>Sein Verhältnis zu Software ist nüchtern: Tools sind Mittel, kein Selbstzweck. Er hat keine Geduld für Onboarding-Tutorials oder Marketing-Sprache im Produkt. Er will Daten, Konfidenz, Override-Rechte, exportierbare Logs. Wenn Ray sich erklären will, dann knapp, technisch, mit Zahlen. Storytelling überlässt er Anna.</p>
+
+    <div class="label-line"><span class="diamond"></span> Was Kai will</div>
+    <ul class="list-clean">
+      <li><b>Volle Preistabelle</b> · alle Spalten (Belegung, ADR, RevPAR, vs. Comp, MinLOS, Pickup, AI-Konfidenz, Quelle), 14+ Tage Tiefe</li>
+      <li><b>Override-Recht auf jede Auto-Decision</b> · ohne Reibung, ohne Bestätigungs-Dialog, ohne "bist du sicher"</li>
+      <li><b>Ray als Analyst-Kollege</b> · liefert Hypothesen mit Konfidenz, exekutiert auf klare Anweisung, lernt aus Overrides</li>
+      <li><b>Cluster-Sicht</b> · alle vier Hotels nebeneinander, Drilldown per Klick, Vergleichbarkeit ohne Pivot</li>
+      <li><b>Decision Log mit allen Details</b> · filterbar, exportierbar als CSV, Daten-Snapshot pro Entscheidung</li>
+      <li><b>Konfidenz immer beziffert</b> · "Ray sagt 0.84" ist ein Argument, "Ray empfiehlt" ist es nicht</li>
+      <li><b>Daten-Pivot per Befehl</b> · "zeig mir Pickup pro Tag pro Hotel pro Segment" innerhalb des Produkts statt im Excel</li>
+    </ul>
+
+    <div class="label-line"><span class="diamond"></span> Was Kai nicht will</div>
+    <ul class="list-clean">
+      <li><b>Owner-Sprache</b> · "Du hast 12.400 € verdient" oder "läuft super, Pfingsten wird stark" hat in seinem Cockpit nichts verloren</li>
+      <li><b>Story-Modus, Emoji-Wetter, Pull-Quotes</b> · alles, was Anna einlädt, lenkt Kai ab</li>
+      <li><b>Modale Briefings</b>, die ihn beim Arbeiten unterbrechen · Findings sammeln sich im Stream, er ruft sie ab, wenn er Zeit hat</li>
+      <li><b>Empfehlungen ohne Konfidenz und Datengrundlage</b> · ein Vorschlag ohne Begründung ist Ballast</li>
+      <li><b>Tutorial-artiges Onboarding</b> · er weiß, was eine MinLOS ist; er muss es nicht lernen</li>
+      <li><b>"Hi Kai, schön dich zu sehen"</b> · Smalltalk ist nicht Rays Job</li>
+      <li><b>Defaults, die er nicht ändern kann</b> · jede Auto-Schwelle muss konfigurierbar sein, sonst ist Kai raus</li>
+    </ul>
+  </div>
+
+  <p class="italic-pull">"Spar dir die Geschichte. Zeig mir die Daten <span class="acc">und sag, wie sicher du dir bist.</span>"<span class="att">Kai, Antwort auf eine zu freundliche Ray-Erklärung</span></p>
+
+  <div class="day-block">
+    <div class="label-line"><span class="diamond"></span> Ein typischer Mittwoch</div>
+
+    <div class="day-row">
+      <span class="ts">07:30</span>
+      <div class="what"><b>Pendeln</b> mit Inbox-Triage. Erste Findings von Ray überfliegen, mental priorisieren.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">09:00</span>
+      <div class="what"><b>Cluster-Standup</b> mit den vier GMs (15 Minuten). Top-3 aus Rays nightlichem Decision-Stream rüberbringen, Owner-Themen ansprechen, Eskalationen verteilen.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">09:45</span>
+      <div class="what"><b>Pickup-Review für alle vier Hotels.</b> Cockpit auf Cluster-Sicht. Wo zieht es an, wo schwächelt es. Anomalien anschauen, Comp-Set-Bewegungen verifizieren.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">10:30</span>
+      <div class="what"><b>Deep-Dive ins schwächste Haus der Woche</b> (heute Mainz). Volle Preistabelle, Pickup-Pivot, Owner-Strategie überprüfen. Zwei Override-Entscheidungen, im Decision Log dokumentiert.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">12:00</span>
+      <div class="what"><b>Lunch.</b> 30 Minuten ohne Ray.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">13:00</span>
+      <div class="what"><b>Strategie-Stunde.</b> Sommer-Mix-Workshop mit Ray (Befehlsmodus): "Bau mir eine Was-wäre-wenn-Tabelle für Direct-Boost +5 % vs. Genius-Verlängerung". Ray liefert in 90 Sekunden.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">14:30</span>
+      <div class="what"><b>Ad-hoc-Probleme.</b> Comp-Set-Anomalie in Garmisch, Restriktions-Konflikt in Frankfurt, Owner-Anfrage zu KW-22-Forecast. Alles in 45 Minuten.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">16:00</span>
+      <div class="what"><b>Owner-Reporting.</b> Monatliches CEO-Update vorbereiten. Decision Log auf CSV exportieren, Top-Wins und Top-Misses kuratieren, in Folien gießen.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">17:30</span>
+      <div class="what"><b>Letzter Sweep.</b> Anomalien-Liste, Decision-Log-Review, ein paar Trust-Settings nachjustiert (MinLOS-Default in Mainz angehoben). Feierabend.</div>
+    </div>
+  </div>
+
+  <div class="label-line" style="margin-top: 48px;"><span class="diamond"></span> Kais Beziehung zu Ray</div>
+  <ul class="list-clean">
+    <li><b>Peer-to-peer, nicht jovial</b> · Kai ist der Senior, Ray der Junior; klare Aufträge, knappe Ergebnisse</li>
+    <li><b>Ray ist Analyst, kein Erzähler</b> · Findings mit Konfidenz, keine Stories, keine Emojis</li>
+    <li><b>Override ohne Reibung</b> · Kais Veto ist final, Ray fragt nicht nach, lernt aber daraus</li>
+    <li><b>Vertrauen mit der Routine, Strategie bleibt bei Kai</b> · Ray darf Restriktionen setzen und Preise anpassen, nicht aber Cluster-Strategie definieren</li>
+    <li><b>Konfidenz ist ein Argument, nicht eine Floskel</b> · 0.94 ist okay, 0.62 nicht; alles dazwischen wird diskutiert</li>
+    <li><b>Daten-Pivot statt Erklärung</b> · wenn Kai eine Frage hat, will er Daten in Tabellenform, kein Narrativ</li>
+    <li><b>Stille ist Qualität</b> · ein Tag ohne Ray-Ping ist ein produktiver Tag</li>
+  </ul>
+
+  <p class="italic-pull">"Ray ist mein bester Junior. <span class="acc">Den ich nicht onboarden musste.</span>"<span class="att">Kai, sechs Monate nach Tarif-Wechsel auf happyhotel</span></p>
+
+</div>
+
+<footer>
+  ▍ Persona · Kai · Experten-Mode · v4 ▍
+</footer>
+
+</body>
+</html>

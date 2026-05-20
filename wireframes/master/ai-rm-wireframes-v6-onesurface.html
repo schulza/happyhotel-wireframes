@@ -1,0 +1,2446 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel — AI Revenue Manager · Wireframes v6 · One Surface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --shell-2:      #efeeea;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --border-3:     #a6a5a0;
+
+  --good:         #1e3a5f;
+  --bad:          #8c2f2f;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* ─── PAGE HEAD ──────────────────────────────────────── */
+.page-head {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 56px 48px 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 40px;
+}
+.page-brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+}
+.page-brand svg {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+.page-meta {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+/* ─── PAGE INTRO ─────────────────────────────────────── */
+.page-intro {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 48px 56px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+.page-intro h1 {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 84px;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+.page-intro h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+.page-intro p {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 480px;
+}
+.page-intro .intro-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.intro-meta .im-key {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.intro-meta .im-val {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--accent);
+}
+
+/* ─── SECTION HEAD ─────────────────────────────────── */
+.frame-section {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 80px 48px 96px;
+}
+.frame-section + .frame-section { border-top: 1px solid var(--border); }
+
+.frame-head {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  margin-bottom: 56px;
+  align-items: end;
+}
+.frame-eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.eb-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.frame-h2 {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.frame-h2 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+.frame-desc {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 460px;
+}
+.frame-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.fm-item .fm-key {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.fm-item .fm-val {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.fm-item .fm-val em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 16px;
+}
+
+/* ═══ APP FRAME ═══════════════════════════════════════ */
+.app-frame {
+  position: relative;
+  border: 1px solid var(--border-2);
+  border-radius: 16px;
+  background: var(--shell);
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 24px 48px -16px rgba(20, 20, 22, 0.10),
+    0 8px 16px -8px rgba(20, 20, 22, 0.06);
+}
+
+/* Topbar */
+.topbar {
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  gap: 16px;
+}
+.tb-brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+}
+.tb-brand svg {
+  height: 20px;
+  width: auto;
+  display: block;
+}
+.tb-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border-2);
+  flex-shrink: 0;
+}
+.tb-hotel { font-size: 13px; color: var(--muted); }
+.tb-hotel strong { color: var(--ink); font-weight: 500; }
+.tb-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tier-pill {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 100px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.tb-av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+}
+.tb-av.kai { background: var(--accent); }
+
+/* ─── BODY ─────────────────────────────────────── */
+.h-body {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  min-height: 880px;
+  position: relative;
+}
+.h-rail {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rail-item {
+  padding: 14px 6px 12px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  position: relative;
+}
+.rail-item .rail-glyph {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--subtle);
+  line-height: 1;
+}
+.rail-item.active {
+  background: var(--accent);
+  color: var(--accent-soft);
+}
+.rail-item.active .rail-glyph { color: #fff; }
+.rail-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: var(--ink);
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rail-spacer { flex: 1; }
+
+.h-main {
+  padding: 36px 56px 64px;
+  background: var(--shell);
+}
+
+/* ─── CLUSTER STRIP (Kai · multi-hotel) ─────────────────────────────────────── */
+.cluster-strip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.cs-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  padding-right: 18px;
+  margin-right: 0;
+}
+.cs-label .cs-mark {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.cs-tiles {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+.cs-tile {
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  background: var(--surface-2);
+  position: relative;
+}
+.cs-tile.active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.cs-tile.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+}
+.cs-name {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.cs-tile:not(.active) .cs-name { color: var(--ink-2); }
+.cs-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.cs-meta .cs-pip {
+  width: 5px;
+  height: 5px;
+  background: var(--border-2);
+  display: inline-block;
+}
+.cs-meta .cs-pip.has { background: var(--accent); }
+.cs-meta .cs-pip.warn { background: var(--bad); }
+.cs-tile.active .cs-meta { color: var(--accent-deep); }
+.cs-expand {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent-line);
+  padding: 7px 11px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cs-expand .cs-x-mark {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ─── GREETING ─────────────────────────────────────── */
+.h-greet {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 32px;
+}
+.h-greet-text {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.h-greet-text em {
+  font-style: italic;
+  color: var(--accent);
+}
+.h-greet-date {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ─── BRIEFING ─────────────────────────────────────── */
+.brief {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 48px 36px;
+  box-shadow: 0 1px 3px rgba(45,41,32,0.04);
+}
+.brief-meta {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.brief-kicker {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+.brief-kicker .kicker-mark {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  margin-right: 8px;
+  vertical-align: middle;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+.brief-headline {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.brief-headline em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.brief-narrative {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-bottom: 36px;
+  max-width: 680px;
+}
+.brief-narrative b { color: var(--ink); font-weight: 600; }
+.brief-narrative .money,
+.brief-narrative .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 14px;
+  letter-spacing: -0.02em;
+}
+.brief-narrative .detail {
+  color: var(--accent);
+  text-decoration: underline dashed var(--accent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+}
+
+/* ─── EXPANSION AFFORDANCE ─────────────────────────────────────── */
+.exp-trigger {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.exp-trigger:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.exp-trigger .ex-glyph {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  line-height: 1;
+}
+.exp-trigger:hover .ex-glyph { color: var(--accent); }
+.exp-trigger.open {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.exp-trigger.open .ex-glyph { color: #fff; }
+
+/* ─── STATS STACK ─────────────────────────────────────── */
+.brief-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+}
+.bs-tile {
+  padding: 24px 28px 22px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+.bs-tile:last-child { border-right: none; }
+.bs-tile:hover { background: var(--surface-2); }
+.bs-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.bs-value {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.bs-value em {
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 500;
+}
+.bs-delta {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 4px;
+}
+.bs-tile.expanded {
+  background: var(--surface-2);
+  grid-column: span 1;
+}
+/* Expanded body inside stat tile */
+.bs-expand-body {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.bs-expand-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.bs-expand-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 56px;
+}
+.bs-bar {
+  flex: 1;
+  background: var(--accent);
+  opacity: 0.78;
+  position: relative;
+}
+.bs-bar.dim { opacity: 0.32; }
+.bs-bar.peak { opacity: 1; }
+.bs-bar-foot {
+  display: flex;
+  margin-top: 6px;
+  gap: 4px;
+}
+.bs-bar-foot span {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.bs-expand-row {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+.bs-expand-row b { color: var(--ink); font-weight: 600; }
+
+/* ─── DECISION CARD ─────────────────────────────────────── */
+.brief-decision {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 36px;
+  position: relative;
+  cursor: pointer;
+}
+.brief-decision.expanded {
+  background: var(--surface);
+  border-color: var(--accent-line);
+  box-shadow: 0 8px 24px -16px rgba(30, 58, 95, 0.12);
+  cursor: default;
+}
+.bd-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-right: 40px;
+}
+.bd-tag {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bd-tag .ar-spark {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.bd-id {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--subtle);
+  text-transform: uppercase;
+}
+.bd-title {
+  font-family: "Instrument Serif", serif;
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+  padding-right: 40px;
+}
+.bd-sub {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 620px;
+}
+.bd-actions { display: flex; gap: 10px; align-items: center; }
+
+/* Buttons */
+.btn {
+  font-family: "Inter", inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-2);
+  border: 1px solid var(--border-2);
+}
+.btn-ray {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  margin-left: auto;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: "Inter";
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-ray .ray-rune {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+
+/* Expanded decision body */
+.bd-expand {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 36px;
+}
+.bd-reason-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.bd-reason-tag .brt-mark {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.bd-reason-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin-bottom: 22px;
+}
+.bd-reason-text b { color: var(--ink); font-weight: 600; }
+.bd-reason-text .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.bd-data-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.bdd-item .bdd-key {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.bdd-item .bdd-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.bdd-item .bdd-val em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.bd-override {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.bd-or-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.bd-or-input {
+  flex: 1;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  padding: 7px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  color: var(--ink);
+}
+.bd-or-input:focus { border-color: var(--accent); }
+.bd-or-action {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Right side of expanded decision: pickup mini */
+.bd-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.bd-mini-block {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+}
+.bd-mini-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.bd-mini-tag .bm-stat {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0;
+}
+.bd-mini-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 44px;
+}
+.bm-bar {
+  flex: 1;
+  background: var(--accent);
+  opacity: 0.78;
+}
+.bm-bar.dim { opacity: 0.32; }
+.bm-bar.peak { opacity: 1; }
+.bd-mini-foot {
+  display: flex;
+  margin-top: 6px;
+}
+.bd-mini-foot span {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.bd-comp-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin-top: 6px;
+}
+.bd-comp-cell {
+  text-align: center;
+  padding: 8px 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.bd-comp-cell.you {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.bd-comp-cell.you .bcc-name,
+.bd-comp-cell.you .bcc-price { color: #fff; }
+.bcc-name {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.bcc-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--ink);
+}
+
+.bd-audit-row {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.bd-audit-row b { color: var(--ink); font-weight: 600; }
+
+/* ─── WEEK OUTLOOK ─────────────────────────────────────── */
+.brief-week {
+  margin-bottom: 36px;
+}
+.bw-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bw-label .bw-mark {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.bw-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+.bw-day {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 10px 14px;
+  text-align: left;
+  background: var(--surface-2);
+  cursor: pointer;
+  position: relative;
+}
+.bw-day.strong {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+.bw-day.event {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.bw-day.event .bw-dow,
+.bw-day.event .bw-status { color: rgba(255,255,255,0.85); }
+.bw-day.expanded {
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.bw-day.expanded::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  width: 14px;
+  height: 14px;
+  background: var(--surface);
+  border-right: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 2;
+}
+.bw-dow {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.bw-dow .bw-occ {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: var(--subtle);
+  font-variant-numeric: tabular-nums;
+}
+.bw-day.strong .bw-occ { color: var(--accent); }
+.bw-day.event .bw-occ { color: rgba(255,255,255,0.7); }
+.bw-status {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* Day detail expansion (inserted below the week strip) */
+.bw-day-detail {
+  margin-top: 12px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 36px;
+}
+.bdd-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.bdd-tag .bm-mark {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.bdd-title {
+  font-family: "Instrument Serif", serif;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.bdd-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.bdd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.bdd-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.bdd-table td {
+  padding: 10px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.bdd-table td.bdd-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--ink);
+}
+.bdd-table td.bdd-num em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 500;
+}
+.bdd-table tr:last-child td { border-bottom: none; }
+.bdd-table .bdd-flag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 2px 7px;
+  display: inline-block;
+}
+
+.bdd-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.bdd-mini-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+}
+.bdd-mc-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.bdd-mc-stat {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 26px;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.bdd-mc-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.bdd-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+.btn-bdd {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 9px 14px;
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-bdd-ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  padding: 9px 14px;
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ─── RAY STRIP ─────────────────────────────────────── */
+.brief-ray {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.br-mark {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.br-text {
+  flex: 1;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink);
+}
+.br-text em {
+  color: var(--accent);
+}
+.br-input {
+  flex: 0 1 320px;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  padding: 9px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  color: var(--ink);
+}
+.br-input:focus { border-color: var(--accent); }
+.br-send {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--accent);
+  color: var(--surface);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ─── INLINE NOTE ─────────────────────────────────────── */
+.inline-note {
+  margin: 18px 0 24px;
+  padding: 14px 18px;
+  background: var(--accent-soft);
+  border-left: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--accent-deep);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.inline-note .in-mark {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ─── VOCABULARY (Section 3) ─────────────────────────────────────── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.vocab-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 1fr;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+.vocab-row:last-child { border-bottom: none; }
+.vocab-name {
+  padding: 28px 32px;
+  border-right: 1px solid var(--border);
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.vocab-num {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.vocab-title {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.vocab-trigger {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.vocab-state {
+  padding: 24px 28px;
+  border-right: 1px solid var(--border);
+}
+.vocab-state:last-child { border-right: none; }
+.vocab-state-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.vocab-state-tag .vsm {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* Mini stat-tile preview */
+.vp-stat {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+}
+.vp-stat-label {
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.vp-stat-val {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 24px;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.vp-stat-delta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.vp-stat-bars {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 38px;
+}
+.vp-bar {
+  flex: 1;
+  background: var(--accent);
+  opacity: 0.65;
+}
+.vp-bar.peak { opacity: 1; }
+.vp-bar.dim { opacity: 0.3; }
+
+.vp-decision {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.vp-decision-tag {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.vp-decision-tag .vd-mark {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.vp-decision-title {
+  font-family: "Instrument Serif", serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.vp-decision-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.vp-decision-actions {
+  display: flex;
+  gap: 6px;
+}
+.vp-mini-btn {
+  font-size: 11px;
+  padding: 5px 10px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+}
+.vp-mini-btn.ghost {
+  background: transparent;
+  color: var(--ink-2);
+  border: 1px solid var(--border-2);
+}
+.vp-mini-btn.ray {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.vp-decision-expand {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.vp-de-cell .vp-de-key {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.vp-de-cell .vp-de-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+.vp-day {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 10px;
+  background: var(--surface-2);
+}
+.vp-day .vp-d-dow {
+  font-size: 9.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.vp-day .vp-d-status {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink);
+}
+.vp-day-expand {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+/* ─── ARCHITECTURE ─────────────────────────────────────── */
+.arch-section {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 96px 48px 120px;
+  border-top: 1px solid var(--border);
+}
+.arch-head {
+  margin-bottom: 64px;
+  max-width: 720px;
+}
+.arch-eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.arch-h2 {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.arch-h2 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+.arch-desc {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 580px;
+}
+
+.arch-coda {
+  margin-top: 56px;
+  padding: 32px 36px;
+  background: var(--shell);
+  border: 1px solid var(--border);
+}
+.arch-coda-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.arch-coda-tag .acm {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.arch-coda-text {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 26px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  max-width: 820px;
+}
+.arch-coda-text em {
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* ─── FOOT ─────────────────────────────────────────── */
+.page-foot {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 32px 48px 64px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .frame-head, .page-intro { grid-template-columns: 1fr; gap: 32px; }
+  .h-body { grid-template-columns: 64px 1fr; }
+  .h-main { padding: 32px; }
+  .brief { padding: 28px; }
+  .brief-headline { font-size: 32px; }
+  .frame-h2 { font-size: 44px; }
+  .arch-h2 { font-size: 40px; }
+  .page-intro h1 { font-size: 56px; }
+  .bd-expand { grid-template-columns: 1fr; gap: 24px; }
+  .bw-day-detail { grid-template-columns: 1fr; gap: 24px; }
+  .vocab-row { grid-template-columns: 1fr; }
+  .cs-tiles { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ PAGE HEAD ═══════════════════════════════════════════════ -->
+<header class="page-head">
+  <span class="page-brand" aria-label="happyhotel">
+    <svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/>
+    </svg>
+  </span>
+  <span class="page-meta">AI Revenue Manager · Wireframe v6 · One Surface</span>
+</header>
+
+<!-- ═══ INTRO ═══════════════════════════════════════════════════════ -->
+<section class="page-intro">
+  <h1>Eine Oberfläche.<br>Tiefe <em>auf Abruf,</em><br>nicht auf Vorrat.</h1>
+  <div>
+    <p>Ein einziges Briefing, geteilt von Anna und Kai. Anna liest oben drüber wie eine Übergabe, Kai zieht jedes Element an Ort und Stelle in seine Power-Form. Kein Mode, kein Drawer, kein zweiter Front-Door. Wer Tiefe will, klickt sie auf, wer nicht, lässt sie zu.</p>
+    <div class="intro-meta">
+      <div>
+        <div class="im-key">Surface</div>
+        <div class="im-val">Briefing · geteilt</div>
+      </div>
+      <div>
+        <div class="im-key">Tiefe</div>
+        <div class="im-val">Inline · pro Element</div>
+      </div>
+      <div>
+        <div class="im-key">Mode</div>
+        <div class="im-val">keiner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 01 · ANNAS MORGEN · alles collapsed                             -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section">
+  <div class="frame-head">
+    <div>
+      <div class="frame-eyebrow"><span class="eb-dot"></span>01 · Annas Morgen</div>
+      <h2 class="frame-h2">Schnell überflogen,<br>nichts <em>aufgeklappt.</em></h2>
+    </div>
+    <div>
+      <p class="frame-desc">Anna hat 12 Minuten zwischen Frühstück und Lieferantencall. Sie liest die Headline, scannt die drei Zahlen, sieht eine Decision die Freigabe braucht, prüft die Woche und ist raus. Alles bleibt wie es ist, sie klickt nichts auf.</p>
+      <div class="frame-meta">
+        <div class="fm-item">
+          <div class="fm-key">Persona</div>
+          <div class="fm-val"><em>Anna</em>, Owner</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Sessiondauer</div>
+          <div class="fm-val">12 Minuten</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Expansionen</div>
+          <div class="fm-val">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-frame">
+
+    <div class="topbar">
+      <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+      <div class="tb-sep"></div>
+      <span class="tb-hotel"><strong>Hotel Seeblick</strong> · Berlin · 80 Zimmer</span>
+      <div class="tb-right">
+        <span class="tier-pill">Senior RM</span>
+        <div class="tb-av">A</div>
+      </div>
+    </div>
+
+    <div class="h-body">
+
+      <nav class="h-rail">
+        <div class="rail-item active">
+          <span class="rail-glyph">B</span>
+          Briefing
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">U</span>
+          Umsatz
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">E</span>
+          Entsch.
+          <span class="rail-badge">3</span>
+        </div>
+        <div class="rail-spacer"></div>
+        <div class="rail-item">
+          <span class="rail-glyph">S</span>
+          Setup
+        </div>
+      </nav>
+
+      <main class="h-main">
+
+        <div class="h-greet">
+          <div class="h-greet-text">Guten Morgen, <em>Anna.</em></div>
+          <div class="h-greet-date">Mittwoch · 6. Mai 2026 · 11:14</div>
+        </div>
+
+        <article class="brief">
+
+          <div class="brief-meta">
+            <span class="brief-kicker"><span class="kicker-mark"></span>KW 19 · Dein Revenue Manager</span>
+            <span class="brief-kicker">heute</span>
+          </div>
+
+          <h1 class="brief-headline">Pfingsten war ein <em>Volltreffer.</em><br>Eine Gruppe wartet auf <em>deine Antwort.</em></h1>
+
+          <p class="brief-narrative">
+            Du hast diesen Monat <span class="money">28.420 €</span> verdient, vier Punkte über deinem Plan. Eine Reisegruppe aus Frankfurt fragt für <b>14.–17. Mai</b> mit <b>24 Zimmern</b> an, <span class="money">119 €</span> pro Nacht, Frist 17 Uhr. Wenn du ja sagst, schließen wir den Monat bei rund <span class="money">64.000 €</span> ab, dein bester Mai seit 2019.
+          </p>
+
+          <div class="brief-stats">
+            <div class="bs-tile">
+              <span class="exp-trigger"><span class="ex-glyph">+</span></span>
+              <div class="bs-label">Forecast Mai</div>
+              <div class="bs-value"><em>64.000 €</em></div>
+              <div class="bs-delta">+ 14 % vs. Plan</div>
+            </div>
+            <div class="bs-tile">
+              <span class="exp-trigger"><span class="ex-glyph">+</span></span>
+              <div class="bs-label">Mai bisher</div>
+              <div class="bs-value">28.420 €</div>
+              <div class="bs-delta">+ 12 % vs. Vorjahr</div>
+            </div>
+            <div class="bs-tile">
+              <span class="exp-trigger"><span class="ex-glyph">+</span></span>
+              <div class="bs-label">Auto-Aktionen</div>
+              <div class="bs-value">23</div>
+              <div class="bs-delta">letzte Nacht</div>
+            </div>
+          </div>
+
+          <div class="brief-decision">
+            <span class="exp-trigger"><span class="ex-glyph">+</span></span>
+            <div class="bd-meta">
+              <span class="bd-tag"><span class="ar-spark"></span>Deine Freigabe nötig</span>
+              <span class="bd-id">DEC-2026-05-07-031</span>
+            </div>
+            <div class="bd-title">Großgruppe Berlin · 14.–17. Mai · 24 Zimmer · 119 €</div>
+            <div class="bd-sub">+ 8.568 € Brutto, abzüglich geschätzter Verdrängung. Frist heute 17:00.</div>
+            <div class="bd-actions">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn btn-ghost">Ablehnen</button>
+              <button class="btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </div>
+
+          <div class="brief-week">
+            <div class="bw-label"><span class="bw-mark"></span>Nächste 7 Tage</div>
+            <div class="bw-grid">
+              <div class="bw-day">
+                <div class="bw-dow">Do <span class="bw-occ">42 %</span></div>
+                <div class="bw-status">ruhig</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Fr <span class="bw-occ">68 %</span></div>
+                <div class="bw-status">normal</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">Sa <span class="bw-occ">88 %</span></div>
+                <div class="bw-status">stark</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">So <span class="bw-occ">76 %</span></div>
+                <div class="bw-status">stark</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mo <span class="bw-occ">38 %</span></div>
+                <div class="bw-status">ruhig</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Di <span class="bw-occ">52 %</span></div>
+                <div class="bw-status">normal</div>
+              </div>
+              <div class="bw-day event">
+                <div class="bw-dow">Mi <span class="bw-occ">99 %</span></div>
+                <div class="bw-status">Pfingsten</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="brief-ray">
+            <span class="br-mark"></span>
+            <div class="br-text">Frag <em>Ray</em> wenn du was wissen willst.</div>
+            <input class="br-input" type="text" placeholder="Was hast du heute Nacht gemacht?">
+            <button class="br-send" aria-label="Senden">→</button>
+          </div>
+
+        </article>
+
+      </main>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 02 · KAIS MORGEN · selbe Surface, mehrere Expansionen           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section">
+  <div class="frame-head">
+    <div>
+      <div class="frame-eyebrow"><span class="eb-dot"></span>02 · Kais Morgen</div>
+      <h2 class="frame-h2">Selbe Oberfläche,<br>aber er <em>klappt auf.</em></h2>
+    </div>
+    <div>
+      <p class="frame-desc">Kai sitzt 90 Minuten am selben Briefing. Die Decision-Card hat er aufgeklappt, die Verdienst-Kachel zeigt die 7-Tage-Kurve, der Sa. ist zur Preistabellen-Zeile entfaltet. Oben drüber wechselt er zwischen seinen 6 Hotels. Selbe Komponenten, selbe Datenobjekte, selbe Chrome. Andere Tiefe.</p>
+      <div class="frame-meta">
+        <div class="fm-item">
+          <div class="fm-key">Persona</div>
+          <div class="fm-val"><em>Kai</em>, Cluster Lead</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Sessiondauer</div>
+          <div class="fm-val">2,5 Stunden</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Expansionen</div>
+          <div class="fm-val">3 aktiv</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-frame">
+
+    <div class="topbar">
+      <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+      <div class="tb-sep"></div>
+      <span class="tb-hotel">Cluster <strong>Nordlicht</strong> · 6 Hotels · aktiv: Seeblick</span>
+      <div class="tb-right">
+        <span class="tier-pill">Revenue Director</span>
+        <div class="tb-av kai">K</div>
+      </div>
+    </div>
+
+    <div class="h-body">
+
+      <nav class="h-rail">
+        <div class="rail-item active">
+          <span class="rail-glyph">B</span>
+          Briefing
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">U</span>
+          Umsatz
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">E</span>
+          Entsch.
+          <span class="rail-badge">11</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">A</span>
+          Audit
+        </div>
+        <div class="rail-spacer"></div>
+        <div class="rail-item">
+          <span class="rail-glyph">S</span>
+          Setup
+        </div>
+      </nav>
+
+      <main class="h-main">
+
+        <!-- Cluster strip · only present for multi-hotel users -->
+        <div class="cluster-strip">
+          <div class="cs-label"><span class="cs-mark"></span>Cluster Nordlicht</div>
+          <div class="cs-tiles">
+            <div class="cs-tile active">
+              <div class="cs-name">Seeblick</div>
+              <div class="cs-meta">
+                <span>128 €</span>
+                <span class="cs-pip has"></span>
+                <span class="cs-pip has"></span>
+                <span class="cs-pip has"></span>
+              </div>
+            </div>
+            <div class="cs-tile">
+              <div class="cs-name">Ammersee</div>
+              <div class="cs-meta">
+                <span>98 €</span>
+                <span class="cs-pip warn"></span>
+                <span class="cs-pip has"></span>
+              </div>
+            </div>
+            <div class="cs-tile">
+              <div class="cs-name">Tegernsee</div>
+              <div class="cs-meta">
+                <span>142 €</span>
+                <span class="cs-pip has"></span>
+                <span class="cs-pip has"></span>
+              </div>
+            </div>
+            <div class="cs-tile">
+              <div class="cs-name">Bodensee</div>
+              <div class="cs-meta">
+                <span>86 €</span>
+                <span class="cs-pip warn"></span>
+                <span class="cs-pip has"></span>
+              </div>
+            </div>
+            <div class="cs-tile">
+              <div class="cs-name">Westerwald</div>
+              <div class="cs-meta">
+                <span>82 €</span>
+                <span class="cs-pip has"></span>
+              </div>
+            </div>
+            <div class="cs-tile">
+              <div class="cs-name">Mosel</div>
+              <div class="cs-meta">
+                <span>112 €</span>
+                <span class="cs-pip has"></span>
+              </div>
+            </div>
+          </div>
+          <button class="cs-expand"><span class="cs-x-mark"></span>Tabelle</button>
+        </div>
+
+        <div class="h-greet">
+          <div class="h-greet-text">Cluster Nordlicht, <em>Donnerstag.</em></div>
+          <div class="h-greet-date">DO · 07.05.2026 · 08:15 · 11 Decisions letzte Nacht</div>
+        </div>
+
+        <article class="brief">
+
+          <div class="brief-meta">
+            <span class="brief-kicker"><span class="kicker-mark"></span>KW 19 · Hotel Seeblick · Berlin</span>
+            <span class="brief-kicker">RevPAR <span class="num">128,40 €</span> · Pickup KW 20 + 18,2 %</span>
+          </div>
+
+          <h1 class="brief-headline">Pfingsten <em>+ 18 %</em> über Forecast.<br>Eine <em>Großgruppe</em> wartet auf 17:00.</h1>
+
+          <p class="brief-narrative">
+            Seeblick KW 20 läuft <b>+ 18,2 %</b> Pickup über Forecast, Comp-Set Median <span class="num">134 €</span>, du <span class="num">128,40 €</span>, Spielraum nach oben. Reisegruppe Frankfurt fragt <b>14.–17. Mai · 24 Zi · 119 €</b>, Frist heute 17:00. Verdrängung <span class="num">7.552 €</span>, Netto <span class="num">+ 1.016 €</span>, Vertrauen <a href="#" class="detail">0,84</a>.
+          </p>
+
+          <!-- Stats: middle tile EXPANDED -->
+          <div class="brief-stats">
+            <div class="bs-tile">
+              <span class="exp-trigger"><span class="ex-glyph">+</span></span>
+              <div class="bs-label">Forecast Mai</div>
+              <div class="bs-value"><em>64.000 €</em></div>
+              <div class="bs-delta">+ 14 % vs. Plan</div>
+            </div>
+            <div class="bs-tile expanded">
+              <span class="exp-trigger open"><span class="ex-glyph">−</span></span>
+              <div class="bs-label">Mai bisher</div>
+              <div class="bs-value">28.420 €</div>
+              <div class="bs-delta">+ 12 % vs. Vorjahr</div>
+              <div class="bs-expand-body">
+                <div class="bs-expand-tag">7-Tage-Beitrag · KW 18</div>
+                <div class="bs-expand-bars">
+                  <div class="bs-bar dim" style="height: 28%"></div>
+                  <div class="bs-bar" style="height: 52%"></div>
+                  <div class="bs-bar" style="height: 64%"></div>
+                  <div class="bs-bar peak" style="height: 86%"></div>
+                  <div class="bs-bar peak" style="height: 92%"></div>
+                  <div class="bs-bar peak" style="height: 78%"></div>
+                  <div class="bs-bar dim" style="height: 22%"></div>
+                </div>
+                <div class="bs-bar-foot">
+                  <span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+                </div>
+                <div class="bs-expand-row">
+                  <span>Stärkster Tag · <b>Fr 02.05.</b></span>
+                  <span><b>+ 4.180 €</b></span>
+                </div>
+                <div class="bs-expand-row">
+                  <span>Schwächster · <b>So 04.05.</b></span>
+                  <span><b>+ 980 €</b></span>
+                </div>
+              </div>
+            </div>
+            <div class="bs-tile">
+              <span class="exp-trigger"><span class="ex-glyph">+</span></span>
+              <div class="bs-label">Auto-Aktionen</div>
+              <div class="bs-value">23</div>
+              <div class="bs-delta">letzte Nacht</div>
+            </div>
+          </div>
+
+          <!-- Decision EXPANDED -->
+          <div class="brief-decision expanded">
+            <span class="exp-trigger open"><span class="ex-glyph">−</span></span>
+            <div class="bd-meta">
+              <span class="bd-tag"><span class="ar-spark"></span>Freigabe nötig</span>
+              <span class="bd-id">DEC-2026-05-07-031</span>
+            </div>
+            <div class="bd-title">Großgruppe Berlin · 14.–17. Mai · 24 Zimmer · 119 €</div>
+            <div class="bd-sub">+ 8.568 € Brutto, Verdrängung 7.552 €, Netto + 1.016 €. Frist heute 17:00.</div>
+
+            <div class="bd-actions">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn btn-ghost">Ablehnen</button>
+              <button class="btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+
+            <div class="bd-expand">
+
+              <!-- Reasoning column -->
+              <div>
+                <div class="bd-reason-tag"><span class="brt-mark"></span>Rays Begründung</div>
+                <p class="bd-reason-text">
+                  Pickup KW 20 läuft <b>+ 18,2 %</b> über Forecast, Auslastung mit Gruppe steigt von 84 % auf <b>99 %</b>. Vorjahresgruppe gleicher Auftraggeber, Stornorate damals <span class="num">2 %</span>. Comp-Set Median <span class="num">134 €</span>, du <span class="num">128 €</span>. Wenn die 24 Zimmer regulär gehen, kämen <span class="num">7.552 €</span> rein, Gruppe bringt <span class="num">8.568 €</span>, Netto <b>+ 1.016 €</b>.
+                </p>
+
+                <div class="bd-data-grid">
+                  <div class="bdd-item">
+                    <div class="bdd-key">Brutto</div>
+                    <div class="bdd-val"><em>+ 8.568 €</em></div>
+                  </div>
+                  <div class="bdd-item">
+                    <div class="bdd-key">Verdrängung</div>
+                    <div class="bdd-val">− 7.552 €</div>
+                  </div>
+                  <div class="bdd-item">
+                    <div class="bdd-key">Netto</div>
+                    <div class="bdd-val"><em>+ 1.016 €</em></div>
+                  </div>
+                  <div class="bdd-item">
+                    <div class="bdd-key">Vertrauen</div>
+                    <div class="bdd-val">0,84</div>
+                  </div>
+                </div>
+
+                <div class="bd-override">
+                  <span class="bd-or-label">Override · Ankerpreis</span>
+                  <input class="bd-or-input" type="text" value="119,00 €">
+                  <button class="bd-or-action">Anwenden</button>
+                </div>
+
+                <div class="bd-audit-row">
+                  <span>Aktor: <b>Anna · 11:14</b> &nbsp;·&nbsp; Modell: <b>Pickup v.3.1 · Comp-Set v.2.6 · Displacement v.4.2</b> &nbsp;·&nbsp; Audit-ID <b>DEC-2026-05-07-031</b></span>
+                </div>
+              </div>
+
+              <!-- Mini visualisations -->
+              <div class="bd-mini">
+                <div class="bd-mini-block">
+                  <div class="bd-mini-tag">
+                    <span>Pickup KW 20</span>
+                    <span class="bm-stat">+ 18,2 %</span>
+                  </div>
+                  <div class="bd-mini-bars">
+                    <div class="bm-bar dim" style="height: 30%"></div>
+                    <div class="bm-bar" style="height: 48%"></div>
+                    <div class="bm-bar" style="height: 62%"></div>
+                    <div class="bm-bar peak" style="height: 88%"></div>
+                    <div class="bm-bar peak" style="height: 96%"></div>
+                    <div class="bm-bar peak" style="height: 84%"></div>
+                    <div class="bm-bar dim" style="height: 22%"></div>
+                  </div>
+                  <div class="bd-mini-foot">
+                    <span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+                  </div>
+                </div>
+
+                <div class="bd-mini-block">
+                  <div class="bd-mini-tag">
+                    <span>Comp-Set · 14. Mai</span>
+                    <span class="bm-stat">Rang 2 von 5</span>
+                  </div>
+                  <div class="bd-comp-row">
+                    <div class="bd-comp-cell">
+                      <div class="bcc-name">A-Hotel</div>
+                      <div class="bcc-price">142 €</div>
+                    </div>
+                    <div class="bd-comp-cell you">
+                      <div class="bcc-name">Du</div>
+                      <div class="bcc-price">128 €</div>
+                    </div>
+                    <div class="bd-comp-cell">
+                      <div class="bcc-name">Park</div>
+                      <div class="bcc-price">124 €</div>
+                    </div>
+                    <div class="bd-comp-cell">
+                      <div class="bcc-name">City</div>
+                      <div class="bcc-price">118 €</div>
+                    </div>
+                    <div class="bd-comp-cell">
+                      <div class="bcc-name">Lake</div>
+                      <div class="bcc-price">112 €</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Week strip with Sa expanded BELOW -->
+          <div class="brief-week">
+            <div class="bw-label"><span class="bw-mark"></span>Nächste 7 Tage · Sa expandiert</div>
+            <div class="bw-grid">
+              <div class="bw-day">
+                <div class="bw-dow">Do <span class="bw-occ">42 %</span></div>
+                <div class="bw-status">ruhig</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Fr <span class="bw-occ">68 %</span></div>
+                <div class="bw-status">normal</div>
+              </div>
+              <div class="bw-day expanded">
+                <div class="bw-dow">Sa <span class="bw-occ">88 %</span></div>
+                <div class="bw-status">stark</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">So <span class="bw-occ">76 %</span></div>
+                <div class="bw-status">stark</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mo <span class="bw-occ">38 %</span></div>
+                <div class="bw-status">ruhig</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Di <span class="bw-occ">52 %</span></div>
+                <div class="bw-status">normal</div>
+              </div>
+              <div class="bw-day event">
+                <div class="bw-dow">Mi <span class="bw-occ">99 %</span></div>
+                <div class="bw-status">Pfingsten</div>
+              </div>
+            </div>
+
+            <!-- Day detail card (inline expansion target for Sa) -->
+            <div class="bw-day-detail">
+
+              <div>
+                <div class="bdd-tag"><span class="bm-mark"></span>Sa · 09. Mai · Preistabellen-Zeile</div>
+                <div class="bdd-title">Sa, 9. Mai 2026</div>
+                <div class="bdd-sub">88 % Belegung erwartet · 70 von 80 Zimmern verkauft · 10 frei</div>
+
+                <table class="bdd-table">
+                  <thead>
+                    <tr>
+                      <th>Position</th>
+                      <th>Wert</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Single</td>
+                      <td class="bdd-num">142,00 €</td>
+                      <td><span class="bdd-flag">Auto · Ray</span></td>
+                    </tr>
+                    <tr>
+                      <td>Double</td>
+                      <td class="bdd-num">158,00 €</td>
+                      <td><span class="bdd-flag">Auto · Ray</span></td>
+                    </tr>
+                    <tr>
+                      <td>MinLOS</td>
+                      <td class="bdd-num">2 Nächte</td>
+                      <td><span class="bdd-flag">Aktiv</span></td>
+                    </tr>
+                    <tr>
+                      <td>Comp-Set Median</td>
+                      <td class="bdd-num">156,00 €</td>
+                      <td>5 Häuser</td>
+                    </tr>
+                    <tr>
+                      <td>Pickup vs. Plan</td>
+                      <td class="bdd-num"><em>+ 14,2 %</em></td>
+                      <td>letzte 24 h</td>
+                    </tr>
+                    <tr>
+                      <td>Empfehlung Ray</td>
+                      <td class="bdd-num"><em>164,00 €</em></td>
+                      <td><span class="bdd-flag">+ 6 €</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="bdd-side">
+                <div class="bdd-mini-card">
+                  <div class="bdd-mc-tag">Pickup-Geschwindigkeit</div>
+                  <div class="bdd-mc-stat">+ 14,2 %</div>
+                  <div class="bdd-mc-sub">vs. Vorhersage · 6 von 7 letzten Tagen positiv</div>
+                </div>
+                <div class="bdd-mini-card">
+                  <div class="bdd-mc-tag">Comp-Set Spielraum</div>
+                  <div class="bdd-mc-stat">+ 28 €</div>
+                  <div class="bdd-mc-sub">teuerstes Haus 156 €, du 128 €</div>
+                </div>
+                <div class="bdd-actions">
+                  <button class="btn-bdd">+ 6 € anwenden</button>
+                  <button class="btn-bdd-ghost">Selber setzen</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="brief-ray">
+            <span class="br-mark"></span>
+            <div class="br-text">Frag <em>Ray</em> oder gib einen Override ein.</div>
+            <input class="br-input" type="text" placeholder="Override Sa: 159 € · oder frag Ray">
+            <button class="br-send" aria-label="Senden">→</button>
+          </div>
+
+        </article>
+
+      </main>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 03 · EXPANSION VOCABULARY                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section">
+  <div class="frame-head">
+    <div>
+      <div class="frame-eyebrow"><span class="eb-dot"></span>03 · Expansion · Vokabular</div>
+      <h2 class="frame-h2">Drei Elemente,<br>jeweils zwei <em>Tiefen.</em></h2>
+    </div>
+    <div>
+      <p class="frame-desc">Jedes Element der Surface kennt zwei Zustände: collapsed (Annas Sicht) und expanded (Kais Sicht). Selbe Komponente, selbes Datenobjekt, kein Mode-Switch dahinter. Wer Tiefe will, klickt das Plus, wer nicht, lässt es zu.</p>
+      <div class="frame-meta">
+        <div class="fm-item">
+          <div class="fm-key">Trigger</div>
+          <div class="fm-val">Klick auf Element</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">State</div>
+          <div class="fm-val">Pro Element gemerkt</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Persistenz</div>
+          <div class="fm-val">Pro User, pro Tag</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vocab-grid">
+
+    <!-- Stat tile -->
+    <div class="vocab-row">
+      <div class="vocab-name">
+        <div class="vocab-num">01</div>
+        <div class="vocab-title">Stat-Kachel</div>
+        <div class="vocab-trigger">Klick auf Tile · zeigt 7-Tage-Beitrag</div>
+      </div>
+      <div class="vocab-state">
+        <div class="vocab-state-tag"><span class="vsm"></span>Collapsed · Anna</div>
+        <div class="vp-stat">
+          <div class="vp-stat-label">Mai bisher</div>
+          <div class="vp-stat-val">28.420 €</div>
+          <div class="vp-stat-delta">+ 12 % vs. Vorjahr</div>
+        </div>
+      </div>
+      <div class="vocab-state">
+        <div class="vocab-state-tag"><span class="vsm"></span>Expanded · Kai</div>
+        <div class="vp-stat">
+          <div class="vp-stat-label">Mai bisher</div>
+          <div class="vp-stat-val">28.420 €</div>
+          <div class="vp-stat-delta">+ 12 % vs. Vorjahr</div>
+          <div class="vp-stat-bars">
+            <div class="vp-bar dim" style="height: 28%"></div>
+            <div class="vp-bar" style="height: 52%"></div>
+            <div class="vp-bar" style="height: 64%"></div>
+            <div class="vp-bar peak" style="height: 86%"></div>
+            <div class="vp-bar peak" style="height: 92%"></div>
+            <div class="vp-bar peak" style="height: 78%"></div>
+            <div class="vp-bar dim" style="height: 22%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decision card -->
+    <div class="vocab-row">
+      <div class="vocab-name">
+        <div class="vocab-num">02</div>
+        <div class="vocab-title">Decision-Card</div>
+        <div class="vocab-trigger">Klick auf Card · zeigt Reasoning &amp; Override</div>
+      </div>
+      <div class="vocab-state">
+        <div class="vocab-state-tag"><span class="vsm"></span>Collapsed · Anna</div>
+        <div class="vp-decision">
+          <div class="vp-decision-tag"><span class="vd-mark"></span>Freigabe nötig</div>
+          <div class="vp-decision-title">Großgruppe Berlin</div>
+          <div class="vp-decision-sub">14.–17. Mai · 24 Zimmer · Frist 17:00</div>
+          <div class="vp-decision-actions">
+            <button class="vp-mini-btn">Annehmen</button>
+            <button class="vp-mini-btn ghost">Ablehnen</button>
+            <button class="vp-mini-btn ray">Ray fragen</button>
+          </div>
+        </div>
+      </div>
+      <div class="vocab-state">
+        <div class="vocab-state-tag"><span class="vsm"></span>Expanded · Kai</div>
+        <div class="vp-decision">
+          <div class="vp-decision-tag"><span class="vd-mark"></span>Freigabe nötig</div>
+          <div class="vp-decision-title">Großgruppe Berlin</div>
+          <div class="vp-decision-sub">14.–17. Mai · 24 Zi · 119 € · Frist 17:00</div>
+          <div class="vp-decision-actions">
+            <button class="vp-mini-btn">Annehmen</button>
+            <button class="vp-mini-btn ghost">Ablehnen</button>
+            <button class="vp-mini-btn ray">Ray fragen</button>
+          </div>
+          <div class="vp-decision-expand">
+            <div class="vp-de-cell">
+              <div class="vp-de-key">Brutto</div>
+              <div class="vp-de-val">+ 8.568</div>
+            </div>
+            <div class="vp-de-cell">
+              <div class="vp-de-key">Netto</div>
+              <div class="vp-de-val">+ 1.016</div>
+            </div>
+            <div class="vp-de-cell">
+              <div class="vp-de-key">Vertrauen</div>
+              <div class="vp-de-val">0,84</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week day -->
+    <div class="vocab-row">
+      <div class="vocab-name">
+        <div class="vocab-num">03</div>
+        <div class="vocab-title">Wochentag</div>
+        <div class="vocab-trigger">Klick auf Tag · zeigt Preistabellen-Zeile</div>
+      </div>
+      <div class="vocab-state">
+        <div class="vocab-state-tag"><span class="vsm"></span>Collapsed · Anna</div>
+        <div class="vp-day">
+          <div class="vp-d-dow">Sa · 88 %</div>
+          <div class="vp-d-status">stark</div>
+        </div>
+      </div>
+      <div class="vocab-state">
+        <div class="vocab-state-tag"><span class="vsm"></span>Expanded · Kai</div>
+        <div class="vp-day">
+          <div class="vp-d-dow">Sa · 88 %</div>
+          <div class="vp-d-status">stark</div>
+          <div class="vp-day-expand">
+            <span>Single</span><span>142 €</span>
+            <span>Double</span><span>158 €</span>
+            <span>MinLOS</span><span>2 N</span>
+            <span>Comp-Med</span><span>156 €</span>
+            <span>Pickup</span><span>+ 14,2 %</span>
+            <span>Ray-Rec</span><span>164 €</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ARCHITEKTUR · DAS PRINZIP                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="arch-section">
+
+  <div class="arch-head">
+    <div class="arch-eyebrow"><span class="eb-dot"></span>Das Prinzip dahinter</div>
+    <h2 class="arch-h2">Eine Surface,<br>die mit <em>Tiefe atmet.</em></h2>
+    <p class="arch-desc">Anna und Kai leben am selben Briefing. Anna stoppt an der Headline, Kai zieht jedes Element auf. Die Surface ist eine, die Tiefe ist freiwillig. Was sich unterscheidet ist nicht das Produkt, sondern wie weit der Cursor vorrückt.</p>
+  </div>
+
+  <div class="arch-coda">
+    <div class="arch-coda-tag"><span class="acm"></span>Konsequenz für die Roadmap</div>
+    <div class="arch-coda-text">
+      Jedes Element bekommt zwei Tiefen, gespeichert pro User. Annas Default ist <em>collapsed</em>, Kais Default ist <em>expanded</em> wo es ihn interessiert. Beide bewegen denselben Cursor durch dieselbe <em>Geschichte.</em>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══ FOOT ═══ -->
+<footer class="page-foot">
+  <span>happyhotel · AI Revenue Manager</span>
+  <span>Wireframe v6 · One Surface · 07.05.2026</span>
+</footer>
+
+</body>
+</html>

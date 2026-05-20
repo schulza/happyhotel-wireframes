@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Persona · Anna · Hotelier-Mode</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+  --surface-3:    #efede6;
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 72px 32px 96px;
+}
+
+.mono-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.diamond {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+
+.headline {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin: 22px 0 22px;
+  color: var(--ink);
+  font-weight: 400;
+  max-width: 880px;
+}
+.headline em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.lede {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+.persona-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 40px;
+  margin-bottom: 32px;
+}
+.persona-card .head-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.persona-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 32px;
+  font-weight: 400;
+}
+.persona-card h2 {
+  font-family: "Instrument Serif", serif;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+.persona-card h2 em { font-style: italic; color: var(--accent); }
+.persona-card .role {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.persona-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-bottom: 14px;
+  max-width: 720px;
+}
+.persona-card p:last-child { margin-bottom: 0; }
+
+.label-line {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin: 32px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list-clean {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 720px;
+}
+.list-clean li {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  padding: 12px 0 12px 22px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.list-clean li:last-child { border-bottom: none; }
+.list-clean li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 19px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.list-clean li b { color: var(--ink); font-weight: 500; }
+
+.day-block {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-top: 32px;
+}
+.day-block .label-line { margin-top: 0; }
+.day-block .day-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 14px;
+}
+.day-block .day-row:last-child { border-bottom: none; }
+.day-block .day-row .ts {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding-top: 2px;
+}
+.day-block .day-row .what { color: var(--ink-2); line-height: 1.6; }
+.day-block .day-row .what b { color: var(--ink); font-weight: 500; }
+
+.italic-pull {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.35;
+  color: var(--ink);
+  margin: 48px 0;
+  max-width: 800px;
+  letter-spacing: -0.005em;
+}
+.italic-pull span {
+  color: var(--accent);
+}
+
+footer {
+  text-align: center;
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="mono-tag"><span class="diamond"></span> Anna · Hotelier-Mode · Persona</div>
+  <h1 class="headline">Klarheit über Komplexität, <em>immer.</em></h1>
+  <p class="lede">Anna ist die Person, für die happyhotel den AI Revenue Manager baut. Sie ist nicht der professionelle Revenue Manager, sondern die Owner-GM, die Pricing als eines von 20 Themen erledigt. Die Strategie nennt sie "Missing Middle"; in dieser Datei bekommt sie Gesicht, Tag, Sprache, rote Linien.</p>
+
+  <div class="persona-card">
+    <div class="head-row">
+      <div class="persona-avatar">A</div>
+      <div>
+        <h2>Anna · Owner &amp; <em>GM</em></h2>
+        <div class="role">47, Hotel Seeblick · Berlin · 80 Zimmer · 4,2 Mio Umsatz</div>
+      </div>
+    </div>
+
+    <p>Anna hat das Hotel Seeblick vor 12 Jahren von ihren Eltern übernommen, mit dem festen Vorsatz, "es richtig modern zu machen". Was bedeutet: drei PMS-Wechsel, zwei RMS-Versuche, ein Channel-Manager-Disaster, eine Phase mit externem Agentur-Pricing, und seit 2024 happyhotel im Standardmodus. Sie hat kein RM-Studium, kein Cornell-Programm, sondern Hotelfachschule plus 12 Jahre lernen by doing.</p>
+
+    <p>Ihr Tag besteht aus 80 % Operations und 20 % Strategie. Frühstücks-Service mit, Buchhaltung, Bewerbungs-Interviews fürs Housekeeping, Owner-Telefonat mit ihrem Geschäftspartner Stefan, Gäste-Beschwerde wegen Klimaanlage in Zimmer 312, dazwischen Pricing. Sie hat permanent das Gefühl, Geld liegen zu lassen, weiß aber nicht, wo. Sie misstraut komplizierten Tools, vertraut Menschen mehr als Software, und Stefan ruft jeden Monat an und fragt Sachen wie "warum waren wir im Mai schlechter als der Wettbewerb?", die sie spontan nicht beantworten kann.</p>
+
+    <p>Sie will keine Revenue-Managerin werden. Sie will, dass jemand das gut für sie macht und ihr in einem Satz sagt, ob alles auf Kurs ist.</p>
+
+    <div class="label-line"><span class="diamond"></span> Was sie will</div>
+    <ul class="list-clean">
+      <li><b>Eine ehrliche Antwort auf "läuft es?"</b> · in einem Satz, mit einer Geld-Zahl, ohne RM-Vokabular</li>
+      <li><b>Entscheidungen in 30 Sekunden</b> · genug Kontext, um ja oder nein zu sagen, ohne zu recherchieren</li>
+      <li><b>Ray als Kollege, dem sie vertraut</b> · der mitdenkt, vor Fehlern warnt, sich erklärt, fragt wenn unsicher</li>
+      <li><b>Ein Werkzeug, das sich morgens meldet</b>, statt eines, das sie ständig prüfen muss</li>
+      <li><b>Owner-Reports auf Knopfdruck</b> · damit Stefans monatliches Telefonat keine Vorbereitung mehr braucht</li>
+      <li><b>Das Gefühl, nichts mehr liegen zu lassen</b> · auch ohne RM-Spezialwissen</li>
+    </ul>
+
+    <div class="label-line"><span class="diamond"></span> Was sie nicht will</div>
+    <ul class="list-clean">
+      <li><b>Fachjargon</b> · "RevPAR Pickup +0,4 vs. STR Sample" sagt ihr nichts</li>
+      <li><b>Dashboards, die sie selbst lesen muss</b> · jede Sekunde Suchen ist eine Sekunde, die der Gast nicht bekommt</li>
+      <li><b>Komplexe Konfigurations-Masken</b> · wenn sie Dropdowns durchklicken muss, ist sie raus</li>
+      <li><b>Überraschungen</b> · ein Preis, den sie nicht erwartet hat, ohne Erklärung, zerstört Vertrauen</li>
+      <li><b>Dauernde Notifications</b> · Ray darf sich nicht wie ein 9-Jähriger benehmen, der Aufmerksamkeit will</li>
+      <li><b>Selbst RM-Expertin werden</b> · weder Zeit noch Lust noch Karrierebedürfnis</li>
+    </ul>
+  </div>
+
+  <p class="italic-pull">"Ich will nicht klüger werden. <span>Ich will mehr verdienen.</span>"<br><span style="font-family: 'JetBrains Mono'; font-style: normal; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);">Anna, sinngemäß, wenn man sie fragt was sie von einem RMS will</span></p>
+
+  <div class="day-block">
+    <div class="label-line"><span class="diamond"></span> Ein typischer Mittwoch</div>
+
+    <div class="day-row">
+      <span class="ts">06:45</span>
+      <div class="what"><b>Aufstehen, Kaffee.</b> Telefon liegt auf dem Tisch. Ray hat sich um 06:30 gemeldet, drei Punkte. Sie liest sie beim Espresso.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">07:30</span>
+      <div class="what"><b>Frühstücks-Service.</b> Service-Personal eingewiesen, Beschwerde an Tisch 4 entschärft (Ei zu hart).</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">09:00</span>
+      <div class="what"><b>Schreibtisch.</b> Lieferanten-Rechnungen, dann auf Rays drei Punkte zurückkommen. Großgruppe Berlin: ablehnen. MinLOS Festwochenende: aktivieren. Strategie-Termin: Donnerstag 14 Uhr.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">11:15</span>
+      <div class="what"><b>Bewerbungs-Interview</b> für Housekeeping-Stelle.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">13:00</span>
+      <div class="what"><b>Stefans Anruf.</b> Owner-Frage: wie laufen die Pfingst-Buchungen? Anna öffnet den happyhotel-Tab, sieht Rays Story-Karte, antwortet ohne nachzuschauen. Stefan ist zufrieden.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">15:30</span>
+      <div class="what"><b>Drei Spontan-Themen:</b> Klimaanlage 312, Streit zwischen Köchen, Kreditkarten-Terminal hängt. Ray meldet sich nicht, weil nichts Dringendes anliegt.</div>
+    </div>
+    <div class="day-row">
+      <span class="ts">19:00</span>
+      <div class="what"><b>Feierabend (theoretisch).</b> Auf dem Heimweg eine letzte Push-Notification: "Pickup für Pfingsten zieht weiter an, ich habe drei Preise nachgezogen. Details morgen." Anna liest, lächelt, steckt das Telefon weg.</div>
+    </div>
+  </div>
+
+  <div class="label-line" style="margin-top: 48px;"><span class="diamond"></span> Annas Beziehung zu Ray</div>
+  <ul class="list-clean">
+    <li><b>Vertrauen wächst</b> mit jeder erklärten Entscheidung; einmal verloren, schwer zurückzuholen</li>
+    <li><b>Ray ist Mitarbeiter, kein Tool</b> · Sprache passt sich an: "Ray, mach das" statt "auf Knopf drücken"</li>
+    <li><b>Hinter Ray stecken auch Menschen</b> aus dem happyhotel-Team, aber Anna sieht keinen separaten Support-Channel · Ray bleibt der Ansprechpartner</li>
+    <li><b>Ray kennt Annas Kontext</b> · ihre Strategie, ihre Eigenheiten, ihre roten Linien · und vergisst nichts zwischen Sessions</li>
+    <li><b>Ray darf Fehler machen</b>, aber nur wenn er sie gleich erklärt und daraus lernt</li>
+  </ul>
+
+</div>
+
+<footer>
+  ▍ Persona · Anna · Hotelier-Mode · v4 ▍
+</footer>
+
+</body>
+</html>

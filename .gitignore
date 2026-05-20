@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensitive
+uploads/
+
+# Debug screenshots
+landing-*.png
+
+# IDE
+.vscode/
+.idea/
+
+# Temp
+*.tmp
+*.swp

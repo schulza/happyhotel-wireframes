@@ -1,0 +1,3332 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel — AI Revenue Manager · Wireframes v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+</style>
+<style>
+:root {
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --shell-2:      #efeeea;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --warn:         #8a6a3a;
+  --warn-soft:    #f1ece3;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --border-3:     #a6a5a0;
+
+  --good:         #1e3a5f;
+  --bad:          #8c2f2f;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+em { font-style: normal; }
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.serif {
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+/* ─── PAGE HEAD ──────────────────────────────────────── */
+.page-head {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 56px 48px 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 40px;
+}
+.page-brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+}
+.page-brand svg {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+.tb-brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+}
+.tb-brand svg {
+  height: 20px;
+  width: auto;
+  display: block;
+}
+.page-meta {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+/* ─── SECTION HEADER (above each wireframe) ─────────── */
+.frame-section {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 64px 48px 80px;
+}
+.frame-section + .frame-section { border-top: 1px solid var(--border); }
+
+.frame-head {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  margin-bottom: 56px;
+  align-items: end;
+}
+.frame-eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.eb-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.frame-h2 {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.frame-h2 em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+}
+.frame-desc {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 420px;
+}
+.frame-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.fm-item .fm-key {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.fm-item .fm-val {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.fm-item .fm-val em {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  color: var(--accent);
+  font-size: 16px;
+}
+
+/* ═══ APP FRAME ═══════════════════════════════════════ */
+.app-frame {
+  position: relative;
+  border: 1px solid var(--border-2);
+  border-radius: 16px;
+  background: var(--shell);
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 24px 48px -16px rgba(20, 20, 22, 0.10),
+    0 8px 16px -8px rgba(20, 20, 22, 0.06);
+}
+
+/* Topbar */
+.topbar {
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  gap: 16px;
+}
+.tb-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border-2);
+  flex-shrink: 0;
+}
+.tb-hotel { font-size: 13px; color: var(--muted); }
+.tb-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tier-pill {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 100px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.tb-av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "EB Garamond", serif;
+}
+.tb-nav {
+  display: flex;
+  gap: 4px;
+}
+.tb-nav-item {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 7px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.tb-nav-item:hover { background: var(--shell-2); color: var(--ink); }
+.tb-nav-item.active {
+  background: var(--shell-2);
+  color: var(--ink);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* HOTELIER MODE BODY                                                  */
+/* ═══════════════════════════════════════════════════════════════════ */
+.h-body {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  min-height: 920px;
+}
+
+/* Left rail nav */
+.h-rail {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rail-item {
+  padding: 14px 6px 12px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  position: relative;
+}
+.rail-item .rail-glyph {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-size: 22px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--subtle);
+  line-height: 1;
+}
+.rail-item:hover { background: var(--surface-2); }
+.rail-item:hover .rail-glyph { color: var(--ink-2); }
+.rail-item.active {
+  background: var(--accent);
+  color: var(--accent-soft);
+}
+.rail-item.active .rail-glyph { color: #fff; }
+.rail-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: var(--ink);
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+}
+.rail-spacer { flex: 1; }
+
+/* Main canvas (Hotelier) */
+.h-main {
+  padding: 48px 56px 64px;
+  background: var(--shell);
+}
+.h-greet {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 36px;
+}
+.h-greet-text {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.h-greet-text em {
+  font-style: normal;
+  color: var(--accent);
+}
+.h-greet-date {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* Briefing — the centerpiece */
+.brief {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 48px 36px;
+  box-shadow: 0 1px 3px rgba(45,41,32,0.04);
+}
+.brief-meta {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.brief-kicker {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+.brief-kicker .kicker-mark {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  margin-right: 8px;
+  vertical-align: middle;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+.brief-headline {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+.brief-headline em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+}
+.brief-narrative {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-bottom: 32px;
+  max-width: 640px;
+}
+.brief-narrative b { color: var(--ink); font-weight: 600; }
+.brief-narrative .money {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 14px;
+  letter-spacing: -0.02em;
+}
+.brief-narrative .trend {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0 4px;
+  padding: 2px 10px 3px;
+  background: var(--accent-soft);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  vertical-align: 2px;
+}
+.brief-narrative .trend.up { color: var(--accent); }
+.brief-narrative .trend.down { color: var(--bad); background: #fbeded; }
+.brief-narrative .trend .arrow {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+}
+.brief-narrative .trend .trend-ref {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--accent);
+  opacity: 0.8;
+  letter-spacing: -0.01em;
+  padding-left: 6px;
+  border-left: 1px solid var(--accent-line);
+  line-height: 1;
+}
+.brief-narrative .detail {
+  color: var(--accent);
+  text-decoration: underline dashed var(--accent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.brief-narrative .detail:hover {
+  opacity: 0.7;
+}
+
+.brief-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.bs-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.bs-value {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.bs-value em {
+  font-style: normal;
+  color: var(--accent);
+}
+.bs-delta {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+/* Inline decision */
+.brief-decision {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+}
+.bd-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.bd-tag {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bd-deadline {
+  font-size: 12px;
+  color: var(--muted);
+}
+.bd-title {
+  font-family: "EB Garamond", serif;
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.bd-sub {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 560px;
+}
+.bd-actions { display: flex; gap: 10px; align-items: center; }
+.bd-actions .btn-ray {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+}
+.bd-actions .btn-ray:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.bd-actions .btn-ray .ray-rune {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.btn {
+  font-family: "Inter", inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-primary:hover { background: #000; }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-2);
+  border: 1px solid var(--border-2);
+}
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-link {
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--ink);
+  border-radius: 0;
+  font-weight: 500;
+}
+
+/* Week outlook */
+.brief-week {
+  margin-bottom: 32px;
+}
+.bw-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.bw-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+.bw-day {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 10px 14px;
+  text-align: left;
+  background: var(--surface-2);
+}
+.bw-day.strong {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+.bw-day.event {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.bw-day.event .bw-dow,
+.bw-day.event .bw-price,
+.bw-day.event .bw-status { color: #fff; }
+.bw-day.event .bw-status { opacity: 0.85; }
+.bw-dow {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.bw-dow .bw-occ {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--subtle);
+}
+.bw-day.strong .bw-dow .bw-occ { color: var(--accent); }
+.bw-day.event .bw-dow .bw-occ { color: rgba(255,255,255,0.7); }
+.bw-status {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.bw-day.strong .bw-status { color: var(--accent); }
+.bw-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* Marc strip */
+.brief-marc {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 0;
+}
+.marc-av {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.marc-on {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 11px;
+  height: 11px;
+  background: #4ade80;
+  border: 2.5px solid var(--surface-2);
+  border-radius: 50%;
+}
+.marc-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.marc-name em {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  color: var(--accent);
+}
+.marc-quote {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  font-style: normal;
+}
+.marc-cta {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* EXPERTEN MODE BODY                                                   */
+/* ═══════════════════════════════════════════════════════════════════ */
+.e-body {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  min-height: 920px;
+}
+.e-main {
+  background: var(--shell);
+  padding: 36px 40px 48px;
+  border-right: 1px solid var(--border);
+}
+.e-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.e-tb-title {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.e-tb-title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.e-tb-meta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+.e-tb-actions {
+  display: flex;
+  gap: 6px;
+}
+.e-tb-btn {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 7px;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+}
+.e-tb-btn:hover { color: var(--ink); border-color: var(--ink); }
+.e-tb-btn.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.e-tb-btn.ai {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+/* Price grid */
+.price-grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+.price-grid thead th {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 0 6px 16px;
+  text-align: center;
+}
+.price-grid thead th:first-child {
+  text-align: left;
+  width: 60px;
+}
+.price-grid tbody td {
+  padding: 4px 4px;
+  text-align: center;
+  vertical-align: top;
+}
+.price-grid tbody td:first-child {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--muted);
+  text-align: left;
+  padding-right: 12px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.price-grid tbody tr.current td:first-child { color: var(--accent); font-weight: 500; }
+
+.pc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 8px 9px;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.pc:hover { border-color: var(--border-3); }
+.pc.strong {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+.pc.weak {
+  background: var(--warn-soft);
+  border-color: #dcd6cb;
+}
+.pc.event {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.pc.event .pc-price,
+.pc.event .pc-occ { color: #fff; }
+.pc.event .pc-occ { opacity: 0.75; }
+.ai-mark {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--warn);
+}
+.pc.event .ai-mark { background: #d4cfba; }
+.pc-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pc-occ {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.grid-legend {
+  display: flex;
+  gap: 28px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.gl-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.gl-sw {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Lower split */
+.e-lower {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.e-block .eb-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+/* Card matched to rest of UI — flat, rounded, subtle shadow */
+.mockup-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(45,41,32,0.04);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.mockup-card .mc-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.mockup-card .comp-block { margin-top: auto; }
+.mockup-card .mc-chart {
+  margin-top: 14px;
+}
+.mockup-card .mc-chart svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 200px;
+}
+.chart-yax {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--muted);
+  letter-spacing: 0.5px;
+}
+.chart-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--ink);
+  letter-spacing: -0.02em;
+}
+.chart-val.accent {
+  fill: var(--accent);
+}
+.chart-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  fill: var(--muted);
+  letter-spacing: 0;
+}
+.chart-cat.accent {
+  fill: var(--accent);
+  font-weight: 600;
+}
+.mc-head {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mc-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+  color: var(--muted);
+}
+.mc-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.mc-inner {
+  padding: 10px 20px 18px;
+}
+/* Hero stat block — big primary + small context + delta line */
+.mc-stat {
+  padding: 14px 0 16px;
+}
+.mc-stat-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+.mc-stat-val {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.mc-stat-context {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  padding-bottom: 6px;
+}
+.mc-stat-context-row {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.mc-stat-deltas {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+.mc-stat-deltas strong {
+  color: var(--ink);
+  font-weight: 600;
+  margin-right: 3px;
+}
+.mc-stat-deltas .d-arrow {
+  color: var(--accent);
+  margin-right: 2px;
+}
+.mc-stat-deltas .d-sep {
+  color: var(--subtle);
+}
+.mc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+}
+.mc-row + .mc-row { border-top: 1px solid var(--border); }
+.mc-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+.mc-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.mc-val em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  margin-right: 5px;
+}
+.mc-val .unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+.mc-chart {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.mc-chart svg {
+  width: 100%;
+  height: 96px;
+  display: block;
+}
+.mc-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* Legacy fallback */
+.pickup-chart { display: none; }
+
+/* mc-inner variant — no inner padding for tight rows */
+.mc-inner.mc-inner-flat { padding: 0; }
+
+/* Comp block — list of hotels under the stat rows */
+.comp-block {
+  margin: 14px -20px -18px;
+  border-top: 1px solid var(--border);
+}
+
+/* Comp set rows — inside mockup-card */
+.comp-row {
+  display: grid;
+  grid-template-columns: 1fr 90px auto;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-row.you { background: rgba(30, 58, 95, 0.025); }
+.comp-name { color: var(--ink-2); }
+.comp-row.you .comp-name { color: var(--ink); font-weight: 600; }
+.comp-name em {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  margin-left: 1px;
+}
+.comp-name .warn-em { color: var(--bad); }
+.comp-bar { height: 4px; background: var(--border); position: relative; }
+.comp-fill { height: 100%; background: var(--ink-2); min-width: 2px; }
+.comp-row.you .comp-fill { background: var(--accent); }
+.comp-fill.warn { background: var(--bad); min-width: 3px; }
+.comp-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* Expert sidebar */
+.e-side {
+  background: var(--surface);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.es-section .es-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.es-count {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 100px;
+  padding: 1px 7px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* AI rec card */
+.ai-rec {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+}
+.ai-rec:last-child { margin-bottom: 0; }
+.ar-tag {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ar-spark {
+  width: 5px; height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.ar-title {
+  font-family: "EB Garamond", serif;
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+.ar-sub {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.ar-actions { display: flex; gap: 6px; }
+.ar-btn {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+}
+.ar-btn.primary {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* RAY MODAL — iOS-style sheet, dashboard visible (blur) behind         */
+/* ═══════════════════════════════════════════════════════════════════ */
+.app-frame.has-modal {
+  position: relative;
+  overflow: hidden;
+}
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20, 22, 30, 0.06);
+  backdrop-filter: blur(4px) saturate(106%);
+  -webkit-backdrop-filter: blur(4px) saturate(106%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ray-modal {
+  position: absolute;
+  top: 80px;
+  right: 24px;
+  bottom: 24px;
+  width: 400px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.9) inset,
+    0 24px 64px -16px rgba(20, 22, 30, 0.16),
+    0 4px 16px -4px rgba(20, 22, 30, 0.08),
+    0 1px 3px rgba(20, 22, 30, 0.04);
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.ray-handle { display: none; }
+.ray-modal .ray-head { padding: 16px 18px 12px; }
+.ray-modal .ray-thread { padding: 18px; }
+.ray-modal .ray-context { padding: 10px 18px; }
+.ray-modal .ray-suggestions { padding: 12px 18px 14px; }
+.ray-modal .ray-input-wrap { padding: 12px 14px; }
+
+/* Legacy side-panel grid (kept for backward compat, not used) */
+.h-body-with-panel { grid-template-columns: 88px 1fr 460px; }
+
+.brief.brief-focused .brief-decision {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  background: var(--accent-soft);
+}
+
+.ray-panel {
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -16px 0 32px -20px rgba(0,0,0,0.10);
+  min-height: 100%;
+}
+.ray-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.ray-head-id {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ray-mark {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.ray-name {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.ray-role {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+}
+.ray-close {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: inherit;
+}
+.ray-close:hover { color: var(--ink); background: var(--surface-2); }
+
+.ray-context {
+  padding: 12px 22px;
+  background: var(--accent-soft);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.ray-context-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 8px;
+}
+.ray-context-val {
+  font-size: 12px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.ray-thread {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.ray-msg-who {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ray-msg-user { display: flex; flex-direction: column; align-items: flex-end; }
+.ray-msg-user .ray-msg-who { text-align: right; }
+.ray-msg-user .ray-msg-text {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+  padding: 10px 14px;
+  background: var(--surface-2);
+  border-radius: 12px 12px 2px 12px;
+  display: inline-block;
+  max-width: 88%;
+}
+
+.ray-msg-ai .ray-msg-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+.ray-msg-ai .ray-msg-text p { margin-bottom: 12px; }
+.ray-msg-ai .ray-msg-text p:last-child { margin-bottom: 0; }
+.ray-msg-ai .ray-msg-text strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ray-points {
+  list-style: none;
+  margin: 12px 0 14px;
+  padding: 0;
+}
+.ray-points li {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  padding: 5px 0 5px 18px;
+  position: relative;
+}
+.ray-points li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 13px;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.ray-mini-card {
+  margin: 14px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  padding: 14px 16px;
+}
+.rmc-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.rmc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  font-size: 13px;
+}
+.rmc-row + .rmc-row { border-top: 1px solid var(--border); }
+.rmc-label { color: var(--muted); }
+.rmc-row.rmc-row-strong .rmc-label { color: var(--ink); font-weight: 600; }
+.rmc-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 13px;
+}
+.rmc-delta {
+  color: var(--accent);
+  font-weight: 600;
+  margin-left: 8px;
+  font-size: 12px;
+}
+
+.ray-msg-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ray-suggestions {
+  padding: 14px 22px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+  flex-shrink: 0;
+}
+.ray-suggestions-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--subtle);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.ray-suggestion {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink-2);
+  cursor: pointer;
+  margin-bottom: 6px;
+  transition: all 0.15s ease;
+}
+.ray-suggestion:last-child { margin-bottom: 0; }
+.ray-suggestion:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.ray-suggestion::before {
+  content: "→ ";
+  color: var(--subtle);
+  margin-right: 4px;
+}
+
+.ray-input-wrap {
+  border-top: 1px solid var(--border);
+  padding: 14px 18px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.ray-input {
+  flex: 1;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  background: var(--surface-2);
+  outline: none;
+  color: var(--ink);
+}
+.ray-input::placeholder { color: var(--subtle); }
+.ray-input:focus { border-color: var(--accent); background: var(--surface); }
+.ray-send {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ray-send:hover { background: var(--accent-deep); }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* RAY INLINE DRILLDOWN — hairlines only, no nested boxes              */
+/* ═══════════════════════════════════════════════════════════════════ */
+.ray-inline {
+  margin: 28px 0 32px;
+  padding: 22px 0 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.ray-inline-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+.ray-inline-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ray-inline-tag-mark {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.ray-inline-close {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+}
+.ray-inline-close:hover { color: var(--ink); }
+
+.ray-inline-summary {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  max-width: 60ch;
+  margin-bottom: 22px;
+}
+.ray-inline-summary strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.ray-changes-head,
+.ray-change-row {
+  display: grid;
+  grid-template-columns: 88px 64px 96px 1fr;
+  gap: 18px;
+  align-items: baseline;
+}
+.ray-changes-head {
+  padding: 0 0 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--subtle);
+}
+.ray-change-row {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ray-change-row:last-of-type {
+  border-bottom: none;
+}
+
+.rch-day {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.rch-from {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--subtle);
+  text-decoration: line-through;
+  text-decoration-color: var(--border-2);
+  text-decoration-thickness: 1px;
+}
+.rch-to {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.rch-delta {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.rch-reason {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.ray-changes-more {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+}
+.ray-changes-more a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  padding-bottom: 1px;
+  margin-left: 6px;
+}
+.ray-changes-more a:hover {
+  border-bottom-style: solid;
+}
+
+.ray-inline-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 22px;
+  align-items: center;
+}
+.ray-inline-actions .ray-link {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  background: transparent;
+  border: none;
+  padding: 0 0 2px;
+  cursor: pointer;
+  font-family: inherit;
+  border-bottom: 1px solid var(--border-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ray-inline-actions .ray-link:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.ray-inline-actions .ray-link::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* RAY EMBEDDED + SPOTLIGHT — Sidekick mode                             */
+/* ═══════════════════════════════════════════════════════════════════ */
+.h-body-with-embedded {
+  grid-template-columns: 88px 1fr 420px;
+}
+
+.ray-embedded {
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.ray-embedded .ray-head { padding: 18px 20px 14px; }
+.ray-embedded .ray-context { padding: 11px 20px; }
+.ray-embedded .ray-thread { padding: 20px; }
+.ray-embedded .ray-suggestions { padding: 14px 20px 16px; }
+.ray-embedded .ray-input-wrap { padding: 14px 16px; }
+
+/* Spotlight: dim all children except .spotlight-active */
+.spotlight-host > .h-greet,
+.spotlight-host > article > * {
+  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brief.spotlight-host > *:not(.spotlight-active) {
+  filter: blur(2.5px);
+  opacity: 0.42;
+}
+.spotlight-host .h-greet.spotlight-dimmed {
+  filter: blur(2.5px);
+  opacity: 0.42;
+}
+.brief.spotlight-host > .spotlight-active {
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 0 1.5px var(--accent), 0 16px 32px -12px rgba(30, 58, 95, 0.18);
+  border-radius: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* TABBED MODAL — wide bottom-sheet with multi-session tabs             */
+/* ═══════════════════════════════════════════════════════════════════ */
+.ray-modal-tabbed {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 64px);
+  max-width: 920px;
+  height: calc(100% - 96px);
+  max-height: 600px;
+  background: var(--surface);
+  border-radius: 18px 18px 0 0;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.9) inset,
+    0 -32px 64px -16px rgba(20, 22, 30, 0.22),
+    0 -8px 24px -8px rgba(20, 22, 30, 0.12);
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tm-handle {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background: var(--border-2);
+  border-radius: 2px;
+}
+
+.tm-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding: 22px 16px 0;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.tm-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px 12px;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: transparent;
+  font-family: inherit;
+  letter-spacing: -0.01em;
+  position: relative;
+  margin-bottom: -1px;
+}
+.tm-tab:hover { color: var(--ink); background: rgba(255,255,255,0.6); }
+.tm-tab.active {
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  border-color: var(--border);
+  border-bottom-color: var(--surface);
+}
+.tm-tab-marker {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+.tm-tab.active .tm-tab-marker { opacity: 1; }
+.tm-tab-status {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+.tm-tab-status.live { background: #22c55e; }
+.tm-tab-status.waiting { background: var(--accent); }
+.tm-tab-status.idle { background: var(--subtle); }
+.tm-tab-new {
+  margin-left: auto;
+  margin-bottom: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1.5px solid var(--accent);
+  cursor: pointer;
+  align-self: center;
+  transition: background 0.15s ease;
+  font-family: inherit;
+  padding: 0;
+}
+.tm-tab-new:hover { background: var(--accent-soft); }
+.tm-tab-new-mark {
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.tm-context-bar {
+  padding: 10px 24px;
+  background: var(--accent-soft);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.tm-context-bar .tm-ctx-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.tm-context-bar .tm-ctx-val {
+  font-size: 12px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.tm-context-bar .tm-ctx-meta {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.tm-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tm-input-wrap {
+  border-top: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.tm-input {
+  flex: 1;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  background: var(--surface-2);
+  outline: none;
+  color: var(--ink);
+}
+.tm-input::placeholder { color: var(--subtle); }
+.tm-input:focus { border-color: var(--accent); background: var(--surface); }
+.tm-send {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* CHAT STACK — LinkedIn-style multi-window pattern                     */
+/* ═══════════════════════════════════════════════════════════════════ */
+.chat-stack {
+  position: absolute;
+  bottom: 0;
+  right: 28px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 20;
+  pointer-events: none;
+}
+.chat-stack > * { pointer-events: auto; }
+
+.stack-chat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  box-shadow:
+    0 -8px 24px -8px rgba(20, 22, 30, 0.10),
+    0 -2px 6px -2px rgba(20, 22, 30, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.stack-chat.collapsed { width: 56px; height: 52px; }
+.stack-chat.expanded  { width: 360px; height: 520px; }
+
+/* Collapsed minimal chip — just marker + status, hides text */
+.stack-chat.collapsed .sc-head {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+.stack-chat.collapsed .sc-info,
+.stack-chat.collapsed .sc-meta {
+  display: none;
+}
+.stack-chat.collapsed .sc-status-dot-pos {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.stack-chat.collapsed:hover {
+  background: var(--surface-2);
+}
+
+.sc-head {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.stack-chat.expanded .sc-head { border-bottom: 1px solid var(--border); }
+
+.sc-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  position: relative;
+}
+.sc-avatar.ray  { background: var(--accent); color: var(--surface); }
+.sc-avatar.marc { background: #166534; color: var(--surface); }
+.sc-avatar.lisa { background: #b45309; color: var(--surface); }
+
+/* Topic-only session marker (no person avatar) */
+.sc-topic {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--accent-line);
+}
+.sc-topic-mark {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* Status indicator for sessions */
+.sc-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sc-status-dot.live { background: #22c55e; }
+.sc-status-dot.idle { background: var(--subtle); }
+.sc-status-dot.waiting { background: var(--accent); }
+
+.sc-online {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 9px;
+  height: 9px;
+  background: #22c55e;
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+}
+
+.sc-info { flex: 1; min-width: 0; overflow: hidden; line-height: 1.2; }
+.sc-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.sc-name em {
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+  margin-right: 2px;
+}
+.sc-context {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.sc-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.sc-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--subtle);
+  letter-spacing: 0.5px;
+}
+.sc-notify {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+.sc-toggle {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 11px;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+.sc-toggle:hover { color: var(--ink); background: var(--surface-2); }
+
+.sc-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sc-msg-who {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.sc-msg-user { display: flex; flex-direction: column; align-items: flex-end; }
+.sc-msg-user .sc-msg-who { text-align: right; }
+.sc-msg-user .sc-msg-bubble {
+  background: var(--accent);
+  color: var(--surface);
+  padding: 8px 11px;
+  border-radius: 10px 10px 2px 10px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  max-width: 80%;
+  font-weight: 500;
+}
+.sc-msg-ai .sc-msg-bubble {
+  background: var(--surface-2);
+  color: var(--ink-2);
+  padding: 8px 11px;
+  border-radius: 10px 10px 10px 2px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  max-width: 90%;
+}
+.sc-msg-ai .sc-msg-bubble strong { color: var(--ink); font-weight: 600; }
+
+.sc-mini {
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.sc-mini-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.sc-mini-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 11.5px;
+  padding: 3px 0;
+}
+.sc-mini-row + .sc-mini-row { border-top: 1px solid var(--border); }
+.sc-mini-row .sc-mini-label { color: var(--muted); }
+.sc-mini-row .sc-mini-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+}
+.sc-mini-row.strong .sc-mini-val { color: var(--accent); }
+
+.sc-input-wrap {
+  border-top: 1px solid var(--border);
+  padding: 10px 12px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.sc-input {
+  flex: 1;
+  border: 1px solid var(--border-2);
+  border-radius: 7px;
+  padding: 7px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  background: var(--surface-2);
+  outline: none;
+  color: var(--ink);
+}
+.sc-input::placeholder { color: var(--subtle); }
+.sc-input:focus { border-color: var(--accent); background: var(--surface); }
+.sc-send {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: var(--accent);
+  color: var(--surface);
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* ─── Page foot ─────────────────────────────────────── */
+.page-foot {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 32px 48px 64px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .frame-head { grid-template-columns: 1fr; gap: 32px; }
+  .e-body { grid-template-columns: 1fr; }
+  .e-side { border-top: 1px solid var(--border); }
+  .h-body { grid-template-columns: 64px 1fr; }
+  .h-main { padding: 32px; }
+  .brief { padding: 28px; }
+  .brief-headline { font-size: 32px; }
+  .frame-h2 { font-size: 44px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ PAGE HEAD ═══════════════════════════════════════════════ -->
+<header class="page-head">
+  <span class="page-brand" aria-label="happyhotel">
+    <svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/>
+    </svg>
+  </span>
+  <span class="page-meta">AI Revenue Manager · Wireframe v4</span>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 01 · HOTELIER MODE                                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section">
+  <div class="frame-head">
+    <div>
+      <div class="frame-eyebrow">
+        <span class="eb-dot"></span>
+        01 — Hotelier Mode
+      </div>
+      <h2 class="frame-h2">Ergebnisse lesen,<br>nicht <em>analysieren.</em></h2>
+    </div>
+    <div>
+      <p class="frame-desc">Anna ist Owner eines 80-Zimmer-Hotels und hat keinen dedizierten Revenue Manager. Sie öffnet das Tool morgens und liest, was die letzte Nacht passiert ist — wie eine Übergabe, nicht wie ein Dashboard.</p>
+      <div class="frame-meta">
+        <div class="fm-item">
+          <div class="fm-key">Persona</div>
+          <div class="fm-val"><em>Anna</em>, Owner / GM</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Front Door</div>
+          <div class="fm-val">Tägliches Briefing</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Sprache</div>
+          <div class="fm-val">Outcome / Geld</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wireframe -->
+  <div class="app-frame">
+
+    <div class="topbar">
+      <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+      <div class="tb-sep"></div>
+      <span class="tb-hotel">Hotel Seeblick · Berlin · 80 Zimmer</span>
+      <div class="tb-right">
+        <span class="tier-pill">Senior RM</span>
+        <div class="tb-av">A</div>
+      </div>
+    </div>
+
+    <div class="h-body">
+
+      <!-- Left rail -->
+      <nav class="h-rail">
+        <div class="rail-item active">
+          <span class="rail-glyph">B</span>
+          Briefing
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">U</span>
+          Umsatz
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">E</span>
+          Entsch.
+          <span class="rail-badge">3</span>
+        </div>
+        <div class="rail-spacer"></div>
+        <div class="rail-item">
+          <span class="rail-glyph">S</span>
+          Setup
+        </div>
+      </nav>
+
+      <!-- Main canvas -->
+      <main class="h-main">
+
+        <div class="h-greet">
+          <div class="h-greet-text">Guten Morgen, <em>Anna.</em></div>
+        </div>
+
+        <article class="brief">
+
+          <div class="brief-meta">
+            <span class="brief-kicker"><span class="kicker-mark"></span>KW 18 · Dein Revenue Manager</span>
+            <span class="brief-kicker">29. April 2026</span>
+          </div>
+
+          <h1 class="brief-headline">Pfingsten war ein <em>Volltreffer.</em><br>Nächste Woche wird <em>interessant.</em></h1>
+
+          <p class="brief-narrative">
+            Du hast diesen Monat <span class="money">28.420 €</span><span class="trend up"><span class="arrow">↑</span>12 %</span> verdient — vier Punkte über deinem Plan. Ich habe <a href="#" class="detail">heute Nacht 23 Preise angepasst</a>, nachdem die Frankfurter Messe für das Pfingstwochenende bestätigt wurde. Wenn das Tempo hält, schließen wir den Monat bei rund <span class="money">64.000 €</span><span class="trend up"><span class="arrow">↑</span>14 %</span> ab — dein bester Mai seit 2019.
+          </p>
+
+          <div class="brief-stats">
+            <div>
+              <div class="bs-label">Forecast Mai</div>
+              <div class="bs-value"><em>64.000 €</em></div>
+              <div class="bs-delta">+ 14 % vs. Plan</div>
+            </div>
+            <div>
+              <div class="bs-label">Mai bisher</div>
+              <div class="bs-value">28.420 €</div>
+              <div class="bs-delta">+ 12 % vs. Vorjahr</div>
+            </div>
+            <div>
+              <div class="bs-label">Auto-Aktionen</div>
+              <div class="bs-value">23</div>
+              <div class="bs-delta">letzte Nacht</div>
+            </div>
+          </div>
+
+          <!-- Inline decision -->
+          <div class="brief-decision">
+            <div class="bd-meta">
+              <span class="bd-tag"><span class="ar-spark"></span> Deine Freigabe nötig</span>
+              <span class="bd-deadline">Frist · heute 17:00 Uhr</span>
+            </div>
+            <div class="bd-title">Großgruppe Berlin · 3.–5. Juni · 24 Zimmer</div>
+            <div class="bd-sub">+2.856 € Brutto, abzüglich −1.840 € geschätzte Verdrängung regulärer Gäste. Netto <b>+1.016 €</b>. Ray empfiehlt anzunehmen.</div>
+            <div class="bd-actions">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn btn-ghost">Ablehnen</button>
+              <button class="btn btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </div>
+
+          <!-- Week outlook -->
+          <div class="brief-week">
+            <div class="bw-label">Diese Woche</div>
+            <div class="bw-grid">
+              <div class="bw-day">
+                <div class="bw-dow">Do<span class="bw-occ">42 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">109 €</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">Fr<span class="bw-occ">58 %</span></div>
+                <div class="bw-status">stark</div>
+                <div class="bw-price">152 €</div>
+              </div>
+              <div class="bw-day event">
+                <div class="bw-dow">Sa<span class="bw-occ">71 %</span></div>
+                <div class="bw-status">Pfingsten</div>
+                <div class="bw-price">168 €</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">So<span class="bw-occ">68 %</span></div>
+                <div class="bw-status">stark</div>
+                <div class="bw-price">162 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mo<span class="bw-occ">35 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">102 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Di<span class="bw-occ">28 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">98 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mi<span class="bw-occ">31 %</span></div>
+                <div class="bw-status">stabil</div>
+                <div class="bw-price">99 €</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Marc -->
+          <div class="brief-marc">
+            <div class="marc-av">R<span class="marc-on"></span></div>
+            <div>
+              <div class="marc-name"><em>Ray</em> · Senior Revenue Manager</div>
+              <div class="marc-quote">"Für den Sommer würde ich den Direktkanal nochmal pushen — ich habe drei konkrete Ideen vorbereitet."</div>
+            </div>
+            <div class="marc-cta">
+              <button class="btn btn-link">Antworten</button>
+            </div>
+          </div>
+
+        </article>
+      </main>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 02 · RAY-KONVERSATION — DECISION DEEP-DIVE                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section" style="border-top:1px solid var(--border)">
+  <div class="frame-head">
+    <div>
+      <div class="frame-eyebrow">
+        <span class="eb-dot"></span>
+        02 — Ray fragen · Decision Deep-Dive
+      </div>
+      <h2 class="frame-h2">Anna fragt,<br>Ray antwortet <em>im Kontext.</em></h2>
+    </div>
+    <div>
+      <p class="frame-desc">Wenn Anna eine Entscheidung delegieren oder verstehen will, klickt sie "Ray fragen" — Ray öffnet sich als detached floating Panel rechts. Das Dashboard bleibt voll sichtbar daneben, kein Blur, kein Dim. Ray fühlt sich an wie ein Companion, der sich neben Anna setzt — nicht wie eine Unterbrechung.</p>
+      <div class="frame-meta">
+        <div class="fm-item">
+          <div class="fm-key">Trigger</div>
+          <div class="fm-val">"Ray fragen" Button</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Pattern</div>
+          <div class="fm-val">Floating Panel</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Fokus</div>
+          <div class="fm-val"><em>Großgruppe</em> Berlin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wireframe with Ray side panel -->
+  <div class="app-frame has-modal">
+
+    <div class="topbar">
+      <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+      <div class="tb-sep"></div>
+      <span class="tb-hotel">Hotel Seeblick · Berlin · 80 Zimmer</span>
+      <div class="tb-right">
+        <span class="tier-pill">Senior RM</span>
+        <div class="tb-av">A</div>
+      </div>
+    </div>
+
+    <!-- ═══ Background: full Dashboard (visible behind blur) ═══ -->
+    <div class="h-body">
+
+      <nav class="h-rail">
+        <div class="rail-item active">
+          <span class="rail-glyph">B</span>
+          <span class="rail-label">Briefing</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">U</span>
+          <span class="rail-label">Umsatz</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">E</span>
+          <span class="rail-label">Entsch.</span>
+          <span class="rail-badge">3</span>
+        </div>
+        <div class="rail-spacer"></div>
+        <div class="rail-item">
+          <span class="rail-glyph">S</span>
+          <span class="rail-label">Setup</span>
+        </div>
+      </nav>
+
+      <main class="h-main">
+        <div class="h-greet">
+          <div class="h-greet-text">Guten Morgen, <em>Anna.</em></div>
+        </div>
+
+        <article class="brief">
+          <div class="brief-meta">
+            <span class="mono-tag"><span class="kicker-mark"></span>KW 18 · Dein Revenue Manager</span>
+            <span class="mono-tag muted">29. 04. 2026</span>
+          </div>
+
+          <h1 class="brief-headline">Pfingsten war ein <em>Volltreffer.</em><br>Nächste Woche wird <em>interessant.</em></h1>
+
+          <p class="brief-narrative">
+            Du hast diesen Monat <span class="money">28.420 €</span><span class="trend up"><span class="arrow">↑</span>12 %</span> verdient — vier Punkte über deinem Plan. Ich habe <a href="#" class="detail">heute Nacht 23 Preise angepasst</a>, nachdem die Frankfurter Messe für das Pfingstwochenende bestätigt wurde.
+          </p>
+
+          <div class="brief-stats">
+            <div class="bs-cell">
+              <div class="bs-label">Forecast Mai</div>
+              <div class="bs-value"><em>64.000</em><span style="font-size:0.7em">&nbsp;€</span></div>
+              <div class="bs-delta">+ 14 % vs. Plan</div>
+            </div>
+            <div class="bs-cell">
+              <div class="bs-label">Mai bisher</div>
+              <div class="bs-value mono-num">28.420<span style="font-size:0.7em">&nbsp;€</span></div>
+              <div class="bs-delta">+ 12 % vs. Vorjahr</div>
+            </div>
+            <div class="bs-cell">
+              <div class="bs-label">Auto-Aktionen</div>
+              <div class="bs-value mono-num">23</div>
+              <div class="bs-delta">letzte Nacht</div>
+            </div>
+          </div>
+
+          <div class="brief-decision">
+            <div class="bd-meta">
+              <span class="mono-tag">Deine Freigabe nötig</span>
+              <span class="bd-deadline">Frist · 17:00 Uhr</span>
+            </div>
+            <div class="bd-title">Großgruppe Berlin · 3.–5. Juni · 24 Zimmer</div>
+            <p class="bd-sub">+2.856 € Brutto, abzüglich −1.840 € geschätzte Verdrängung. Netto <b>+1.016 €</b>. Ray empfiehlt anzunehmen.</p>
+            <div class="bd-actions">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn">Ablehnen</button>
+              <button class="btn btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </div>
+        </article>
+      </main>
+
+    </div><!-- /h-body -->
+
+    <!-- ═══ Modal Backdrop (blur + dim) ═══ -->
+    <div class="modal-backdrop"></div>
+
+    <!-- ═══ RAY MODAL ═══ -->
+    <div class="ray-modal">
+      <div class="ray-handle"></div>
+
+      <header class="ray-head">
+        <div class="ray-head-id">
+          <span class="ray-mark"></span>
+          <span class="ray-name">Ray</span>
+          <span class="ray-role">Dein Revenue Manager</span>
+        </div>
+        <button class="ray-close">Schließen ✕</button>
+      </header>
+
+      <div class="ray-context">
+        <span class="ray-context-label">Kontext</span>
+        <span class="ray-context-val">Großgruppe Berlin · 24 Zimmer · 3.–5. Juni</span>
+      </div>
+
+      <div class="ray-thread">
+
+        <div class="ray-msg ray-msg-user">
+          <div class="ray-msg-who">Du · gerade eben</div>
+          <div class="ray-msg-text">Soll ich die Gruppe annehmen?</div>
+        </div>
+
+        <div class="ray-msg ray-msg-ai">
+          <div class="ray-msg-who"><span class="ray-mark"></span>Ray</div>
+          <div class="ray-msg-text">
+            <p>Ja, ich würde annehmen. Drei Punkte sprechen klar dafür:</p>
+            <ul class="ray-points">
+              <li>Die Gruppe füllt einen sonst schwachen Mittwoch–Donnerstag (35–42 % Occ. ohne Gruppe)</li>
+              <li>Pfingst-Wochenende ist ohnehin stark gebucht — kein Risiko für deine Premium-Tarife</li>
+              <li>Marc hat ähnliche Anfragen letztes Jahr 4× angenommen, jedes Mal mit positivem Ergebnis</li>
+            </ul>
+
+            <div class="ray-mini-card">
+              <div class="rmc-tag">Forecast 3.–5. Juni</div>
+              <div class="rmc-row">
+                <span class="rmc-label">Ohne Gruppe</span>
+                <span class="rmc-val">4.280 €</span>
+              </div>
+              <div class="rmc-row rmc-row-strong">
+                <span class="rmc-label">Mit Gruppe</span>
+                <span class="rmc-val">5.296 €<span class="rmc-delta">+1.016 €</span></span>
+              </div>
+            </div>
+
+            <p>Die Frist läuft heute um <strong>17:00 Uhr</strong> ab. Wenn du willst, übernehme ich die Antwort an die Reisegruppe direkt.</p>
+          </div>
+
+          <div class="ray-msg-actions">
+            <button class="btn btn-primary">Annehmen — Ray antwortet</button>
+            <button class="btn">Ablehnen</button>
+          </div>
+        </div>
+
+      </div><!-- /thread -->
+
+      <div class="ray-suggestions">
+        <div class="ray-suggestions-label">Mehr fragen</div>
+        <button class="ray-suggestion">Was passiert wenn ich ablehne?</button>
+        <button class="ray-suggestion">Welche Konditionen kann ich verhandeln?</button>
+        <button class="ray-suggestion">Hatten wir eine ähnliche Anfrage letztes Jahr?</button>
+      </div>
+
+      <div class="ray-input-wrap">
+        <input type="text" class="ray-input" placeholder="Frag Ray etwas..." />
+        <button class="ray-send">↑</button>
+      </div>
+
+    </div><!-- /ray-modal -->
+
+  </div><!-- /app-frame -->
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 03 · RAY-DRILLDOWN — INLINE EXPANSION                           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section" style="border-top:1px solid var(--border)">
+  <div class="frame-head">
+    <div>
+      <div class="frame-eyebrow">
+        <span class="eb-dot"></span>
+        03 — Ray erklärt · Inline Drilldown
+      </div>
+      <h2 class="frame-h2">Klick auf den<br>dotted Link, <em>nicht mehr.</em></h2>
+    </div>
+    <div>
+      <p class="frame-desc">Wenn Anna im Briefing-Text auf einen dotted Link klickt (z.&nbsp;B. "23 Preise angepasst"), expandiert die Erklärung inline — kein Panel, keine neue Seite. Ray gibt nur das, was sie wissen wollte.</p>
+      <div class="frame-meta">
+        <div class="fm-item">
+          <div class="fm-key">Trigger</div>
+          <div class="fm-val">Dotted Link im Text</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Pattern</div>
+          <div class="fm-val">Inline Expansion</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Fokus</div>
+          <div class="fm-val"><em>23</em> Preisanpassungen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-frame">
+
+    <div class="topbar">
+      <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+      <div class="tb-sep"></div>
+      <span class="tb-hotel">Hotel Seeblick · Berlin · 80 Zimmer</span>
+      <div class="tb-right">
+        <span class="tier-pill">Senior RM</span>
+        <div class="tb-av">A</div>
+      </div>
+    </div>
+
+    <div class="h-body">
+
+      <nav class="h-rail">
+        <div class="rail-item active">
+          <span class="rail-glyph">B</span>
+          <span class="rail-label">Briefing</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">U</span>
+          <span class="rail-label">Umsatz</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">E</span>
+          <span class="rail-label">Entsch.</span>
+          <span class="rail-badge">3</span>
+        </div>
+        <div class="rail-spacer"></div>
+        <div class="rail-item">
+          <span class="rail-glyph">S</span>
+          <span class="rail-label">Setup</span>
+        </div>
+      </nav>
+
+      <main class="h-main">
+        <div class="h-greet">
+          <div class="h-greet-text">Guten Morgen, <em>Anna.</em></div>
+        </div>
+
+        <article class="brief">
+          <div class="brief-meta">
+            <span class="mono-tag"><span class="kicker-mark"></span>KW 18 · Dein Revenue Manager</span>
+            <span class="mono-tag muted">29. 04. 2026</span>
+          </div>
+
+          <h1 class="brief-headline">Pfingsten war ein <em>Volltreffer.</em><br>Nächste Woche wird <em>interessant.</em></h1>
+
+          <p class="brief-narrative">
+            Du hast diesen Monat <span class="money">28.420 €</span><span class="trend up"><span class="arrow">↑</span>12 %</span> verdient — vier Punkte über deinem Plan. Ich habe <a href="#" class="detail" style="color:var(--accent);text-decoration-color:var(--accent)">heute Nacht 23 Preise angepasst</a>, nachdem die Frankfurter Messe für das Pfingstwochenende bestätigt wurde.
+          </p>
+
+          <!-- Inline drilldown — hairlines only, no nested boxes -->
+          <div class="ray-inline">
+            <div class="ray-inline-head">
+              <span class="ray-inline-tag">
+                <span class="ray-inline-tag-mark"></span>
+                Ray erklärt
+              </span>
+              <button class="ray-inline-close">Schließen</button>
+            </div>
+
+            <p class="ray-inline-summary">
+              Diese Nacht habe ich <strong>23 Preise angehoben</strong>, im Schnitt um <strong>+12 €</strong>. Auslöser: die Frankfurter Messe wurde bestätigt, das treibt deine Pickup-Kurve für Pfingsten nach oben.
+            </p>
+
+            <div class="ray-changes-head">
+              <span>Tag</span>
+              <span>Vorher</span>
+              <span>Neu</span>
+              <span>Grund</span>
+            </div>
+            <div class="ray-change-row">
+              <span class="rch-day">Sa · 18.5.</span>
+              <span class="rch-from">144 €</span>
+              <span class="rch-to">168 €<span class="rch-delta">+24</span></span>
+              <span class="rch-reason">Pickup 3× über Schnitt, Comp-Set 158 €</span>
+            </div>
+            <div class="ray-change-row">
+              <span class="rch-day">So · 19.5.</span>
+              <span class="rch-from">142 €</span>
+              <span class="rch-to">162 €<span class="rch-delta">+20</span></span>
+              <span class="rch-reason">Pfingsten-Effekt, Schwesterhotels +18 €</span>
+            </div>
+            <div class="ray-change-row">
+              <span class="rch-day">Mo · 20.5.</span>
+              <span class="rch-from">128 €</span>
+              <span class="rch-to">152 €<span class="rch-delta">+24</span></span>
+              <span class="rch-reason">Brückentag, letzte Verfügbarkeiten</span>
+            </div>
+            <div class="ray-change-row">
+              <span class="rch-day">Fr · 17.5.</span>
+              <span class="rch-from">140 €</span>
+              <span class="rch-to">152 €<span class="rch-delta">+12</span></span>
+              <span class="rch-reason">Anreise Pfingsten, solide Nachfrage</span>
+            </div>
+
+            <div class="ray-changes-more">
+              + 19 weitere Änderungen <a href="#">Alle anzeigen</a>
+            </div>
+
+            <div class="ray-inline-actions">
+              <button class="btn btn-primary">Sieht gut aus</button>
+              <button class="ray-link">Mit Ray besprechen</button>
+            </div>
+          </div>
+
+          <p class="brief-narrative">
+            Wenn das Tempo hält, schließen wir den Monat bei rund <span class="money">64.000 €</span><span class="trend up"><span class="arrow">↑</span>14 %</span> ab, dein bester Mai seit 2019.
+          </p>
+
+          <div class="brief-stats">
+            <div class="bs-cell">
+              <div class="bs-label">Forecast Mai</div>
+              <div class="bs-value"><em>64.000</em><span style="font-size:0.7em">&nbsp;€</span></div>
+              <div class="bs-delta">+ 14 % vs. Plan</div>
+            </div>
+            <div class="bs-cell">
+              <div class="bs-label">Mai bisher</div>
+              <div class="bs-value mono-num">28.420<span style="font-size:0.7em">&nbsp;€</span></div>
+              <div class="bs-delta">+ 12 % vs. Vorjahr</div>
+            </div>
+            <div class="bs-cell">
+              <div class="bs-label">Auto-Aktionen</div>
+              <div class="bs-value mono-num">23</div>
+              <div class="bs-delta">letzte Nacht</div>
+            </div>
+          </div>
+
+          <div class="brief-decision">
+            <div class="bd-meta">
+              <span class="mono-tag">Deine Freigabe nötig</span>
+              <span class="bd-deadline">Frist · 17:00 Uhr</span>
+            </div>
+            <div class="bd-title">Großgruppe Berlin · 3.–5. Juni · 24 Zimmer</div>
+            <p class="bd-sub">+2.856 € Brutto, abzüglich −1.840 € geschätzte Verdrängung. Netto <b>+1.016 €</b>. Ray empfiehlt anzunehmen.</p>
+            <div class="bd-actions">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn">Ablehnen</button>
+              <button class="btn btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </div>
+
+          <div class="brief-week">
+            <div style="margin-bottom:16px">
+              <span class="mono-tag muted">Diese Woche</span>
+            </div>
+            <div class="bw-grid">
+              <div class="bw-day">
+                <div class="bw-dow">Do<span class="bw-occ">42 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">109 €</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">Fr<span class="bw-occ">58 %</span></div>
+                <div class="bw-status">stark</div>
+                <div class="bw-price">152 €</div>
+              </div>
+              <div class="bw-day event">
+                <div class="bw-dow">Sa<span class="bw-occ">71 %</span></div>
+                <div class="bw-status">Pfingsten</div>
+                <div class="bw-price">168 €</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">So<span class="bw-occ">68 %</span></div>
+                <div class="bw-status">stark</div>
+                <div class="bw-price">162 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mo<span class="bw-occ">35 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">102 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Di<span class="bw-occ">28 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">98 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mi<span class="bw-occ">31 %</span></div>
+                <div class="bw-status">stabil</div>
+                <div class="bw-price">99 €</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="brief-marc">
+            <div class="marc-av">R<span class="marc-on"></span></div>
+            <div>
+              <div class="marc-name"><em>Ray</em> · Senior Revenue Manager</div>
+              <div class="marc-quote">"Für den Sommer würde ich den Direktkanal nochmal pushen, ich habe drei konkrete Ideen vorbereitet."</div>
+            </div>
+            <div class="marc-cta">
+              <button class="btn btn-link">Antworten</button>
+            </div>
+          </div>
+        </article>
+      </main>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 04 · MIT RAY BESPRECHEN — EMBEDDED SIDEKICK + SPOTLIGHT          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section" style="border-top:1px solid var(--border)">
+  <div class="frame-head">
+    <div>
+      <div class="frame-eyebrow">
+        <span class="eb-dot"></span>
+        04 — Mit Ray besprechen · Embedded Sidekick
+      </div>
+      <h2 class="frame-h2">Ray rechts,<br>Fokus <em>links.</em></h2>
+    </div>
+    <div>
+      <p class="frame-desc">Wenn Anna tiefer einsteigen will, klickt sie "Mit Ray besprechen". Ray bleibt rechts angedockt, das Dashboard rückt links — und nur der Briefing-Teil, über den gerade gesprochen wird, bleibt scharf. Alles andere wird blurry und tritt zurück. Das System leitet Annas Aufmerksamkeit ohne Modal-Unterbrechung.</p>
+      <div class="frame-meta">
+        <div class="fm-item">
+          <div class="fm-key">Trigger</div>
+          <div class="fm-val">"Mit Ray besprechen"</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Pattern</div>
+          <div class="fm-val">Embedded · Spotlight</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Fokus</div>
+          <div class="fm-val"><em>Großgruppe</em> Berlin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-frame">
+
+    <div class="topbar">
+      <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+      <div class="tb-sep"></div>
+      <span class="tb-hotel">Hotel Seeblick · Berlin · 80 Zimmer</span>
+      <div class="tb-right">
+        <span class="tier-pill">Senior RM</span>
+        <div class="tb-av">A</div>
+      </div>
+    </div>
+
+    <div class="h-body h-body-with-embedded spotlight-host">
+
+      <nav class="h-rail">
+        <div class="rail-item active">
+          <span class="rail-glyph">B</span>
+          <span class="rail-label">Briefing</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">U</span>
+          <span class="rail-label">Umsatz</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">E</span>
+          <span class="rail-label">Entsch.</span>
+          <span class="rail-badge">3</span>
+        </div>
+        <div class="rail-spacer"></div>
+        <div class="rail-item">
+          <span class="rail-glyph">S</span>
+          <span class="rail-label">Setup</span>
+        </div>
+      </nav>
+
+      <main class="h-main">
+        <div class="h-greet spotlight-dimmed">
+          <div class="h-greet-text">Guten Morgen, <em>Anna.</em></div>
+        </div>
+
+        <article class="brief spotlight-host">
+          <div class="brief-meta">
+            <span class="mono-tag"><span class="kicker-mark"></span>KW 18 · Dein Revenue Manager</span>
+            <span class="mono-tag muted">29. 04. 2026</span>
+          </div>
+
+          <h1 class="brief-headline">Pfingsten war ein <em>Volltreffer.</em><br>Nächste Woche wird <em>interessant.</em></h1>
+
+          <p class="brief-narrative">
+            Du hast diesen Monat <span class="money">28.420 €</span><span class="trend up"><span class="arrow">↑</span>12 %</span> verdient, vier Punkte über deinem Plan.
+          </p>
+
+          <div class="brief-stats">
+            <div class="bs-cell">
+              <div class="bs-label">Forecast Mai</div>
+              <div class="bs-value"><em>64.000</em><span style="font-size:0.7em">&nbsp;€</span></div>
+              <div class="bs-delta">+ 14 % vs. Plan</div>
+            </div>
+            <div class="bs-cell">
+              <div class="bs-label">Mai bisher</div>
+              <div class="bs-value mono-num">28.420<span style="font-size:0.7em">&nbsp;€</span></div>
+              <div class="bs-delta">+ 12 % vs. Vorjahr</div>
+            </div>
+            <div class="bs-cell">
+              <div class="bs-label">Auto-Aktionen</div>
+              <div class="bs-value mono-num">23</div>
+              <div class="bs-delta">letzte Nacht</div>
+            </div>
+          </div>
+
+          <!-- ═══ SPOTLIGHT TARGET — Großgruppe Decision ═══ -->
+          <div class="brief-decision spotlight-active">
+            <div class="bd-meta">
+              <span class="mono-tag">Deine Freigabe nötig</span>
+              <span class="bd-deadline">Frist · 17:00 Uhr</span>
+            </div>
+            <div class="bd-title">Großgruppe Berlin · 3.–5. Juni · 24 Zimmer</div>
+            <p class="bd-sub">+2.856 € Brutto, abzüglich −1.840 € geschätzte Verdrängung. Netto <b>+1.016 €</b>. Ray empfiehlt anzunehmen.</p>
+            <div class="bd-actions">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn">Ablehnen</button>
+              <button class="btn btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </div>
+
+          <div class="brief-week">
+            <div style="margin-bottom:16px">
+              <span class="mono-tag muted">Diese Woche</span>
+            </div>
+            <div class="bw-grid">
+              <div class="bw-day">
+                <div class="bw-dow">Do<span class="bw-occ">42 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">109 €</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">Fr<span class="bw-occ">58 %</span></div>
+                <div class="bw-status">stark</div>
+                <div class="bw-price">152 €</div>
+              </div>
+              <div class="bw-day event">
+                <div class="bw-dow">Sa<span class="bw-occ">71 %</span></div>
+                <div class="bw-status">Pfingsten</div>
+                <div class="bw-price">168 €</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">So<span class="bw-occ">68 %</span></div>
+                <div class="bw-status">stark</div>
+                <div class="bw-price">162 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mo<span class="bw-occ">35 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">102 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Di<span class="bw-occ">28 %</span></div>
+                <div class="bw-status">ruhig</div>
+                <div class="bw-price">98 €</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mi<span class="bw-occ">31 %</span></div>
+                <div class="bw-status">stabil</div>
+                <div class="bw-price">99 €</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+
+      <!-- ═══ EMBEDDED RAY SIDEKICK ═══ -->
+      <aside class="ray-embedded">
+
+        <header class="ray-head">
+          <div class="ray-head-id">
+            <span class="ray-mark"></span>
+            <span class="ray-name">Ray</span>
+            <span class="ray-role">Embedded · Sidekick</span>
+          </div>
+          <button class="ray-close">Schließen</button>
+        </header>
+
+        <div class="ray-context">
+          <span class="ray-context-label">Im Fokus</span>
+          <span class="ray-context-val">Großgruppe Berlin · 24 Zimmer</span>
+        </div>
+
+        <div class="ray-thread">
+
+          <div class="ray-msg ray-msg-user">
+            <div class="ray-msg-who">Du · gerade eben</div>
+            <div class="ray-msg-text">Erklär mir die Verdrängung nochmal genauer.</div>
+          </div>
+
+          <div class="ray-msg ray-msg-ai">
+            <div class="ray-msg-who"><span class="ray-mark"></span>Ray</div>
+            <div class="ray-msg-text">
+              <p>Klar. Wenn die Gruppe 24 Zimmer für drei Nächte belegt, fallen 72 Zimmernächte aus dem regulären Verkauf raus. Ich habe deinen Pickup für Mi–Fr (3.–5. Juni) modelliert:</p>
+
+              <div class="ray-mini-card">
+                <div class="rmc-tag">Ohne Gruppe · regulärer Pickup</div>
+                <div class="rmc-row">
+                  <span class="rmc-label">Mi 3.6.</span>
+                  <span class="rmc-val">~14 Buchungen à 102 €</span>
+                </div>
+                <div class="rmc-row">
+                  <span class="rmc-label">Do 4.6.</span>
+                  <span class="rmc-val">~16 Buchungen à 109 €</span>
+                </div>
+                <div class="rmc-row">
+                  <span class="rmc-label">Fr 5.6.</span>
+                  <span class="rmc-val">~22 Buchungen à 152 €</span>
+                </div>
+                <div class="rmc-row rmc-row-strong">
+                  <span class="rmc-label">Erwartet ohne Gruppe</span>
+                  <span class="rmc-val">~5.840 €</span>
+                </div>
+              </div>
+
+              <p>Mit Gruppe gehen davon ungefähr <strong>12 Buchungen verloren</strong> (nicht alle, weil ohnehin nicht ausgebucht). Geschätzter Verlust: <strong>~1.840 €</strong>. Bleibt netto <strong>+1.016 €</strong>.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ray-suggestions">
+          <div class="ray-suggestions-label">Mehr fragen</div>
+          <button class="ray-suggestion">Wie genau ist deine Schätzung?</button>
+          <button class="ray-suggestion">Was passiert bei einer kleineren Gruppe?</button>
+          <button class="ray-suggestion">Wann sollte ich nicht annehmen?</button>
+        </div>
+
+        <div class="ray-input-wrap">
+          <input type="text" class="ray-input" placeholder="Frag Ray etwas..." />
+          <button class="ray-send">↑</button>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 05 · TABBED MODAL — Multi-Session via Tabs                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section" style="border-top:1px solid var(--border)">
+  <div class="frame-head">
+    <div>
+      <div class="frame-eyebrow">
+        <span class="eb-dot"></span>
+        05 — Tabbed Modal · Multi-Session
+      </div>
+      <h2 class="frame-h2">Mehrere Themen,<br>ein <em>Modal.</em></h2>
+    </div>
+    <div>
+      <p class="frame-desc">Wie das Modal aus Section 02, aber breiter und mit Tabs oben. Anna wechselt zwischen offenen Sessions per Tab-Click. Alle Topic-basiert (kein Personenname), Status-Dot pro Tab zeigt Live · Wartet · Idle. Dashboard im Hintergrund mit Blur, Modal von unten als Bottom-Sheet.</p>
+      <div class="frame-meta">
+        <div class="fm-item">
+          <div class="fm-key">Pattern</div>
+          <div class="fm-val">Wide Modal · Tabs</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Backdrop</div>
+          <div class="fm-val">Blur 4 · Dim 6 %</div>
+        </div>
+        <div class="fm-item">
+          <div class="fm-key">Aktiv</div>
+          <div class="fm-val"><em>Großgruppe</em> Berlin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-frame has-modal">
+
+    <div class="topbar">
+      <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+      <div class="tb-sep"></div>
+      <span class="tb-hotel">Hotel Seeblick · Berlin · 80 Zimmer</span>
+      <div class="tb-right">
+        <span class="tier-pill">Senior RM</span>
+        <div class="tb-av">A</div>
+      </div>
+    </div>
+
+    <div class="h-body">
+      <nav class="h-rail">
+        <div class="rail-item active"><span class="rail-glyph">B</span><span class="rail-label">Briefing</span></div>
+        <div class="rail-item"><span class="rail-glyph">U</span><span class="rail-label">Umsatz</span></div>
+        <div class="rail-item"><span class="rail-glyph">E</span><span class="rail-label">Entsch.</span><span class="rail-badge">3</span></div>
+        <div class="rail-spacer"></div>
+        <div class="rail-item"><span class="rail-glyph">S</span><span class="rail-label">Setup</span></div>
+      </nav>
+      <main class="h-main">
+        <div class="h-greet"><div class="h-greet-text">Guten Morgen, <em>Anna.</em></div></div>
+        <article class="brief">
+          <div class="brief-meta">
+            <span class="mono-tag"><span class="kicker-mark"></span>KW 18 · Dein Revenue Manager</span>
+            <span class="mono-tag muted">29. 04. 2026</span>
+          </div>
+          <h1 class="brief-headline">Pfingsten war ein <em>Volltreffer.</em><br>Nächste Woche wird <em>interessant.</em></h1>
+          <p class="brief-narrative">Du hast diesen Monat <span class="money">28.420 €</span><span class="trend up"><span class="arrow">↑</span>12 %</span> verdient, vier Punkte über deinem Plan.</p>
+          <div class="brief-decision">
+            <div class="bd-meta"><span class="mono-tag">Deine Freigabe nötig</span><span class="bd-deadline">Frist · 17:00 Uhr</span></div>
+            <div class="bd-title">Großgruppe Berlin · 3.–5. Juni · 24 Zimmer</div>
+            <p class="bd-sub">+2.856 € Brutto, abzüglich −1.840 € geschätzte Verdrängung. Netto <b>+1.016 €</b>. Ray empfiehlt anzunehmen.</p>
+            <div class="bd-actions">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn">Ablehnen</button>
+              <button class="btn btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </div>
+        </article>
+      </main>
+    </div>
+
+    <!-- Backdrop with blur (same as Section 02) -->
+    <div class="modal-backdrop"></div>
+
+    <!-- ═══ TABBED RAY MODAL ═══ -->
+    <div class="ray-modal-tabbed">
+      <div class="tm-handle"></div>
+
+      <div class="tm-tabs">
+        <button class="tm-tab active">
+          <span class="tm-tab-marker"></span>
+          Großgruppe Berlin
+          <span class="tm-tab-status live"></span>
+        </button>
+        <button class="tm-tab">
+          <span class="tm-tab-marker"></span>
+          MinLOS Festwochenende
+          <span class="tm-tab-status waiting"></span>
+        </button>
+        <button class="tm-tab">
+          <span class="tm-tab-marker"></span>
+          Direkt-Kanal Boost
+          <span class="tm-tab-status idle"></span>
+        </button>
+        <button class="tm-tab">
+          <span class="tm-tab-marker"></span>
+          Rate-Strategie Sommer
+          <span class="tm-tab-status idle"></span>
+        </button>
+        <button class="tm-tab-new" title="Neue Ray-Session"><span class="tm-tab-new-mark"></span></button>
+      </div>
+
+      <div class="tm-context-bar">
+        <span class="tm-ctx-label">Kontext</span>
+        <span class="tm-ctx-val">Großgruppe Berlin · 24 Zimmer · 3.–5. Juni</span>
+        <span class="tm-ctx-meta">Frist heute 17:00 Uhr</span>
+      </div>
+
+      <div class="tm-body">
+
+        <div class="ray-msg ray-msg-user">
+          <div class="ray-msg-who">Du · 09:14</div>
+          <div class="ray-msg-text">Soll ich die Gruppe annehmen?</div>
+        </div>
+
+        <div class="ray-msg ray-msg-ai">
+          <div class="ray-msg-who"><span class="ray-mark"></span>Ray</div>
+          <div class="ray-msg-text">
+            <p>Ja, ich würde annehmen. Drei Punkte sprechen klar dafür:</p>
+            <ul class="ray-points">
+              <li>Die Gruppe füllt einen sonst schwachen Mittwoch–Donnerstag (35–42 % Occ. ohne Gruppe)</li>
+              <li>Pfingst-Wochenende ist ohnehin stark gebucht, kein Risiko für deine Premium-Tarife</li>
+              <li>Ähnliche Anfragen letztes Jahr 4× angenommen, jedes Mal mit positivem Ergebnis</li>
+            </ul>
+            <div class="ray-mini-card">
+              <div class="rmc-tag">Forecast 3.–5. Juni</div>
+              <div class="rmc-row">
+                <span class="rmc-label">Ohne Gruppe</span>
+                <span class="rmc-val">4.280 €</span>
+              </div>
+              <div class="rmc-row rmc-row-strong">
+                <span class="rmc-label">Mit Gruppe</span>
+                <span class="rmc-val">5.296 €<span class="rmc-delta">+1.016 €</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="ray-msg-actions">
+            <button class="btn btn-primary">Annehmen, Ray antwortet</button>
+            <button class="btn">Ablehnen</button>
+          </div>
+        </div>
+
+        <div class="ray-msg ray-msg-user">
+          <div class="ray-msg-who">Du · 09:16</div>
+          <div class="ray-msg-text">Welche Konditionen kann ich verhandeln?</div>
+        </div>
+
+        <div class="ray-msg ray-msg-ai">
+          <div class="ray-msg-who"><span class="ray-mark"></span>Ray</div>
+          <div class="ray-msg-text">
+            <p>Anker bei <strong>119 €</strong> pro Zimmer, du hast Spielraum bis <strong>109 €</strong>. Zwei klassische Verhandlungspunkte:</p>
+            <ul class="ray-points">
+              <li>Frühstück inkludieren ist üblich (kostet dich ~6 €/Gast, gibt der Gruppe das Gefühl eines Deals)</li>
+              <li>Spätanreise nach 18:00 Uhr ohne Aufpreis als Geste, bindet Marketing-mäßig nichts</li>
+            </ul>
+            <p>Soll ich den Rückruf für dich vorbereiten?</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tm-input-wrap">
+        <input type="text" class="tm-input" placeholder="Frag Ray etwas zur aktiven Session..." />
+        <button class="tm-send">↑</button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ FOOT ═════════════════════════════════════════════════ -->
+<footer class="page-foot">
+  <span>happyhotel · AI Revenue Manager · Wireframe v4 · Anna (Hotelier)</span>
+  <span>05 Screens · Briefing → Modal → Inline → Spotlight → Tabbed Multi-Session</span>
+</footer>
+
+</body>
+</html>

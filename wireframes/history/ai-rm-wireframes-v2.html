@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>AI Revenue Manager — Verpackungs-Richtungen</title>
+<style>
+  * { box-sizing: border-box; }
+  :root {
+    --ink: #0a0a0a;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --bg: #f5f5f7;
+  }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* ---- Header ---- */
+  header {
+    padding: 56px 48px 32px;
+    background: white;
+    border-bottom: 1px solid var(--line);
+  }
+  header .kicker {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  header h1 { margin: 0 0 12px; font-size: 32px; font-weight: 600; letter-spacing: -0.02em; }
+  header p { margin: 0 0 8px; color: #374151; max-width: 760px; font-size: 15px; }
+  header .caps {
+    margin-top: 24px; padding: 16px; background: #fafafa; border-radius: 8px;
+    font-size: 13px; color: var(--muted); max-width: 760px;
+  }
+  header .caps b { color: var(--ink); }
+
+  /* ---- Nav ---- */
+  nav {
+    position: sticky; top: 0;
+    background: white;
+    padding: 12px 48px;
+    border-bottom: 1px solid var(--line);
+    display: flex; gap: 6px;
+    overflow-x: auto;
+    z-index: 50;
+    font-size: 13px;
+  }
+  nav a {
+    padding: 6px 14px;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  nav a:hover { background: #fafafa; color: var(--ink); }
+
+  /* ---- Sections ---- */
+  main { padding: 48px; max-width: 1280px; margin: 0 auto; }
+  section { margin-bottom: 96px; }
+  .label {
+    display: inline-block;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); font-weight: 600;
+    background: white; border: 1px solid var(--line);
+    padding: 4px 10px; border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  section h2 {
+    font-size: 26px; margin: 0 0 6px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  section .tagline {
+    font-size: 15px; color: #374151; margin: 0 0 6px;
+  }
+  section .blurb {
+    color: var(--muted); max-width: 720px; margin: 0 0 24px; font-size: 13px;
+  }
+
+  /* ============================================================ */
+  /* DIRECTION 1: PURE CHAT (WhatsApp-style)                       */
+  /* ============================================================ */
+  .phone {
+    width: 380px; max-width: 100%;
+    background: white;
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .phone-bar {
+    background: #128c7e; color: white;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px;
+  }
+  .phone-bar .av {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: white; color: #128c7e;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .phone-bar .name { font-weight: 600; }
+  .phone-bar .status { font-size: 11px; opacity: 0.85; }
+  .phone-body {
+    background: #ece5dd;
+    padding: 16px;
+    min-height: 600px;
+    background-image: radial-gradient(circle, #d6cfc4 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .bubble {
+    background: white;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    max-width: 85%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.06);
+  }
+  .bubble.me {
+    background: #dcf8c6;
+    margin-left: auto;
+  }
+  .bubble .time {
+    font-size: 10px; color: #999; text-align: right; margin-top: 4px;
+  }
+  .bubble .card {
+    border: 1px solid #ddd; border-radius: 6px;
+    padding: 8px; margin-top: 6px; background: #fafafa;
+    font-size: 12px;
+  }
+  .bubble .quick {
+    margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .bubble .quick button {
+    background: white; border: 1px solid #128c7e; color: #128c7e;
+    padding: 4px 10px; font-size: 11px; border-radius: 999px;
+    cursor: pointer;
+  }
+  .day-divider {
+    text-align: center; font-size: 11px; color: #555;
+    margin: 12px 0;
+  }
+  .day-divider span {
+    background: #fff5c2; padding: 3px 10px; border-radius: 6px;
+  }
+
+  /* ============================================================ */
+  /* DIRECTION 2: TAGESSCHAU (Newspaper)                           */
+  /* ============================================================ */
+  .paper {
+    background: #fefdf8;
+    padding: 32px;
+    border: 1px solid #d9d4c2;
+    font-family: Georgia, "Times New Roman", serif;
+    color: #1a1a1a;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .paper-head {
+    text-align: center;
+    border-bottom: 3px double #1a1a1a;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+  .paper-head .masthead {
+    font-size: 36px; font-weight: 700; letter-spacing: -0.01em;
+    font-family: "Playfair Display", Georgia, serif;
+  }
+  .paper-head .sub {
+    font-size: 12px; color: #555; margin-top: 4px;
+    font-family: -apple-system, sans-serif;
+  }
+  .paper-cols {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 24px;
+  }
+  .paper h3.lead {
+    font-size: 28px; font-weight: 700; margin: 0 0 8px; line-height: 1.2;
+  }
+  .paper .byline {
+    font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    font-family: -apple-system, sans-serif;
+  }
+  .paper p { font-size: 14px; line-height: 1.65; margin: 0 0 12px; }
+  .paper .pull-quote {
+    border-left: 3px solid #1a1a1a;
+    padding: 8px 12px; margin: 16px 0;
+    font-style: italic; font-size: 16px;
+  }
+  .sidebar-news {
+    border-left: 1px solid #d9d4c2;
+    padding-left: 20px;
+  }
+  .sidebar-news .item {
+    padding: 12px 0; border-bottom: 1px solid #d9d4c2;
+  }
+  .sidebar-news .item:last-child { border-bottom: none; }
+  .sidebar-news .label-news {
+    font-family: -apple-system, sans-serif;
+    font-size: 10px; text-transform: uppercase;
+    color: #888; letter-spacing: 0.1em; margin-bottom: 4px;
+  }
+  .sidebar-news h4 {
+    font-size: 15px; margin: 0 0 4px; line-height: 1.3;
+  }
+  .sidebar-news .item p {
+    font-size: 12px; color: #555; margin: 0;
+  }
+  .ticker {
+    background: #1a1a1a; color: #f5f5f5;
+    padding: 8px 16px;
+    font-size: 12px;
+    margin-top: 20px;
+    font-family: -apple-system, sans-serif;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker b { color: #fbbf24; }
+
+  /* ============================================================ */
+  /* DIRECTION 3: MISSION CONTROL                                  */
+  /* ============================================================ */
+  .mission {
+    background: #0b1220;
+    color: #e5e7eb;
+    padding: 24px;
+    border-radius: 8px;
+    font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    border: 1px solid #1f2937;
+  }
+  .mission-bar {
+    display: flex; gap: 24px;
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 12px; margin-bottom: 16px;
+    font-size: 11px;
+  }
+  .mission-bar .stat-m { }
+  .mission-bar .stat-m .l { color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; }
+  .mission-bar .stat-m .v { color: #4ade80; font-size: 18px; margin-top: 2px; }
+  .mission-bar .stat-m .v.amber { color: #fbbf24; }
+  .mission-bar .stat-m .v.red { color: #f87171; }
+  .mission-grid {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 16px;
+  }
+  .mission-panel {
+    border: 1px solid #1f2937;
+    padding: 12px;
+    background: #0a0f1c;
+  }
+  .mission-panel .title {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: #6b7280; margin-bottom: 10px;
+    border-bottom: 1px solid #1f2937; padding-bottom: 6px;
+  }
+  .mission-row {
+    display: grid; grid-template-columns: 60px 1fr 60px 80px;
+    padding: 4px 0; gap: 8px;
+    border-bottom: 1px dotted #1f2937;
+  }
+  .mission-row:last-child { border-bottom: none; }
+  .mission-row .ts { color: #6b7280; }
+  .mission-row .msg { color: #e5e7eb; }
+  .mission-row .impact.pos { color: #4ade80; text-align: right; }
+  .mission-row .impact.neg { color: #f87171; text-align: right; }
+  .mission-row .src { color: #60a5fa; text-align: right; }
+
+  .heat {
+    display: grid; grid-template-columns: repeat(14, 1fr);
+    gap: 2px; margin-top: 8px;
+  }
+  .heat .cell {
+    aspect-ratio: 1; border-radius: 2px;
+  }
+  .heat .c0 { background: #1f2937; }
+  .heat .c1 { background: #166534; }
+  .heat .c2 { background: #16a34a; }
+  .heat .c3 { background: #4ade80; }
+  .heat .c4 { background: #facc15; }
+  .heat .c5 { background: #f97316; }
+  .heat .c6 { background: #dc2626; }
+
+  .hotels-list .h-row {
+    display: grid; grid-template-columns: 1fr 60px 60px 60px 24px;
+    padding: 6px 0; gap: 8px;
+    border-bottom: 1px dotted #1f2937;
+    align-items: center;
+  }
+  .hotels-list .h-row .name { color: #e5e7eb; }
+  .hotels-list .h-row .v { text-align: right; }
+  .hotels-list .h-row .v.g { color: #4ade80; }
+  .hotels-list .h-row .v.a { color: #fbbf24; }
+  .hotels-list .h-row .v.r { color: #f87171; }
+  .hotels-list .h-row .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #4ade80;
+  }
+  .hotels-list .h-row .dot.amber { background: #fbbf24; }
+  .hotels-list .h-row .dot.red { background: #f87171; }
+
+  /* ============================================================ */
+  /* DIRECTION 4: CARD DECK MOBILE                                 */
+  /* ============================================================ */
+  .deck-stage {
+    background: #fef3e7;
+    padding: 32px;
+    border-radius: 24px;
+    display: flex; justify-content: center;
+    position: relative;
+  }
+  .deck-stage::before {
+    content: ""; position: absolute; inset: 32px;
+    border-radius: 16px;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.4), transparent 70%);
+    pointer-events: none;
+  }
+  .card-stack {
+    position: relative;
+    width: 320px; height: 480px;
+  }
+  .swipe-card {
+    position: absolute;
+    width: 320px; height: 480px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    padding: 24px;
+    display: flex; flex-direction: column;
+  }
+  .swipe-card.back-2 { transform: translateY(16px) scale(0.96); opacity: 0.5; z-index: 1; }
+  .swipe-card.back-1 { transform: translateY(8px) scale(0.98); opacity: 0.75; z-index: 2; }
+  .swipe-card.front { z-index: 3; }
+  .swipe-card .topic {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  .swipe-card .head {
+    font-size: 22px; font-weight: 600; line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .swipe-card .why {
+    font-size: 13px; color: #374151; margin-bottom: 16px;
+  }
+  .swipe-card .impact {
+    background: #ecfdf5; color: #065f46;
+    padding: 8px 12px; border-radius: 8px;
+    font-size: 13px; font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .swipe-card .footer {
+    margin-top: auto;
+    display: flex; justify-content: space-between;
+    align-items: center;
+  }
+  .swipe-action {
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .swipe-action.no { background: white; color: #dc2626; border: 2px solid #fecaca; }
+  .swipe-action.yes { background: #16a34a; color: white; }
+  .swipe-action.maybe { background: white; color: #d97706; border: 2px solid #fed7aa; font-size: 22px; }
+  .swipe-card .progress {
+    font-size: 11px; color: var(--muted); text-align: center; margin-bottom: 8px;
+  }
+
+  /* ============================================================ */
+  /* DIRECTION 5: STRATEGY CANVAS                                  */
+  /* ============================================================ */
+  .canvas-wrap {
+    background: #fafafa;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .canvas-bar {
+    padding: 12px 20px; background: white;
+    border-bottom: 1px solid var(--line);
+    font-size: 12px; color: var(--muted);
+    display: flex; justify-content: space-between;
+  }
+  .canvas {
+    position: relative;
+    height: 520px;
+    background-color: #fafafa;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .axis-x, .axis-y {
+    position: absolute; color: var(--muted); font-size: 11px;
+  }
+  .axis-x.l { bottom: 16px; left: 16px; }
+  .axis-x.r { bottom: 16px; right: 16px; }
+  .axis-y.t { top: 16px; left: 16px; }
+  .axis-y.b { bottom: 16px; left: 16px; }
+  .map-axis {
+    position: absolute;
+    top: 50%; left: 0; right: 0; height: 1px;
+    background: rgba(0,0,0,0.08);
+  }
+  .map-axis.v {
+    left: 50%; top: 0; bottom: 0; width: 1px; height: auto;
+  }
+  .point {
+    position: absolute;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--muted);
+    transform: translate(-50%, -50%);
+  }
+  .point.me {
+    width: 24px; height: 24px;
+    background: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.2);
+  }
+  .point.target {
+    width: 18px; height: 18px;
+    background: transparent;
+    border: 2px dashed #16a34a;
+  }
+  .point .lbl {
+    position: absolute;
+    left: 14px; top: -4px;
+    font-size: 11px;
+    color: var(--ink);
+    background: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  .arrow {
+    position: absolute;
+    height: 1px;
+    background: #2563eb;
+    transform-origin: 0 0;
+  }
+  .arrow::after {
+    content: "→"; color: #2563eb;
+    position: absolute; right: -10px; top: -10px; font-size: 14px;
+  }
+  .canvas-tag {
+    position: absolute;
+    background: white;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    max-width: 220px;
+  }
+  .canvas-tag .small { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+
+  /* ============================================================ */
+  /* DIRECTION 6: AGENT AT WORK (Cursor-style)                     */
+  /* ============================================================ */
+  .work-wrap {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    min-height: 540px;
+  }
+  .work-main {
+    padding: 16px;
+    background: #fafafa;
+    border-right: 1px solid var(--line);
+  }
+  .work-main .tab-bar {
+    display: flex; gap: 4px; margin-bottom: 12px;
+    font-size: 12px;
+  }
+  .work-main .tab {
+    padding: 6px 12px; background: white;
+    border: 1px solid var(--line);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    color: var(--muted);
+  }
+  .work-main .tab.active { color: var(--ink); font-weight: 500; }
+  .grid-cal {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 11px;
+  }
+  .grid-cal .row {
+    display: grid; grid-template-columns: 100px repeat(7, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+  .grid-cal .row:last-child { border-bottom: none; }
+  .grid-cal .row .h {
+    padding: 8px; color: var(--muted); font-weight: 500;
+    background: #fafafa;
+  }
+  .grid-cal .row .c {
+    padding: 8px; border-left: 1px solid var(--line);
+    text-align: center;
+  }
+  .grid-cal .row .c.changed { background: #ecfdf5; color: #065f46; font-weight: 500; }
+  .grid-cal .row .c.changed::after { content: " ↑"; color: #16a34a; }
+  .grid-cal .row .c.changed.dn::after { content: " ↓"; color: #dc2626; }
+  .grid-cal .row .c.changed.dn { background: #fef2f2; color: #991b1b; }
+  .grid-cal .row .c.highlighted {
+    background: #fef9c3;
+    box-shadow: inset 0 0 0 2px #facc15;
+  }
+
+  .work-side {
+    display: flex; flex-direction: column;
+    background: white;
+  }
+  .work-side .head {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .work-side .head .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #16a34a;
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+  .work-side .stream {
+    flex: 1; overflow-y: auto;
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+  .work-side .step {
+    display: flex; gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .work-side .step .icon {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #eff6ff; color: #2563eb;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .work-side .step.done .icon { background: #dcfce7; color: #16a34a; }
+  .work-side .step.active .icon { background: #fef3c7; color: #d97706; }
+  .work-side .step .body { flex: 1; }
+  .work-side .step .body .t { font-weight: 500; }
+  .work-side .step .body .s { color: var(--muted); margin-top: 2px; }
+  .work-side .input {
+    padding: 12px 16px; border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--muted);
+  }
+  .work-side .input .box {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+
+  /* ============================================================ */
+  /* COMMON FOOTER                                                 */
+  /* ============================================================ */
+  footer {
+    text-align: center; padding: 32px;
+    color: var(--muted); font-size: 12px;
+    border-top: 1px solid var(--line);
+    background: white;
+  }
+
+  @media (max-width: 720px) {
+    main { padding: 24px; }
+    header { padding: 24px; }
+    .paper-cols, .work-wrap { grid-template-columns: 1fr; }
+    .mission-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">v2 · Wurf 2 · Verpackungs-Richtungen</div>
+  <h1>Wie verpacken wir die bestehenden Capabilities in einen Agenten?</h1>
+  <p>Sechs unterschiedliche Metaphern für dasselbe Ding. Ziel: Den Lösungsraum aufmachen, bevor wir uns festlegen. Jede Richtung verpackt dieselben Funktionen anders — Pricing, Forecast, Comp-Set, Restriktionen, Events, Pickup, Distribution, Decision Log, Multi-Property, Hybrid-Team.</p>
+  <div class="caps">
+    <b>Verpackt werden in jeder Richtung:</b> Preisempfehlungen + Auto-Execute · Forecast &amp; Pickup · Comp-Set Monitoring · Event-Demand-Effekt · Restriktionen (MinLOS/CTA/CTD) · Channel/OTA-Hygiene · Distribution (Promos, Direkt-Boost) · Displacement / Gruppen · Multi-Property · Hybrid-Eskalation an menschliche Experten · Decision Log &amp; Reasoning.
+  </div>
+</header>
+
+<nav>
+  <a href="#chat">1 · Pure Chat</a>
+  <a href="#paper">2 · Tagesschau</a>
+  <a href="#mission">3 · Mission Control</a>
+  <a href="#deck">4 · Card Deck</a>
+  <a href="#canvas">5 · Strategy Canvas</a>
+  <a href="#work">6 · Agent at Work</a>
+</nav>
+
+<main>
+
+  <!-- ========================================================== -->
+  <!-- 1. PURE CHAT                                                -->
+  <!-- ========================================================== -->
+  <section id="chat">
+    <div class="label">Richtung 1 · Radikal konversationell</div>
+    <h2>"Pure Chat" — der AI-RM auf WhatsApp</h2>
+    <p class="tagline">Keine App. Kein Dashboard. Nur ein Chat — wie mit einem echten RM-Mitarbeiter, der dir morgens schreibt.</p>
+    <p class="blurb">Extreme Variante des Conversation-First-Prinzips. Alle Capabilities werden zu Nachrichten. Charts, Vorschläge, Approvals laufen als Quick-Reply-Cards. Funktioniert auf jedem Endgerät — der Owner braucht keinen Laptop. Risiko: tiefe Drilldowns sind im Chat schwierig — bräuchte Web-Dashboard als Backup für Power-User.</p>
+
+    <div class="phone">
+      <div class="phone-bar">
+        <div class="av">RM</div>
+        <div>
+          <div class="name">happyhotel · AI Revenue Manager</div>
+          <div class="status">online · gerade aktiv</div>
+        </div>
+      </div>
+      <div class="phone-body">
+        <div class="day-divider"><span>Heute · Mittwoch, 29. April</span></div>
+
+        <div class="bubble">
+          ☀️ Guten Morgen Anna! Diese Nacht 23 Preisänderungen, Pfingsten +18 € (Frankfurter Messe wurde bestätigt). Heute zeichnet sich gut ab.
+          <div class="time">06:30</div>
+        </div>
+
+        <div class="bubble">
+          Brauche dich kurz bei <b>3 Sachen</b>:
+          <div class="card">
+            <b>1. Großgruppe Berlin</b><br>
+            24 Zi · 3.–5. Juni · 119 €/Nacht<br>
+            <span style="color: #16a34a;">+2.856 €</span> Brutto, aber <span style="color: #dc2626;">−1.840 €</span> Verdrängung
+          </div>
+          <div class="quick">
+            <button>Annehmen</button>
+            <button>Ablehnen</button>
+            <button>Erkläre mehr</button>
+          </div>
+          <div class="time">06:31</div>
+        </div>
+
+        <div class="bubble me">
+          Erkläre mehr
+          <div class="time">08:14</div>
+        </div>
+
+        <div class="bubble">
+          Klar. Das Wochenende war für 78 % Auslastung à 142 € geplant. Wenn ich die Gruppe annehme, fülle ich auf 100 %, aber die 24 Zimmer gehen für 119 € weg statt durchschnittlich 165 €. Mein Vorschlag: <b>Annehmen wenn du Cash-Flow brauchst, sonst halten.</b>
+          <div class="time">08:14</div>
+        </div>
+
+        <div class="bubble me">
+          Ablehnen
+          <div class="time">08:15</div>
+        </div>
+
+        <div class="bubble">
+          ✓ Erledigt. Marc (RM-Experte) habe ich den Kontext gegeben, falls das Reisebüro nachhakt.
+          <div class="time">08:15</div>
+        </div>
+
+        <div class="bubble">
+          📊 Wenn du Zeit hast — Marc hat 3 Empfehlungen für deine Sommer-Strategie. Soll ich dir morgen 9 Uhr 15 Min mit ihm blocken?
+          <div class="quick">
+            <button>Ja, buchen</button>
+            <button>Anderer Termin</button>
+          </div>
+          <div class="time">08:16</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- 2. TAGESSCHAU                                               -->
+  <!-- ========================================================== -->
+  <section id="paper">
+    <div class="label">Richtung 2 · Redaktionell, gelesen wie ein Magazin</div>
+    <h2>"Die Tagesschau" — dein Hotel als Morgenzeitung</h2>
+    <p class="tagline">Jeden Morgen erscheint deine "Hotel-Tagesausgabe" — Top-Story, Marktbewegungen, Wettbewerb, Aussichten.</p>
+    <p class="blurb">Nutzt das vertraute Mental Model "Zeitung lesen". Erzählend, scannbar, mit klarer Hierarchie. Spielt elegant mit der Idee "der AI-RM hat über Nacht gearbeitet — hier ist sein Bericht". Funktioniert besonders gut für Owner, die nicht täglich aktiv sein wollen — Konsumieren statt Bedienen.</p>
+
+    <div class="paper">
+      <div class="paper-head">
+        <div class="masthead">Hotel Seeblick Tageblatt</div>
+        <div class="sub">Mittwoch, 29. April 2026 · Ausgabe Nr. 119 · Kuratiert von deinem AI Revenue Manager</div>
+      </div>
+
+      <div class="paper-cols">
+        <article>
+          <div class="byline">Top-Story · Pricing</div>
+          <h3 class="lead">Pfingsten wird zum Glücksfall: Messe Frankfurt zieht Preise um 18 € nach oben</h3>
+          <p>In der Nacht zum Mittwoch wurden 23 Preise automatisch angehoben — die größte Bewegung betrifft den Pfingstmontag. Auslöser ist die gestern offiziell bestätigte Frankfurter Messe, die historisch den Pickup um den Faktor drei beschleunigt.</p>
+          <p>Das Hotel Seeblick steht damit aktuell bei einem Median-Preis von 184 €, exakt im Mittel des Comp-Sets. Der Booking-Demand-Index für Berlin hat sich gegenüber Vorjahres-Pfingsten um 28 % erhöht — Anlass, in den nächsten Tagen weiter nachzujustieren.</p>
+          <div class="pull-quote">"Wenn der Pickup so weiterläuft, halte ich noch zwei Anpassungen für sinnvoll — voraussichtlich am Wochenende."</div>
+          <p>Auch das Wochenende vom 9.–11. Mai wurde nachgezogen: 21 Änderungen, im Schnitt +6 €. Treiber ist hier die Pickup-Beschleunigung in den letzten 72 Stunden.</p>
+        </article>
+
+        <aside class="sidebar-news">
+          <div class="item">
+            <div class="label-news">Marktbewegung</div>
+            <h4>Hotel Adler senkt seit 3 Tagen alle Preise — vermutlich Software-Panne</h4>
+            <p>Die ungewöhnliche Bewegung wurde aus den Empfehlungen ausgeklammert.</p>
+          </div>
+          <div class="item">
+            <div class="label-news">Performance</div>
+            <h4>Mai-Forecast steigt auf 62 % Belegung</h4>
+            <p>4 Punkte über dem Wert vom Monatsanfang.</p>
+          </div>
+          <div class="item">
+            <div class="label-news">Anstehend</div>
+            <h4>3 Entscheidungen auf deinem Tisch</h4>
+            <p>Großgruppe Berlin, MinLOS Festwochenende, Sommerstrategie mit Marc.</p>
+          </div>
+          <div class="item">
+            <div class="label-news">Wetter / Aussichten</div>
+            <h4>Pfingsten +28 % Nachfrage<br>Mai-Wochenende stabil<br>Juli: Vorsicht KW 28+29</h4>
+          </div>
+        </aside>
+      </div>
+
+      <div class="ticker">
+        LIVE · <b>+12 %</b> Umsatz heute vs. Vorwoche · <b>62 %</b> Belegung Mai · <b>23</b> Auto-Anpassungen heute Nacht · <b>3</b> offene Entscheidungen · <b>+8.420 €</b> RevPAR-Uplift Q1 vs. Baseline
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- 3. MISSION CONTROL                                          -->
+  <!-- ========================================================== -->
+  <section id="mission">
+    <div class="label">Richtung 3 · Operations Center</div>
+    <h2>"Mission Control" — die Brücke für Power-User &amp; Multi-Property</h2>
+    <p class="tagline">Eine dichte, lebendige Brücke. Live-Stream der Aktivität, Heatmaps, Portfolio-Status auf einen Blick.</p>
+    <p class="blurb">Bewusster Gegenentwurf zur Zeitung: maximal informationsdicht, real-time, technisch. Für Hotelgruppen, Cluster-RMs, das happyhotel-CS-Team intern. Macht das "Always-On"-Versprechen physisch sichtbar — der Agent arbeitet, du siehst es. Risiko: für GMs zu viel; eher das "Dach" über mehreren Properties oder das Tool für die menschlichen Experten.</p>
+
+    <div class="mission">
+      <div class="mission-bar">
+        <div class="stat-m"><div class="l">RevPAR · 7d</div><div class="v">87.40 €</div></div>
+        <div class="stat-m"><div class="l">Pickup · 24h</div><div class="v">+18</div></div>
+        <div class="stat-m"><div class="l">Forecast · Mai</div><div class="v amber">62 %</div></div>
+        <div class="stat-m"><div class="l">Auto-Decisions</div><div class="v">23</div></div>
+        <div class="stat-m"><div class="l">Open Esc.</div><div class="v amber">3</div></div>
+        <div class="stat-m"><div class="l">Comp Δ Median</div><div class="v">+2.8 €</div></div>
+        <div class="stat-m"><div class="l">PMS Sync</div><div class="v red">DEGRADED</div></div>
+      </div>
+
+      <div class="mission-grid">
+        <div class="mission-panel">
+          <div class="title">▶ Live Decision Stream</div>
+          <div class="mission-row"><span class="ts">06:31</span><span class="msg">PRICE 01.06 Double 171 → 189 (Frankfurt Messe)</span><span class="impact pos">+18€</span><span class="src">AUTO</span></div>
+          <div class="mission-row"><span class="ts">06:30</span><span class="msg">PRICE 11.05 Single 89 → 95 (pickup index 2.4×)</span><span class="impact pos">+6€</span><span class="src">AUTO</span></div>
+          <div class="mission-row"><span class="ts">06:30</span><span class="msg">PRICE 10.05 Double 142 → 148</span><span class="impact pos">+6€</span><span class="src">AUTO</span></div>
+          <div class="mission-row"><span class="ts">06:18</span><span class="msg">COMPSET Adler -40% flagged as anomaly, ignored</span><span class="impact">—</span><span class="src">FILTER</span></div>
+          <div class="mission-row"><span class="ts">06:15</span><span class="msg">ALERT PMS Mews API 503, escalated to Marc</span><span class="impact">—</span><span class="src">ESC</span></div>
+          <div class="mission-row"><span class="ts">06:02</span><span class="msg">RESTRICTION suggest MinLOS 3 14.-17.08 (festival)</span><span class="impact pos">+480€</span><span class="src">SUGGEST</span></div>
+          <div class="mission-row"><span class="ts">05:48</span><span class="msg">GROUP req Berlin 24rm 03.-05.06 awaiting decision</span><span class="impact">±1k€</span><span class="src">QUEUE</span></div>
+          <div class="mission-row"><span class="ts">04:11</span><span class="msg">BOOKING genius discount auto-extended W22</span><span class="impact pos">+14bk</span><span class="src">AUTO</span></div>
+          <div class="mission-row"><span class="ts">03:42</span><span class="msg">FORECAST May upgraded 58→62%</span><span class="impact pos">+4pp</span><span class="src">MODEL</span></div>
+        </div>
+
+        <div class="mission-panel">
+          <div class="title">⊞ Hotel Status · 6 properties</div>
+          <div class="hotels-list">
+            <div class="h-row"><span class="name">Seeblick Berlin</span><span class="v g">62%</span><span class="v">87€</span><span class="v amber">3</span><span class="dot amber"></span></div>
+            <div class="h-row"><span class="name">Bergblick Garmisch</span><span class="v g">71%</span><span class="v g">112€</span><span class="v g">0</span><span class="dot"></span></div>
+            <div class="h-row"><span class="name">Stadthotel Frankfurt</span><span class="v g">88%</span><span class="v g">142€</span><span class="v g">0</span><span class="dot"></span></div>
+            <div class="h-row"><span class="name">Strandhof Sylt</span><span class="v amber">54%</span><span class="v">96€</span><span class="v">1</span><span class="dot amber"></span></div>
+            <div class="h-row"><span class="name">Altstadt Köln</span><span class="v g">79%</span><span class="v g">128€</span><span class="v g">0</span><span class="dot"></span></div>
+            <div class="h-row"><span class="name">Wein &amp; Sein Mainz</span><span class="v r">38%</span><span class="v r">62€</span><span class="v r">2</span><span class="dot red"></span></div>
+          </div>
+
+          <div class="title" style="margin-top: 16px;">▤ Belegung Heatmap · Mai</div>
+          <div class="heat">
+            <div class="cell c2"></div><div class="cell c3"></div><div class="cell c4"></div><div class="cell c4"></div><div class="cell c5"></div><div class="cell c6"></div><div class="cell c5"></div>
+            <div class="cell c1"></div><div class="cell c2"></div><div class="cell c3"></div><div class="cell c3"></div><div class="cell c4"></div><div class="cell c5"></div><div class="cell c5"></div>
+            <div class="cell c2"></div><div class="cell c2"></div><div class="cell c3"></div><div class="cell c4"></div><div class="cell c5"></div><div class="cell c6"></div><div class="cell c6"></div>
+            <div class="cell c1"></div><div class="cell c1"></div><div class="cell c2"></div><div class="cell c3"></div><div class="cell c3"></div><div class="cell c4"></div><div class="cell c4"></div>
+          </div>
+          <div style="font-size: 10px; color: #6b7280; margin-top: 8px;">
+            ░ leer · ▒ niedrig · ▓ hoch · █ ausgebucht
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- 4. CARD DECK                                                -->
+  <!-- ========================================================== -->
+  <section id="deck">
+    <div class="label">Richtung 4 · Mobile, gestenbasiert</div>
+    <h2>"Card Deck" — Entscheidungen wegswipen</h2>
+    <p class="tagline">Eine Karte. Eine Entscheidung. Swipe rechts = Übernehmen. Swipe links = Ablehnen.</p>
+    <p class="blurb">Maximaler Minimalismus für die Owner-Persona, die zwischen zwei Meetings 2 Min Zeit hat. Reduziert die kognitive Last auf "nimm Stellung zu einer Sache". Funktioniert weil happyhotel die meisten Entscheidungen schon vorbereitet — der Owner muss nur noch ja/nein sagen. Risiko: Kein Platz für Begründung — Tap auf die Karte muss zur Reasoning-Detailseite führen.</p>
+
+    <div class="deck-stage">
+      <div class="card-stack">
+        <div class="swipe-card back-2">
+          <div class="topic">Restriktion</div>
+          <div class="head">MinLOS 3 für Festwochenende?</div>
+        </div>
+        <div class="swipe-card back-1">
+          <div class="topic">Strategie</div>
+          <div class="head">Sommer-Review mit Marc?</div>
+        </div>
+        <div class="swipe-card front">
+          <div class="progress">Entscheidung 1 von 3</div>
+          <div class="topic">Gruppe · 119 €/Nacht</div>
+          <div class="head">Berliner Reisebüro: 24 Zimmer für 3.–5. Juni annehmen?</div>
+          <div class="why">Diese Wochenende war für 78 % Auslastung geplant (à 142 €). Die Gruppe füllt auf 100 %, aber zu niedrigerem Preis.</div>
+          <div class="impact">+1.016 € Netto-Effekt geschätzt</div>
+          <div class="footer">
+            <div class="swipe-action no">✕</div>
+            <div class="swipe-action maybe">?</div>
+            <div class="swipe-action yes">✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 16px; font-size: 12px; color: var(--muted);">
+      ✕ Ablehnen &nbsp;·&nbsp; ? Diskutieren mit AI/Marc &nbsp;·&nbsp; ✓ Übernehmen
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- 5. STRATEGY CANVAS                                          -->
+  <!-- ========================================================== -->
+  <section id="canvas">
+    <div class="label">Richtung 5 · Räumlich, visuell, strategisch</div>
+    <h2>"Strategy Canvas" — sieh, wo du im Markt stehst</h2>
+    <p class="tagline">Eine 2D-Karte, auf der du, dein Comp-Set, dein Forecast und dein Ziel als Punkte erscheinen. Der AI-RM zeigt, in welche Richtung er dich bewegt.</p>
+    <p class="blurb">Spielt mit der Tatsache, dass Pricing räumlich ist (Preis × Belegung). Macht Strategie greifbar — du siehst, dass du teurer und voller wirst, oder dass du im Mittelfeld feststeckst. Eignet sich besonders für die Strategie-Ebene (jährliches/quartalsweises Review). Risiko: nicht für die tägliche Bedienung — eher Begleiter zum Briefing.</p>
+
+    <div class="canvas-wrap">
+      <div class="canvas-bar">
+        <span><b>Hotel Seeblick</b> · Position im Markt · April–Juli 2026</span>
+        <span>Ø Preis × Belegung · Filter: Comp-Set · Wochenenden</span>
+      </div>
+      <div class="canvas">
+        <div class="map-axis"></div>
+        <div class="map-axis v"></div>
+
+        <div class="axis-y t">↑ höhere Belegung</div>
+        <div class="axis-y b">↓ niedrigere Belegung</div>
+        <div class="axis-x l">← niedrigerer Preis</div>
+        <div class="axis-x r">höherer Preis →</div>
+
+        <!-- Comp-set points -->
+        <div class="point" style="top: 38%; left: 32%;"><div class="lbl">Adler (Anomalie)</div></div>
+        <div class="point" style="top: 28%; left: 58%;"><div class="lbl">Stadthof</div></div>
+        <div class="point" style="top: 22%; left: 70%;"><div class="lbl">Riverside</div></div>
+        <div class="point" style="top: 45%; left: 50%;"><div class="lbl">Comp Median</div></div>
+        <div class="point" style="top: 30%; left: 78%;"><div class="lbl">Premier</div></div>
+
+        <!-- Me -->
+        <div class="point me" style="top: 55%; left: 45%;"><div class="lbl">Du · heute · 171 € · 47 %</div></div>
+
+        <!-- Target -->
+        <div class="point target" style="top: 25%; left: 65%;"><div class="lbl">Mein Ziel · Pfingsten · 195 € · 78 %</div></div>
+
+        <!-- Trajectory arrow -->
+        <div class="arrow" style="top: 55%; left: 45%; width: 30%; transform: rotate(-40deg);"></div>
+
+        <!-- Annotation -->
+        <div class="canvas-tag" style="top: 12%; right: 24px;">
+          <div class="small">Empfehlung</div>
+          <div>Zwei Hebel bringen dich zum Ziel: Preise +14 € im Schnitt &amp; MinLOS 3 für Festwochenende.</div>
+        </div>
+
+        <div class="canvas-tag" style="bottom: 60px; left: 24px;">
+          <div class="small">Risiko</div>
+          <div>Wenn du nichts tust, bleibst du im Mittelfeld — geschätzt −2.840 € RevPAR ggü. Plan.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== -->
+  <!-- 6. AGENT AT WORK                                            -->
+  <!-- ========================================================== -->
+  <section id="work">
+    <div class="label">Richtung 6 · Live-Sidecar, Cursor-Stil</div>
+    <h2>"Agent at Work" — der Agent arbeitet, du schaust zu</h2>
+    <p class="tagline">Die bekannte Preistabelle bleibt links — rechts läuft eine Sidebar, in der du dem AI-RM live bei der Arbeit zusiehst und ihm Anweisungen gibst.</p>
+    <p class="blurb">Bewahrt die heutige Software-Investition (Preistabelle, Charts, Kalender) und legt den Agenten als ständigen Begleiter daneben. Der GM sieht in Echtzeit, was der Agent tut, kann unterbrechen, fragen, verändern. Familiäres Mental Model für alle, die Cursor, Copilot oder Notion AI kennen. Ideal für Power-User, die nicht ganz loslassen wollen.</p>
+
+    <div class="work-wrap">
+      <div class="work-main">
+        <div class="tab-bar">
+          <div class="tab active">Preistabelle</div>
+          <div class="tab">Restriktionen</div>
+          <div class="tab">Kalender</div>
+          <div class="tab">Performance</div>
+        </div>
+        <div class="grid-cal">
+          <div class="row">
+            <div class="h"></div>
+            <div class="h">Do 30.4</div>
+            <div class="h">Fr 1.5</div>
+            <div class="h">Sa 2.5</div>
+            <div class="h">So 3.5</div>
+            <div class="h">Mo 4.5</div>
+            <div class="h">Di 5.5</div>
+            <div class="h">Mi 6.5</div>
+          </div>
+          <div class="row">
+            <div class="h">Belegung</div>
+            <div class="c">42%</div><div class="c">58%</div><div class="c">71%</div><div class="c">68%</div><div class="c">35%</div><div class="c">28%</div><div class="c">31%</div>
+          </div>
+          <div class="row">
+            <div class="h">ADR</div>
+            <div class="c">98€</div><div class="c">142€</div><div class="c">158€</div><div class="c">152€</div><div class="c">96€</div><div class="c">92€</div><div class="c">94€</div>
+          </div>
+          <div class="row">
+            <div class="h">Double Room</div>
+            <div class="c">109€</div>
+            <div class="c changed">152€</div>
+            <div class="c changed highlighted">168€</div>
+            <div class="c changed">162€</div>
+            <div class="c">102€</div><div class="c">98€</div><div class="c">99€</div>
+          </div>
+          <div class="row">
+            <div class="h">Single Room</div>
+            <div class="c">79€</div>
+            <div class="c changed">98€</div>
+            <div class="c changed">112€</div>
+            <div class="c changed">109€</div>
+            <div class="c">76€</div><div class="c">72€</div><div class="c">75€</div>
+          </div>
+          <div class="row">
+            <div class="h">vs. Comp Median</div>
+            <div class="c">−4€</div><div class="c">+2€</div><div class="c">+8€</div><div class="c">+5€</div><div class="c">−2€</div><div class="c">−4€</div><div class="c">−3€</div>
+          </div>
+        </div>
+        <div style="margin-top: 12px; padding: 12px; background: #fef9c3; border-radius: 6px; font-size: 12px;">
+          🟡 <b>Sa, 2. Mai · Double Room 168 €</b> — Klick zur Begründung des Agents (rechts).
+        </div>
+      </div>
+
+      <div class="work-side">
+        <div class="head">
+          <span class="pulse"></span> AI Revenue Manager arbeitet
+        </div>
+        <div class="stream">
+          <div class="step done">
+            <div class="icon">✓</div>
+            <div class="body">
+              <div class="t">Pickup-Daten geladen</div>
+              <div class="s">Letzte 14 Tage · 412 Buchungen</div>
+            </div>
+          </div>
+          <div class="step done">
+            <div class="icon">✓</div>
+            <div class="body">
+              <div class="t">Comp-Set abgefragt</div>
+              <div class="s">5 Hotels · Median 158 €</div>
+            </div>
+          </div>
+          <div class="step done">
+            <div class="icon">✓</div>
+            <div class="body">
+              <div class="t">Event-Wirkung geprüft</div>
+              <div class="s">Frankfurt Messe bestätigt → +12 €</div>
+            </div>
+          </div>
+          <div class="step active">
+            <div class="icon">⟳</div>
+            <div class="body">
+              <div class="t">Preise für KW 19 berechnen</div>
+              <div class="s">3 Tage berechnet · 4 verbleibend</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="icon">4</div>
+            <div class="body">
+              <div class="t">An Channel Manager senden</div>
+              <div class="s">Wartet auf Bestätigung von dir</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="icon">5</div>
+            <div class="body">
+              <div class="t">Decision Log schreiben</div>
+              <div class="s">Begründungen archivieren</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 16px; padding: 12px; background: #eff6ff; border-radius: 6px; font-size: 12px;">
+            💬 <b>Frage:</b> Soll ich für den Sa, 2.5. weiter auf 168 € gehen oder bei 162 € bleiben? Comp-Set steht bei 165 € Median.
+            <div style="margin-top: 8px; display: flex; gap: 6px;">
+              <button style="padding: 4px 10px; font-size: 11px; border-radius: 6px; background: #2563eb; color: white; border: none;">168 €</button>
+              <button style="padding: 4px 10px; font-size: 11px; border-radius: 6px; background: white; border: 1px solid var(--line);">165 €</button>
+              <button style="padding: 4px 10px; font-size: 11px; border-radius: 6px; background: white; border: 1px solid var(--line);">162 €</button>
+            </div>
+          </div>
+        </div>
+        <div class="input">
+          <div class="box">Frag den Agent: "Warum...?"</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Wurf 2 · sechs Verpackungs-Richtungen für dieselben Capabilities. Keine ist "richtig" — sie machen den Möglichkeitsraum auf, bevor wir uns festlegen.
+</footer>
+
+</body>
+</html>

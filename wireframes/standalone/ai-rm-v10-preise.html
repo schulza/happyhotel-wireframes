@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel · Preise (Kai) · v10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --shell-2:      #efeeea;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --warn:         #8a6a3a;
+  --warn-soft:    #f1ece3;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --border-3:     #a6a5a0;
+
+  --good:         #1e3a5f;
+  --bad:          #8c2f2f;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ─── TOPBAR (sticky) ─────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  gap: 16px;
+}
+.tb-brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+}
+.tb-brand svg { height: 20px; width: auto; display: block; }
+.tb-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border-2);
+  flex-shrink: 0;
+}
+.tb-nav { display: flex; gap: 4px; }
+.tb-nav-item {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 7px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.tb-nav-item:hover { background: var(--shell-2); color: var(--ink); }
+.tb-nav-item.active { background: var(--shell-2); color: var(--ink); }
+
+.tb-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tier-pill {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 100px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.tb-av {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+}
+
+/* ═══ E-BODY · main + side ═══════════════════════ */
+.e-body {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  min-height: calc(100vh - 56px);
+}
+.e-main {
+  background: var(--shell);
+  padding: 40px 48px 56px;
+  border-right: 1px solid var(--border);
+  min-width: 0;
+}
+
+/* Toolbar (above grid) */
+.e-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+  gap: 24px;
+}
+.e-tb-title {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.e-tb-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+.e-tb-meta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+.e-tb-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.e-tb-btn {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 7px;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.e-tb-btn:hover { color: var(--ink); border-color: var(--ink-2); }
+.e-tb-btn.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.e-tb-btn.ai {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-line);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+.e-tb-btn.ai .ai-mark-tb {
+  width: 7px; height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ─── PRICE GRID · classic ─────────────────────── */
+.price-grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.price-grid thead th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  padding: 0 6px 18px;
+  text-align: center;
+}
+.price-grid thead th:first-child {
+  text-align: left;
+  width: 64px;
+}
+.price-grid tbody td {
+  padding: 5px 4px;
+  text-align: center;
+  vertical-align: top;
+}
+.price-grid tbody td:first-child {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--muted);
+  text-align: left;
+  padding-right: 12px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.price-grid tbody tr.current td:first-child {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.pc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 8px 12px;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  min-height: 64px;
+}
+.pc:hover { border-color: var(--ink-2); }
+.pc.strong {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+.pc.weak {
+  background: var(--warn-soft);
+  border-color: #dcd6cb;
+}
+.pc.event {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.pc.event .pc-price,
+.pc.event .pc-occ { color: #fff; }
+.pc.event .pc-occ { opacity: 0.75; }
+.ai-mark {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--warn);
+}
+.pc.event .ai-mark { background: #d4cfba; }
+.pc-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.pc-occ {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.grid-legend {
+  display: flex;
+  gap: 28px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.gl-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.gl-sw {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ─── E-LOWER · pickup + comp-set ─────────────── */
+.e-lower {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+.mockup-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(45,41,32,0.04);
+  display: flex;
+  flex-direction: column;
+}
+.mc-head {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mc-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+  color: var(--muted);
+}
+.mc-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.mc-inner { padding: 10px 20px 18px; }
+.mc-stat { padding: 14px 0 10px; }
+.mc-stat-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+.mc-stat-val {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.mc-stat-context {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  padding-bottom: 6px;
+}
+.mc-stat-context-row {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.mc-stat-deltas {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+.mc-stat-deltas strong {
+  color: var(--ink);
+  font-weight: 600;
+  margin-right: 3px;
+}
+.mc-stat-deltas .d-arrow { color: var(--accent); margin-right: 2px; }
+.mc-stat-deltas .d-sep { color: var(--subtle); }
+
+.mc-chart {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.mc-chart svg { width: 100%; height: auto; display: block; max-height: 200px; }
+.chart-yax {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--muted);
+  letter-spacing: 0.5px;
+}
+.chart-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--ink);
+  letter-spacing: -0.02em;
+}
+.chart-val.accent { fill: var(--accent); }
+.chart-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  fill: var(--muted);
+  letter-spacing: 0;
+}
+.chart-cat.accent { fill: var(--accent); font-weight: 600; }
+
+/* Comp-Set rows */
+.comp-block {
+  margin: 14px -20px -18px;
+  border-top: 1px solid var(--border);
+}
+.comp-row {
+  display: grid;
+  grid-template-columns: 1fr 90px auto;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-row.you { background: rgba(30, 58, 95, 0.025); }
+.comp-name { color: var(--ink-2); }
+.comp-row.you .comp-name { color: var(--ink); font-weight: 600; }
+.comp-name em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  margin-left: 1px;
+}
+.comp-name .warn-em { color: var(--bad); }
+.comp-bar { height: 4px; background: var(--border); position: relative; }
+.comp-fill { height: 100%; background: var(--ink-2); min-width: 2px; }
+.comp-row.you .comp-fill { background: var(--accent); }
+.comp-fill.warn { background: var(--bad); min-width: 3px; }
+.comp-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* ─── E-SIDE · Empfehlungen ──────────────────── */
+.e-side {
+  background: var(--surface);
+  padding: 32px 28px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: auto;
+}
+.es-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.es-mark {
+  width: 7px; height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.es-count {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 100px;
+  padding: 1px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.ai-rec {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+.ar-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ar-spark {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.ar-title {
+  font-family: "Instrument Serif", serif;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+.ar-sub {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.ar-actions { display: flex; gap: 6px; }
+.ar-btn {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 7px;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ar-btn:hover { color: var(--ink); border-color: var(--ink-2); }
+.ar-btn.primary {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.ar-btn.primary:hover { background: #000; }
+
+/* Responsive */
+@media (max-width: 1280px) {
+  .e-body { grid-template-columns: 1fr 340px; }
+  .e-main { padding: 32px 32px 44px; }
+}
+@media (max-width: 1080px) {
+  .e-body { grid-template-columns: 1fr; }
+  .e-main { border-right: none; border-bottom: 1px solid var(--border); }
+}
+@media (max-width: 720px) {
+  .e-toolbar { flex-direction: column; align-items: flex-start; }
+  .e-tb-title { font-size: 24px; }
+  .e-lower { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TOPBAR ════════════════════════════════════ -->
+<header class="topbar">
+  <span class="tb-brand" aria-label="happyhotel">
+    <svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/>
+    </svg>
+  </span>
+  <div class="tb-sep"></div>
+  <nav class="tb-nav">
+    <a class="tb-nav-item" href="ai-rm-v9-briefing-dashboard.html">Briefing</a>
+    <a class="tb-nav-item active">Preise</a>
+    <a class="tb-nav-item" href="ai-rm-v9-briefing-dashboard.html#ray">Ray</a>
+  </nav>
+  <div class="tb-right">
+    <span class="tier-pill">Cluster · 6 Häuser</span>
+    <div class="tb-av">K</div>
+  </div>
+</header>
+
+<!-- ═══ MAIN BODY ═════════════════════════════════ -->
+<div class="e-body">
+
+  <!-- ─── MAIN · Calendar + Lower split ──────── -->
+  <main class="e-main">
+
+    <div class="e-toolbar">
+      <div>
+        <div class="e-tb-title">Hotel Seeblick · <em>KW 18</em></div>
+        <div class="e-tb-meta">Mai 2026 · Doppelzimmer · 80 Zimmer · letzte Sync vor 4 Min.</div>
+      </div>
+      <div class="e-tb-actions">
+        <button class="e-tb-btn active">Woche</button>
+        <button class="e-tb-btn">Monat</button>
+        <button class="e-tb-btn">Quartal</button>
+        <button class="e-tb-btn ai">
+          <span class="ai-mark-tb"></span>
+          Empfehlungen 4
+        </button>
+      </div>
+    </div>
+
+    <table class="price-grid">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Mo</th>
+          <th>Di</th>
+          <th>Mi</th>
+          <th>Do</th>
+          <th>Fr</th>
+          <th>Sa</th>
+          <th>So</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>KW 17</td>
+          <td><div class="pc"><div class="pc-price">98 €</div><div class="pc-occ">44 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">95 €</div><div class="pc-occ">38 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">97 €</div><div class="pc-occ">41 %</div></div></td>
+          <td><div class="pc"><span class="ai-mark"></span><div class="pc-price">109 €</div><div class="pc-occ">52 %</div></div></td>
+          <td><div class="pc strong"><span class="ai-mark"></span><div class="pc-price">138 €</div><div class="pc-occ">74 %</div></div></td>
+          <td><div class="pc strong"><span class="ai-mark"></span><div class="pc-price">148 €</div><div class="pc-occ">81 %</div></div></td>
+          <td><div class="pc strong"><div class="pc-price">135 €</div><div class="pc-occ">69 %</div></div></td>
+        </tr>
+        <tr class="current">
+          <td>KW 18</td>
+          <td><div class="pc weak"><div class="pc-price">102 €</div><div class="pc-occ">35 %</div></div></td>
+          <td><div class="pc weak"><div class="pc-price">98 €</div><div class="pc-occ">28 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">99 €</div><div class="pc-occ">31 %</div></div></td>
+          <td><div class="pc"><span class="ai-mark"></span><div class="pc-price">109 €</div><div class="pc-occ">42 %</div></div></td>
+          <td><div class="pc strong"><span class="ai-mark"></span><div class="pc-price">152 €</div><div class="pc-occ">58 %</div></div></td>
+          <td><div class="pc event"><span class="ai-mark"></span><div class="pc-price">168 €</div><div class="pc-occ">71 %</div></div></td>
+          <td><div class="pc strong"><span class="ai-mark"></span><div class="pc-price">162 €</div><div class="pc-occ">68 %</div></div></td>
+        </tr>
+        <tr>
+          <td>KW 19</td>
+          <td><div class="pc"><span class="ai-mark"></span><div class="pc-price">112 €</div><div class="pc-occ">46 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">108 €</div><div class="pc-occ">39 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">110 €</div><div class="pc-occ">42 %</div></div></td>
+          <td><div class="pc"><span class="ai-mark"></span><div class="pc-price">118 €</div><div class="pc-occ">55 %</div></div></td>
+          <td><div class="pc event"><span class="ai-mark"></span><div class="pc-price">172 €</div><div class="pc-occ">82 %</div></div></td>
+          <td><div class="pc event"><span class="ai-mark"></span><div class="pc-price">178 €</div><div class="pc-occ">88 %</div></div></td>
+          <td><div class="pc strong"><span class="ai-mark"></span><div class="pc-price">165 €</div><div class="pc-occ">76 %</div></div></td>
+        </tr>
+        <tr>
+          <td>KW 20</td>
+          <td><div class="pc"><div class="pc-price">115 €</div><div class="pc-occ">48 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">110 €</div><div class="pc-occ">41 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">112 €</div><div class="pc-occ">44 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">120 €</div><div class="pc-occ">52 %</div></div></td>
+          <td><div class="pc strong"><div class="pc-price">142 €</div><div class="pc-occ">62 %</div></div></td>
+          <td><div class="pc strong"><div class="pc-price">152 €</div><div class="pc-occ">67 %</div></div></td>
+          <td><div class="pc"><div class="pc-price">128 €</div><div class="pc-occ">54 %</div></div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="grid-legend">
+      <div class="gl-item">
+        <div class="gl-sw" style="background:var(--accent-soft);border:1px solid var(--accent-line)"></div>
+        Stark (&gt; 65 % Occ.)
+      </div>
+      <div class="gl-item">
+        <div class="gl-sw" style="background:var(--warn-soft);border:1px solid #dcd6cb"></div>
+        Schwach (&lt; 35 % Occ.)
+      </div>
+      <div class="gl-item">
+        <div class="gl-sw" style="background:var(--accent);border:1px solid var(--accent)"></div>
+        Event / Messe
+      </div>
+      <div class="gl-item">
+        <div class="gl-sw" style="background:var(--warn);border-radius:50%;width:8px;height:8px"></div>
+        AI-Anpassung
+      </div>
+    </div>
+
+    <!-- Lower split: Pickup + Comp-Set -->
+    <div class="e-lower">
+
+      <div class="mockup-card">
+        <div class="mc-head">
+          <span class="mc-tag">Pickup · KW 18</span>
+          <span class="mc-dot"></span>
+        </div>
+        <div class="mc-inner">
+          <div class="mc-stat">
+            <div class="mc-stat-row">
+              <span class="mc-stat-val">+24</span>
+              <span class="mc-stat-context">Zimmer · Pickup KW 18</span>
+            </div>
+            <div class="mc-stat-deltas">
+              <span><span class="d-arrow">↑</span><strong>+12</strong>vs. Vorjahr</span>
+              <span class="d-sep">·</span>
+              <span><span class="d-arrow">↑</span><strong>+4</strong>vs. Plan</span>
+            </div>
+          </div>
+          <div class="mc-chart">
+            <svg viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="dots-accent" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="0.7" fill="#1e3a5f"/>
+                </pattern>
+                <pattern id="dots-muted" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="0.7" fill="#a8a8ac"/>
+                </pattern>
+              </defs>
+              <line x1="44" y1="20" x2="360" y2="20" stroke="#d1cdc4" stroke-width="1" stroke-dasharray="2,3"/>
+              <line x1="44" y1="60" x2="360" y2="60" stroke="#d1cdc4" stroke-width="1" stroke-dasharray="2,3"/>
+              <line x1="44" y1="100" x2="360" y2="100" stroke="#d1cdc4" stroke-width="1" stroke-dasharray="2,3"/>
+              <text x="38" y="24" text-anchor="end" class="chart-yax">30</text>
+              <text x="38" y="64" text-anchor="end" class="chart-yax">20</text>
+              <text x="38" y="104" text-anchor="end" class="chart-yax">10</text>
+              <text x="38" y="144" text-anchor="end" class="chart-yax">0</text>
+              <rect x="68" y="44" width="80" height="96" fill="#ffffff"/>
+              <rect x="68" y="44" width="80" height="96" fill="url(#dots-accent)"/>
+              <path d="M68,140 L68,44 L148,44 L148,140" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
+              <text x="108" y="36" text-anchor="middle" class="chart-val accent">+24</text>
+              <rect x="164" y="60" width="80" height="80" fill="#ffffff"/>
+              <rect x="164" y="60" width="80" height="80" fill="url(#dots-muted)"/>
+              <path d="M164,140 L164,60 L244,60 L244,140" fill="none" stroke="#c9c8c2" stroke-width="1.5"/>
+              <text x="204" y="52" text-anchor="middle" class="chart-val">+20</text>
+              <rect x="260" y="92" width="80" height="48" fill="#ffffff"/>
+              <rect x="260" y="92" width="80" height="48" fill="url(#dots-muted)"/>
+              <path d="M260,140 L260,92 L340,92 L340,140" fill="none" stroke="#c9c8c2" stroke-width="1.5"/>
+              <text x="300" y="84" text-anchor="middle" class="chart-val">+12</text>
+              <line x1="44" y1="140" x2="360" y2="140" stroke="#c9c8c2" stroke-width="1"/>
+              <text x="108" y="162" text-anchor="middle" class="chart-cat accent">Aktuell</text>
+              <text x="204" y="162" text-anchor="middle" class="chart-cat">Plan</text>
+              <text x="300" y="162" text-anchor="middle" class="chart-cat">Vorjahr</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="mockup-card">
+        <div class="mc-head">
+          <span class="mc-tag">Comp-Set · heute</span>
+          <span class="mc-dot"></span>
+        </div>
+        <div class="mc-inner">
+          <div class="mc-stat">
+            <div class="mc-stat-row">
+              <span class="mc-stat-val">Oberes Drittel</span>
+            </div>
+            <div class="mc-stat-context-row">Position im Comp-Set · KW 18</div>
+            <div class="mc-stat-deltas">
+              <span><strong>2.</strong>von 5</span>
+              <span class="d-sep">·</span>
+              <span><strong>+8 €</strong>über Median</span>
+              <span class="d-sep">·</span>
+              <span><strong>−14 €</strong>unter Top</span>
+            </div>
+          </div>
+          <div class="comp-block">
+            <div class="comp-row">
+              <div class="comp-name">Hotel Stadtpalais</div>
+              <div class="comp-bar"><div class="comp-fill" style="width:100%"></div></div>
+              <div class="comp-price">156 €</div>
+            </div>
+            <div class="comp-row you">
+              <div class="comp-name">Hotel Seeblick · <em>du</em></div>
+              <div class="comp-bar"><div class="comp-fill" style="width:86%"></div></div>
+              <div class="comp-price">142 €</div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-name">Hotel Zentrum</div>
+              <div class="comp-bar"><div class="comp-fill" style="width:71%"></div></div>
+              <div class="comp-price">128 €</div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-name">Hotel Mitte</div>
+              <div class="comp-bar"><div class="comp-fill" style="width:63%"></div></div>
+              <div class="comp-price">120 €</div>
+            </div>
+            <div class="comp-row">
+              <div class="comp-name">Hotel Adler · <em class="warn-em">Anomalie</em></div>
+              <div class="comp-bar"><div class="comp-fill warn" style="width:0%"></div></div>
+              <div class="comp-price">59 €</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ─── SIDE · Empfehlungen ─────────────── -->
+  <aside class="e-side">
+
+    <div class="es-label">
+      <span class="es-mark"></span>
+      Empfehlungen
+      <span class="es-count">4</span>
+    </div>
+
+    <div class="ai-rec">
+      <div class="ar-tag"><span class="ar-spark"></span> Pickup-Pattern · KW 19</div>
+      <div class="ar-title">Pfingstmontag auf 185 € erhöhen</div>
+      <div class="ar-sub">Pickup 3× über Schnitt. Comp-Set bei 158 €. Dein Forecast deckt +17 € locker.</div>
+      <div class="ar-actions">
+        <button class="ar-btn primary">Ausführen</button>
+        <button class="ar-btn">Begründung</button>
+      </div>
+    </div>
+
+    <div class="ai-rec">
+      <div class="ar-tag"><span class="ar-spark"></span> Soft-Demand · KW 18</div>
+      <div class="ar-title">Frühbucher Mo–Mi anbieten</div>
+      <div class="ar-sub">28–35 % Occ. −10 % Frühbucher schätze ich auf +8 Buchungen.</div>
+      <div class="ar-actions">
+        <button class="ar-btn primary">Aktivieren</button>
+        <button class="ar-btn">Ablehnen</button>
+      </div>
+    </div>
+
+    <div class="ai-rec">
+      <div class="ar-tag"><span class="ar-spark"></span> Restriction · KW 21</div>
+      <div class="ar-title">MinLOS 3 für Festwochenende</div>
+      <div class="ar-sub">14.–17. August. Geschätzte Wirkung: +480 € RevPAR über das Wochenende.</div>
+      <div class="ar-actions">
+        <button class="ar-btn primary">Aktivieren</button>
+        <button class="ar-btn">Nur Booking</button>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+</body>
+</html>

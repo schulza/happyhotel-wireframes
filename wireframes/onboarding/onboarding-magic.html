@@ -1,0 +1,3327 @@
+<!DOCTYPE html>
+<html lang="de" data-view="email">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel — Onboarding Magic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --live:         #22c55e;
+
+  --font-mono:    "JetBrains Mono", "SF Mono", Menlo, monospace;
+  --font-serif:   "EB Garamond", Georgia, serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+em { font-style: normal; }
+
+html, body { height: 100%; }
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.serif { font-family: var(--font-serif); letter-spacing: -0.005em; }
+
+/* ─── Topbar ─── */
+.topbar {
+  height: 60px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 18px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+html[data-view="email"] .topbar,
+html[data-view="loading"] .topbar { display: none; }
+.tb-brand { display: inline-flex; align-items: center; color: var(--accent); }
+.tb-brand svg { height: 22px; width: auto; display: block; }
+.tb-sep { width: 1px; height: 18px; background: var(--border-2); }
+.tb-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.tb-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.tb-progress {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.tb-progress em {
+  font-family: var(--font-serif);
+  color: var(--accent);
+  font-size: 14px;
+  padding: 0 2px;
+  font-weight: 500;
+}
+
+/* Common */
+.diamond {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  vertical-align: middle;
+}
+.diamond.sm { width: 5px; height: 5px; }
+.btn-primary {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  padding: 14px 26px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--accent-deep); }
+.btn-primary .arr { font-family: var(--font-serif); font-size: 18px; line-height: 1; }
+.btn-ghost {
+  font-family: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  padding: 14px 16px;
+}
+.btn-ghost:hover { color: var(--accent); }
+
+/* ─── Views ─── */
+.view { display: none; }
+html[data-view="email"]    #view-email   { display: flex; }
+html[data-view="loading"]  #view-email   { display: flex; }
+html[data-view="profile"]  #view-profile { display: block; }
+html[data-view="profile"] #view-profile .stage-eyebrow,
+html[data-view="profile"] #view-profile .profile-hero,
+html[data-view="profile"] #view-profile .profile-summary-card .summary-block {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: flyin 600ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+html[data-view="profile"] #view-profile .stage-eyebrow            { animation-delay: 60ms; }
+html[data-view="profile"] #view-profile .profile-hero             { animation-delay: 180ms; }
+html[data-view="profile"] #view-profile .profile-summary-card .summary-block:nth-child(1) { animation-delay: 320ms; }
+html[data-view="profile"] #view-profile .profile-summary-card .summary-block:nth-child(2) { animation-delay: 420ms; }
+html[data-view="profile"] #view-profile .profile-summary-card .summary-block:nth-child(3) { animation-delay: 520ms; }
+@keyframes flyin {
+  to { opacity: 1; transform: translateY(0); }
+}
+html[data-view="pms"]      #view-pms     { display: block; }
+html[data-view="pms-load"] #view-pms     { display: block; }
+html[data-view="ops"]      #view-ops     { display: block; }
+html[data-view="decisions"] #view-decisions { display: block; }
+html[data-view="ready"]    #view-ready   { display: block; }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* VIEW 1 · EMAIL                                                      */
+/* ═══════════════════════════════════════════════════════════════════ */
+#view-email {
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+.email-card {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.em-logo {
+  display: inline-flex;
+  color: var(--accent);
+  margin-bottom: 56px;
+}
+.em-logo svg { height: 28px; }
+.em-headline {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(48px, 6vw, 72px);
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.em-headline em { color: var(--accent); font-weight: 500; }
+.em-sub {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 420px;
+  margin-bottom: 40px;
+}
+.em-form-wrap {
+  position: relative;
+  width: 100%;
+}
+.em-form {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 24px 22px;
+  text-align: left;
+  box-shadow: 0 12px 32px -16px rgba(20, 20, 22, 0.08);
+  position: relative;
+  z-index: 2;
+}
+.em-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: block;
+}
+.em-input-row {
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  gap: 10px;
+  align-items: center;
+}
+.em-input-row input {
+  font-family: inherit;
+  font-size: 18px;
+  border: 0;
+  background: transparent;
+  outline: none;
+  padding: 8px 0;
+  color: var(--ink);
+}
+.em-input-row input::placeholder { color: var(--subtle); }
+.em-submit {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1;
+}
+.em-submit:hover { background: var(--accent-deep); }
+.em-loading {
+  position: absolute;
+  bottom: -44px;
+  left: 18px;
+  right: 18px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 14px;
+  padding: 28px 22px 16px;
+  opacity: 0;
+  transform: translateY(-24px);
+  pointer-events: none;
+  transition: opacity 320ms ease, transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: 1;
+}
+html[data-view="loading"] .em-loading {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+html[data-view="loading"] .em-input-row input { color: var(--muted); pointer-events: none; }
+html[data-view="loading"] .em-submit {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: var(--ink-2);
+}
+
+.loading-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.sparkle {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  animation: spin 1100ms ease-in-out infinite;
+}
+@keyframes spin {
+  0%   { transform: rotate(45deg); }
+  50%  { transform: rotate(225deg); }
+  100% { transform: rotate(405deg); }
+}
+
+.loading-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.loading-line {
+  display: grid;
+  grid-template-columns: 8px 1fr;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--subtle);
+  opacity: 0;
+  animation: fadein 360ms forwards;
+  transition: color 200ms ease;
+}
+.loading-line.active { color: var(--ink-2); }
+.loading-line.done   { color: var(--ink-2); }
+
+.ll-icon {
+  width: 8px;
+  height: 8px;
+  border: 1.25px solid var(--border-2);
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: background 220ms ease, border-color 220ms ease;
+}
+.ll-icon .ll-spin {
+  width: 3px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.ll-icon .ll-check {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+.loading-line.active .ll-icon { border-color: var(--accent); }
+.loading-line.active .ll-spin {
+  opacity: 1;
+  animation: pulse-dot 1000ms ease-in-out infinite;
+}
+.loading-line.done .ll-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.loading-line.done .ll-spin { opacity: 0; animation: none; }
+.loading-line.done .ll-check { opacity: 1; }
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(0.65); opacity: 0.45; }
+}
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.loading-line:nth-child(1) { animation-delay: 100ms; }
+.loading-line:nth-child(2) { animation-delay: 1100ms; }
+.loading-line:nth-child(3) { animation-delay: 2100ms; }
+.loading-line:nth-child(4) { animation-delay: 3100ms; }
+.loading-line:nth-child(5) { animation-delay: 4100ms; }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SHARED · stage layout for views 2-5                                  */
+/* ═══════════════════════════════════════════════════════════════════ */
+.stage {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px 32px 140px;
+}
+.stage-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.stage-eyebrow em { color: var(--accent); font-weight: 500; letter-spacing: 0.22em; }
+
+.stage-h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.stage-h1 em { color: var(--accent); font-weight: 500; }
+.stage-lede {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  letter-spacing: -0.005em;
+  margin-bottom: 40px;
+  max-width: 580px;
+}
+.stage-lede em { color: var(--accent); font-weight: 500; }
+
+/* Confirm bar (sticky bottom) */
+.confirm-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 18px 24px 22px;
+  display: none;
+  z-index: 60;
+  box-shadow: 0 -8px 24px -12px rgba(20, 20, 22, 0.06);
+}
+html[data-view="profile"] #cb-profile,
+html[data-view="ops"] #cb-ops,
+html[data-view="decisions"] #cb-decisions { display: block; }
+
+.confirm-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  justify-content: flex-end;
+}
+.confirm-text {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--ink-2);
+  flex: 1;
+  letter-spacing: -0.005em;
+}
+.confirm-text em { color: var(--accent); font-weight: 500; }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* VIEW 2 · PROFILE SUMMARY                                             */
+/* ═══════════════════════════════════════════════════════════════════ */
+.profile-hero {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
+  align-items: start;
+  margin-bottom: 36px;
+}
+.hotel-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, #c9d4e1 0%, #8095a8 50%, #5a6e80 100%);
+  position: relative;
+  box-shadow: 0 8px 24px -12px rgba(20, 20, 22, 0.18);
+}
+.hotel-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    /* sky gradient */
+    linear-gradient(180deg, rgba(220, 228, 240, 0.4) 0%, rgba(80, 100, 120, 0.0) 35%),
+    /* building facade pattern (vertical lines = windows) */
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0) 0px,
+      rgba(255,255,255,0) 22px,
+      rgba(255,255,255,0.18) 22px,
+      rgba(255,255,255,0.18) 24px,
+      rgba(255,255,255,0) 24px,
+      rgba(255,255,255,0) 38px
+    ),
+    /* horizontal floor lines */
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 28px,
+      rgba(0,0,0,0.08) 28px,
+      rgba(0,0,0,0.08) 29px
+    );
+}
+.hotel-image::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 38%;
+  background: linear-gradient(180deg, rgba(20, 30, 40, 0) 0%, rgba(20, 30, 40, 0.45) 100%);
+}
+.hotel-image .hi-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.85);
+  color: var(--ink-2);
+  padding: 4px 10px;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+}
+.hotel-image .hi-badge .diamond {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.hotel-image .hi-caption {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  right: 14px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: rgba(255,255,255,0.92);
+  font-size: 13px;
+  z-index: 2;
+}
+
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.profile-name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(40px, 5vw, 60px);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.profile-name em { color: var(--accent); font-weight: 500; }
+.profile-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  margin-top: 12px;
+}
+.profile-tags span { display: inline-flex; align-items: center; gap: 6px; }
+.profile-tags em { color: var(--accent); font-weight: 500; }
+
+.summary-block {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 22px;
+}
+.summary-block:last-of-type { border-bottom: 1px solid var(--border); }
+
+/* Card wrapping the profile summary blocks */
+.profile-summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 4px 32px;
+}
+.profile-summary-card .summary-block:first-of-type {
+  border-top: 0;
+  padding-top: 22px;
+}
+.profile-summary-card .summary-block:last-of-type {
+  border-bottom: 0;
+  padding-bottom: 22px;
+}
+.summary-block-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+  gap: 18px;
+}
+.summary-block-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.summary-source {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.summary-block-body {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+.summary-block-body em {
+  font-family: var(--font-serif);
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.summary-kv {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 22px;
+  font-size: 14px;
+  font-family: var(--font-mono);
+}
+.summary-kv .k {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-top: 4px;
+}
+.summary-kv .v {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.summary-list .sl-row {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+}
+.summary-list .sl-row:first-child { border-top: 0; padding-top: 0; }
+.summary-list .sl-mark {
+  width: 5px;
+  height: 5px;
+  background: var(--accent-line);
+  transform: rotate(45deg);
+  margin-top: 8px;
+}
+.summary-list .sl-text { color: var(--ink-2); }
+.summary-list .sl-text strong { color: var(--ink); font-weight: 500; }
+.summary-list .sl-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* VIEW 3 · PMS PICK                                                    */
+/* ═══════════════════════════════════════════════════════════════════ */
+.pms-suggestion {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 14px;
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.pms-sug-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  display: grid;
+  place-items: center;
+  font-weight: 500;
+}
+.pms-sug-text h5 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.pms-sug-text p {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.pms-grid-wrap {
+  position: relative;
+  margin-top: 8px;
+}
+.pms-grid-mini {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.pms-grid-wrap::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(246, 245, 241, 0) 0%, rgba(246, 245, 241, 0.85) 65%, rgba(246, 245, 241, 1) 100%);
+  pointer-events: none;
+}
+.pms-show-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 12px 20px;
+  width: 100%;
+  font-weight: 500;
+  position: relative;
+  z-index: 2;
+}
+.pms-show-all .psa-line {
+  display: block;
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+}
+.pms-show-all:hover .psa-line { color: var(--accent-deep); }
+.pms-show-all .psa-count {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+.pms-mini {
+  font-family: inherit;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 200ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pms-mini:hover { border-color: var(--accent-line); background: var(--surface-2); }
+.pms-mini[data-setup="concierge"] { border-style: dashed; }
+.pms-mini h6 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.pms-mini p {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* PMS LOADING · centered modal with backdrop blur                      */
+/* ═══════════════════════════════════════════════════════════════════ */
+.pms-load-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+html[data-view="pms-load"] .pms-load-modal { display: block; }
+.pms-load-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 22, 30, 0.30);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.pms-load-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 40px 32px;
+  width: 480px;
+  max-width: calc(100vw - 32px);
+  box-shadow: 0 32px 80px -16px rgba(20, 20, 22, 0.32);
+}
+.pms-load-card .loading-eyebrow {
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* VIEW 4 · OPS SUMMARY                                                 */
+/* ═══════════════════════════════════════════════════════════════════ */
+.ops-divider {
+  border-top: 1px solid var(--border);
+  margin: 28px 0 24px;
+  padding-top: 20px;
+}
+.ops-divider-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.price-row-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 8px;
+  padding: 14px 0;
+}
+.price-cell-mini .pcm-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 4px;
+}
+.price-cell-mini .pcm-val {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  color: var(--accent);
+  font-weight: 500;
+  line-height: 1;
+}
+.price-cell-mini .pcm-cur {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  margin-left: 2px;
+  vertical-align: top;
+}
+
+.season-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.season-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 12px;
+  color: var(--ink-2);
+}
+.season-pill.high {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* VIEW 5 · DECISIONS · enhanced                                        */
+/* ═══════════════════════════════════════════════════════════════════ */
+.decision-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.decision-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 36px 28px;
+}
+.dc-head {
+  margin-bottom: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.dc-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.dc-tag .diamond { background: var(--accent); }
+.dc-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  line-height: 1.1;
+}
+.dc-title em { color: var(--accent); font-weight: 500; }
+.dc-helper {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 600px;
+}
+
+.dc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.dc-option {
+  font-family: inherit;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 22px 20px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 220ms ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.dc-option:hover {
+  border-color: var(--accent-line);
+  background: var(--surface);
+}
+.dc-option.selected {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px -12px rgba(30, 58, 95, 0.20);
+}
+.dc-glyph {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+}
+.dc-glyph svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+.dc-tag-mini {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.dc-option.selected .dc-tag-mini { color: var(--accent); }
+.dc-name {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.dc-name em { color: var(--accent); }
+.dc-desc {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+.dc-sample {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.dc-sample-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+.dc-option.selected .dc-sample-tag { color: var(--accent); }
+.dc-sample p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.dc-sample p.quote {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+.dc-sample p.quote em {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Auto-tasks card · cleaner replacement for dec-auto-strip */
+.auto-tasks-card {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 14px;
+  padding: 26px 32px 24px;
+}
+.atc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--accent-line);
+  margin-bottom: 20px;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.atc-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.atc-eyebrow .diamond { background: var(--accent); }
+.atc-time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.7;
+}
+.atc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 32px;
+}
+.atc-item h6 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.atc-item p {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* OPS · SLIDER HERO (from funnel)                                      */
+/* ═══════════════════════════════════════════════════════════════════ */
+.ops-price-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 40px 32px;
+  margin-bottom: 24px;
+}
+.opc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.opc-head h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+}
+.opc-head h3 em { color: var(--accent); font-weight: 500; }
+.opc-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+.opc-slider-stage { padding: 16px 0 8px; }
+.opc-slider {
+  position: relative;
+  height: 64px;
+  background: linear-gradient(90deg, var(--accent-soft) 0%, #f4ecdf 100%);
+  border-radius: 8px;
+  margin: 24px 0 16px;
+}
+.opc-marker {
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  width: 2px;
+  background: var(--accent);
+}
+.opc-marker::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -7px;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.opc-marker.min { left: 18%; }
+.opc-marker.base { left: 42%; opacity: 0.55; }
+.opc-marker.max { left: 78%; }
+.opc-marker .opc-val {
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.opc-marker .opc-lab {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.opc-outcome {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+}
+.opc-narr {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+}
+.opc-narr em { color: var(--accent); font-weight: 500; }
+.opc-stack { display: flex; flex-direction: column; gap: 14px; }
+.opc-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.opc-stat:last-child { border-bottom: 0; }
+.opc-stat .opc-stat-lab {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.opc-stat .opc-stat-val {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.opc-services-hint {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.opc-services-hint em { color: var(--accent); font-weight: 500; }
+.opc-services-hint strong { color: var(--ink); font-weight: 600; }
+
+/* Zimmer + Saison sections below */
+.ops-below-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.ops-card-mini {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px 28px 24px;
+}
+.ops-card-mini-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.ops-card-mini-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+.ops-card-mini-title em { color: var(--accent); font-weight: 500; }
+.ops-card-mini-source {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.opcm-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+  font-size: 14px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+}
+.opcm-row:first-of-type,
+.ops-card-mini-head + .opcm-row { border-top: 0; padding-top: 4px; }
+.opcm-row .or-text { color: var(--ink-2); line-height: 1.45; }
+.opcm-row .or-text strong { color: var(--ink); font-weight: 500; }
+.opcm-row .or-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.ops-saison-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px 28px 24px;
+  margin-top: 18px;
+}
+
+/* ─── COMP-SET · Positioning ─────────────────────────── */
+.ops-comp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px 28px;
+  margin-top: 18px;
+}
+.ops-comp-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.ops-comp-eyebrow .diamond { background: var(--accent); }
+.ops-comp-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.15;
+}
+.ops-comp-title em { color: var(--accent); font-weight: 500; }
+.ops-comp-sub {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 32px;
+}
+
+/* Map */
+.comp-map-wrap {
+  margin: 28px 0 32px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--shell);
+  position: relative;
+}
+.comp-map {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.comp-map-caption {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: rgba(255,255,255,0.85);
+  padding: 4px 10px;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+.comp-map-caption .diamond { background: var(--accent); width: 4px; height: 4px; }
+
+/* Price ladder · minified default, hover-expand */
+.comp-ladder {
+  margin: 0;
+  padding: 50px 0 50px;
+  position: relative;
+}
+.ladder-track {
+  position: relative;
+  height: 36px;
+  background: linear-gradient(90deg, var(--surface-2) 0%, var(--accent-soft) 100%);
+  border-radius: 6px;
+}
+.ladder-zone {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 33.33%;
+  background: rgba(30, 58, 95, 0.08);
+  border-left: 1px dashed var(--accent-line);
+  border-radius: 0 6px 6px 0;
+}
+.ladder-zone-label {
+  position: absolute;
+  top: -22px;
+  right: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.ladder-marker {
+  position: absolute;
+  top: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 1;
+}
+.ladder-marker:hover { z-index: 2; }
+.ladder-marker .lm-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: var(--ink-2);
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--border-2);
+  transition: width 220ms ease, height 220ms ease, box-shadow 220ms ease;
+}
+.ladder-marker:hover .lm-dot {
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 0 1px var(--border-2), 0 4px 8px rgba(20, 20, 22, 0.15);
+}
+.ladder-marker.self .lm-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-radius: 0;
+  border: 2px solid var(--surface);
+  box-shadow: 0 1px 3px rgba(30, 58, 95, 0.25);
+}
+.ladder-marker.self:hover .lm-dot {
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 4px 10px rgba(30, 58, 95, 0.35);
+}
+.ladder-marker .lm-price {
+  position: absolute;
+  top: 50%;
+  margin-top: -32px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  font-weight: 500;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, margin-top 220ms ease;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(20, 20, 22, 0.05);
+}
+.ladder-marker .lm-name {
+  position: absolute;
+  top: 50%;
+  margin-top: 32px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, margin-top 220ms ease;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(20, 20, 22, 0.05);
+}
+.ladder-marker:hover .lm-price {
+  opacity: 1;
+  margin-top: -36px;
+}
+.ladder-marker:hover .lm-name {
+  opacity: 1;
+  margin-top: 36px;
+}
+.ladder-marker.self .lm-price {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 13px;
+  border-color: var(--accent-line);
+}
+.ladder-marker.self .lm-name {
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  border-color: var(--accent-line);
+}
+
+/* Stats row */
+.comp-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 22px;
+}
+.cs-stat {
+  padding: 0 18px;
+  border-right: 1px solid var(--border);
+}
+.cs-stat:first-child { padding-left: 0; }
+.cs-stat:last-child { border-right: 0; padding-right: 0; }
+.cs-stat .cs-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+.cs-stat .cs-val {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.cs-stat .cs-val.accent { color: var(--accent); }
+
+/* Hotel list */
+.comp-list {
+  display: flex;
+  flex-direction: column;
+}
+.comp-list-head {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.cl-row {
+  display: grid;
+  grid-template-columns: 22px 1fr 90px;
+  gap: 14px;
+  align-items: center;
+  padding: 11px 8px;
+  margin: 0 -8px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 180ms ease, opacity 220ms ease;
+}
+.cl-row:first-of-type { border-top: 0; }
+.cl-row:hover { background: var(--accent-soft); }
+.cl-row.off { opacity: 0.42; }
+.cl-row.off .cl-name strong,
+.cl-row.off .cl-name,
+.cl-row.off .cl-rate { text-decoration: line-through; color: var(--muted); }
+.cl-name { color: var(--ink-2); line-height: 1.45; }
+.cl-name strong { color: var(--ink); font-weight: 500; }
+/* Map pin states */
+.comp-pin {
+  transition: opacity 260ms ease;
+}
+.comp-pin circle {
+  transition: fill 200ms ease, stroke 200ms ease, stroke-width 200ms ease, r 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.comp-pin .pin-name,
+.comp-pin .pin-rate {
+  transition: fill 200ms ease, font-weight 200ms ease;
+}
+.comp-pin.hl circle {
+  fill: var(--accent);
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  r: 9;
+}
+.comp-pin.hl .pin-name,
+.comp-pin.hl .pin-rate {
+  fill: var(--accent);
+  font-weight: 700;
+}
+.comp-pin.off { opacity: 0; pointer-events: none; }
+.cl-rate {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-weight: 500;
+  text-align: right;
+}
+.cl-toggle {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border-2);
+  cursor: pointer;
+  position: relative;
+}
+.cl-toggle.on { background: var(--accent); border-color: var(--accent); }
+.cl-toggle.on::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  left: 6px;
+  top: 2px;
+  transform: rotate(45deg);
+}
+.cl-add {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* OPS · NEW LAYOUT (Hero + Two-Zones) — legacy, kept for safety        */
+/* ═══════════════════════════════════════════════════════════════════ */
+.ops-hero {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 16px;
+  padding: 32px 36px 28px;
+  margin-bottom: 32px;
+  position: relative;
+}
+.ops-hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.ops-hero-eyebrow .diamond { background: var(--accent); }
+.ops-hero-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  color: var(--accent);
+  margin-bottom: 22px;
+}
+.ops-hero-title em { font-weight: 500; }
+.ops-hero-prices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  align-items: end;
+  border-top: 1px solid var(--accent-line);
+  padding-top: 18px;
+  margin-bottom: 18px;
+}
+.ops-hero-price {
+  position: relative;
+}
+.ops-hero-price + .ops-hero-price { padding-left: 24px; border-left: 1px solid var(--accent-line); }
+.ops-hero-price + .ops-hero-price:not(:last-child),
+.ops-hero-price:first-child { padding-right: 24px; }
+.ohp-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 4px;
+}
+.ohp-val {
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 5vw, 56px);
+  color: var(--accent);
+  font-weight: 500;
+  line-height: 1;
+}
+.ohp-cur {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--accent);
+  margin-left: 4px;
+  vertical-align: top;
+  font-weight: 500;
+}
+.ops-hero-source {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.7;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ops-hero-source .diamond { background: var(--accent); }
+
+/* Two-zones */
+.ops-twocol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.ops-zone {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.ops-zone-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.ops-zone-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ops-zone-title .diamond { background: var(--accent); }
+.ops-zone-source {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ops-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ops-section-label {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.ops-section-label em { color: var(--accent); font-weight: 500; }
+.ops-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: baseline;
+  font-size: 13px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+}
+.ops-row:first-of-type { border-top: 0; padding-top: 4px; }
+.ops-row .or-text { color: var(--ink-2); line-height: 1.45; }
+.ops-row .or-text strong { color: var(--ink); font-weight: 500; }
+.ops-row .or-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.ops-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+.ops-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 3px 10px;
+  color: var(--ink-2);
+}
+.ops-pill.high {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* CONCIERGE MODAL                                                      */
+/* ═══════════════════════════════════════════════════════════════════ */
+.pms-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+}
+.pms-modal.open { display: block; }
+.pms-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 22, 30, 0.42);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.pms-modal-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 40px 32px;
+  width: 560px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  box-shadow: 0 32px 80px -16px rgba(20, 20, 22, 0.32);
+}
+.pms-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 50%;
+}
+.pms-modal-close:hover { background: var(--surface-2); color: var(--ink); }
+
+.pmm-state-confirmed { display: none; }
+.pms-modal-card.confirmed .pmm-state-booking { display: none; }
+.pms-modal-card.confirmed .pmm-state-confirmed { display: block; }
+
+.pmm-avatar-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.pmm-av {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #5a4632;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  display: grid;
+  place-items: center;
+  font-weight: 500;
+}
+.pmm-av-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pmm-av-name .diamond { background: var(--accent); }
+.pmm-av-role {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.pmm-headline {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.pmm-headline em { color: var(--accent); font-weight: 500; }
+
+.pmm-narr {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pmm-cal {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.cal-day {
+  font-family: inherit;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  padding: 10px 4px 8px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all 200ms ease;
+  color: var(--ink);
+}
+.cal-day:hover { border-color: var(--accent-line); background: var(--surface-2); }
+.cal-day.selected {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.cal-day.disabled { opacity: 0.35; cursor: not-allowed; }
+.cd-dow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cal-day.selected .cd-dow { color: var(--accent); }
+.cd-num {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.cal-day.selected .cd-num { color: var(--accent); }
+.cd-slots {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--subtle);
+}
+.cal-day.selected .cd-slots { color: var(--accent); }
+
+.pmm-times-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: block;
+}
+.pmm-times-label em { color: var(--accent); font-weight: 500; }
+.pmm-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.pmm-time {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.pmm-time:hover { border-color: var(--accent-line); background: var(--surface-2); }
+.pmm-time.selected {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.pmm-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-end;
+}
+.pmm-skip {
+  font-family: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+}
+.pmm-skip:hover { color: var(--ink); }
+
+/* Post-booking */
+.confirm-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+}
+.confirm-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.confirm-icon::after {
+  content: "";
+  width: 10px;
+  height: 18px;
+  border-right: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(45deg);
+  margin-top: -3px;
+}
+.confirm-text h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.confirm-text h4 em { color: var(--accent); font-weight: 500; }
+.confirm-text p {
+  font-size: 13px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.cuts-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cuts-label .diamond { background: var(--accent); }
+
+.task-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.task-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 16px 14px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.task-card:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+.task-card .tc-time {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.task-card h5 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.task-card h5 em { color: var(--accent); font-weight: 500; }
+.task-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* VIEW 6 · READY                                                       */
+/* ═══════════════════════════════════════════════════════════════════ */
+#view-ready { padding: 64px 24px 100px; }
+.ready-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+.ready-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.ready-h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.ready-h2 em { color: var(--accent); font-weight: 500; }
+.ready-lede {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin-bottom: 32px;
+}
+
+.team-strip {
+  margin-top: 32px;
+  padding: 24px 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: center;
+}
+.ts-avatars { display: flex; }
+.ts-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--surface);
+  margin-left: -10px;
+}
+.ts-avatar:first-child { margin-left: 0; background: var(--accent); }
+.ts-avatar:nth-child(2) { background: #5a4632; }
+.ts-avatar:nth-child(3) { background: #6a4a4a; }
+.ts-text h4 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  letter-spacing: -0.005em;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+.ts-text h4 em { color: var(--accent); font-weight: 500; }
+.ts-text p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.ready-cta { margin-top: 40px; display: flex; align-items: center; gap: 24px; }
+
+.ready-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 36px;
+  box-shadow: 0 24px 48px -24px rgba(20, 20, 22, 0.10);
+}
+.rc-meta {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 22px;
+}
+.rc-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rc-kicker .diamond { margin-right: 8px; }
+.rc-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.rc-headline {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 18px;
+}
+.rc-headline em { color: var(--accent); font-weight: 500; }
+.rc-narr {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-bottom: 24px;
+}
+.trend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 8px;
+}
+.rc-table { width: 100%; border-top: 1px solid var(--border); border-collapse: collapse; }
+.rc-table td {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+.rc-table td:nth-child(2), .rc-table td:nth-child(3) { text-align: right; }
+.rc-table td:first-child {
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  font-weight: 500;
+}
+.rc-table .delta { color: var(--accent); }
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+  <span class="tb-sep"></span>
+  <span class="tb-eyebrow">Setup</span>
+  <div class="tb-right">
+    <span class="tb-progress">Schritt <em id="prog-step">1</em> / 5</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VIEW 1 · EMAIL                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-email">
+  <div class="email-card">
+    <span class="em-logo"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+
+    <h1 class="em-headline serif">Willkommen.<br>Lass uns <em>loslegen</em>.</h1>
+    <p class="em-sub">Eine Mail genügt, wir richten deinen Account automatisch für dich ein.</p>
+
+    <div class="em-form-wrap">
+      <div class="em-form">
+        <span class="em-label">Deine geschäftliche E-Mail</span>
+        <div class="em-input-row">
+          <input type="email" id="email-input" value="anna.bauer@hotel-seeblick.de" placeholder="anna@hotel-seeblick.de">
+          <button class="em-submit" onclick="startDiscovery()" aria-label="weiter">→</button>
+        </div>
+      </div>
+
+      <div class="em-loading" id="em-loading">
+        <div class="loading-eyebrow">
+          <span class="sparkle"></span>
+          <span id="loading-status">Hotel-Website analysiert…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VIEW 2 · PROFILE SUMMARY                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-profile">
+  <div class="stage">
+    <div class="stage-eyebrow">
+      <span class="diamond"></span>
+      <em>aus 5 Quellen</em>
+      <span style="color: var(--muted);">· in 4 Sekunden</span>
+    </div>
+
+    <div class="profile-hero">
+      <div class="hotel-image">
+        <span class="hi-badge"><span class="diamond"></span>aus Booking · Photo</span>
+        <span class="hi-caption">Hotel Seeblick · Spreebogen, Berlin Mitte</span>
+      </div>
+      <div class="profile-meta">
+        <h1 class="profile-name serif">Hotel <em>Seeblick</em></h1>
+        <div class="profile-tags">
+          <span><em>4★</em> Boutique</span>
+          <span><em>80</em> Zimmer</span>
+          <span>Berlin <em>Mitte</em></span>
+          <span><em>4,4 / 5</em> · 1.240 Reviews</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-summary-card">
+      <!-- Profil -->
+      <div class="summary-block">
+        <div class="summary-block-head">
+          <span class="summary-block-title serif">Beschreibung</span>
+          <span class="summary-source"><span class="diamond sm"></span>Website + Booking + Tripadvisor</span>
+        </div>
+        <div class="summary-block-body">
+          Hotel Seeblick ist ein <em>4-Sterne-Boutique-Hotel</em> im Herzen Berlins, am Spreebogen-Ufer. Geführt von Anna B. mit 12 FTE seit 9 Jahren. Spezialisiert auf Business und City-Breaks, ruhige Zimmer trotz zentraler Lage.
+        </div>
+      </div>
+
+      <!-- Adresse -->
+      <div class="summary-block">
+        <div class="summary-block-head">
+          <span class="summary-block-title serif">Adresse · Lage</span>
+          <span class="summary-source"><span class="diamond sm"></span>Booking + Google Maps</span>
+        </div>
+        <div class="summary-kv">
+          <span class="k">Straße</span><span class="v">Seestraße 12</span>
+          <span class="k">PLZ · Ort</span><span class="v">10115 Berlin</span>
+          <span class="k">Bezirk</span><span class="v">Mitte · Spreebogen</span>
+          <span class="k">Telefon</span><span class="v">+49 30 12345678</span>
+        </div>
+      </div>
+
+      <!-- Firma -->
+      <div class="summary-block">
+        <div class="summary-block-head">
+          <span class="summary-block-title serif">Firma · Rechnung</span>
+          <span class="summary-source"><span class="diamond sm"></span>Handelsregister</span>
+        </div>
+        <div class="summary-kv">
+          <span class="k">Firma</span><span class="v">Hotel Seeblick GmbH</span>
+          <span class="k">Handelsregister</span><span class="v">HRB 14210 · AG Berlin Charlottenburg</span>
+          <span class="k">USt-IdNr.</span><span class="v">DE291779897</span>
+          <span class="k">Land · Währung</span><span class="v">Deutschland · EUR</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VIEW 3 · PMS PICK                                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-pms">
+  <div class="stage">
+    <div class="stage-eyebrow">
+      <span class="diamond"></span>
+      <em>Schritt 2</em> · Buchungssystem
+    </div>
+
+    <h1 class="stage-h1 serif">Verbinde dein <em>Buchungssystem</em>.</h1>
+    <p class="stage-lede">Sobald verbunden, hole ich Zimmer, Buchungen und Preise automatisch. Dauert einen Klick.</p>
+
+    <div class="pms-suggestion">
+      <div class="pms-sug-icon">M</div>
+      <div class="pms-sug-text">
+        <h5 class="serif">Mews</h5>
+        <p>Automatisch auf deiner Webseite erkannt</p>
+      </div>
+      <button class="btn-primary" onclick="connectMews()">
+        Verbinden <span class="arr">→</span>
+      </button>
+    </div>
+
+    <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; margin-top: 32px;">Oder ein anderes wählen</p>
+
+    <div class="pms-grid-wrap">
+      <div class="pms-grid-mini">
+        <button class="pms-mini" data-setup="instant" onclick="connectOther(this, 'apaleo')">
+          <h6 class="serif">apaleo</h6>
+          <p>Sofort · Cloud-API</p>
+        </button>
+        <button class="pms-mini" data-setup="instant" onclick="connectOther(this, 'hotline')">
+          <h6 class="serif">hotline</h6>
+          <p>Sofort · Cloud-API</p>
+        </button>
+        <button class="pms-mini" data-setup="concierge" onclick="connectOther(this, 'protel')">
+          <h6 class="serif">protel</h6>
+          <p>Concierge · 30 Min Setup</p>
+        </button>
+        <button class="pms-mini" data-setup="instant" onclick="connectOther(this, '3RPMS')">
+          <h6 class="serif">3RPMS</h6>
+          <p>Sofort · Cloud-API</p>
+        </button>
+        <button class="pms-mini" data-setup="instant" onclick="connectOther(this, 'Ibelsa')">
+          <h6 class="serif">Ibelsa</h6>
+          <p>Sofort · Cloud-API</p>
+        </button>
+        <button class="pms-mini" data-setup="concierge" onclick="connectOther(this, 'clock')">
+          <h6 class="serif">clock</h6>
+          <p>Concierge · 30 Min Setup</p>
+        </button>
+        <button class="pms-mini" data-setup="instant" onclick="connectOther(this, 'FOCloud')">
+          <h6 class="serif">FOCloud</h6>
+          <p>Sofort · Cloud-API</p>
+        </button>
+        <button class="pms-mini" data-setup="instant" onclick="connectOther(this, 'RESAVIO')">
+          <h6 class="serif">RESAVIO</h6>
+          <p>Sofort · Cloud-API</p>
+        </button>
+        <button class="pms-mini" data-setup="concierge" onclick="connectOther(this, 'Oracle Opera')">
+          <h6 class="serif">Oracle Opera</h6>
+          <p>Concierge · 30 Min Setup</p>
+        </button>
+        <button class="pms-mini" data-setup="instant" onclick="connectOther(this, 'ASA Hotel')">
+          <h6 class="serif">ASA Hotel</h6>
+          <p>Sofort · Live-API</p>
+        </button>
+        <button class="pms-mini" data-setup="instant" onclick="connectOther(this, 'HS3')">
+          <h6 class="serif">HS3</h6>
+          <p>Sofort · Live-API</p>
+        </button>
+        <button class="pms-mini" data-setup="concierge" onclick="connectOther(this, 'SIHOT')">
+          <h6 class="serif">SIHOT</h6>
+          <p>Concierge · 30 Min Setup</p>
+        </button>
+      </div>
+    </div>
+    <button class="pms-show-all" onclick="alert('In production: scrollable Liste aller 24 PMS-Integrationen, gefiltert nach Sofort/Concierge/In Entwicklung.');">
+      <span class="psa-count">+ 11</span>
+      <span class="psa-line">weitere PMS · alle anzeigen</span>
+    </button>
+
+  </div>
+</div>
+
+<!-- ─── PMS LOADING MODAL · centered with backdrop blur ─── -->
+<div class="pms-load-modal" id="pms-load-modal">
+  <div class="pms-load-backdrop"></div>
+  <div class="pms-load-card">
+    <div class="loading-eyebrow">
+      <span class="sparkle"></span>
+      <span id="pms-load-status">Hole Daten aus Mews…</span>
+    </div>
+    <div class="loading-list">
+      <div class="loading-line">
+        <span class="ll-icon"></span>
+        <span>OAuth · Authentifizierung erfolgreich</span>
+      </div>
+      <div class="loading-line">
+        <span class="ll-icon"></span>
+        <span>Zimmer und Kategorien geladen</span>
+      </div>
+      <div class="loading-line">
+        <span class="ll-icon"></span>
+        <span>Services und Aufpreise importiert</span>
+      </div>
+      <div class="loading-line">
+        <span class="ll-icon"></span>
+        <span>12 Monate Buchungs-Historie</span>
+      </div>
+      <div class="loading-line">
+        <span class="ll-icon"></span>
+        <span>Comp-Set aus Geo-Similarity</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VIEW 4 · OPS SUMMARY · NEW LAYOUT                                -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-ops">
+  <div class="stage">
+    <div class="stage-eyebrow">
+      <span class="diamond"></span>
+      <em>Mews verbunden</em>
+      <span style="color: var(--muted);">· 5 Sekunden für Daten · 8 Quellen für den Markt</span>
+    </div>
+
+    <h1 class="stage-h1 serif">Dein Setup auf einen <em>Blick</em>.</h1>
+    <p class="stage-lede">Schau kurz drüber, dann legt Ray los.</p>
+
+    <!-- Hero · Preisspanne mit Slider -->
+    <div class="ops-price-card">
+      <div class="opc-head">
+        <h3 class="serif">Doppelzimmer Komfort · <em>Referenz</em></h3>
+        <span class="opc-meta">DZK · 34 Zimmer</span>
+      </div>
+
+      <div class="opc-slider-stage">
+        <div class="opc-slider">
+          <div class="opc-marker min">
+            <span class="opc-val">79 €</span>
+            <span class="opc-lab">Minimum</span>
+          </div>
+          <div class="opc-marker base">
+            <span class="opc-val">119 €</span>
+            <span class="opc-lab">Basis</span>
+          </div>
+          <div class="opc-marker max">
+            <span class="opc-val">189 €</span>
+            <span class="opc-lab">Premium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opc-outcome">
+        <p class="opc-narr">
+          Bei einer Spanne von <em>79 € bis 189 €</em> macht Ray in einem starken Mai voraussichtlich <em>+ 3.200 €</em> mehr als bei einem festen 99 € Preis.
+        </p>
+        <div class="opc-stack">
+          <div class="opc-stat">
+            <span class="opc-stat-lab">Heute Schnitt</span>
+            <span class="opc-stat-val">112 €</span>
+          </div>
+          <div class="opc-stat">
+            <span class="opc-stat-lab">Mit Ray Schnitt</span>
+            <span class="opc-stat-val">128 €</span>
+          </div>
+          <div class="opc-stat">
+            <span class="opc-stat-lab">+ pro Monat</span>
+            <span class="opc-stat-val" style="color: var(--accent);">~ 3.200 €</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="opc-services-hint">
+        <strong>Übrigens:</strong> Frühstück, Halbpension und Sauna habe ich auch aus deinem <em>Mews</em> gelesen. Die Aufpreise gelten pro Person und sind in den Vorschlägen schon drin.
+      </div>
+    </div>
+
+    <!-- Below · Zimmer + Services -->
+    <div class="ops-below-grid">
+      <div class="ops-card-mini">
+        <div class="ops-card-mini-head">
+          <span class="ops-card-mini-title serif">Zimmer · <em>4 Kategorien</em></span>
+          <span class="ops-card-mini-source">aus Mews</span>
+        </div>
+        <div class="opcm-row">
+          <span class="or-text"><strong>Suite Seeblick</strong> · 35 m²</span>
+          <span class="or-num">8</span>
+        </div>
+        <div class="opcm-row">
+          <span class="or-text"><strong>DZ Komfort</strong> · Spree-Blick · 22 m²</span>
+          <span class="or-num">34</span>
+        </div>
+        <div class="opcm-row">
+          <span class="or-text"><strong>DZ Standard</strong> · Innenhof · 18 m²</span>
+          <span class="or-num">28</span>
+        </div>
+        <div class="opcm-row">
+          <span class="or-text"><strong>Einzelzimmer</strong> · 14 m²</span>
+          <span class="or-num">10</span>
+        </div>
+      </div>
+
+      <div class="ops-card-mini">
+        <div class="ops-card-mini-head">
+          <span class="ops-card-mini-title serif">Services · <em>p.P.</em></span>
+          <span class="ops-card-mini-source">aus Mews</span>
+        </div>
+        <div class="opcm-row">
+          <span class="or-text">Frühstück</span>
+          <span class="or-num">12,00 €</span>
+        </div>
+        <div class="opcm-row">
+          <span class="or-text">Halbpension</span>
+          <span class="or-num">25,00 €</span>
+        </div>
+        <div class="opcm-row">
+          <span class="or-text">Sauna · Spa</span>
+          <span class="or-num">8,00 €</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saison · full width -->
+    <div class="ops-saison-card">
+      <div class="ops-card-mini-head">
+        <span class="ops-card-mini-title serif">Saisonzeiten · <em>Berlin-Pattern</em></span>
+        <span class="ops-card-mini-source">aus Lage + Buchungs-Historie</span>
+      </div>
+      <p style="font-size: 14px; color: var(--ink-2); line-height: 1.6; margin-bottom: 14px;">
+        Berlin-Lage zieht über <em style="color: var(--accent); font-weight: 500;">Pfingsten</em>, Sommerferien und Messezeiten stark, in der zweiten Januar- und Februar-Hälfte schwach. Verfeinert sich mit jedem Monat Daten.
+      </p>
+      <div class="ops-pills">
+        <span class="ops-pill high">Pfingsten</span>
+        <span class="ops-pill high">ITB · März</span>
+        <span class="ops-pill high">Sommerferien</span>
+        <span class="ops-pill high">Weihnachten · Silvester</span>
+        <span class="ops-pill">Januar</span>
+        <span class="ops-pill">Februar</span>
+        <span class="ops-pill">2. Hälfte August</span>
+      </div>
+    </div>
+
+    <!-- Wettbewerb · Positionierung -->
+    <div class="ops-comp-card">
+      <span class="ops-comp-eyebrow"><span class="diamond"></span>Aus deiner Lage · Geo-Similarity</span>
+      <h3 class="ops-comp-title serif">Wettbewerb. Du im <em>oberen Drittel</em>.</h3>
+      <p class="ops-comp-sub">4 Hotels in 2 km Umkreis · Du bist Premium-nahe, aber nicht teuerste. Hospitality-stabil, mit Spielraum für Pfingsten und ITB.</p>
+
+      <!-- Map -->
+      <div class="comp-map-wrap">
+        <span class="comp-map-caption"><span class="diamond"></span>2 km Radius · Berlin Mitte</span>
+        <svg class="comp-map" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+          <style>
+            .pin-name {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 11px;
+              fill: #1a1a1c;
+              font-weight: 600;
+              paint-order: stroke fill;
+              stroke: #fafaf7;
+              stroke-width: 3.5;
+              stroke-linejoin: round;
+            }
+            .pin-rate {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 10px;
+              fill: #6e6e72;
+              font-weight: 500;
+              paint-order: stroke fill;
+              stroke: #fafaf7;
+              stroke-width: 3.5;
+              stroke-linejoin: round;
+            }
+            .you-label {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 11px;
+              fill: #1e3a5f;
+              font-weight: 700;
+              letter-spacing: 1.5px;
+              paint-order: stroke fill;
+              stroke: #fafaf7;
+              stroke-width: 4.5;
+              stroke-linejoin: round;
+            }
+            .you-rate {
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 10px;
+              fill: #1e3a5f;
+              font-weight: 600;
+              paint-order: stroke fill;
+              stroke: #fafaf7;
+              stroke-width: 4.5;
+              stroke-linejoin: round;
+            }
+          </style>
+
+          <!-- Real Berlin map as background, reduced opacity -->
+          <!-- Alternative (light): assets/references/berlin-mitte-map-light.png -->
+          <image href="../../assets/references/berlin-mitte-map-light.png"
+                 x="0" y="0" width="720" height="360"
+                 preserveAspectRatio="xMidYMid slice"
+                 opacity="0.55"/>
+
+          <!-- Soft warm overlay to blend with brand palette -->
+          <rect width="720" height="360" fill="#f6f5f1" opacity="0.25"/>
+
+          <!-- 2km radius circle -->
+          <circle cx="360" cy="180" r="135"
+                  fill="#1e3a5f" fill-opacity="0.10"
+                  stroke="#1e3a5f" stroke-width="1"
+                  stroke-dasharray="3 6" stroke-opacity="0.35"/>
+
+          <!-- Mövenpick (NW) -->
+          <g class="comp-pin" data-hotel="moevenpick" transform="translate(280, 110)">
+            <circle r="7" fill="#fafaf7" stroke="#3a3a3d" stroke-width="2"/>
+            <text class="pin-name" x="-13" y="4" text-anchor="end">Mövenpick</text>
+            <text class="pin-rate" x="-13" y="20" text-anchor="end">134 €</text>
+          </g>
+
+          <!-- Adlon (NE) -->
+          <g class="comp-pin" data-hotel="adlon" transform="translate(460, 105)">
+            <circle r="7" fill="#fafaf7" stroke="#3a3a3d" stroke-width="2"/>
+            <text class="pin-name" x="13" y="4">Adlon</text>
+            <text class="pin-rate" x="13" y="20">149 €</text>
+          </g>
+
+          <!-- Park Plaza (SW) -->
+          <g class="comp-pin" data-hotel="parkplaza" transform="translate(290, 270)">
+            <circle r="7" fill="#fafaf7" stroke="#3a3a3d" stroke-width="2"/>
+            <text class="pin-name" x="-13" y="4" text-anchor="end">Park Plaza</text>
+            <text class="pin-rate" x="-13" y="20" text-anchor="end">128 €</text>
+          </g>
+
+          <!-- 25hours (SE inside radius) -->
+          <g class="comp-pin" data-hotel="25hours" transform="translate(440, 260)">
+            <circle r="7" fill="#fafaf7" stroke="#3a3a3d" stroke-width="2"/>
+            <text class="pin-name" x="13" y="4">25hours</text>
+            <text class="pin-rate" x="13" y="20">165 €</text>
+          </g>
+
+          <!-- Anna's hotel (center) -->
+          <g transform="translate(360, 180)">
+            <rect x="-6" y="-6" width="12" height="12" fill="#1e3a5f" transform="rotate(45)"/>
+            <text class="you-label" x="0" y="-22" text-anchor="middle">DU · SEEBLICK</text>
+            <text class="you-rate" x="0" y="28" text-anchor="middle">~ 155 €</text>
+          </g>
+        </svg>
+      </div>
+
+      <!--
+      <div class="comp-ladder">
+        <div class="ladder-track">
+          <div class="ladder-zone">
+            <span class="ladder-zone-label">Oberes Drittel</span>
+          </div>
+          <div class="ladder-marker" style="left: 8%">
+            <span class="lm-dot"></span>
+            <span class="lm-price">128 €</span>
+            <span class="lm-name">Park Plaza</span>
+          </div>
+          <div class="ladder-marker" style="left: 22%">
+            <span class="lm-dot"></span>
+            <span class="lm-price">134 €</span>
+            <span class="lm-name">Mövenpick</span>
+          </div>
+          <div class="ladder-marker" style="left: 56%">
+            <span class="lm-dot"></span>
+            <span class="lm-price">149 €</span>
+            <span class="lm-name">Adlon</span>
+          </div>
+          <div class="ladder-marker self" style="left: 70%">
+            <span class="lm-dot"></span>
+            <span class="lm-price">~ 155 €</span>
+            <span class="lm-name">Du · Mit Ray</span>
+          </div>
+          <div class="ladder-marker" style="left: 92%">
+            <span class="lm-dot"></span>
+            <span class="lm-price">165 €</span>
+            <span class="lm-name">25hours</span>
+          </div>
+        </div>
+      </div>
+      -->
+
+
+      <div class="comp-stats">
+        <div class="cs-stat">
+          <span class="cs-key">Median Comp-Set</span>
+          <span class="cs-val">141 €</span>
+        </div>
+        <div class="cs-stat">
+          <span class="cs-key">Du · Pfingsten ø</span>
+          <span class="cs-val accent">~ 155 €</span>
+        </div>
+        <div class="cs-stat">
+          <span class="cs-key">Δ über Median</span>
+          <span class="cs-val accent">+ 14 €</span>
+        </div>
+      </div>
+
+      <span class="comp-list-head">4 Hotels im Comp-Set</span>
+      <div class="comp-list">
+        <div class="cl-row" data-hotel="adlon">
+          <span class="cl-toggle on" onclick="toggleClRow(this)"></span>
+          <span class="cl-name"><strong>Hotel Adlon Charlottenburg</strong> · Mitte</span>
+          <span class="cl-rate">149 €</span>
+        </div>
+        <div class="cl-row" data-hotel="moevenpick">
+          <span class="cl-toggle on" onclick="toggleClRow(this)"></span>
+          <span class="cl-name"><strong>Mövenpick Berlin</strong> · 1,2 km</span>
+          <span class="cl-rate">134 €</span>
+        </div>
+        <div class="cl-row" data-hotel="parkplaza">
+          <span class="cl-toggle on" onclick="toggleClRow(this)"></span>
+          <span class="cl-name"><strong>Park Plaza Wallstreet</strong> · Mitte</span>
+          <span class="cl-rate">128 €</span>
+        </div>
+        <div class="cl-row" data-hotel="25hours">
+          <span class="cl-toggle on" onclick="toggleClRow(this)"></span>
+          <span class="cl-name"><strong>25hours Bikini</strong> · 2,4 km</span>
+          <span class="cl-rate">165 €</span>
+        </div>
+      </div>
+      <span class="cl-add">+ Hotel hinzufügen</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VIEW 5 · DECISIONS · enhanced                                    -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-decisions">
+  <div class="stage">
+    <div class="stage-eyebrow">
+      <span class="diamond"></span>
+      <em>letzte Schritte</em> · vor dem Live-Betrieb
+    </div>
+    <h1 class="stage-h1 serif">Zwei Entscheidungen, die nur du <em>treffen kannst</em>.</h1>
+    <p class="stage-lede">Alles andere habe ich. Diese definieren deine <em>Geschäfts-Philosophie</em>.</p>
+
+    <div class="decision-cards">
+
+      <!-- Decision 01 · Strategy -->
+      <div class="decision-card">
+        <div class="dc-head">
+          <span class="dc-tag"><span class="diamond"></span>01 · Strategie</span>
+          <h3 class="dc-title serif">Worauf <em>spielen</em> wir?</h3>
+          <p class="dc-helper">Wie soll ich für dich Preise machen? Du kannst es jederzeit ändern.</p>
+        </div>
+        <div class="dc-grid">
+
+          <button class="dc-option" onclick="pickChip(this, 'strategy')">
+            <span class="dc-glyph">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M 3 18 L 9 12 L 13 15 L 21 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M 15 5 L 21 5 L 21 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h5 class="dc-name serif">Mehr verdienen</h5>
+            <p class="dc-desc">Höhere Preise pro Zimmer, auch wenn mal ein paar leer bleiben.</p>
+            <div class="dc-sample">
+              <span class="dc-sample-tag">Was heißt das?</span>
+              <p>Wenn die Nachfrage steigt, ziehe ich Preise früher hoch.</p>
+            </div>
+          </button>
+
+          <button class="dc-option selected" onclick="pickChip(this, 'strategy')">
+            <span class="dc-glyph">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <rect x="4" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
+                <rect x="10" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
+                <rect x="16" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
+              </svg>
+            </span>
+            <h5 class="dc-name serif">Voll bleiben</h5>
+            <p class="dc-desc">Lieber günstiger und ausgebucht als teurer und halbleer.</p>
+            <div class="dc-sample">
+              <span class="dc-sample-tag">Was heißt das?</span>
+              <p>Wenn weniger gebucht wird, senke ich die Preise schneller.</p>
+            </div>
+          </button>
+
+          <button class="dc-option" onclick="pickChip(this, 'strategy')">
+            <span class="dc-glyph">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 12 2 L 22 12 L 12 22 L 2 12 Z" fill="currentColor"/>
+              </svg>
+            </span>
+            <h5 class="dc-name serif">Premium halten</h5>
+            <p class="dc-desc">Image vor Auslastung. Niemals zu billig wirken.</p>
+            <div class="dc-sample">
+              <span class="dc-sample-tag">Was heißt das?</span>
+              <p>Auch Last-Minute bleiben Preise stabil. Keine Schnäppchen.</p>
+            </div>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Decision 02 · Trust -->
+      <div class="decision-card">
+        <div class="dc-head">
+          <span class="dc-tag"><span class="diamond"></span>02 · Zusammenarbeit</span>
+          <h3 class="dc-title serif">Wie nah darf <em>Ray</em> ran?</h3>
+          <p class="dc-helper">Wie viel Verantwortung gibst du Ray? Du kannst es jederzeit ändern.</p>
+        </div>
+        <div class="dc-grid">
+
+          <button class="dc-option" onclick="pickChip(this, 'trust')">
+            <span class="dc-glyph">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </span>
+            <h5 class="dc-name serif">Beobachten</h5>
+            <p class="dc-desc">Ray meldet sich morgens, du entscheidest jeden Preis selbst.</p>
+            <div class="dc-sample">
+              <span class="dc-sample-tag">So rede ich</span>
+              <p class="quote">"Pfingsten zieht stark an. Du <em>könntest</em> auf + 9 € gehen."</p>
+            </div>
+          </button>
+
+          <button class="dc-option selected" onclick="pickChip(this, 'trust')">
+            <span class="dc-glyph">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M 12 3 A 9 9 0 0 1 12 21 Z" fill="currentColor"/>
+              </svg>
+            </span>
+            <h5 class="dc-name serif">Empfehlen</h5>
+            <p class="dc-desc">Ray schlägt vor, du sagst per Klick Ja oder Nein.</p>
+            <div class="dc-sample">
+              <span class="dc-sample-tag">So rede ich</span>
+              <p class="quote">"Ich würde Pfingsten auf + 9 € ziehen. <em>OK?</em>"</p>
+            </div>
+          </button>
+
+          <button class="dc-option" onclick="pickChip(this, 'trust')">
+            <span class="dc-glyph">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="currentColor"/>
+              </svg>
+            </span>
+            <h5 class="dc-name serif">Auto-Pilot</h5>
+            <p class="dc-desc">Ray entscheidet selbst, fragt nur bei Ungewöhnlichem.</p>
+            <div class="dc-sample">
+              <span class="dc-sample-tag">So rede ich</span>
+              <p class="quote">"Habe Pfingsten auf + 9 € gesetzt. Hier dein Briefing."</p>
+            </div>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Auto-running tasks -->
+    <div class="auto-tasks-card">
+      <div class="atc-head">
+        <span class="atc-eyebrow"><span class="diamond"></span>Läuft heute Nacht automatisch</span>
+        <span class="atc-time">morgen früh 6 Uhr</span>
+      </div>
+      <div class="atc-grid">
+        <div class="atc-item">
+          <h6 class="serif">Preise deiner Wettbewerber</h6>
+          <p>Ich hole sie jeden Morgen um 6 Uhr für die 4 Hotels in deiner Nähe.</p>
+        </div>
+        <div class="atc-item">
+          <h6 class="serif">Wann bei dir was los ist</h6>
+          <p>Ich lese aus deinen letzten 12 Monaten Buchungen, wann es voll wird und wann ruhig.</p>
+        </div>
+        <div class="atc-item">
+          <h6 class="serif">Dein erstes Briefing</h6>
+          <p>Morgen früh um 8 in deinem Postfach. Danach jeden Morgen.</p>
+        </div>
+        <div class="atc-item">
+          <h6 class="serif">Alles nachvollziehbar</h6>
+          <p>Jede Empfehlung und Anpassung wird dokumentiert, jederzeit reversibel.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VIEW 6 · READY                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="view" id="view-ready">
+  <div class="ready-grid">
+    <div>
+      <div class="ready-eyebrow"><span class="diamond"></span>Fertig · in 90 Sekunden</div>
+      <h2 class="ready-h2 serif"><em>Ray</em> ist eingestellt.</h2>
+      <p class="ready-lede">Ab heute Nacht arbeitet Ray für dich. Erstes Briefing morgen früh um 8:00. Wenn etwas Besonderes ist, schreibt er dir.</p>
+
+      <div class="ready-cta">
+        <a class="btn-primary" href="../standalone/current/dashboard.html">
+          Zum Briefing <span class="arr">→</span>
+        </a>
+        <button class="btn-ghost">Tour starten</button>
+      </div>
+    </div>
+
+    <div class="ready-card">
+      <div class="rc-meta">
+        <span class="rc-kicker"><span class="diamond"></span>Sample · so würde Ray heute setzen</span>
+        <span class="rc-date">preview</span>
+      </div>
+      <div class="rc-headline serif">14 Preise <em>justiert</em>, Pfingsten ist deine Chance.</div>
+      <p class="rc-narr">
+        Ray hätte heute Nacht 14 Preise nach oben gezogen. Pfingsten zieht stark an, dein Comp-Set ist im Schnitt <span class="trend-pill">↑ 8 €</span> über deinem Niveau.
+      </p>
+      <table class="rc-table">
+        <tr><td>DZK Pfingsten</td><td>119 €</td><td class="delta">+9 €</td></tr>
+        <tr><td>EZ Pfingsten</td><td>79 €</td><td class="delta">+6 €</td></tr>
+        <tr><td>Suite Pfingsten</td><td>219 €</td><td class="delta">+24 €</td></tr>
+        <tr><td>DZ KW 22</td><td>99 €</td><td class="delta">+4 €</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Sticky Confirm Bars ─── -->
+<div class="confirm-bar" id="cb-profile">
+  <div class="confirm-inner">
+    <div class="confirm-text">Stimmt das Profil? Wenn ja, fragen wir nur noch nach deinem <em>Buchungssystem</em>.</div>
+    <button class="btn-ghost" onclick="alert('Demo: Edit-Mode würde alle Blocks aufklappen.');">Anpassen</button>
+    <button class="btn-primary" onclick="setView('pms', 2)">Stimmt <span class="arr">→</span></button>
+  </div>
+</div>
+<div class="confirm-bar" id="cb-ops">
+  <div class="confirm-inner">
+    <div class="confirm-text">Stimmt das soweit? Dann nur noch <em>drei Entscheidungen</em>.</div>
+    <button class="btn-ghost">Anpassen</button>
+    <button class="btn-primary" onclick="setView('decisions', 4)">Stimmt <span class="arr">→</span></button>
+  </div>
+</div>
+<div class="confirm-bar" id="cb-decisions">
+  <div class="confirm-inner">
+    <div class="confirm-text">Bereit? <em>Ray</em> startet heute Nacht.</div>
+    <button class="btn-ghost">Zurück</button>
+    <button class="btn-primary" onclick="setView('ready', 5)">Ray einschalten <span class="arr">→</span></button>
+  </div>
+</div>
+
+<!-- ─── CONCIERGE MODAL ─── -->
+<div class="pms-modal" id="concierge-modal">
+  <div class="pms-modal-overlay" onclick="closeConciergeModal()"></div>
+  <div class="pms-modal-card" id="cm-card">
+    <button class="pms-modal-close" onclick="closeConciergeModal()">×</button>
+
+    <!-- State 1 · Booking -->
+    <div class="pmm-state-booking">
+      <div class="pmm-avatar-row">
+        <div class="pmm-av">h</div>
+        <div>
+          <div class="pmm-av-name"><span class="diamond"></span>happyhotel Setup</div>
+          <div class="pmm-av-role">30-Minuten Setup-Termin per Video-Call.</div>
+        </div>
+      </div>
+
+      <h3 class="pmm-headline serif"><span id="cm-pms">Protel</span> braucht ein <em>Setup-Termin</em>.</h3>
+
+      <p class="pmm-narr">
+        Manche Buchungssysteme können wir nicht per Klick verbinden, weil sie auf deinem Hotel-Rechner laufen oder besondere Schnittstellen brauchen. Damit nichts schief geht und keine falschen Preise an Booking.com fliegen, richten wir das gemeinsam in einem 30-Minuten-Termin ein.
+      </p>
+
+      <span class="pmm-times-label">Wann passt's dir?</span>
+      <div class="pmm-cal">
+        <button class="cal-day" data-label="Heute" data-date="6" onclick="pickDay(this)">
+          <span class="cd-dow">Heute</span>
+          <span class="cd-num">6</span>
+          <span class="cd-slots">3 frei</span>
+        </button>
+        <button class="cal-day selected" data-label="Di" data-date="7" onclick="pickDay(this)">
+          <span class="cd-dow">Di</span>
+          <span class="cd-num">7</span>
+          <span class="cd-slots">3 frei</span>
+        </button>
+        <button class="cal-day" data-label="Mi" data-date="8" onclick="pickDay(this)">
+          <span class="cd-dow">Mi</span>
+          <span class="cd-num">8</span>
+          <span class="cd-slots">4 frei</span>
+        </button>
+        <button class="cal-day" data-label="Do" data-date="9" onclick="pickDay(this)">
+          <span class="cd-dow">Do</span>
+          <span class="cd-num">9</span>
+          <span class="cd-slots">2 frei</span>
+        </button>
+        <button class="cal-day" data-label="Fr" data-date="10" onclick="pickDay(this)">
+          <span class="cd-dow">Fr</span>
+          <span class="cd-num">10</span>
+          <span class="cd-slots">3 frei</span>
+        </button>
+        <button class="cal-day disabled" data-label="Sa" data-date="11">
+          <span class="cd-dow">Sa</span>
+          <span class="cd-num">11</span>
+          <span class="cd-slots">—</span>
+        </button>
+        <button class="cal-day" data-label="Mo" data-date="13" onclick="pickDay(this)">
+          <span class="cd-dow">Mo</span>
+          <span class="cd-num">13</span>
+          <span class="cd-slots">5 frei</span>
+        </button>
+      </div>
+
+      <span class="pmm-times-label">Verfügbar <em id="cm-day-label">Di 7. Mai</em></span>
+      <div class="pmm-times">
+        <button class="pmm-time" onclick="pickTime(this)">09:00</button>
+        <button class="pmm-time selected" onclick="pickTime(this)">10:00</button>
+        <button class="pmm-time" onclick="pickTime(this)">14:00</button>
+      </div>
+
+      <div class="pmm-actions">
+        <button class="pmm-skip" onclick="closeConciergeModal()">Anderes PMS wählen</button>
+        <button class="btn-primary" onclick="bookConcierge()">
+          Termin buchen <span class="arr">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- State 2 · Post-booking -->
+    <div class="pmm-state-confirmed">
+      <div class="confirm-row">
+        <div class="confirm-icon"></div>
+        <div class="confirm-text">
+          <h4 class="serif">Termin <em id="cm-confirm-slot">Di 7. Mai · 10:00</em></h4>
+          <p>Calendar-Invite kommt per Mail</p>
+        </div>
+      </div>
+
+      <div class="cuts-label">
+        <span class="diamond"></span>
+        <span>Was du bis dahin schon tun kannst</span>
+      </div>
+
+      <div class="task-grid-2">
+        <button class="task-card" onclick="closeConciergeAndGo('decisions', 4)">
+          <span class="tc-time">~ 2 Min</span>
+          <h5 class="serif">Strategie und <em>Vertrauen</em> setzen</h5>
+          <p>Worauf wir spielen und wie nah Ray ran darf, kannst du jetzt schon entscheiden.</p>
+        </button>
+
+        <button class="task-card" onclick="closeConciergeAndGo('ready', 5)">
+          <span class="tc-time">jederzeit</span>
+          <h5 class="serif">Pause bis <em>zum Termin</em></h5>
+          <p>Am Termin richten wir gemeinsam ein, danach läuft alles automatisch wie bei Cloud-PMS.</p>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const html = document.documentElement;
+
+  function setView(v, stepNum) {
+    html.setAttribute("data-view", v);
+    if (stepNum) document.getElementById("prog-step").textContent = String(stepNum);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+
+  function startDiscovery() {
+    const input = document.getElementById("email-input");
+    if (!input.value || input.value.length < 6) {
+      input.focus();
+      return;
+    }
+    setView("loading");
+    const status = document.getElementById("loading-status");
+    const messages = [
+      "Hotel-Website analysiert…",
+      "Booking.com-Listing gefunden…",
+      "Google Maps · Lage und Telefon…",
+      "Handelsregister · Firma und USt-IdNr…",
+      "Tripadvisor · Reviews und Brand-Tone…"
+    ];
+    const stepMs = 2000;
+    messages.forEach((msg, i) => {
+      setTimeout(() => {
+        status.textContent = msg;
+      }, 200 + (i * stepMs));
+    });
+    setTimeout(() => {
+      status.textContent = "Fertig.";
+    }, 200 + messages.length * stepMs);
+    setTimeout(() => setView("profile", 1), 200 + messages.length * stepMs + 700);
+  }
+
+  function connectMews() {
+    setView("pms-load", 3);
+    document.getElementById("pms-load-status").textContent = "Hole Daten aus Mews…";
+    const lines = document.querySelectorAll("#pms-load-modal .loading-line");
+    const messages = [
+      "OAuth · Authentifizierung erfolgreich",
+      "Zimmer und Kategorien…",
+      "Services und Aufpreise…",
+      "12 Monate Buchungs-Historie…",
+      "Comp-Set aus Geo-Similarity…"
+    ];
+    lines.forEach((line, i) => {
+      setTimeout(() => {
+        if (i > 0) lines[i - 1].classList.add("done");
+        line.classList.add("active");
+      }, 100 + (i * 600));
+    });
+    setTimeout(() => {
+      lines[lines.length - 1].classList.add("done");
+    }, 100 + lines.length * 600);
+    setTimeout(() => setView("ops", 3), 100 + lines.length * 600 + 700);
+  }
+
+  function connectOther(btn, name) {
+    if (btn.dataset.setup === "concierge") {
+      openConciergeModal(name);
+      return;
+    }
+    connectMews();
+  }
+
+  // ─── Concierge modal ────────────────────────────────
+  let _selectedDayLabel = "Di 7. Mai";
+  let _selectedTime = "10:00";
+
+  function openConciergeModal(pmsName) {
+    const display = pmsName ? (pmsName.charAt(0).toUpperCase() + pmsName.slice(1)) : "Dein PMS";
+    document.getElementById("cm-pms").textContent = display;
+    document.getElementById("cm-card").classList.remove("confirmed");
+    document.getElementById("concierge-modal").classList.add("open");
+  }
+  function closeConciergeModal() {
+    document.getElementById("concierge-modal").classList.remove("open");
+  }
+  function pickDay(btn) {
+    if (btn.classList.contains("disabled")) return;
+    btn.parentElement.querySelectorAll(".cal-day").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    const label = (btn.dataset.label || "") + " " + (btn.dataset.date || "") + ". Mai";
+    _selectedDayLabel = label.trim();
+    document.getElementById("cm-day-label").textContent = _selectedDayLabel;
+  }
+  function pickTime(btn) {
+    btn.parentElement.querySelectorAll(".pmm-time").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    _selectedTime = btn.textContent.trim();
+  }
+  function bookConcierge() {
+    document.getElementById("cm-confirm-slot").textContent = _selectedDayLabel + " · " + _selectedTime;
+    document.getElementById("cm-card").classList.add("confirmed");
+  }
+  function closeConciergeAndGo(view, step) {
+    closeConciergeModal();
+    setView(view, step);
+  }
+
+  function pickChip(el, group) {
+    const parent = el.parentElement;
+    parent.querySelectorAll(".dc-option, .decision-chip").forEach(c => c.classList.remove("selected"));
+    el.classList.add("selected");
+  }
+
+  function toggleClRow(t) {
+    const row = t.closest(".cl-row");
+    t.classList.toggle("on");
+    const isOn = t.classList.contains("on");
+    row.classList.toggle("off", !isOn);
+    const hotel = row.dataset.hotel;
+    const pin = document.querySelector(`.comp-pin[data-hotel="${hotel}"]`);
+    if (pin) pin.classList.toggle("off", !isOn);
+    event.stopPropagation();
+  }
+
+  document.querySelectorAll(".cl-row").forEach(row => {
+    row.addEventListener("mouseenter", () => {
+      const hotel = row.dataset.hotel;
+      const pin = document.querySelector(`.comp-pin[data-hotel="${hotel}"]`);
+      if (pin && !pin.classList.contains("off")) pin.classList.add("hl");
+    });
+    row.addEventListener("mouseleave", () => {
+      const hotel = row.dataset.hotel;
+      const pin = document.querySelector(`.comp-pin[data-hotel="${hotel}"]`);
+      if (pin) pin.classList.remove("hl");
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT") return;
+    if (e.key === "Enter" && html.getAttribute("data-view") === "email") startDiscovery();
+  });
+</script>
+</body>
+</html>

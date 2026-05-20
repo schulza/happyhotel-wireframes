@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel · Ray Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ─── happyhotel · Ray Tokens ──────────────────────── */
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --shell-2:      #efeeea;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --warn:         #8a6a3a;
+  --warn-soft:    #f1ece3;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --border-3:     #a6a5a0;
+
+  --good:         #1e3a5f;
+  --bad:          #8c2f2f;
+
+  --font-display: "EB Garamond", Georgia, serif;
+  --font-sans:    "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", "SF Mono", Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+em { font-style: normal; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  background-color: #0d0f14;
+  background-image:
+    radial-gradient(circle, rgba(184,196,212,0.05) 1px, transparent 1.2px);
+  background-size: 18px 18px;
+  background-position: 0 0;
+  min-height: 100vh;
+  padding: 32px;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ─── Header ──────────────────────────────────────────── */
+.ds-head {
+  max-width: 1440px;
+  margin: 0 auto 18px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ds-head-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-head-mark::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--accent-line);
+  transform: rotate(45deg);
+}
+.ds-head-title {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  color: #e8eaf0;
+  letter-spacing: -0.005em;
+}
+.ds-head-title em {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--accent-line);
+  margin: 0 4px;
+}
+.ds-head-meta {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(232, 234, 240, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ds-head-meta-dot {
+  width: 5px; height: 5px;
+  background: #22c55e;
+  border-radius: 50%;
+}
+
+/* ─── Outer Frame ─────────────────────────────────────── */
+.ds-frame {
+  max-width: 1440px;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 0 0 1px rgba(30, 58, 95, 0.18), 0 30px 60px -20px rgba(0,0,0,0.45);
+}
+
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.ds-grid + .ds-grid { margin-top: 18px; }
+
+.ds-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ─── Section Header Strip ────────────────────────────── */
+.ds-section {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 4px 4px 0;
+  margin-top: 4px;
+}
+.ds-section-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.ds-section-title em {
+  font-weight: 500;
+  color: var(--accent);
+}
+.ds-section-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.ds-section-meta::before {
+  content: "";
+  width: 5px; height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.ds-hr {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ─── Card Base ────────────────────────────────────────── */
+.ds-card {
+  background: var(--surface-2);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 180px;
+}
+.ds-card.flat { background: var(--surface); border: 1px solid var(--border); }
+.ds-card.tall { min-height: 240px; }
+
+.ds-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+.ds-card-label {
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.ds-card-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ─── Color Card ──────────────────────────────────────── */
+.ds-color-card {
+  background: var(--surface-2);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ds-color-block {
+  height: 78px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+.ds-color-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.ds-color-hex {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.ds-color-scale {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 1px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ds-color-scale > div { height: 22px; }
+.ds-color-tokens {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-top: 2px;
+}
+.ds-color-tokens span { display: block; }
+.ds-color-tokens b { color: var(--ink-2); font-weight: 600; }
+
+/* ─── Typography Card ─────────────────────────────────── */
+.ds-type-card {
+  background: var(--surface-2);
+  border-radius: 14px;
+  padding: 18px 22px 22px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+}
+.ds-type-aa {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 104px;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  margin-top: 8px;
+}
+.ds-type-aa.serif { font-family: var(--font-display); font-weight: 400; }
+.ds-type-aa.serif em { color: var(--accent); font-weight: 500; }
+.ds-type-aa.sans  { font-family: var(--font-sans); font-weight: 500; }
+.ds-type-aa.mono  { font-family: var(--font-mono); font-weight: 500; font-size: 84px; font-variant-numeric: tabular-nums; }
+.ds-type-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Inline samples ──────────────────────────────────── */
+.ds-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ds-stack { display: flex; flex-direction: column; gap: 10px; }
+
+/* Mono tag */
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.mono-tag .mark {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.mono-tag.accent { color: var(--accent); }
+.mono-tag.muted .mark { background: var(--muted); }
+
+/* Diamond scale */
+.diamond-grid {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  justify-content: center;
+  padding: 16px 0 4px;
+}
+.diamond {
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.diamond.s  { width: 6px;  height: 6px; }
+.diamond.m  { width: 10px; height: 10px; }
+.diamond.l  { width: 16px; height: 16px; }
+.diamond.xl { width: 24px; height: 24px; }
+
+/* Trend pill (inline body pattern from dashboard) */
+.trend-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  padding: 2px 8px 3px;
+  background: var(--accent-soft);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.trend-pill.down { background: #fbeded; color: var(--bad); }
+.trend-pill .arrow { font-size: 9px; line-height: 1; }
+.trend-pill .trend-ref {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--accent);
+  opacity: 0.85;
+  letter-spacing: -0.01em;
+  padding-left: 6px;
+  margin-left: 2px;
+  border-left: 1px solid var(--accent-line);
+  line-height: 1;
+}
+.trend-pill.down .trend-ref { color: var(--bad); border-color: rgba(140, 47, 47, 0.3); }
+
+/* Status dot */
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.status-dot::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.status-dot.live::before    { background: #22c55e; animation: pulse 2.4s ease-in-out infinite; }
+.status-dot.waiting::before { background: var(--accent); }
+.status-dot.analysing::before { background: var(--accent); animation: pulse 1.4s ease-in-out infinite; }
+.status-dot.idle::before    { background: var(--subtle); }
+
+/* Detail link */
+.detail-link {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: underline dashed var(--accent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+}
+
+/* ─── Buttons ─────────────────────────────────────────── */
+.btn {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-ghost {
+  background: var(--surface);
+  color: var(--ink-2);
+  border: 1px solid var(--border-2);
+}
+.btn-ray {
+  background: var(--surface);
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-ray .ray-rune {
+  width: 7px; height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.btn-ray-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--accent);
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.btn-ray-icon::before {
+  content: "";
+  width: 8px; height: 8px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* Filter pills */
+.rpf {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 6px 13px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+.rpf.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Input */
+.sample-input {
+  width: 100%;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  color: var(--muted);
+}
+.input-context {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.input-context-val {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-2);
+  margin-left: 4px;
+}
+
+/* ─── Stat block ──────────────────────────────────────── */
+.stat-block { display: flex; flex-direction: column; gap: 6px; }
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--muted);
+}
+.stat-value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.stat-value em { color: var(--accent); font-weight: 500; }
+.stat-delta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Headline sample ─────────────────────────────────── */
+.sample-headline {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.sample-headline em { color: var(--accent); font-weight: 500; }
+.sample-narrative {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-top: 10px;
+}
+.money {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Decision card sample ────────────────────────────── */
+.sample-decision {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.sample-dec-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sample-dec-tag::before {
+  content: "";
+  width: 6px; height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.sample-dec-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.sample-dec-sub {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+.sample-dec-actions { display: flex; gap: 6px; }
+.sample-dec-actions .btn { font-size: 11px; padding: 6px 12px; }
+
+/* ─── Mini briefing card ──────────────────────────────── */
+.sample-brief {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+.sample-brief-kicker {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 7px;
+  margin-bottom: 10px;
+}
+.sample-brief-kicker::before {
+  content: "";
+  width: 5px; height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ─── AI rec card ─────────────────────────────────────── */
+.sample-rec {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.sample-rec-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 7px;
+}
+.sample-rec-tag::before {
+  content: "";
+  width: 5px; height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.sample-rec-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.sample-rec-spark {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 36px;
+  margin-bottom: 14px;
+}
+.sample-rec-spark > div {
+  flex: 1;
+  background: var(--accent-soft);
+  border-radius: 1px;
+}
+.sample-rec-spark > div.peak { background: var(--accent); }
+.sample-rec-actions { display: flex; gap: 6px; }
+.sample-rec-actions .btn { font-size: 11px; padding: 5px 11px; }
+
+/* ─── Week outlook mini ───────────────────────────────── */
+.sample-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.sw-day {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 6px 7px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 78px;
+}
+.sw-day.strong { background: var(--accent-soft); border-color: var(--accent-line); }
+.sw-day.event {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+}
+.sw-dow {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sw-day.strong .sw-dow { color: var(--accent); }
+.sw-day.event .sw-dow { color: rgba(255,255,255,0.85); }
+.sw-status {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1;
+  margin-top: 2px;
+}
+.sw-day.strong .sw-status { color: var(--accent); font-weight: 500; }
+.sw-day.event .sw-status { color: #fff; font-weight: 500; }
+.sw-price {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  margin-top: auto;
+}
+.sw-day.strong .sw-price { color: var(--accent); }
+.sw-day.event .sw-price { color: #fff; }
+
+/* ─── Comp block ──────────────────────────────────────── */
+.sample-comp {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.comp-row {
+  display: grid;
+  grid-template-columns: 86px 1fr 50px;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-row.you { background: rgba(30, 58, 95, 0.025); padding-left: 6px; padding-right: 6px; margin: 0 -6px; border-radius: 4px; }
+.comp-name {
+  font-size: 11px;
+  color: var(--ink-2);
+}
+.comp-row.you .comp-name { color: var(--ink); font-weight: 600; }
+.comp-bar {
+  height: 4px;
+  background: var(--border);
+  position: relative;
+  border-radius: 1px;
+}
+.comp-fill {
+  height: 100%;
+  background: var(--ink-2);
+  min-width: 2px;
+  border-radius: 1px;
+}
+.comp-row.you .comp-fill { background: var(--accent); }
+.comp-price {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--ink);
+}
+
+/* ─── Price heatmap mini ──────────────────────────────── */
+.sample-heatmap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.heat-cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 7px 8px 8px;
+  position: relative;
+  min-height: 54px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.heat-cell.strong { background: var(--accent-soft); border-color: var(--accent-line); }
+.heat-cell.weak   { background: var(--warn-soft); border-color: var(--border); }
+.heat-cell.event  { background: var(--accent); border-color: var(--accent); color: #fff; }
+.heat-day {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.heat-cell.strong .heat-day { color: var(--accent); }
+.heat-cell.event .heat-day { color: rgba(255,255,255,0.8); }
+.heat-price {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  margin-top: auto;
+}
+.heat-cell.event .heat-price { color: #fff; }
+.heat-occ {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--subtle);
+  font-variant-numeric: tabular-nums;
+}
+.heat-cell.event .heat-occ { color: rgba(255,255,255,0.7); }
+.ai-mark {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 5px; height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.heat-cell.event .ai-mark { background: #d4cfba; }
+
+/* ─── Bar chart mini (mockup card style) ──────────────── */
+.chart-card-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: end;
+}
+.chart-stat .cs-hero {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.chart-stat .cs-ctx {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.chart-stat .cs-ctx b { color: var(--ink-2); }
+.chart-stat .cs-delta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  margin-top: 10px;
+  letter-spacing: 0.02em;
+}
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 86px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  gap: 4px;
+}
+.chart-bar {
+  flex: 1;
+  position: relative;
+  background: var(--surface);
+  border: 1.2px solid var(--accent);
+  border-bottom: none;
+  background-image: radial-gradient(circle at 50% 50%, var(--accent) 0.7px, transparent 1px);
+  background-size: 4px 4px;
+}
+.chart-bar.muted {
+  border-color: var(--border-2);
+  background-image: radial-gradient(circle at 50% 50%, var(--subtle) 0.7px, transparent 1px);
+  background-size: 4px 4px;
+}
+.chart-cats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+/* ─── Tabs / Multi-session ────────────────────────────── */
+.tabs-strip {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  padding: 8px 8px 0;
+  background: var(--surface);
+  border-radius: 8px 8px 0 0;
+  border: 1px solid var(--border);
+  border-bottom: none;
+}
+.tab {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 7px 11px;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.tab::before {
+  content: "";
+  width: 5px; height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  opacity: 0.5;
+}
+.tab.active {
+  background: var(--surface-2);
+  color: var(--ink);
+  font-weight: 600;
+  border-color: var(--border);
+  border-bottom-color: var(--surface-2);
+  margin-bottom: -1px;
+}
+.tab.active::before { opacity: 1; }
+.tab-plus {
+  margin-left: auto;
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  border: 1.5px solid var(--accent);
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.tab-plus::before {
+  content: "";
+  width: 6px; height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.tab-body {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 14px;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+/* ─── Ray conversation row ────────────────────────────── */
+.sample-rp {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.rp-section-head {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.rp-conv {
+  display: grid;
+  grid-template-columns: 14px 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.rp-conv:last-child { border-bottom: none; }
+.rp-conv-status {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+}
+.rp-conv-status.active   { background: var(--accent); animation: pulse 2.4s ease-in-out infinite; }
+.rp-conv-status.waiting  { background: var(--accent); opacity: 0.45; }
+.rp-conv-status.past     { background: var(--border-3); }
+.rp-conv-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.rp-conv-snippet {
+  font-size: 11.5px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.rp-conv-snippet .quote { color: var(--muted); }
+.rp-conv-snippet .badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  padding: 1px 7px 2px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  margin-left: 4px;
+  vertical-align: 1px;
+}
+.rp-conv-meta {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ─── Chain-of-thought mini ───────────────────────────── */
+.sample-cot {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+.cot-theme-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.cot-theme-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+.cot-theme-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  flex: 1;
+}
+.cot-theme-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 9px 3px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+.cot-step {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+}
+.cot-step-bullet {
+  width: 7px; height: 7px;
+  background: var(--subtle);
+  transform: rotate(45deg);
+  margin-top: 6px;
+}
+.cot-step.decision .cot-step-bullet { background: var(--accent); }
+.cot-step-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 3px;
+  display: flex; gap: 6px; align-items: baseline;
+}
+.cot-step.decision .cot-step-tag { color: var(--accent); }
+.cot-step-tag .cst-meta { color: var(--subtle); font-weight: 400; letter-spacing: 0.08em; }
+.cot-step-body {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.cot-step.decision .cot-step-body {
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 2px;
+}
+.cot-step-body b { color: var(--ink); font-weight: 600; }
+.cot-step-body .num {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.cot-step.decision .cot-step-body b { color: var(--accent-deep); }
+
+/* ─── Footer note ─────────────────────────────────────── */
+.ds-footer-note {
+  max-width: 1440px;
+  margin: 14px auto 0;
+  padding: 0 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+}
+.ds-footer-note a { color: rgba(255,255,255,0.6); text-decoration: none; }
+
+.hairline {
+  border-top: 1px solid var(--border);
+  margin: 14px 0;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═════════════ HEADER ═════════════ -->
+<div class="ds-head">
+  <div class="ds-head-mark"></div>
+  <div class="ds-head-title">happyhotel <em>· Ray</em> Design System</div>
+  <div class="ds-head-meta"><span class="ds-head-meta-dot"></span>v Mai 2026 · live</div>
+</div>
+
+<!-- ═════════════ FRAME ═════════════ -->
+<div class="ds-frame">
+
+  <!-- ── SECTION : COLORS ── -->
+  <div class="ds-grid">
+    <div class="ds-section">
+      <h2 class="ds-section-title">Farben · <em>warmes Paper, Ink-Blue Akzent</em></h2>
+      <span class="ds-section-meta">01 · Tokens</span>
+    </div>
+
+    <div class="ds-color-card">
+      <div class="ds-color-block" style="background: var(--ink); color: #f4f4f7;">
+        <span class="ds-color-name">Ink</span>
+        <span class="ds-color-hex">#18181A</span>
+      </div>
+      <div class="ds-color-scale">
+        <div style="background:#18181a"></div>
+        <div style="background:#28282b"></div>
+        <div style="background:#3a3a3d"></div>
+        <div style="background:#52525a"></div>
+        <div style="background:#6e6e72"></div>
+        <div style="background:#8e8e94"></div>
+        <div style="background:#a8a8ac"></div>
+        <div style="background:#c9c8c2"></div>
+        <div style="background:#e6e5df"></div>
+        <div style="background:#f7f6f2"></div>
+      </div>
+      <div class="ds-color-tokens">
+        <span><b>--ink</b> #18181a</span>
+        <span><b>--ink-2</b> #3a3a3d</span>
+        <span><b>--muted</b> #6e6e72</span>
+        <span><b>--subtle</b> #a8a8ac</span>
+      </div>
+    </div>
+
+    <div class="ds-color-card">
+      <div class="ds-color-block" style="background: var(--accent); color: #ebf0f6;">
+        <span class="ds-color-name">Accent · Ink Blue</span>
+        <span class="ds-color-hex">#1E3A5F</span>
+      </div>
+      <div class="ds-color-scale">
+        <div style="background:#0c1d34"></div>
+        <div style="background:#14294a"></div>
+        <div style="background:#1e3a5f"></div>
+        <div style="background:#2a5180"></div>
+        <div style="background:#3e6aa1"></div>
+        <div style="background:#6385b8"></div>
+        <div style="background:#8aa3c8"></div>
+        <div style="background:#b8c4d4"></div>
+        <div style="background:#d4dce8"></div>
+        <div style="background:#ebf0f6"></div>
+      </div>
+      <div class="ds-color-tokens">
+        <span><b>--accent</b> #1e3a5f</span>
+        <span><b>--accent-deep</b> #14294a</span>
+        <span><b>--accent-line</b> #b8c4d4</span>
+        <span><b>--accent-soft</b> #ebf0f6</span>
+      </div>
+    </div>
+
+    <div class="ds-color-card">
+      <div class="ds-color-block" style="background: var(--bg); color: var(--ink); border: 1px solid var(--border);">
+        <span class="ds-color-name">Paper · warm</span>
+        <span class="ds-color-hex">#F6F5F1</span>
+      </div>
+      <div class="ds-color-scale">
+        <div style="background:#ededea"></div>
+        <div style="background:#efeeea"></div>
+        <div style="background:#f3f1ed"></div>
+        <div style="background:#f6f5f1"></div>
+        <div style="background:#f7f6f2"></div>
+        <div style="background:#fafaf7"></div>
+        <div style="background:#fbfbf9"></div>
+        <div style="background:#fcfcfa"></div>
+        <div style="background:#fdfdfc"></div>
+        <div style="background:#ffffff"></div>
+      </div>
+      <div class="ds-color-tokens">
+        <span><b>--bg</b> #f6f5f1</span>
+        <span><b>--shell</b> #fafaf7</span>
+        <span><b>--shell-2</b> #efeeea</span>
+        <span><b>--surface</b> #ffffff</span>
+      </div>
+    </div>
+
+    <div class="ds-color-card">
+      <div class="ds-color-block" style="background: var(--bad); color: #fff;">
+        <span class="ds-color-name">Semantic</span>
+        <span class="ds-color-hex">#8C2F2F</span>
+      </div>
+      <div class="ds-color-scale">
+        <div style="background:#8c2f2f"></div>
+        <div style="background:#fbeded"></div>
+        <div style="background:#8a6a3a"></div>
+        <div style="background:#f1ece3"></div>
+        <div style="background:#22c55e"></div>
+        <div style="background:#e6e5df"></div>
+        <div style="background:#c9c8c2"></div>
+        <div style="background:#a6a5a0"></div>
+        <div style="background:#1e3a5f"></div>
+        <div style="background:#18181a"></div>
+      </div>
+      <div class="ds-color-tokens">
+        <span><b>--bad</b> #8c2f2f · nur Echtverlust</span>
+        <span><b>--warn</b> #8a6a3a · selten</span>
+        <span style="color:#22c55e"><b>live-pulse</b> #22c55e · nur Status</span>
+        <span><b>--good = --accent</b> · kein Grün</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION : TYPOGRAPHY ── -->
+  <div class="ds-grid">
+    <div class="ds-section">
+      <h2 class="ds-section-title">Schriften · <em>Editorial, nicht SaaS</em></h2>
+      <span class="ds-section-meta">02 · Type</span>
+    </div>
+
+    <div class="ds-type-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Display</span>
+        <span class="ds-card-meta">EB Garamond</span>
+      </div>
+      <div class="ds-type-aa serif">A<em>a</em></div>
+      <div class="ds-type-meta">
+        <span>Headlines · Stats · Status</span>
+        <span>400 / 500</span>
+      </div>
+    </div>
+
+    <div class="ds-type-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Body</span>
+        <span class="ds-card-meta">Inter</span>
+      </div>
+      <div class="ds-type-aa sans">Aa</div>
+      <div class="ds-type-meta">
+        <span>Narrative · Labels · UI</span>
+        <span>400 / 500 / 600</span>
+      </div>
+    </div>
+
+    <div class="ds-type-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Mono</span>
+        <span class="ds-card-meta">JetBrains Mono</span>
+      </div>
+      <div class="ds-type-aa mono">28<em style="color:var(--accent); font-weight:500">k</em></div>
+      <div class="ds-type-meta">
+        <span>Numbers · Eyebrows · Code</span>
+        <span>500 / 600 · tabular</span>
+      </div>
+    </div>
+
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Headline · Stat</span>
+        <span class="ds-card-meta">Live Sample</span>
+      </div>
+      <div class="sample-headline">Pfingsten war ein <em>Volltreffer.</em></div>
+      <div class="hairline"></div>
+      <div class="stat-block">
+        <span class="stat-label">Mai bisher</span>
+        <span class="stat-value">28.420 <em>€</em></span>
+        <span class="stat-delta">↑ 12 % vs. Vorjahr</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION : FOUNDATIONS ── -->
+  <div class="ds-grid">
+    <div class="ds-section">
+      <h2 class="ds-section-title">Foundations · <em>Marker, Pillen, Status, Link</em></h2>
+      <span class="ds-section-meta">03 · Atoms</span>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Mono Tags · Diamond</span>
+        <span class="ds-card-meta">eyebrow · marker</span>
+      </div>
+      <div class="ds-stack">
+        <span class="mono-tag accent"><span class="mark"></span>Ray erklärt</span>
+        <span class="mono-tag muted"><span class="mark"></span>KW 18 · Briefing</span>
+        <span class="mono-tag muted"><span class="mark"></span>Heute 06:42</span>
+      </div>
+      <div class="diamond-grid">
+        <div class="diamond s"></div>
+        <div class="diamond m"></div>
+        <div class="diamond l"></div>
+        <div class="diamond xl"></div>
+      </div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Trend Pills</span>
+        <span class="ds-card-meta">inline + trend-ref</span>
+      </div>
+      <div class="ds-stack" style="gap:12px">
+        <span class="trend-pill"><span class="arrow">↑</span>12 %<span class="trend-ref">vs. Vorjahr</span></span>
+        <span class="trend-pill"><span class="arrow">↑</span>+1.016 €<span class="trend-ref">14 Tage</span></span>
+        <span class="trend-pill down"><span class="arrow">↓</span>4 %<span class="trend-ref">vs. Plan</span></span>
+      </div>
+      <div class="hairline"></div>
+      <div style="font-size:11px; color:var(--muted); line-height:1.55">
+        Delta ohne Referenz ist Lärm. Trend-Ref ist Pflicht.
+      </div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Status Dots</span>
+        <span class="ds-card-meta">live · waiting · idle</span>
+      </div>
+      <div class="ds-stack">
+        <span class="status-dot live">Live · Ray analysiert</span>
+        <span class="status-dot waiting">Wartet auf dich</span>
+        <span class="status-dot analysing">Erkennt Muster</span>
+        <span class="status-dot idle">Idle · vor 2 Std</span>
+      </div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Detail Link · Money</span>
+        <span class="ds-card-meta">drilldown · num</span>
+      </div>
+      <a class="detail-link">heute Nacht 23 Preise angepasst</a>
+      <div class="hairline"></div>
+      <div style="font-size:13px; line-height:1.7; color:var(--ink-2)">
+        Du hast <span class="money">28.420 €</span> verdient,
+        <span class="trend-pill"><span class="arrow">↑</span>12 %<span class="trend-ref">vs. Vorjahr</span></span>
+        und <a class="detail-link">die Großgruppe</a> wartet.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION : BUTTONS / INPUTS / TABS ── -->
+  <div class="ds-grid">
+    <div class="ds-section">
+      <h2 class="ds-section-title">Controls · <em>Buttons, Filter, Input, Tabs</em></h2>
+      <span class="ds-section-meta">04 · Actions</span>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Buttons</span>
+        <span class="ds-card-meta">primary · ghost · ray</span>
+      </div>
+      <div class="ds-row">
+        <button class="btn btn-primary">Annehmen</button>
+        <button class="btn btn-ghost">Ablehnen</button>
+      </div>
+      <div class="ds-row" style="margin-top:12px">
+        <button class="btn btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+        <button class="btn-ray-icon" aria-label="Ray"></button>
+      </div>
+      <div class="hairline"></div>
+      <div style="font-size:11px; color:var(--muted)">Ray-Button ist die einzige Outline-Variante. Niemals als Primary einsetzen.</div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Filter Pills</span>
+        <span class="ds-card-meta">Ray Panel</span>
+      </div>
+      <div class="ds-row">
+        <button class="rpf active">Alle</button>
+        <button class="rpf">Pinned</button>
+        <button class="rpf">Wartet</button>
+        <button class="rpf">Erledigt</button>
+      </div>
+      <div class="hairline"></div>
+      <div class="ds-row">
+        <button class="rpf active">14 Tage</button>
+        <button class="rpf">30 Tage</button>
+        <button class="rpf">90 Tage</button>
+      </div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Input · Anchor</span>
+        <span class="ds-card-meta">text field</span>
+      </div>
+      <input class="sample-input" placeholder="Frag Ray etwas …" />
+      <div class="input-context">
+        <span class="mono-tag accent"><span class="mark"></span>Kontext</span>
+        <span class="input-context-val">Großgruppe Berlin · 24 Z.</span>
+      </div>
+      <div class="hairline"></div>
+      <div style="font-size:11px; color:var(--muted); line-height:1.55">Eingabe immer mit Kontext-Anker, damit Ray weiß, worauf sie sich bezieht.</div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Tabs · Multi-Session</span>
+        <span class="ds-card-meta">Ray Modal</span>
+      </div>
+      <div class="tabs-strip">
+        <button class="tab active">Großgruppe</button>
+        <button class="tab">MinLOS</button>
+        <button class="tab">Comp-Set</button>
+        <button class="tab-plus" aria-label="Neue Session"></button>
+      </div>
+      <div class="tab-body">Context: 24 Z · 7 Nächte · Anker 119 €</div>
+    </div>
+  </div>
+
+  <!-- ── SECTION : CARDS ── -->
+  <div class="ds-grid">
+    <div class="ds-section">
+      <h2 class="ds-section-title">Patterns · <em>Briefing, Decision, Empfehlung, Chart</em></h2>
+      <span class="ds-section-meta">05 · Surfaces</span>
+    </div>
+
+    <!-- Briefing mini -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Briefing</span>
+        <span class="ds-card-meta">Hotelier Mode</span>
+      </div>
+      <div class="sample-brief">
+        <span class="sample-brief-kicker">KW 18 · Briefing</span>
+        <div class="sample-headline" style="font-size:22px">Pfingsten war ein <em>Volltreffer.</em></div>
+        <div class="sample-narrative">
+          Du hast <span class="money">28.420 €</span> verdient,
+          <span class="trend-pill"><span class="arrow">↑</span>12 %<span class="trend-ref">vs. Vorjahr</span></span>
+          und <a class="detail-link">23 Preise angepasst</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Decision Card -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Decision Card</span>
+        <span class="ds-card-meta">inline · approval</span>
+      </div>
+      <div class="sample-decision">
+        <div class="sample-dec-tag">Deine Freigabe nötig</div>
+        <div class="sample-dec-title">Großgruppe Berlin · 24 Z.</div>
+        <div class="sample-dec-sub">Anker 119 €, Spielraum bis 109 €. Ohne Annahme verlieren wir 7 Nächte.</div>
+        <div class="sample-dec-actions">
+          <button class="btn btn-primary">Annehmen</button>
+          <button class="btn btn-ghost">Ablehnen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Rec Card -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">AI Empfehlung</span>
+        <span class="ds-card-meta">Sidebar Card</span>
+      </div>
+      <div class="sample-rec">
+        <span class="sample-rec-tag">Empfehlung</span>
+        <div class="sample-rec-title">MinLOS 2 für 23.–25. Mai</div>
+        <div class="sample-rec-spark">
+          <div style="height:40%"></div>
+          <div style="height:55%"></div>
+          <div style="height:70%"></div>
+          <div style="height:88%" class="peak"></div>
+          <div style="height:80%" class="peak"></div>
+          <div style="height:60%"></div>
+          <div style="height:48%"></div>
+        </div>
+        <div class="sample-rec-actions">
+          <button class="btn btn-primary">Übernehmen</button>
+          <button class="btn btn-ghost">Später</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mockup Chart Card -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Chart Card</span>
+        <span class="ds-card-meta">hero stat + bars</span>
+      </div>
+      <div class="chart-card-inner">
+        <div class="chart-stat">
+          <div class="cs-hero">+24</div>
+          <div class="cs-ctx"><b>Nächte</b><br>vs. Vorwoche</div>
+          <div class="cs-delta">↑ 12 % · +1.016 €</div>
+        </div>
+        <div>
+          <div class="chart-bars">
+            <div class="chart-bar muted" style="height:46%"></div>
+            <div class="chart-bar muted" style="height:62%"></div>
+            <div class="chart-bar" style="height:78%"></div>
+            <div class="chart-bar" style="height:92%"></div>
+          </div>
+          <div class="chart-cats">
+            <span>KW15</span><span>KW16</span><span>KW17</span><span>KW18</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION : ADVANCED ── -->
+  <div class="ds-grid">
+    <div class="ds-section">
+      <h2 class="ds-section-title">Daten-Patterns · <em>Week, Comp, Heatmap</em></h2>
+      <span class="ds-section-meta">06 · Data</span>
+    </div>
+
+    <!-- Week outlook -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Week Outlook</span>
+        <span class="ds-card-meta">status words</span>
+      </div>
+      <div class="sample-week">
+        <div class="sw-day"><span class="sw-dow">Mo</span><span class="sw-status">ruhig</span><span class="sw-price">98 €</span></div>
+        <div class="sw-day"><span class="sw-dow">Di</span><span class="sw-status">ruhig</span><span class="sw-price">98 €</span></div>
+        <div class="sw-day strong"><span class="sw-dow">Mi</span><span class="sw-status">stark</span><span class="sw-price">119 €</span></div>
+        <div class="sw-day strong"><span class="sw-dow">Do</span><span class="sw-status">stark</span><span class="sw-price">124 €</span></div>
+        <div class="sw-day event"><span class="sw-dow">Fr</span><span class="sw-status">Pfingsten</span><span class="sw-price">149 €</span></div>
+        <div class="sw-day event"><span class="sw-dow">Sa</span><span class="sw-status">Pfingsten</span><span class="sw-price">169 €</span></div>
+        <div class="sw-day strong"><span class="sw-dow">So</span><span class="sw-status">stark</span><span class="sw-price">132 €</span></div>
+      </div>
+      <div class="hairline"></div>
+      <div style="font-size:11px; color:var(--muted)">Status literarisch: ruhig · stark · Pfingsten. Kein "+12 %", kein "Event".</div>
+    </div>
+
+    <!-- Comp block -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Comp-Set</span>
+        <span class="ds-card-meta">positioning</span>
+      </div>
+      <div class="sample-comp">
+        <div class="comp-row"><span class="comp-name">Hotel Adler</span><div class="comp-bar"><div class="comp-fill" style="width:96%"></div></div><span class="comp-price">142 €</span></div>
+        <div class="comp-row you"><span class="comp-name">Du</span><div class="comp-bar"><div class="comp-fill" style="width:80%"></div></div><span class="comp-price">119 €</span></div>
+        <div class="comp-row"><span class="comp-name">Maritim</span><div class="comp-bar"><div class="comp-fill" style="width:75%"></div></div><span class="comp-price">112 €</span></div>
+        <div class="comp-row"><span class="comp-name">Ibis Center</span><div class="comp-bar"><div class="comp-fill" style="width:62%"></div></div><span class="comp-price">94 €</span></div>
+        <div class="comp-row"><span class="comp-name">B&amp;B Hotel</span><div class="comp-bar"><div class="comp-fill" style="width:48%"></div></div><span class="comp-price">72 €</span></div>
+      </div>
+    </div>
+
+    <!-- Price heatmap mini -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Preis-Heatmap</span>
+        <span class="ds-card-meta">cell states</span>
+      </div>
+      <div class="sample-heatmap">
+        <div class="heat-cell"><span class="heat-day">Mo</span><span class="heat-price">98 €</span><span class="heat-occ">62 %</span></div>
+        <div class="heat-cell"><span class="heat-day">Di</span><span class="heat-price">98 €</span><span class="heat-occ">68 %</span></div>
+        <div class="heat-cell strong"><span class="ai-mark"></span><span class="heat-day">Mi</span><span class="heat-price">119 €</span><span class="heat-occ">84 %</span></div>
+        <div class="heat-cell strong"><span class="ai-mark"></span><span class="heat-day">Do</span><span class="heat-price">124 €</span><span class="heat-occ">88 %</span></div>
+        <div class="heat-cell event"><span class="ai-mark"></span><span class="heat-day">Fr</span><span class="heat-price">149 €</span><span class="heat-occ">97 %</span></div>
+        <div class="heat-cell event"><span class="ai-mark"></span><span class="heat-day">Sa</span><span class="heat-price">169 €</span><span class="heat-occ">99 %</span></div>
+        <div class="heat-cell strong"><span class="heat-day">So</span><span class="heat-price">132 €</span><span class="heat-occ">86 %</span></div>
+        <div class="heat-cell weak"><span class="heat-day">Mo</span><span class="heat-price">88 €</span><span class="heat-occ">42 %</span></div>
+      </div>
+      <div class="hairline"></div>
+      <div style="font-size:10.5px; color:var(--muted); line-height:1.6">
+        <span style="display:inline-flex; align-items:center; gap:5px"><span style="width:8px;height:8px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:2px"></span>strong</span>
+        &nbsp;·&nbsp;
+        <span style="display:inline-flex; align-items:center; gap:5px"><span style="width:8px;height:8px;background:var(--accent);border-radius:2px"></span>event</span>
+        &nbsp;·&nbsp;
+        <span style="display:inline-flex; align-items:center; gap:5px"><span style="width:8px;height:8px;background:var(--warn-soft);border-radius:2px"></span>weak</span>
+        &nbsp;·&nbsp;
+        <span style="display:inline-flex; align-items:center; gap:5px"><span style="width:5px;height:5px;background:var(--accent);transform:rotate(45deg)"></span>ai-mark</span>
+      </div>
+    </div>
+
+    <!-- Stat / Stat-Stack -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Stat Stack</span>
+        <span class="ds-card-meta">brief footer</span>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; padding:8px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border)">
+        <div class="stat-block">
+          <span class="stat-label">RevPAR</span>
+          <span class="stat-value" style="font-size:30px">86 <em>€</em></span>
+          <span class="stat-delta">↑ 8,4 % vs. Vorjahr</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-label">Auslastung</span>
+          <span class="stat-value" style="font-size:30px">74 <em>%</em></span>
+          <span class="stat-delta">↑ 3 PP vs. Plan</span>
+        </div>
+      </div>
+      <div style="margin-top:16px; font-size:11px; color:var(--muted); line-height:1.6">
+        Stat-Value: EB Garamond 30–48px · Currency-Symbol als Accent-em · Delta Mono.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION : RAY ── -->
+  <div class="ds-grid" style="grid-template-columns: 1.4fr 1fr;">
+    <div class="ds-section">
+      <h2 class="ds-section-title">Ray · <em>Konversation, Chain-of-Thought</em></h2>
+      <span class="ds-section-meta">07 · Agent</span>
+    </div>
+
+    <!-- Ray panel conversation list -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Ray Panel · Conversations</span>
+        <span class="ds-card-meta">filter + rows</span>
+      </div>
+      <div class="ds-row" style="gap:6px; margin-bottom:14px">
+        <button class="rpf active">Alle</button>
+        <button class="rpf">Pinned</button>
+        <button class="rpf">Wartet</button>
+      </div>
+      <div class="sample-rp">
+        <div class="rp-section-head">Heute</div>
+        <a class="rp-conv">
+          <span class="rp-conv-status active"></span>
+          <div>
+            <div class="rp-conv-title">Großgruppe Berlin</div>
+            <div class="rp-conv-snippet"><span class="quote">"Anker 119 €, Spielraum bis 109 €"</span><span class="badge">3 Aktionen</span></div>
+          </div>
+          <div class="rp-conv-meta">vor 14 Min<br>8 Msg</div>
+        </a>
+        <a class="rp-conv">
+          <span class="rp-conv-status waiting"></span>
+          <div>
+            <div class="rp-conv-title">MinLOS 2 · Pfingsten</div>
+            <div class="rp-conv-snippet"><span class="quote">"Empfehle 2 Nächte minimum für Fr–Sa"</span></div>
+          </div>
+          <div class="rp-conv-meta">vor 1 Std<br>3 Msg</div>
+        </a>
+        <a class="rp-conv">
+          <span class="rp-conv-status past"></span>
+          <div>
+            <div class="rp-conv-title">Comp-Set Hotel Adler</div>
+            <div class="rp-conv-snippet"><span class="quote">"Adler +18 % seit gestern, Spielraum nutzbar"</span></div>
+          </div>
+          <div class="rp-conv-meta">vor 6 Std<br>12 Msg</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Chain of thought -->
+    <div class="ds-card tall">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Chain-of-Thought</span>
+        <span class="ds-card-meta">themes · steps</span>
+      </div>
+      <div class="sample-cot">
+        <div class="cot-theme-head">
+          <span class="cot-theme-num">01</span>
+          <span class="cot-theme-title">Verdrängung prüfen</span>
+          <span class="cot-theme-pill">±0 €</span>
+        </div>
+        <div class="cot-step">
+          <span class="cot-step-bullet"></span>
+          <div>
+            <div class="cot-step-tag">Analyse <span class="cst-meta">vor 2 Min</span></div>
+            <div class="cot-step-body">Pickup 14 Tage <b>+24 Nächte</b>, Auslastung im eigenen Forecast.</div>
+          </div>
+        </div>
+        <div class="cot-step decision">
+          <span class="cot-step-bullet"></span>
+          <div>
+            <div class="cot-step-tag">Entscheidung</div>
+            <div class="cot-step-body">Großgruppe annehmen, kein Displacement: <b><span class="num">+2.856 €</span></b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECTION : NOTES ── -->
+  <div class="ds-grid">
+    <div class="ds-section">
+      <h2 class="ds-section-title">Conventions · <em>do &amp; don't</em></h2>
+      <span class="ds-section-meta">08 · Rules</span>
+    </div>
+
+    <div class="ds-card" style="grid-column: span 2;">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Do</span>
+        <span class="ds-card-meta">stay on-brand</span>
+      </div>
+      <div style="font-size:12.5px; color:var(--ink-2); line-height:1.85">
+        Du-Form durchgehend · Geld in Euro mit tabular-nums · Hairlines statt Boxen ·
+        Diamond als System-Element in 4 Größen · Status-Wörter literarisch (ruhig · stark · Pfingsten) ·
+        Trend-Pills mit <b>trend-ref</b> · Italic-Cut killed, Akzent über Farbe + Weight ·
+        EB Garamond nur für Headlines, Stats, Status · Ray-Button = einzige Outline-Variante.
+      </div>
+    </div>
+
+    <div class="ds-card" style="grid-column: span 2;">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Don't</span>
+        <span class="ds-card-meta">slop patterns</span>
+      </div>
+      <div style="font-size:12.5px; color:var(--ink-2); line-height:1.85">
+        Side-stripe borders (<code style="font-family:var(--font-mono);font-size:11px">border-left: 3px accent</code>) · Nested Cards mit Bg-Shift ·
+        Gradient Text · Em-Dashes im Body · Modal als erste Lösung · Stoplicht-Grün für Delta ·
+        Sage Green / Royal Blue als Accent · Italic Serif für Akzent ·
+        Hero-metric Template mit Gradient · RM-Jargon im Hotelier-Mode.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="ds-footer-note">
+  <span>happyhotel · Ray · v Mai 2026 · Design System</span>
+  <span>EB Garamond + Inter + JetBrains · Ink-Blue · Paper Warm</span>
+</div>
+
+</body>
+</html>

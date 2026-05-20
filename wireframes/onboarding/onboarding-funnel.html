@@ -1,0 +1,4311 @@
+<!DOCTYPE html>
+<html lang="de" data-step="1" data-mode="">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel — Onboarding Funnel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --shell-2:      #efeeea;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+
+  --good:         #1e3a5f;
+  --bad:          #8c2f2f;
+  --live:         #22c55e;
+
+  --font-mono:    "JetBrains Mono", "SF Mono", Menlo, monospace;
+  --font-serif:   "EB Garamond", Georgia, serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+}
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.serif { font-family: var(--font-serif); letter-spacing: -0.02em; }
+em { font-style: normal; }
+.num   { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; letter-spacing: -0.02em; }
+
+/* ─── App Shell ───────────────────────────── */
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar */
+.topbar {
+  height: 64px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.tb-brand { display: inline-flex; align-items: center; color: var(--accent); }
+.tb-brand svg { height: 22px; width: auto; display: block; }
+.tb-sep { width: 1px; height: 18px; background: var(--border-2); }
+.tb-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.tb-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.tb-help {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.tb-help:hover { color: var(--accent); }
+
+/* Main canvas */
+.canvas {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 64px 48px 140px;
+}
+
+/* Bottom progress / nav */
+.botbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  z-index: 60;
+}
+.botbar-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+.bb-progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+.bb-track {
+  display: flex;
+  gap: 4px;
+}
+.bb-step {
+  width: 28px;
+  height: 4px;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+.bb-step:hover { background: var(--border-2); }
+.bb-step.done { background: var(--accent-line); }
+.bb-step.active { background: var(--accent); }
+.bb-mid {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.bb-mid em { font-family: var(--font-serif); font-style: normal; color: var(--accent); font-size: 16px; padding: 0 4px; }
+.bb-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+}
+.bb-back, .bb-next {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  padding: 11px 22px;
+  border-radius: 7px;
+}
+.bb-back {
+  background: transparent;
+  color: var(--muted);
+}
+.bb-back:hover { color: var(--ink); }
+.bb-back:disabled { opacity: 0.3; cursor: not-allowed; }
+.bb-next {
+  background: var(--accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.bb-next:hover { background: var(--accent-deep); }
+.bb-next .arr {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ─── Screen container ─────────────────────── */
+.screen {
+  display: none;
+  width: 100%;
+  max-width: 1080px;
+  animation: fadein 280ms ease-out;
+}
+html[data-step="1"] #screen-1 { display: block; }
+html[data-step="2"] #screen-2 { display: block; }
+html[data-step="3"] #screen-3 { display: block; }
+html[data-step="4"] #screen-4 { display: block; }
+html[data-step="5"] #screen-5 { display: block; }
+html[data-step="6"] #screen-6 { display: block; }
+html[data-step="7"] #screen-7 { display: block; }
+html[data-step="8"] #screen-8 { display: block; }
+html[data-step="9"] #screen-9 { display: block; }
+html[data-step="10"] #screen-10 { display: block; }
+html[data-step="11"] #screen-11 { display: block; }
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Screen 1 hides botbar (landing has its own CTA) */
+html[data-step="1"] .botbar { display: none; }
+html[data-step="1"] .canvas { padding-bottom: 80px; }
+
+/* Mode-aware visibility */
+[data-anna], [data-kai] { display: none; }
+html[data-mode="anna"] [data-anna] { display: revert; }
+html[data-mode="kai"]  [data-kai]  { display: revert; }
+html[data-mode="anna"] [data-anna].block,
+html[data-mode="kai"]  [data-kai].block  { display: block; }
+html[data-mode="anna"] [data-anna].trust-page-grid { display: grid; }
+html[data-mode="kai"]  [data-kai].kai-trust-matrix { display: block; }
+
+/* Common UI atoms */
+.diamond {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  vertical-align: middle;
+}
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.mono-tag.accent { color: var(--accent); }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-primary {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.btn-primary:hover { background: var(--accent-deep); }
+.btn-primary .arr { font-family: var(--font-serif); font-style: normal; font-size: 18px; line-height: 1; }
+.btn-ghost {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--ink-2);
+  border: none;
+  padding: 14px 22px;
+  cursor: pointer;
+  text-decoration: underline dashed;
+  text-underline-offset: 5px;
+}
+.btn-ghost:hover { color: var(--accent); }
+
+.trend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 8px;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.detail-link {
+  color: var(--accent);
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.detail-link:hover { color: var(--accent-deep); }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 1 · LANDING                                                  */
+/* ═══════════════════════════════════════════════════════════════════ */
+#screen-1 {
+  max-width: 1320px;
+}
+.landing {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.landing-left .lead-eyebrow {
+  margin-bottom: 32px;
+}
+.landing-left h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+.landing-left h1 em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+}
+.landing-lede {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 520px;
+  margin-bottom: 40px;
+}
+.landing-cta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 56px;
+}
+.landing-trust {
+  display: flex;
+  gap: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.lt-item .lt-num {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 32px;
+  color: var(--accent);
+  display: block;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.lt-item .lt-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Landing right preview card — mimics briefing */
+.landing-right {
+  position: relative;
+}
+.preview-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 36px;
+  box-shadow: 0 32px 64px -24px rgba(20, 20, 22, 0.14), 0 8px 16px -8px rgba(20, 20, 22, 0.06);
+  position: relative;
+}
+.preview-card::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 36px;
+  background: var(--bg);
+  padding: 4px 12px 4px 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pc-meta {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.pc-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pc-kicker .diamond { margin-right: 8px; }
+.pc-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.pc-headline {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-bottom: 18px;
+}
+.pc-headline em {
+  font-style: normal;
+  color: var(--accent);
+}
+.pc-narrative {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-bottom: 22px;
+}
+.pc-stack {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+.pc-stat { padding-right: 16px; border-right: 1px solid var(--border); }
+.pc-stat:last-child { border-right: 0; padding-right: 0; padding-left: 16px; }
+.pc-stat:nth-child(2) { padding-left: 16px; }
+.pc-stat .ps-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.pc-stat .ps-num {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 28px;
+  color: var(--accent);
+  display: block;
+  line-height: 1.05;
+}
+.pc-foot {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.pc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--live); flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* GENERIC STEP HEAD                                                   */
+/* ═══════════════════════════════════════════════════════════════════ */
+.step-head {
+  margin-bottom: 48px;
+  max-width: 720px;
+}
+.step-head .eyebrow {
+  margin-bottom: 24px;
+}
+.step-h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.step-h2 em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+}
+.step-lede {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+.step-lede em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+  font-size: 19px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 2 · SIGN-UP                                                  */
+/* ═══════════════════════════════════════════════════════════════════ */
+.signup-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  gap: 80px;
+  align-items: start;
+}
+.form-stack { max-width: 460px; }
+.form-row { margin-bottom: 24px; }
+.form-row label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 10px;
+}
+.form-row input,
+.form-row select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-2);
+  padding: 10px 0;
+  color: var(--ink);
+  outline: none;
+}
+.form-row input:focus,
+.form-row select:focus { border-bottom-color: var(--accent); }
+.form-row input::placeholder { color: var(--subtle); }
+.form-helper {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.dsgvo {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 32px;
+  line-height: 1.6;
+}
+.dsgvo a { color: var(--accent); text-decoration: underline dashed; text-underline-offset: 3px; }
+
+.next-up {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 36px 32px;
+}
+.next-up h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.next-up h3 em { font-style: normal; color: var(--accent); }
+.next-up .nu-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.nu-step {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+.nu-step:first-of-type { border-top: 0; padding-top: 4px; }
+.nu-num {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 22px;
+  color: var(--accent);
+  line-height: 1;
+}
+.nu-step h4 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.nu-step p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 3 · PROFILE BRANCH                                           */
+/* ═══════════════════════════════════════════════════════════════════ */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 36px 32px;
+  cursor: pointer;
+  transition: all 220ms ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+}
+.profile-card:hover {
+  border-color: var(--accent-line);
+  box-shadow: 0 16px 32px -16px rgba(20, 20, 22, 0.12);
+}
+.profile-card.selected {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  box-shadow: 0 16px 32px -16px rgba(30, 58, 95, 0.18);
+}
+.pf-mark {
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  opacity: 0;
+}
+.profile-card.selected .pf-mark { opacity: 1; }
+.pf-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.pf-headline {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 14px;
+}
+.pf-headline em { font-style: normal; color: var(--accent); }
+.pf-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin-bottom: 28px;
+}
+.pf-traits {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pf-trait {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.pf-trait .pt-mark {
+  width: 5px;
+  height: 5px;
+  background: var(--accent-line);
+  transform: rotate(45deg);
+  margin-top: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 4 · PMS CONNECT                                              */
+/* ═══════════════════════════════════════════════════════════════════ */
+.pms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 8px;
+}
+.pms-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  min-height: 140px;
+  position: relative;
+}
+.pms-card:hover {
+  border-color: var(--accent-line);
+}
+.pms-card.connected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.pms-card[data-setup="concierge"] {
+  border-style: dashed;
+}
+.pms-card[data-setup="concierge"]:hover {
+  border-style: solid;
+  border-color: #5a4632;
+  background: var(--surface-2);
+}
+.pms-card[data-setup="concierge"].connected {
+  border-style: solid;
+  border-color: #5a4632;
+  background: var(--surface-2);
+}
+.pms-card[data-setup="concierge"].connected .pms-name { color: #3a3a3d; }
+.pms-card[data-setup="concierge"].connected .pms-meta.connected { color: #5a4632; }
+.pms-card[data-setup="concierge"].connected .pms-meta .live-dot { background: #5a4632; }
+.pms-more-link {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.pms-more-link:hover { color: var(--accent-deep); }
+.pms-name {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.pms-card.connected .pms-name { color: var(--accent); }
+.pms-meta {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pms-meta.connected { color: var(--accent); display: inline-flex; align-items: center; gap: 8px; }
+.pms-meta .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--live); }
+
+.pms-fineprint {
+  margin-top: 32px;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+.pms-fineprint strong { color: var(--ink); font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 5 · ROOMS CONFIRM                                            */
+/* ═══════════════════════════════════════════════════════════════════ */
+.rooms-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px;
+}
+.rooms-card .rc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+.rooms-card .rc-head h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+.rooms-card .rc-head h3 em { font-style: normal; color: var(--accent); }
+.rooms-card .rc-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+.room-row {
+  display: grid;
+  grid-template-columns: 28px 1fr 100px 140px 80px;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+.room-row:first-of-type { border-top: 0; }
+html[data-mode="kai"] .room-row {
+  grid-template-columns: 28px 1fr 80px 100px 100px 100px;
+}
+.rr-handle {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  color: var(--subtle);
+  cursor: grab;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.rr-name h4 {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.rr-name span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.rr-count {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+.rr-count em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+  font-size: 16px;
+}
+.rr-quality {
+  display: flex;
+  gap: 4px;
+}
+.qd {
+  width: 16px;
+  height: 8px;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+.qd.on { background: var(--accent); }
+.rr-quality:hover .qd { background: var(--border-2); }
+.rr-quality .qd.on { background: var(--accent); }
+.rr-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 7 · PRICE RANGE (was 6)                                      */
+/* ═══════════════════════════════════════════════════════════════════ */
+.price-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 40px;
+}
+.pr-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.pr-head h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+}
+.pr-head h3 em { font-style: normal; color: var(--accent); }
+
+/* Anna slider */
+.pr-slider-stage { padding: 16px 0 8px; }
+.pr-slider {
+  position: relative;
+  height: 64px;
+  background: linear-gradient(90deg, var(--accent-soft) 0%, #f4ecdf 100%);
+  border-radius: 8px;
+  margin: 24px 0 16px;
+}
+.pr-marker {
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  width: 2px;
+  background: var(--accent);
+  cursor: ew-resize;
+}
+.pr-marker::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -7px;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.pr-marker.min { left: 18%; }
+.pr-marker.base { left: 42%; opacity: 0.7; }
+.pr-marker.max { left: 78%; }
+.pr-marker .pr-val {
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pr-marker .pr-lab {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.pr-outcome {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+}
+.pr-outcome-narr {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--ink-2);
+}
+.pr-outcome-narr em { font-style: normal; color: var(--accent); }
+.pr-outcome-narr .num-em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+}
+.pr-outcome-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pr-outcome-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.pr-outcome-stat:last-child { border-bottom: 0; }
+.pr-outcome-stat .pos-lab {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pr-outcome-stat .pos-val {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+/* Kai tabular table */
+.pr-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 4px;
+}
+.pr-table th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  text-align: right;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.pr-table th:first-child { text-align: left; }
+.pr-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--ink-2);
+  text-align: right;
+}
+.pr-table td:first-child { text-align: left; color: var(--ink); font-weight: 500; }
+.pr-table tr:last-child td { border-bottom: 0; }
+.pr-table .ref-row td:first-child { color: var(--accent); }
+.pr-table .ref-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-left: 8px;
+  font-weight: 500;
+}
+.pr-table .num-cell {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.pr-aside {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.pr-aside-block .pab-lab {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+  display: block;
+}
+.pr-aside-block input {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-2);
+  padding: 8px 0;
+  color: var(--ink);
+  outline: none;
+}
+.pr-aside-block input:focus { border-bottom-color: var(--accent); }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* RAY BUBBLE · conversational pattern (used on Strategy + Price)      */
+/* ═══════════════════════════════════════════════════════════════════ */
+.ray-bubble {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 32px;
+  padding: 22px 28px 24px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  position: relative;
+}
+.ray-bubble::before {
+  content: "";
+  position: absolute;
+  left: 36px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+.ray-av {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 22px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.ray-av::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  background: var(--live);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+}
+.ray-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.ray-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ray-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ray-statement {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.ray-statement em {
+  font-style: normal;
+  color: var(--accent);
+}
+.ray-reasoning {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.ray-reasoning .rr-pair {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.ray-reasoning .rr-key {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ray-reasoning .rr-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* STRATEGY CARDS                                                      */
+/* ═══════════════════════════════════════════════════════════════════ */
+.strat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.strat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  cursor: pointer;
+  transition: all 220ms ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  position: relative;
+}
+.strat-card:hover {
+  border-color: var(--accent-line);
+  box-shadow: 0 12px 24px -16px rgba(20, 20, 22, 0.10);
+}
+.strat-card.selected {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  box-shadow: 0 16px 32px -16px rgba(30, 58, 95, 0.18);
+}
+.strat-mark {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  opacity: 0;
+}
+.strat-card.selected .strat-mark { opacity: 1; }
+.strat-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.strat-icon {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 36px;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 18px;
+}
+.strat-headline {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+.strat-headline em { font-style: normal; color: var(--accent); }
+.strat-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin-bottom: 22px;
+}
+.strat-implies {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.strat-implies .si-key {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.strat-implies .si-val {
+  font-size: 12px;
+  color: var(--ink-2);
+  display: grid;
+  grid-template-columns: 12px 1fr;
+  gap: 8px;
+}
+.strat-implies .si-val .pt-mark {
+  width: 4px;
+  height: 4px;
+  background: var(--accent-line);
+  transform: rotate(45deg);
+  margin-top: 7px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* RATE GROUPS (Step 5 add-on)                                         */
+/* ═══════════════════════════════════════════════════════════════════ */
+.rate-groups {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.rg-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+.rg-head h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: -0.015em;
+}
+.rg-head h4 em { font-style: normal; color: var(--accent); }
+.rg-head .rg-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rg-anna {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--ink-2);
+  align-items: start;
+  line-height: 1.6;
+}
+.rg-anna .diamond { margin-top: 6px; }
+.rg-anna strong { color: var(--ink); font-weight: 600; }
+.rg-row {
+  display: grid;
+  grid-template-columns: 1fr 200px 22px;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.rg-row:first-of-type { border-top: 0; }
+.rg-row .rg-name h5 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.rg-row .rg-name span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 8 · COMPSET + TRUST (was 7)                                  */
+/* ═══════════════════════════════════════════════════════════════════ */
+.cs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.cs-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 32px 28px;
+}
+.cs-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.cs-card h3 em { font-style: normal; color: var(--accent); }
+.cs-card .cs-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+/* Comp-set list */
+.cs-hotel {
+  display: grid;
+  grid-template-columns: 1fr 80px 24px;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.cs-hotel:first-of-type { border-top: 0; }
+.cs-hotel .csh-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.cs-hotel .csh-name span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 2px;
+}
+.cs-hotel .csh-rate {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  text-align: right;
+}
+.cs-hotel .csh-rate em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+  font-size: 15px;
+}
+.cs-toggle {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border-2);
+  cursor: pointer;
+  position: relative;
+}
+.cs-toggle.on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.cs-toggle.on::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 9px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  left: 7px;
+  top: 3px;
+  transform: rotate(45deg);
+}
+.cs-add {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.cs-add:hover { color: var(--accent); }
+
+/* Trust — Anna 3-step */
+.trust-stack { display: flex; flex-direction: column; gap: 0; }
+.trust-row {
+  display: grid;
+  grid-template-columns: 32px 1fr 16px;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+  position: relative;
+}
+.trust-row:first-of-type { border-top: 0; }
+.tr-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-2);
+  margin-top: 4px;
+  position: relative;
+}
+.trust-row.selected .tr-radio { border-color: var(--accent); }
+.trust-row.selected .tr-radio::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.tr-body h4 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.tr-body p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.trust-row.selected .tr-body h4 { color: var(--accent); }
+.tr-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  margin-top: 4px;
+}
+
+/* Trust — Kai per dimension */
+.trust-dim {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.trust-dim:first-of-type { border-top: 0; }
+.td-label h5 {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.td-label span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.td-toggle-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  background: var(--shell-2);
+  padding: 3px;
+  border-radius: 6px;
+}
+.td-opt {
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.td-opt.on {
+  background: var(--accent);
+  color: #fff;
+}
+
+.cs-foot-note {
+  margin-top: 24px;
+  padding: 16px 18px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  display: flex;
+  gap: 12px;
+}
+.cs-foot-note .diamond { margin-top: 6px; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* PROTEL CONCIERGE MODAL (Step 4)                                     */
+/* ═══════════════════════════════════════════════════════════════════ */
+.pms-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+}
+.pms-modal.open { display: block; }
+.pms-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 22, 30, 0.42);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.pms-modal-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 40px 32px;
+  width: 560px;
+  max-width: calc(100vw - 32px);
+  box-shadow: 0 32px 80px -16px rgba(20, 20, 22, 0.32);
+}
+.pms-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 50%;
+}
+.pms-modal-close:hover { background: var(--shell-2); color: var(--ink); }
+.pmm-avatar-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.pmm-av {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #5a4632;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 22px;
+  display: grid;
+  place-items: center;
+}
+.pmm-av-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.pmm-av-role {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.pmm-headline {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.pmm-headline em { font-style: normal; color: var(--accent); }
+.pmm-narr {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.pmm-slots-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: block;
+}
+.pmm-slots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.pmm-slot {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  color: var(--ink);
+  transition: all 200ms ease;
+}
+.pmm-slot:hover {
+  border-color: var(--accent-line);
+  background: var(--surface-2);
+}
+.pmm-slot.selected {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.pmm-slot .pmm-slot-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.pmm-slot.selected .pmm-slot-time { color: var(--accent); }
+.pmm-or {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.pmm-or a { color: var(--accent); text-decoration: underline dashed; text-underline-offset: 4px; cursor: pointer; }
+.pmm-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: flex-end;
+}
+.pmm-skip {
+  font-family: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+}
+.pmm-skip:hover { color: var(--ink); }
+
+/* ─── Calendar picker ───────────────────── */
+.pmm-cal {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.cal-day {
+  font-family: inherit;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  padding: 10px 4px 8px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: all 200ms ease;
+  color: var(--ink);
+}
+.cal-day:hover {
+  border-color: var(--accent-line);
+  background: var(--surface-2);
+}
+.cal-day.selected {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.cal-day.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.cd-dow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cal-day.selected .cd-dow { color: var(--accent); }
+.cd-num {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.cal-day.selected .cd-num { color: var(--accent); }
+.cd-slots {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--subtle);
+}
+.cal-day.selected .cd-slots { color: var(--accent); }
+
+.pmm-times-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: block;
+}
+.pmm-times-label em { color: var(--accent); font-style: normal; font-weight: 600; }
+.pmm-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.pmm-time {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  transition: all 180ms ease;
+}
+.pmm-time:hover {
+  border-color: var(--accent-line);
+  background: var(--surface-2);
+}
+.pmm-time.selected {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ─── Modal state · post-booking ─── */
+.pmm-state-confirmed { display: none; }
+.pmm-modal-card.confirmed .pmm-state-booking { display: none; }
+.pmm-modal-card.confirmed .pmm-state-confirmed { display: block; }
+
+.confirm-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+}
+.confirm-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.confirm-icon::after {
+  content: "";
+  width: 10px;
+  height: 18px;
+  border-right: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(45deg);
+  margin-top: -3px;
+}
+.confirm-text h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.confirm-text h4 em { color: var(--accent); font-style: normal; font-weight: 500; }
+.confirm-text p {
+  font-size: 13px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.cuts-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cuts-label .diamond {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.task-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 16px 14px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.task-card:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+.task-card .tc-time {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.task-card h5 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.task-card h5 em { color: var(--accent); font-style: normal; font-weight: 500; }
+.task-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.pause-row {
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.pause-row .pause-text {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  flex: 1;
+}
+.pause-row .pause-text em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* PREISLISTE UPLOAD SHORTCUT (Step 7)                                 */
+/* ═══════════════════════════════════════════════════════════════════ */
+.upload-shortcut {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 22px;
+  background: var(--surface-2);
+  border: 1px dashed var(--border-2);
+  border-radius: 10px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+.upload-shortcut:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+.upload-shortcut.done {
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  cursor: default;
+}
+.us-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 22px;
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  border-radius: 8px;
+}
+.upload-shortcut.done .us-icon {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.us-text h5 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  color: var(--ink);
+}
+.us-text h5 em { font-family: var(--font-serif); font-style: normal; color: var(--accent); }
+.us-text p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.us-action {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* BESONDERHEITEN (Step 7) · Saisonzeiten + Wochentage                 */
+/* ═══════════════════════════════════════════════════════════════════ */
+.special-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-top: 24px;
+  overflow: hidden;
+}
+.sp-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 22px 28px;
+  cursor: pointer;
+  gap: 24px;
+}
+.sp-head h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  margin-bottom: 4px;
+}
+.sp-head h4 em { font-style: normal; color: var(--accent); }
+.sp-head .sp-sub {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.sp-head .sp-toggle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.sp-head .sp-toggle .sp-glyph {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 220ms ease;
+}
+.special-card.expanded .sp-head .sp-glyph {
+  transform: rotate(45deg);
+}
+
+.sp-body {
+  display: none;
+  padding: 0 28px 26px;
+  border-top: 1px solid var(--border);
+}
+.special-card.expanded .sp-body { display: block; }
+
+.sp-row {
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+.sp-row:first-of-type { border-top: 0; padding-top: 22px; }
+.sp-row label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 10px;
+}
+.sp-row textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-2);
+  padding: 8px 0;
+  color: var(--ink);
+  outline: none;
+  resize: none;
+  line-height: 1.55;
+}
+.sp-row textarea:focus { border-bottom-color: var(--accent); }
+.sp-row textarea::placeholder { color: var(--subtle); font-style: normal; }
+.sp-upload {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* HYBRID STRIP · Marc/Lisa Mini-Eskalation                            */
+/* ═══════════════════════════════════════════════════════════════════ */
+.hybrid-strip {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  align-items: center;
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.hs-av {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+}
+.hs-av.marc { background: #5a4632; }
+.hs-av.lisa { background: #6a4a4a; }
+.hs-text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.hs-name {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 10px;
+}
+.hs-text em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* TRUST · enhanced (Step 9 NEW)                                       */
+/* ═══════════════════════════════════════════════════════════════════ */
+.trust-page-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.trust-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  cursor: pointer;
+  transition: all 220ms ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 360px;
+  position: relative;
+}
+.trust-card:hover {
+  border-color: var(--accent-line);
+  box-shadow: 0 12px 24px -16px rgba(20, 20, 22, 0.10);
+}
+.trust-card.selected {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  box-shadow: 0 16px 32px -16px rgba(30, 58, 95, 0.18);
+}
+.tc-mark {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  opacity: 0;
+}
+.trust-card.selected .tc-mark { opacity: 1; }
+.tc-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.tc-headline {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+.tc-headline em { font-style: normal; color: var(--accent); }
+.tc-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin-bottom: 22px;
+}
+
+/* Sample-decision quote — Ray would say… */
+.tc-sample {
+  margin-top: auto;
+  padding: 18px 18px 16px;
+  background: var(--accent-soft);
+  border-radius: 10px;
+  position: relative;
+}
+.tc-sample::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: -1px;
+  width: 32px;
+  height: 2px;
+  background: var(--accent);
+}
+.tc-sample-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.tc-sample-text {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.tc-sample-text em { font-style: normal; color: var(--accent); }
+.tc-tag-rec {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* Kai per-dimension matrix — full width with sample columns */
+.kai-trust-matrix {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 8px 32px 24px;
+}
+.ktm-row {
+  display: grid;
+  grid-template-columns: 1.1fr 220px 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 22px 0;
+  border-top: 1px solid var(--border);
+}
+.ktm-row:first-of-type { border-top: 0; }
+.ktm-label h5 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.ktm-label h5 em { font-style: normal; color: var(--accent); }
+.ktm-label p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+.ktm-sample {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  padding-left: 20px;
+  border-left: 1px solid var(--border);
+}
+.ktm-sample-key {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+  display: block;
+}
+.ktm-sample em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+/* Comp-set page (Step 8) — single column wider */
+.compset-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px 28px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SERVICES DETECTED (Step 7 add-on)                                    */
+/* ═══════════════════════════════════════════════════════════════════ */
+.services-detected {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.services-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.services-eyebrow .diamond {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.services-eyebrow em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.service-item {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px 10px;
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.srv-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.srv-rate {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.services-foot {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.services-foot em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 500;
+}
+.anna-services-hint {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  font-style: normal;
+}
+.anna-services-hint em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* RATE-SHOPPER TIER (Step 8 add-on)                                    */
+/* ═══════════════════════════════════════════════════════════════════ */
+.rs-tier {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px 22px;
+  margin-bottom: 16px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.rs-tier-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.rs-tier-head h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+}
+.rs-tier-head h4 em { color: var(--accent); font-style: normal; font-weight: 500; }
+.rs-tier-head .rs-tier-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rs-tier-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.rs-tier-opt {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  background: var(--surface);
+  text-align: left;
+}
+.rs-tier-opt:hover { border-color: var(--accent-line); background: var(--surface-2); }
+.rs-tier-opt.selected {
+  border-color: var(--accent);
+  border-width: 1.5px;
+  background: var(--accent-soft);
+}
+.rs-tier-opt h5 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.rs-tier-opt h5 em { color: var(--accent); font-style: normal; font-weight: 500; }
+.rs-tier-opt .rs-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.rs-tier-opt p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.cs-hotel .csh-name .csh-url {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  font-weight: 400;
+  margin-top: 4px;
+  text-decoration: underline dashed;
+  text-underline-offset: 3px;
+  text-transform: none;
+}
+
+.cs-currency-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  gap: 16px;
+}
+.cs-currency-row .cs-cur-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cs-currency-row select {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-2);
+  padding: 4px 0;
+  color: var(--ink);
+  outline: none;
+  font-weight: 500;
+}
+.cs-currency-row select:focus { border-bottom-color: var(--accent); }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 10 · GESCHÄFTLICHES                                           */
+/* ═══════════════════════════════════════════════════════════════════ */
+.biz-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 32px;
+}
+.biz-row { display: flex; flex-direction: column; }
+.biz-row.span-2 { grid-column: 1 / -1; }
+.biz-row label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.biz-row input,
+.biz-row select {
+  font-family: inherit;
+  font-size: 15px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-2);
+  padding: 8px 0;
+  color: var(--ink);
+  outline: none;
+  width: 100%;
+}
+.biz-row input:focus,
+.biz-row select:focus { border-bottom-color: var(--accent); }
+.biz-row input::placeholder { color: var(--subtle); }
+.biz-row .biz-helper {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.biz-row .prefilled-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.biz-row .prefilled-tag .diamond {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* SCREEN 11 · READY (was 10, was 9, was 8)                             */
+/* ═══════════════════════════════════════════════════════════════════ */
+.ready-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+.ready-left .step-h2 { font-size: 64px; }
+
+.ready-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 36px;
+  box-shadow: 0 24px 48px -24px rgba(20, 20, 22, 0.10);
+}
+.rc-meta {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 22px;
+}
+.rc-kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rc-kicker .diamond { margin-right: 8px; }
+.rc-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.rc-headline {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 18px;
+}
+.rc-headline em { font-style: normal; color: var(--accent); }
+.rc-narr {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-bottom: 24px;
+}
+.rc-table {
+  width: 100%;
+  border-top: 1px solid var(--border);
+  border-collapse: collapse;
+}
+.rc-table td {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.rc-table td:nth-child(2), .rc-table td:nth-child(3) { text-align: right; }
+.rc-table td:first-child {
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  font-weight: 500;
+}
+.rc-table .delta { color: var(--accent); }
+
+.team-strip {
+  margin-top: 32px;
+  padding: 24px 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: center;
+}
+.ts-avatars {
+  display: flex;
+}
+.ts-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--surface);
+  margin-left: -10px;
+}
+.ts-avatar:first-child { margin-left: 0; background: var(--accent); }
+.ts-avatar:nth-child(2) { background: #5a4632; }
+.ts-avatar:nth-child(3) { background: #6a4a4a; }
+.ts-text h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  margin-bottom: 4px;
+}
+.ts-text h4 em { font-style: normal; color: var(--accent); }
+.ts-text p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.ready-cta {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* HELPERS                                                             */
+/* ═══════════════════════════════════════════════════════════════════ */
+.center-stack { text-align: center; }
+.flex-row { display: flex; align-items: center; gap: 12px; }
+.spacer-32 { height: 32px; }
+.spacer-16 { height: 16px; }
+
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ─── TOPBAR ─────────────────────────── -->
+  <div class="topbar">
+    <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+    <span class="tb-sep"></span>
+    <span class="tb-eyebrow">Onboarding</span>
+    <div class="tb-right">
+      <span class="tb-help" data-anna="">Hilfe</span>
+      <span class="tb-help" data-kai="">Dokumentation</span>
+    </div>
+  </div>
+
+  <!-- ─── CANVAS ─────────────────────────── -->
+  <div class="canvas">
+
+  <!-- ───────────────────── SCREEN 1 · LANDING ───────────────────── -->
+  <div class="screen" id="screen-1">
+    <div class="landing">
+      <div class="landing-left">
+        <div class="eyebrow lead-eyebrow">
+          <span class="diamond"></span>
+          AI Revenue Manager · ab 2026
+        </div>
+        <h1>
+          Stelle deinen<br>
+          <em>Revenue Manager</em><br>
+          ein.
+        </h1>
+        <p class="landing-lede">
+          Ray übernimmt deine Pricing-Entscheidungen. Ein Backup-Team aus echten Revenue-Profis ist dabei, wenn es kompliziert wird. Du behältst die Kontrolle, ohne den Kalender voller Tabellen.
+        </p>
+        <div class="landing-cta">
+          <button class="btn-primary" onclick="goStep(2)">
+            Jetzt einstellen <span class="arr">→</span>
+          </button>
+          <button class="btn-ghost">Ray live erleben</button>
+        </div>
+        <div class="landing-trust">
+          <div class="lt-item">
+            <span class="lt-num serif">+12 %</span>
+            <span class="lt-label">RevPAR im Schnitt</span>
+          </div>
+          <div class="lt-item">
+            <span class="lt-num serif">5 Min</span>
+            <span class="lt-label">pro Tag im Tool</span>
+          </div>
+          <div class="lt-item">
+            <span class="lt-num serif">320+</span>
+            <span class="lt-label">Hotels in DACH</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="landing-right">
+        <div class="preview-card">
+          <div class="pc-meta">
+            <span class="pc-kicker"><span class="diamond"></span>Briefing · Fr 8. Mai</span>
+            <span class="pc-date">07:42</span>
+          </div>
+          <div class="pc-headline serif">
+            Der Mai läuft <em>stark</em>, Pfingsten ist fast voll.
+          </div>
+          <p class="pc-narrative">
+            Du hast diese Woche <span class="trend-pill">28.420 € ↑ 12 %</span> verdient. Pfingsten ist zu 78 % gebucht, Ray hat 14 Preise nach oben gezogen. Eine Großgruppe-Anfrage wartet auf dich.
+          </p>
+          <div class="pc-stack">
+            <div class="pc-stat">
+              <div class="ps-label">Umsatz Woche</div>
+              <span class="ps-num">28.420 €</span>
+            </div>
+            <div class="pc-stat">
+              <div class="ps-label">Pfingsten</div>
+              <span class="ps-num">78 %</span>
+            </div>
+            <div class="pc-stat">
+              <div class="ps-label">Auf Schreibtisch</div>
+              <span class="ps-num">1</span>
+            </div>
+          </div>
+          <div class="pc-foot">
+            <span class="pc-dot"></span>
+            Ray hat heute Nacht 14 Preise angepasst.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 2 · SIGN-UP ───────────────────── -->
+  <div class="screen" id="screen-2">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 1 · Konto anlegen</div>
+      <h2 class="step-h2">Sag uns, wer <em>du</em> bist.</h2>
+      <p class="step-lede">Wir richten in den nächsten 5 Minuten dein Hotel ein. Du brauchst dafür nur deinen PMS-Zugang.</p>
+    </div>
+
+    <div class="signup-grid">
+      <div class="form-stack">
+        <div class="form-row">
+          <label>Hotelname</label>
+          <input type="text" value="Hotel Seeblick" placeholder="z. B. Hotel Seeblick">
+        </div>
+        <div class="form-row">
+          <label>Hotel-Website</label>
+          <input type="url" placeholder="www.hotel-seeblick.de">
+          <div class="form-helper">Hilft mir dein Hotel zu verstehen — Brand, Lage, USP.</div>
+        </div>
+        <div class="form-row">
+          <label>Dein Name</label>
+          <input type="text" placeholder="Anna Bauer">
+        </div>
+        <div class="form-row">
+          <label>Deine Rolle</label>
+          <select>
+            <option>Inhaber / GM</option>
+            <option>General Manager</option>
+            <option>Senior Revenue Manager</option>
+            <option>Cluster Lead</option>
+            <option>Director of Revenue</option>
+            <option>Andere</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>E-Mail</label>
+          <input type="email" placeholder="anna@hotel-seeblick.de">
+        </div>
+        <div class="form-row">
+          <label>Telefon</label>
+          <input type="tel" placeholder="+49 30 12345678">
+          <div class="form-helper">Falls Marc oder Lisa kurz mit dir sprechen müssen.</div>
+        </div>
+        <div class="form-row">
+          <label>Passwort</label>
+          <input type="password" placeholder="• • • • • • • •">
+          <div class="form-helper">Mindestens 10 Zeichen, eine Zahl, ein Symbol.</div>
+        </div>
+        <p class="dsgvo">
+          Mit dem Klick stimmst du unseren <a>AGB</a> und der <a>DSGVO-konformen Datenverarbeitung</a> zu. Wir verkaufen keine Daten, niemals.
+        </p>
+      </div>
+
+      <div class="next-up">
+        <h3 class="serif">Was als <em>nächstes</em> passiert</h3>
+        <p class="nu-sub">Drei Schritte bis Ray für dich arbeitet.</p>
+        <div class="nu-step">
+          <span class="nu-num serif">1</span>
+          <div>
+            <h4>PMS verbinden</h4>
+            <p>Ein-Klick-Authentifizierung. Wir holen Zimmer, Raten, Buchungen automatisch.</p>
+          </div>
+        </div>
+        <div class="nu-step">
+          <span class="nu-num serif">2</span>
+          <div>
+            <h4>Preisspanne und Comp-Set</h4>
+            <p>Du gibst Min und Max, wir lernen aus deinen Buchungen und dem Markt.</p>
+          </div>
+        </div>
+        <div class="nu-step">
+          <span class="nu-num serif">3</span>
+          <div>
+            <h4>Vertrauensgrad</h4>
+            <p>Du entscheidest, wie viel Ray selbst tun darf. Du kannst das jederzeit ändern.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 3 · PROFILE BRANCH ───────────────────── -->
+  <div class="screen" id="screen-3">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 2 · Profil</div>
+      <h2 class="step-h2">Wer bist du <em>im Hotel?</em></h2>
+      <p class="step-lede">Damit Ray die richtige Sprache spricht und die richtige Tiefe zeigt. Du kannst das später jederzeit umstellen.</p>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-card" id="card-anna" onclick="setMode('anna')">
+        <div class="pf-mark"></div>
+        <div class="pf-tag">Inhaber · GM · Direktion</div>
+        <h3 class="pf-headline serif">Ich führe das <em>Hotel</em>.</h3>
+        <p class="pf-desc">
+          Du bist verantwortlich fürs Geschäft, hast aber keinen dedizierten Revenue Manager. Du willst Ergebnisse, keine Tabellen.
+        </p>
+        <div class="pf-traits">
+          <div class="pf-trait"><span class="pt-mark"></span><span>Briefing am Morgen statt Dashboard-Drilldown</span></div>
+          <div class="pf-trait"><span class="pt-mark"></span><span>Geld und Wachstum in Klartext, kein Fachjargon</span></div>
+          <div class="pf-trait"><span class="pt-mark"></span><span>Ray entscheidet, du genehmigst nur das Wichtige</span></div>
+        </div>
+      </div>
+
+      <div class="profile-card" id="card-kai" onclick="setMode('kai')">
+        <div class="pf-mark"></div>
+        <div class="pf-tag">Senior RM · Cluster Lead · Director</div>
+        <h3 class="pf-headline serif">Ich bin <em>Revenue Manager</em>.</h3>
+        <p class="pf-desc">
+          Du arbeitest täglich mit Pricing-Tools, betreust mehrere Häuser und brauchst Tiefe. Ray ist dein Copilot, nicht dein Boss.
+        </p>
+        <div class="pf-traits">
+          <div class="pf-trait"><span class="pt-mark"></span><span>Volle Preistabelle, Cluster-Sicht, Bulk-Actions</span></div>
+          <div class="pf-trait"><span class="pt-mark"></span><span>Reasoning + Audit-Trail bei jeder AI-Empfehlung</span></div>
+          <div class="pf-trait"><span class="pt-mark"></span><span>Per-Dimension Trust statt Auto-on/Auto-off</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 4 · PMS CONNECT ───────────────────── -->
+  <div class="screen" id="screen-4">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 3 · Buchungssystem</div>
+      <h2 class="step-h2" data-anna>Verbinde dein <em>Buchungssystem</em>.</h2>
+      <h2 class="step-h2" data-kai>PMS-Integration.</h2>
+      <p class="step-lede" data-anna>Ein Klick, dann holen wir uns Zimmer, Preise und Buchungen automatisch. Du musst nichts eintippen.</p>
+      <p class="step-lede" data-kai>Standard-Spezifika je PMS werden auto-detected. Special-Cases (virtuelle Raten, abhängige Tarife) erkennen wir automatisch und konfigurieren sie passend.</p>
+    </div>
+
+    <div class="pms-grid">
+      <div class="pms-card" data-setup="instant" onclick="connectPMS(this)">
+        <span class="pms-name serif">apaleo</span>
+        <span class="pms-meta">Sofort verbinden · Cloud-API</span>
+      </div>
+      <div class="pms-card connected" data-setup="instant">
+        <span class="pms-name serif">Mews</span>
+        <span class="pms-meta connected"><span class="live-dot"></span>Verbunden</span>
+      </div>
+      <div class="pms-card" data-setup="instant" onclick="connectPMS(this)">
+        <span class="pms-name serif">hotline</span>
+        <span class="pms-meta">Sofort verbinden · Cloud-API</span>
+      </div>
+      <div class="pms-card" data-setup="instant" onclick="connectPMS(this)">
+        <span class="pms-name serif">3RPMS</span>
+        <span class="pms-meta">Sofort verbinden · Cloud-API</span>
+      </div>
+      <div class="pms-card" data-setup="concierge" data-pms="protel" onclick="connectPMS(this)">
+        <span class="pms-name serif">protel</span>
+        <span class="pms-meta">Concierge-Setup · 30 Min mit Marc</span>
+      </div>
+      <div class="pms-card" data-setup="concierge" data-pms="clock" onclick="connectPMS(this)">
+        <span class="pms-name serif">clock</span>
+        <span class="pms-meta">Concierge-Setup · 30 Min mit Marc</span>
+      </div>
+    </div>
+    <div class="pms-more-link" onclick="alert('In der echten App: scrollbare Liste mit allen 24 PMS-Integrationen, gefiltert nach Sofort/Concierge/In Entwicklung.')">+ 18 weitere PMS</div>
+
+    <div class="pms-fineprint" data-anna>
+      <strong>Was wir holen:</strong> Zimmerkategorien · Belegung · aktuelle Preise · Buchungen der letzten 12 Monate. <strong>Was wir nicht anfassen:</strong> Gästedaten, Rechnungen, Personal. Wir sehen nur, was wir brauchen.
+    </div>
+    <div class="pms-fineprint" data-kai>
+      <strong>Datentiefe:</strong> Channel-Manager-Settings, Restrictions (MinLOS/CTA/CTD), Services p.P., Personenabhängigkeit. Spezialfälle apaleo/clock/3rpms/Mews mit virtueller Rate auto-konfiguriert. Audit-Trail aller Schreibvorgänge im Decision Log.
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 5 · ROOMS CONFIRM ───────────────────── -->
+  <div class="screen" id="screen-5">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 4 · Zimmer</div>
+      <h2 class="step-h2" data-anna>Sortier deine Zimmer von <em>best</em> zu basic.</h2>
+      <h2 class="step-h2" data-kai>Zimmerkategorien <em>kalibrieren</em>.</h2>
+      <p class="step-lede" data-anna>Wir haben das aus Mews gezogen. Drag and drop, falls die Reihenfolge nicht stimmt.</p>
+      <p class="step-lede" data-kai>Sort-Order, Qualitäts-Score, Standard- und Maxbelegung pro Kategorie. Default-Werte aus Mews. RevPar-Mapping nutzt diese Reihenfolge als Referenz.</p>
+    </div>
+
+    <div class="rooms-card">
+      <div class="rc-head">
+        <h3 class="serif" data-anna>Hotel Seeblick · <em>4 Kategorien · 80 Zimmer</em></h3>
+        <h3 class="serif" data-kai>Hotel Seeblick · <em>4 Kategorien · 80 Zimmer</em></h3>
+        <span class="rc-meta" data-anna>aus Mews</span>
+        <span class="rc-meta" data-kai>auto-detected · Mews API</span>
+      </div>
+
+      <!-- ANNA simplified -->
+      <div data-anna class="block">
+        <div class="room-row">
+          <span class="rr-handle">≡</span>
+          <div class="rr-name"><h4>Suite Seeblick</h4><span>SUI</span></div>
+          <span class="rr-count"><em>8</em>&nbsp;Zimmer</span>
+          <div class="rr-quality" onclick="cycleQuality(this)"><span class="qd on"></span><span class="qd on"></span><span class="qd on"></span><span class="qd on"></span><span class="qd on"></span></div>
+          <span class="rr-pill">Top</span>
+        </div>
+        <div class="room-row">
+          <span class="rr-handle">≡</span>
+          <div class="rr-name"><h4>Doppelzimmer Komfort</h4><span>DZK</span></div>
+          <span class="rr-count"><em>34</em>&nbsp;Zimmer</span>
+          <div class="rr-quality" onclick="cycleQuality(this)"><span class="qd on"></span><span class="qd on"></span><span class="qd on"></span><span class="qd on"></span><span class="qd"></span></div>
+          <span class="rr-pill">Premium</span>
+        </div>
+        <div class="room-row">
+          <span class="rr-handle">≡</span>
+          <div class="rr-name"><h4>Doppelzimmer Standard</h4><span>DZ</span></div>
+          <span class="rr-count"><em>28</em>&nbsp;Zimmer</span>
+          <div class="rr-quality" onclick="cycleQuality(this)"><span class="qd on"></span><span class="qd on"></span><span class="qd on"></span><span class="qd"></span><span class="qd"></span></div>
+          <span class="rr-pill">Standard</span>
+        </div>
+        <div class="room-row">
+          <span class="rr-handle">≡</span>
+          <div class="rr-name"><h4>Einzelzimmer</h4><span>EZ</span></div>
+          <span class="rr-count"><em>10</em>&nbsp;Zimmer</span>
+          <div class="rr-quality" onclick="cycleQuality(this)"><span class="qd on"></span><span class="qd on"></span><span class="qd"></span><span class="qd"></span><span class="qd"></span></div>
+          <span class="rr-pill">Basis</span>
+        </div>
+      </div>
+
+      <!-- KAI dense -->
+      <div data-kai class="block">
+        <table class="pr-table" style="margin-top: 4px;">
+          <thead>
+            <tr>
+              <th>Kategorie</th>
+              <th>Code</th>
+              <th>Zimmer</th>
+              <th>Standard</th>
+              <th>Max</th>
+              <th>Qualität</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Suite Seeblick <span class="ref-tag">Premium</span></td><td class="num-cell">SUI</td><td class="num-cell">8</td><td class="num-cell">2</td><td class="num-cell">4</td><td class="num-cell">10</td></tr>
+            <tr class="ref-row"><td>Doppelzimmer Komfort <span class="ref-tag">Referenz</span></td><td class="num-cell">DZK</td><td class="num-cell">34</td><td class="num-cell">2</td><td class="num-cell">3</td><td class="num-cell">8</td></tr>
+            <tr><td>Doppelzimmer Standard</td><td class="num-cell">DZ</td><td class="num-cell">28</td><td class="num-cell">2</td><td class="num-cell">2</td><td class="num-cell">6</td></tr>
+            <tr><td>Einzelzimmer</td><td class="num-cell">EZ</td><td class="num-cell">10</td><td class="num-cell">1</td><td class="num-cell">1</td><td class="num-cell">5</td></tr>
+          </tbody>
+        </table>
+        <div class="cs-foot-note" style="margin-top: 24px;">
+          <span class="diamond"></span>
+          <div>
+            <strong>Mews schickt Standard- und Maxbelegung mit.</strong> Bei apaleo/clock werden personenunabhängige Preise verwendet, Aufpreise im PMS gepflegt. Spezialfälle wurden auto-konfiguriert.
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Ratengruppen ─── -->
+      <div class="rate-groups">
+        <div class="rg-head">
+          <h4 class="serif" data-anna>Tarife: <em>BAR (Standard)</em></h4>
+          <h4 class="serif" data-kai><em>Ratengruppen</em> &amp; Yielding</h4>
+          <span class="rg-meta" data-anna>aus Mews</span>
+          <span class="rg-meta" data-kai>3 Gruppen erkannt</span>
+        </div>
+
+        <div class="rg-anna" data-anna>
+          <span class="diamond"></span>
+          <div>
+            Alle Buchungen laufen aktuell über deinen <strong>BAR-Tarif</strong>. Wenn du Group- oder Long-Stay-Raten getrennt steuern willst, sagt Marc dir Bescheid sobald wir das brauchen. Du musst hier jetzt nichts entscheiden.
+          </div>
+        </div>
+
+        <div data-kai>
+          <div class="rg-row">
+            <div class="rg-name">
+              <h5>BAR (Best Available Rate)</h5>
+              <span>aktiv im PMS · alle Zimmerkategorien</span>
+            </div>
+            <div class="td-toggle-3" data-rg-toggle>
+              <span class="td-opt">Off</span>
+              <span class="td-opt">Empfehlen</span>
+              <span class="td-opt on">Yielding</span>
+            </div>
+            <div></div>
+          </div>
+          <div class="rg-row">
+            <div class="rg-name">
+              <h5>Group Leisure</h5>
+              <span>3 Ratenpläne · Standalone Yielding empfohlen</span>
+            </div>
+            <div class="td-toggle-3" data-rg-toggle>
+              <span class="td-opt">Off</span>
+              <span class="td-opt on">Empfehlen</span>
+              <span class="td-opt">Yielding</span>
+            </div>
+            <div></div>
+          </div>
+          <div class="rg-row">
+            <div class="rg-name">
+              <h5>Long Stay (7+ Nächte)</h5>
+              <span>abhängig von BAR · Abschlag 12 %</span>
+            </div>
+            <div class="td-toggle-3" data-rg-toggle>
+              <span class="td-opt">Off</span>
+              <span class="td-opt on">Abhängig</span>
+              <span class="td-opt">Standalone</span>
+            </div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 6 · STRATEGY (Ray asks) ───────────────────── -->
+  <div class="screen" id="screen-6">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 5 · Strategie</div>
+      <h2 class="step-h2" data-anna>Worauf <em>spielen</em> wir?</h2>
+      <h2 class="step-h2" data-kai>Pricing-<em>Strategie</em> setzen.</h2>
+      <p class="step-lede" data-anna>Bevor Ray Preise vorschlägt, sollte er wissen, was dir wichtiger ist: mehr verdienen oder voll bleiben.</p>
+      <p class="step-lede" data-kai>Initial Strategy. Wirkt als Hyperparameter auf das Yielding-Modell. Später per Quartal anpassbar im Cluster-Setup.</p>
+    </div>
+
+    <div class="ray-bubble">
+      <div class="ray-av">R</div>
+      <div>
+        <div class="ray-meta">
+          <span class="ray-name"><span class="diamond"></span>Ray</span>
+          <span class="ray-status">deine AI · seit gerade eben</span>
+        </div>
+        <div class="ray-statement" data-anna>
+          Hi, ich bin <em>Ray</em>. Wenn ich für dein Hotel Preise setze, sollte ich wissen, worauf wir spielen. Was ist dir <em>diesen Mai</em> am wichtigsten?
+        </div>
+        <div class="ray-statement" data-kai>
+          Initial Strategy für <em>Q2/Q3 2026</em>. Diese Wahl wirkt als Prior auf Yielding-Aggressivität, Min-Preis-Toleranz und Restriction-Default. Override jederzeit möglich.
+        </div>
+      </div>
+    </div>
+
+    <div class="strat-grid">
+      <div class="strat-card" onclick="selectStrategy(this, 'yield')">
+        <div class="strat-mark"></div>
+        <div class="strat-tag" data-anna>Yield-Fokus</div>
+        <div class="strat-tag" data-kai>Yield · RevPAR</div>
+        <div class="strat-icon">↑</div>
+        <h3 class="strat-headline" data-anna>Mehr verdienen <em>pro Zimmer</em>.</h3>
+        <h3 class="strat-headline" data-kai>RevPAR <em>maximieren</em>.</h3>
+        <p class="strat-desc" data-anna>Höhere Preise akzeptieren, auch wenn ein paar Zimmer leer bleiben. Premium vor Volumen.</p>
+        <p class="strat-desc" data-kai>Aggressives Yielding, Min-Preis hoch, MinLOS aktiv bei Spitzen. Toleriert Auslastung-Dips für ADR-Gewinn.</p>
+        <div class="strat-implies">
+          <span class="si-key">Was Ray tut</span>
+          <div class="si-val" data-anna><span class="pt-mark"></span><span>Pusht Preise früher und stärker bei steigendem Pickup</span></div>
+          <div class="si-val" data-anna><span class="pt-mark"></span><span>Lässt Last-Minute-Lücken zu, statt sie billig zu füllen</span></div>
+          <div class="si-val" data-kai><span class="pt-mark"></span><span>Yield-Aggressivität: hoch · Min-Preis +12 % über Floor</span></div>
+          <div class="si-val" data-kai><span class="pt-mark"></span><span>MinLOS Auto-Trigger ab Pickup &gt; 2,5×</span></div>
+        </div>
+      </div>
+
+      <div class="strat-card selected" onclick="selectStrategy(this, 'volume')">
+        <div class="strat-mark"></div>
+        <div class="strat-tag" data-anna>Auslastung</div>
+        <div class="strat-tag" data-kai>Volume · Occ</div>
+        <div class="strat-icon">≡</div>
+        <h3 class="strat-headline" data-anna>Voll <em>bleiben</em>.</h3>
+        <h3 class="strat-headline" data-kai>Auslastung <em>sichern</em>.</h3>
+        <p class="strat-desc" data-anna>Lieber günstiger und voll als teurer und halbvoll. Stetiger Cashflow zählt.</p>
+        <p class="strat-desc" data-kai>Volume-First, Yielding moderat, Promo-friendly. Min-Preis flexibel, Last-Minute-Aktivierung erlaubt.</p>
+        <div class="strat-implies">
+          <span class="si-key">Was Ray tut</span>
+          <div class="si-val" data-anna><span class="pt-mark"></span><span>Senkt früher und stärker, wenn Buchungen ausbleiben</span></div>
+          <div class="si-val" data-anna><span class="pt-mark"></span><span>Akzeptiert Group-Anfragen schneller</span></div>
+          <div class="si-val" data-kai><span class="pt-mark"></span><span>Yield-Aggressivität: moderat · Min-Preis = Floor</span></div>
+          <div class="si-val" data-kai><span class="pt-mark"></span><span>Promo-Cascade aktiv ab Pace −15 % vs. Plan</span></div>
+        </div>
+      </div>
+
+      <div class="strat-card" onclick="selectStrategy(this, 'premium')">
+        <div class="strat-mark"></div>
+        <div class="strat-tag" data-anna>Premium</div>
+        <div class="strat-tag" data-kai>ADR · Position</div>
+        <div class="strat-icon">◆</div>
+        <h3 class="strat-headline" data-anna>Premium <em>halten</em>.</h3>
+        <h3 class="strat-headline" data-kai>ADR-<em>Premium</em> verteidigen.</h3>
+        <p class="strat-desc" data-anna>Niemals zu billig wirken, auch wenn mal Lücken bleiben. Image vor Auslastung.</p>
+        <p class="strat-desc" data-kai>ADR-First, Floor hoch, kein Last-Minute-Sellout, MinLOS aktiv, Comp-Set-Position oberes Drittel.</p>
+        <div class="strat-implies">
+          <span class="si-key">Was Ray tut</span>
+          <div class="si-val" data-anna><span class="pt-mark"></span><span>Senkt nie unter dein Premium-Minimum</span></div>
+          <div class="si-val" data-anna><span class="pt-mark"></span><span>Bietet keine Last-Minute-Schnäppchen an</span></div>
+          <div class="si-val" data-kai><span class="pt-mark"></span><span>Min-Preis +25 % über Floor · MinLOS 2 Default</span></div>
+          <div class="si-val" data-kai><span class="pt-mark"></span><span>Comp-Set Tracking: Rang 1–2 von 5</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 7 · PRICE RANGE (was 6) ───────────────────── -->
+  <div class="screen" id="screen-7">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 6 · Preisspanne</div>
+      <h2 class="step-h2" data-anna>Wo soll dein Preis <em>landen?</em></h2>
+      <h2 class="step-h2" data-kai>Min / Basis / Max <em>festlegen</em>.</h2>
+      <p class="step-lede" data-anna>Ray bleibt zwischen Minimum und Premium. Du gibst die Spanne, der Algorithmus arbeitet darin.</p>
+      <p class="step-lede" data-kai>Min/Basis/Max-Preise je Referenzkategorie. Abstände zur Referenzkategorie steuern abhängige Kategorien automatisch.</p>
+    </div>
+
+    <div class="ray-bubble">
+      <div class="ray-av">R</div>
+      <div>
+        <div class="ray-meta">
+          <span class="ray-name"><span class="diamond"></span>Ray</span>
+          <span class="ray-status">denkt mit</span>
+        </div>
+        <div class="ray-statement" data-anna>
+          Auf Basis deiner letzten <em>12 Monate</em> Buchungen und dem Comp-Set würde ich für dein DZK eine Spanne von <em>79 € bis 189 €</em> vorschlagen. Du kannst das anpassen, ich rechne neu.
+        </div>
+        <div class="ray-statement" data-kai>
+          Vorschlag DZK Referenz: Min <em>79 €</em>, Basis <em>119 €</em>, Max <em>189 €</em>. Abgeleitet aus 12-Monats-Buchungen, Comp-Set-Median und Volatility. Override per Spalte.
+        </div>
+        <div class="ray-reasoning">
+          <span class="rr-pair"><span class="rr-key">12 M Schnitt</span><span class="rr-val">112 €</span></span>
+          <span class="rr-pair"><span class="rr-key">Comp-Set Median</span><span class="rr-val">134 €</span></span>
+          <span class="rr-pair"><span class="rr-key">Volatility</span><span class="rr-val">± 18 %</span></span>
+          <span class="rr-pair"><span class="rr-key">Floor (PMS)</span><span class="rr-val">59 €</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preisliste-Upload Shortcut -->
+    <div class="upload-shortcut" id="upload-shortcut" onclick="fakeUpload(this)">
+      <div class="us-icon">↑</div>
+      <div class="us-text">
+        <h5 data-anna>Hast du schon eine <em>Preisliste?</em> Lade hoch, ich leite die Spanne ab.</h5>
+        <h5 data-kai>Pricing-Sheet <em>importieren</em>: Excel · CSV · PDF. Ray extrahiert Min / Basis / Max.</h5>
+        <p data-anna>Excel, PDF oder Foto reicht. Spart dir den Slider unten.</p>
+        <p data-kai>OCR-Pipeline für PDF · direkter Parser für XLSX/CSV. Validierung gegen PMS-Floor.</p>
+      </div>
+      <span class="us-action">Datei wählen</span>
+    </div>
+
+    <div class="price-card">
+      <div class="pr-head">
+        <h3 class="serif" data-anna>Doppelzimmer Komfort · <em>Referenz</em></h3>
+        <h3 class="serif" data-kai>Doppelzimmer Komfort <em>(Referenzkategorie)</em></h3>
+        <span class="rc-meta">DZK · 34 Zimmer</span>
+      </div>
+
+      <!-- ANNA Slider -->
+      <div data-anna class="block">
+        <div class="pr-slider-stage">
+          <div class="pr-slider">
+            <div class="pr-marker min" id="mark-min">
+              <span class="pr-val">79 €</span>
+              <span class="pr-lab">Minimum</span>
+            </div>
+            <div class="pr-marker base">
+              <span class="pr-val">119 €</span>
+              <span class="pr-lab">Basis</span>
+            </div>
+            <div class="pr-marker max" id="mark-max">
+              <span class="pr-val">189 €</span>
+              <span class="pr-lab">Premium</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pr-outcome">
+          <p class="pr-outcome-narr">
+            Bei einer Spanne von <em>79 € bis 189 €</em> macht Ray in einem starken Mai voraussichtlich <span class="num-em">+ 3.200 €</span> mehr als bei einem festen 99 € Preis.
+          </p>
+          <div class="pr-outcome-stack">
+            <div class="pr-outcome-stat">
+              <span class="pos-lab">Heute Schnitt</span>
+              <span class="pos-val">112 €</span>
+            </div>
+            <div class="pr-outcome-stat">
+              <span class="pos-lab">Mit Ray Schnitt</span>
+              <span class="pos-val">128 €</span>
+            </div>
+            <div class="pr-outcome-stat">
+              <span class="pos-lab">+ pro Monat</span>
+              <span class="pos-val" style="color: var(--accent);">~ 3.200 €</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="anna-services-hint">
+          <strong>Übrigens:</strong> Frühstück, Halbpension und Sauna habe ich auch aus deinem <em>Mews</em> gelesen — die Aufpreise gelten pro Person und sind in den Vorschlägen schon drin. Wenn etwas nicht stimmt, sag <em>Marc</em> Bescheid.
+        </div>
+      </div>
+
+      <!-- KAI Tabular -->
+      <div data-kai class="block">
+        <table class="pr-table">
+          <thead>
+            <tr>
+              <th>Kategorie</th>
+              <th>Min</th>
+              <th>Basis</th>
+              <th>Max</th>
+              <th>Δ Referenz</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Suite Seeblick</td><td class="num-cell">149,00 €</td><td class="num-cell">219,00 €</td><td class="num-cell">329,00 €</td><td class="num-cell" style="color: var(--accent);">+ 70 €</td></tr>
+            <tr class="ref-row"><td>DZK <span class="ref-tag">Referenz</span></td><td class="num-cell">79,00 €</td><td class="num-cell">119,00 €</td><td class="num-cell">189,00 €</td><td class="num-cell">—</td></tr>
+            <tr><td>DZ Standard</td><td class="num-cell">69,00 €</td><td class="num-cell">99,00 €</td><td class="num-cell">159,00 €</td><td class="num-cell">− 20 €</td></tr>
+            <tr><td>EZ</td><td class="num-cell">59,00 €</td><td class="num-cell">79,00 €</td><td class="num-cell">119,00 €</td><td class="num-cell">− 40 €</td></tr>
+          </tbody>
+        </table>
+
+        <div class="pr-aside">
+          <div class="pr-aside-block">
+            <span class="pab-lab">Anpassung leeres Bett</span>
+            <input type="text" value="− 10,00 €">
+          </div>
+          <div class="pr-aside-block">
+            <span class="pab-lab">Anpassung extra Bett</span>
+            <input type="text" value="+ 25,00 €">
+          </div>
+        </div>
+        <div class="services-detected">
+          <div class="services-eyebrow">
+            <span class="diamond"></span>
+            <span>Personenbezogene Services · <em>aus PMS auto-detected</em></span>
+          </div>
+          <div class="services-grid">
+            <div class="service-item">
+              <span class="srv-name">Frühstück</span>
+              <span class="srv-rate">12,00 € p.P.</span>
+            </div>
+            <div class="service-item">
+              <span class="srv-name">Halbpension</span>
+              <span class="srv-rate">25,00 € p.P.</span>
+            </div>
+            <div class="service-item">
+              <span class="srv-name">Sauna · Spa</span>
+              <span class="srv-rate">8,00 € p.P.</span>
+            </div>
+          </div>
+          <div class="services-foot">
+            Aufpreise werden in Logisanteil-Kalkulation und Maxbelegung-Auf-/Abschlägen berücksichtigt. Override pro Service möglich, oder <em>Lisa</em> kontaktieren bei komplexer Service-Logik (Pakete, Kinderpreise, Saison-Service-Splits).
+          </div>
+        </div>
+
+        <div class="cs-foot-note" style="margin-top: 24px;">
+          <span class="diamond"></span>
+          <div>
+            <strong>Logisanteil-Logik:</strong> Wenn 10 € Frühstück p.P. hinterlegt ist und Anpassung leeres Bett 10 €, kostet DZ als EZ-Nutzung 20 € weniger. Aufschläge/Abschläge laufen über Abstand zur Referenz, nicht händisch je Kategorie.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Besonderheiten · Saisonzeiten + Wochentage -->
+    <div class="special-card" id="special-card">
+      <div class="sp-head" onclick="toggleSpecial()">
+        <div>
+          <h4 class="serif" data-anna>Besonderheiten? <em>Eher selten.</em></h4>
+          <h4 class="serif" data-kai><em>Saison-Override</em> &amp; Day-of-Week Pattern</h4>
+          <p class="sp-sub" data-anna>Ray erkennt Saisonzeiten und Wochentag-Muster aus deinen Daten. Wenn du noch nicht so viele Buchungen im System hast, kannst du sie hier ergänzen.</p>
+          <p class="sp-sub" data-kai>Auto-Detection ab 12 Monaten Buchungs-Daten. Cold-Start Override-Felder für Saison-Phasen und DOW-Multiplikatoren bei Datenarmut.</p>
+        </div>
+        <span class="sp-toggle">
+          <span data-anna>Ergänzen</span><span data-kai>Override</span>
+          <span class="sp-glyph">+</span>
+        </span>
+      </div>
+
+      <div class="sp-body">
+        <div class="sp-row">
+          <label data-anna>Saisonzeiten · wann ist bei dir Hochsaison oder Nebensaison?</label>
+          <label data-kai>Saison-Phasen · Pricing-Multiplier-Hints</label>
+          <textarea rows="2" placeholder="z. B. Juni bis August Hauptsaison, November bis Februar Nebensaison, Weihnachten/Silvester separat hoch"></textarea>
+          <div class="sp-upload">+ Kalender-Datei hochladen (Excel oder PDF)</div>
+        </div>
+
+        <div class="sp-row">
+          <label data-anna>Wochentage · gibt es Tage die anders sind?</label>
+          <label data-kai>Day-of-Week Pattern · Multiplier oder Constraint</label>
+          <textarea rows="2" placeholder="z. B. Sonntags ist immer ruhig, Donnerstag ist Business-Peak, Freitag/Samstag voll"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lisa-Strip · Hybrid-Eskalation -->
+    <div class="hybrid-strip">
+      <div class="hs-av lisa">L</div>
+      <div class="hs-text">
+        <span class="hs-name">Lisa</span>
+        <span data-anna>Hast du <em>komplexe Tarif-Logik</em> (abhängige Raten, Gruppen-Pricing, Mix-Modelle)? Schreib mir kurz, ich richte das hinter den Kulissen ein, du musst hier nichts technisch bauen.</span>
+        <span data-kai>Edge-Cases wie virtuelle Raten, Mix-Pricing oder Group-Contract-Logik kann ich für dich konfigurieren. Reicht ein <em>Slack-Ping</em> mit Hotel-ID.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 8 · COMPSET (was part of 7) ───────────────────── -->
+  <div class="screen" id="screen-8">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 7 · Wettbewerb</div>
+      <h2 class="step-h2" data-anna>Mit wem <em>misst</em> du dich?</h2>
+      <h2 class="step-h2" data-kai>Comp-Set <em>festlegen</em>.</h2>
+      <p class="step-lede" data-anna>Drei bis fünf Hotels, deren Preise wir täglich für dich beobachten. Du musst sie nicht alle perfekt aussuchen, du kannst später ändern.</p>
+      <p class="step-lede" data-kai>Comp-Set für Rateshopper Pro über HQ Revenue. Median + Spread automatisch, exportierbar via API. Trial-Phase 60 Tage aktiv.</p>
+    </div>
+
+    <div class="ray-bubble">
+      <div class="ray-av">R</div>
+      <div>
+        <div class="ray-meta">
+          <span class="ray-name"><span class="diamond"></span>Ray</span>
+          <span class="ray-status">hat 4 Hotels in deiner Nähe vorgeschlagen</span>
+        </div>
+        <div class="ray-statement" data-anna>
+          Ich habe in deiner Gegend nach <em>4★ Boutique-Hotels mit ähnlicher Größe</em> gesucht. Pass die Auswahl an, wenn ich daneben liege.
+        </div>
+        <div class="ray-statement" data-kai>
+          Auto-Vorschlag basiert auf <em>Sterne · Größe · Mikro-Lage · Channel-Mix</em>. Manuelle Override empfohlen für strategische Comp-Set-Definition.
+        </div>
+      </div>
+    </div>
+
+    <!-- Rate-Shopper-Tier ─── -->
+    <div class="rs-tier">
+      <div class="rs-tier-head">
+        <h4 class="serif" data-anna>Rate-Shopper · <em>Tier wählen</em></h4>
+        <h4 class="serif" data-kai>Rate-Shopper Subscription</h4>
+        <span class="rs-tier-tag" data-anna>was ist eingeschlossen?</span>
+        <span class="rs-tier-tag" data-kai>HQ Revenue · 60-Tage Trial</span>
+      </div>
+      <div class="rs-tier-options">
+        <button class="rs-tier-opt" onclick="pickTier(this)">
+          <div class="rs-meta">Tier 0</div>
+          <h5 class="serif">Keine</h5>
+          <p>Ohne Comp-Set. Ray arbeitet nur mit deinen Daten.</p>
+        </button>
+        <button class="rs-tier-opt selected" onclick="pickTier(this)">
+          <div class="rs-meta">Tier 1 · inklusive</div>
+          <h5 class="serif">Rate <em>Shopper</em></h5>
+          <p>Bis zu 5 Wettbewerber, tägliches Crawl, BAR-Rate-Vergleich.</p>
+        </button>
+        <button class="rs-tier-opt" onclick="pickTier(this)">
+          <div class="rs-meta">Tier 2 · + 49 € / Mo</div>
+          <h5 class="serif">Rate Shopper <em>PRO</em></h5>
+          <p>Bis zu 10 Wettbewerber, OTA + Direct, LOS-Filter, Spread-Analyse.</p>
+        </button>
+        <button class="rs-tier-opt" onclick="pickTier(this)">
+          <div class="rs-meta">Tier · own</div>
+          <h5 class="serif">Eigene Subscription</h5>
+          <p>Du nutzt OTA Insight, Lighthouse oder ähnliches. API-Anbindung.</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="compset-card">
+      <h3 class="serif" style="font-weight:400; font-size:22px; letter-spacing:-0.02em; margin-bottom:6px;">Vergleichshotels</h3>
+      <p class="cs-sub" data-anna style="margin-bottom:18px;">Wir holen ihre Preise täglich um 06:00. Ray nutzt das für Empfehlungen.</p>
+      <p class="cs-sub" data-kai style="margin-bottom:18px;">Daily Crawl 06:00 UTC. Median, Min, Max, Spread auswertbar in Analyse 2.0.</p>
+
+      <div class="cs-hotel">
+        <div class="csh-name">Hotel Adlon Charlottenburg<span>4★ · Berlin Mitte</span><a class="csh-url">booking.com/hotel/adlon-charlottenburg</a></div>
+        <div class="csh-rate"><em>149 €</em></div>
+        <div class="cs-toggle on"></div>
+      </div>
+      <div class="cs-hotel">
+        <div class="csh-name">Mövenpick Berlin<span>4★ · 1.2 km</span><a class="csh-url">booking.com/hotel/movenpick-berlin</a></div>
+        <div class="csh-rate"><em>134 €</em></div>
+        <div class="cs-toggle on"></div>
+      </div>
+      <div class="cs-hotel">
+        <div class="csh-name">Park Plaza Wallstreet<span>4★ · Mitte</span><a class="csh-url">booking.com/hotel/park-plaza-wallstreet</a></div>
+        <div class="csh-rate"><em>128 €</em></div>
+        <div class="cs-toggle on"></div>
+      </div>
+      <div class="cs-hotel">
+        <div class="csh-name">25hours Bikini<span>Boutique · 2.4 km</span><a class="csh-url">booking.com/hotel/25hours-bikini</a></div>
+        <div class="csh-rate"><em>165 €</em></div>
+        <div class="cs-toggle on"></div>
+      </div>
+      <div class="cs-hotel">
+        <div class="csh-name">Hotel Zoo Berlin<span>5★ · Ku'damm</span><a class="csh-url">— Link einfügen —</a></div>
+        <div class="csh-rate"><em>189 €</em></div>
+        <div class="cs-toggle"></div>
+      </div>
+      <div class="cs-add">+ Hotel hinzufügen <span style="color: var(--subtle); margin-left: 8px;" data-anna>(noch 1 frei)</span><span style="color: var(--subtle); margin-left: 8px;" data-kai>(5 frei mit PRO)</span></div>
+
+      <div class="cs-currency-row">
+        <span class="cs-cur-label">Währung &amp; Quelle</span>
+        <div style="display:flex; gap:18px; align-items:baseline;">
+          <select>
+            <option>EUR · Euro</option>
+            <option>CHF · Franken</option>
+            <option>GBP · Pfund</option>
+            <option>USD · US-Dollar</option>
+          </select>
+          <select>
+            <option>Booking.com</option>
+            <option>Direkt-Websites</option>
+            <option>Beide</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marc-Strip · Hybrid-Eskalation -->
+    <div class="hybrid-strip" style="max-width: 720px; margin: 20px auto 0;">
+      <div class="hs-av marc">M</div>
+      <div class="hs-text">
+        <span class="hs-name">Marc</span>
+        <span data-anna>Du <em>weißt nicht</em>, mit welchen Hotels du dich vergleichen sollst? Schreib mir, ich kenne die meisten Häuser in deiner Region und schicke dir eine Empfehlung.</span>
+        <span data-kai>Strategische Comp-Set-Definition pro Cluster: ich helfe bei Boutique-Mix, Mikro-Lage-Differenzierung und kanalspezifischer Auswahl. <em>30-Min-Call</em> reicht.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 9 · WIE MÖCHTEST DU RAY VERWENDEN ───────────────────── -->
+  <div class="screen" id="screen-9">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 8 · Zusammenarbeit</div>
+      <h2 class="step-h2" data-anna>Wie möchtest du <em>Ray</em> verwenden?</h2>
+      <h2 class="step-h2" data-kai>Working Style mit <em>Ray</em>.</h2>
+      <p class="step-lede" data-anna>Drei Arbeitsweisen, drei Tonarten. Du wählst, wie nah Ray dir auf den Schreibtisch rückt. Änderbar im Briefing, jederzeit.</p>
+      <p class="step-lede" data-kai>Pro Achse den Operations-Modus festlegen. Defaults aus Tarif Director, override jederzeit. Decision Log dokumentiert jede Aktion.</p>
+    </div>
+
+    <div class="ray-bubble">
+      <div class="ray-av">R</div>
+      <div>
+        <div class="ray-meta">
+          <span class="ray-name"><span class="diamond"></span>Ray</span>
+          <span class="ray-status">letzte Frage, dann legen wir los</span>
+        </div>
+        <div class="ray-statement" data-anna>
+          Bevor ich loslege, sag mir <em>wie wir zusammenarbeiten</em>. Ich schlage den mittleren Weg für den Anfang vor. Dann steigern wir das Schritt für Schritt, sobald du mir vertraust.
+        </div>
+        <div class="ray-statement" data-kai>
+          Setze pro Achse, in welchem <em>Modus</em> ich operiere. Großgruppen-Displacement bleibt initial off, da Hotel-spezifische Constraints noch fehlen. Q3-Review kann das öffnen.
+        </div>
+      </div>
+    </div>
+
+    <!-- Anna · 3 Trust-Karten mit Sample-Decision -->
+    <div class="trust-page-grid" data-anna>
+      <div class="trust-card" onclick="selectTrustCard(this)">
+        <div class="tc-mark"></div>
+        <div class="tc-tag">Stufe 1</div>
+        <h3 class="tc-headline serif">Beobachten.</h3>
+        <p class="tc-desc">Ray analysiert und meldet sich. Du entscheidest alles selbst, jeden Tag.</p>
+        <div class="tc-sample">
+          <div class="tc-sample-meta"><span class="diamond"></span>So würde Ray reden</div>
+          <div class="tc-sample-text">"Pfingsten zieht stark an. Du <em>könntest</em> für DZK auf <em>+ 9 €</em> gehen."</div>
+          <div class="tc-tag-rec">für Vorsichtige</div>
+        </div>
+      </div>
+
+      <div class="trust-card selected" onclick="selectTrustCard(this)">
+        <div class="tc-mark"></div>
+        <div class="tc-tag">Stufe 2</div>
+        <h3 class="tc-headline serif"><em>Empfehlen.</em></h3>
+        <p class="tc-desc">Ray schlägt vor, du genehmigst per Klick. Kleine Änderungen bis 5 % laufen automatisch.</p>
+        <div class="tc-sample">
+          <div class="tc-sample-meta"><span class="diamond"></span>So würde Ray reden</div>
+          <div class="tc-sample-text">"Ich würde DZK Pfingsten auf <em>+ 9 €</em> ziehen. <em>OK?</em>"</div>
+          <div class="tc-tag-rec">empfohlen für den Start</div>
+        </div>
+      </div>
+
+      <div class="trust-card" onclick="selectTrustCard(this)">
+        <div class="tc-mark"></div>
+        <div class="tc-tag">Stufe 3</div>
+        <h3 class="tc-headline serif">Auto-Pilot.</h3>
+        <p class="tc-desc">Ray entscheidet in deiner Spanne. Eskaliert nur bei Großgruppen, ungewöhnlichen Mustern oder Floor-Verletzung.</p>
+        <div class="tc-sample">
+          <div class="tc-sample-meta"><span class="diamond"></span>So würde Ray reden</div>
+          <div class="tc-sample-text">"Habe DZK Pfingsten auf <em>+ 9 €</em> gesetzt. Hier dein Briefing."</div>
+          <div class="tc-tag-rec">nach 4–6 Wochen empfohlen</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kai · per-dimension matrix mit Sample-Behavior -->
+    <div class="kai-trust-matrix" data-kai>
+      <div class="ktm-row">
+        <div class="ktm-label">
+          <h5 class="serif">Preis-<em>Magnitude</em></h5>
+          <p>± Δ pro Anpassung</p>
+        </div>
+        <div class="td-toggle-3">
+          <span class="td-opt">±2 %</span>
+          <span class="td-opt on">±5 %</span>
+          <span class="td-opt">±10 %</span>
+        </div>
+        <div class="ktm-sample">
+          <span class="ktm-sample-key">Beispiel</span>
+          Bei <em>±5 %</em> dürfte Ray Pfingsten auf 125 € ziehen, größere Sprünge eskalieren in den Decision Log.
+        </div>
+      </div>
+
+      <div class="ktm-row">
+        <div class="ktm-label">
+          <h5 class="serif"><em>Horizon</em></h5>
+          <p>Tage in die Zukunft</p>
+        </div>
+        <div class="td-toggle-3">
+          <span class="td-opt">14 d</span>
+          <span class="td-opt on">60 d</span>
+          <span class="td-opt">180 d</span>
+        </div>
+        <div class="ktm-sample">
+          <span class="ktm-sample-key">Beispiel</span>
+          <em>60 d</em> Horizon erfasst Pfingsten und Sommerferien, weiter Vorausschau bei niedrigerem Pickup-Signal.
+        </div>
+      </div>
+
+      <div class="ktm-row">
+        <div class="ktm-label">
+          <h5 class="serif"><em>Restrictions</em></h5>
+          <p>MinLOS / CTA / CTD</p>
+        </div>
+        <div class="td-toggle-3">
+          <span class="td-opt">Off</span>
+          <span class="td-opt">Empfehlen</span>
+          <span class="td-opt on">Auto</span>
+        </div>
+        <div class="ktm-sample">
+          <span class="ktm-sample-key">Beispiel</span>
+          Auto-Trigger MinLOS 2 ab Pickup &gt; 2,5×, MinLOS 3 ab Sa-Pickup &gt; <em>3×</em> Schnitt.
+        </div>
+      </div>
+
+      <div class="ktm-row">
+        <div class="ktm-label">
+          <h5 class="serif">Channel-<em>Hygiene</em></h5>
+          <p>Promo / Direct Boost</p>
+        </div>
+        <div class="td-toggle-3">
+          <span class="td-opt">Off</span>
+          <span class="td-opt on">Empfehlen</span>
+          <span class="td-opt">Auto</span>
+        </div>
+        <div class="ktm-sample">
+          <span class="ktm-sample-key">Beispiel</span>
+          Bei Pace −15 % schlägt Ray Direct-Promo vor, Aktivierung bleibt manuell.
+        </div>
+      </div>
+
+      <div class="ktm-row">
+        <div class="ktm-label">
+          <h5 class="serif"><em>Großgruppen</em></h5>
+          <p>Displacement-Modell</p>
+        </div>
+        <div class="td-toggle-3">
+          <span class="td-opt on">Off</span>
+          <span class="td-opt">Empfehlen</span>
+          <span class="td-opt">Auto</span>
+        </div>
+        <div class="ktm-sample">
+          <span class="ktm-sample-key">Beispiel</span>
+          Initial off, da Group-Kontingente und Verträge fehlen. <em>Q3-Review</em> öffnet auf Empfehlen.
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-foot-note" style="margin-top: 22px; max-width: 100%;" data-anna>
+      <span class="diamond"></span>
+      <div><strong>Du kannst das jederzeit ändern.</strong> Auch direkt im Briefing, mit einem Klick. Marc und Lisa schauen mit, wenn Ray sich nicht sicher ist.</div>
+    </div>
+    <div class="cs-foot-note" style="margin-top: 22px; max-width: 100%;" data-kai>
+      <span class="diamond"></span>
+      <div>Alle Aktionen Ray's landen im Decision Log. Auditable per Hotel und Achse, exportierbar an die GF. Override-Patterns lernt Ray für künftige Empfehlungen.</div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 10 · GESCHÄFTLICHES (NEW) ───────────────────── -->
+  <div class="screen" id="screen-10">
+    <div class="step-head">
+      <div class="eyebrow"><span class="diamond"></span>Schritt 9 · Geschäftliches</div>
+      <h2 class="step-h2" data-anna>Eines noch &mdash; <em>Rechnung</em>.</h2>
+      <h2 class="step-h2" data-kai>Vertrags- und <em>Rechnungsdaten</em>.</h2>
+      <p class="step-lede" data-anna>Damit wir die Rechnung an die richtige Adresse schicken. Vieles haben wir schon aus deiner Anmeldung, du musst nur prüfen.</p>
+      <p class="step-lede" data-kai>Compliance-Block. Land aus IP-Lookup, Währung aus Land. Override jederzeit. Multi-Property Konsolidierung in Q3.</p>
+    </div>
+
+    <div class="biz-card">
+      <div class="biz-row span-2">
+        <label>Firmenname</label>
+        <input type="text" value="Hotel Seeblick GmbH">
+      </div>
+      <div class="biz-row span-2">
+        <label>Straße und Hausnummer</label>
+        <input type="text" value="Seestraße 12">
+      </div>
+      <div class="biz-row">
+        <label>PLZ</label>
+        <input type="text" value="10115">
+      </div>
+      <div class="biz-row">
+        <label>Ort</label>
+        <input type="text" value="Berlin">
+      </div>
+      <div class="biz-row">
+        <label>Land</label>
+        <select>
+          <option>Deutschland</option>
+          <option>Österreich</option>
+          <option>Schweiz</option>
+          <option>Italien</option>
+          <option>Frankreich</option>
+        </select>
+        <span class="prefilled-tag"><span class="diamond"></span>aus Hotel-Adresse</span>
+      </div>
+      <div class="biz-row">
+        <label>Währung</label>
+        <select>
+          <option>EUR · Euro</option>
+          <option>CHF · Franken</option>
+          <option>GBP · Pfund</option>
+          <option>USD · US-Dollar</option>
+        </select>
+        <span class="prefilled-tag"><span class="diamond"></span>aus Land</span>
+      </div>
+      <div class="biz-row span-2">
+        <label>E-Mail für Buchhaltung</label>
+        <input type="email" placeholder="rechnung@hotel-seeblick.de">
+        <div class="biz-helper" data-anna>Optional. Wenn leer, schicken wir die Rechnung an deine Anmelde-Mail.</div>
+        <div class="biz-helper" data-kai>Falls Rechnung an Accounting-Team statt Operator. SEPA-Lastschrift wird im Folgeschritt eingerichtet.</div>
+      </div>
+      <div class="biz-row span-2">
+        <label>USt-IdNr. (optional)</label>
+        <input type="text" placeholder="DE123456789">
+        <div class="biz-helper">Für Reverse-Charge-Rechnungen ohne Mehrwertsteuer.</div>
+      </div>
+    </div>
+
+    <div class="cs-foot-note" style="margin-top: 22px; max-width: 100%;" data-anna>
+      <span class="diamond"></span>
+      <div><strong>Datenschutz:</strong> Rechnungsdaten gehen nur an unsere Buchhaltung. Nicht an Ray, nicht an Marc, nicht an Lisa. Komplett getrennt.</div>
+    </div>
+    <div class="cs-foot-note" style="margin-top: 22px; max-width: 100%;" data-kai>
+      <span class="diamond"></span>
+      <div>SEPA-Mandat-Setup im nächsten Step. Rechnungsstellung monatlich, 14 Tage Zahlungsziel. Konsolidierte Rechnung bei Multi-Property auf Anfrage.</div>
+    </div>
+  </div>
+
+  <!-- ───────────────────── SCREEN 11 · READY (was 10, was 9, was 8) ───────────────────── -->
+  <div class="screen" id="screen-11">
+    <div class="ready-grid">
+      <div class="ready-left">
+        <div class="eyebrow"><span class="diamond"></span>Fertig</div>
+        <h2 class="step-h2 serif" style="margin-top: 18px;">
+          <span data-anna><em>Ray</em> ist bereit.<br>Hier ist sein erstes Briefing.</span>
+          <span data-kai><em>Cluster</em> ready.<br>Erste Empfehlungen ab morgen früh.</span>
+        </h2>
+        <p class="step-lede" style="margin-top: 18px;" data-anna>
+          Ab heute Nacht arbeitet Ray für dich. Du bekommst dein erstes echtes Briefing morgen früh um 8:00. Wenn etwas Besonderes ist, schreibt er dir.
+        </p>
+        <p class="step-lede" style="margin-top: 18px;" data-kai>
+          Algorithmus trainiert über Nacht (Pickup-Modell, Comp-Set Median, Forecast Pace). Ab 06:00 erste Empfehlungen in der Preistabelle. Decision Log läuft live.
+        </p>
+
+        <div class="team-strip" data-anna>
+          <div class="ts-avatars">
+            <div class="ts-avatar serif">R</div>
+            <div class="ts-avatar serif">M</div>
+            <div class="ts-avatar serif">L</div>
+          </div>
+          <div class="ts-text">
+            <h4 class="serif">Dein <em>Backup-Team</em>: Ray, Marc und Lisa.</h4>
+            <p>Ray ist deine AI. Marc und Lisa sind echte Revenue-Profis und springen ein, wenn etwas knifflig wird. Direkt in deinem Briefing, kein extra Channel.</p>
+          </div>
+        </div>
+
+        <div class="team-strip" data-kai>
+          <div class="ts-avatars">
+            <div class="ts-avatar serif">R</div>
+          </div>
+          <div class="ts-text">
+            <h4 class="serif"><em>Audit-Trail</em> aktiv.</h4>
+            <p>Decision Log dokumentiert jede AI-Aktion mit Reasoning, Pickup-Daten und Comp-Set-Kontext. Eskalation an Senior-RM-Team optional einschaltbar.</p>
+          </div>
+        </div>
+
+        <div class="ready-cta">
+          <button class="btn-primary" onclick="goDashboard()">
+            <span data-anna>Zum Briefing</span>
+            <span data-kai>Zur Preistabelle</span>
+            <span class="arr">→</span>
+          </button>
+          <button class="btn-ghost">Tour starten</button>
+        </div>
+      </div>
+
+      <div class="ready-card">
+        <div class="rc-meta">
+          <span class="rc-kicker"><span class="diamond"></span>Sample · So würde Ray heute setzen</span>
+          <span class="rc-date" data-anna>nicht live</span>
+          <span class="rc-date" data-kai>preview</span>
+        </div>
+        <div class="rc-headline serif" data-anna>
+          14 Preise <em>justiert</em>, Pfingsten ist deine Chance.
+        </div>
+        <div class="rc-headline serif" data-kai>
+          14 Preisanpassungen für <em>KW 21</em>.
+        </div>
+        <p class="rc-narr" data-anna>
+          Ray hätte heute Nacht 14 Preise nach oben gezogen. Pfingsten zieht stark an, dein Comp-Set ist im Schnitt <span class="trend-pill">↑ 8 €</span> über deinem Niveau.
+        </p>
+        <p class="rc-narr" data-kai>
+          Pickup KW 21 +14 Zimmer (3.2× Schnitt). Comp-Set Median +6,40 € auf Pfingsten. Empfehlung: DZK Basis +9 €, EZ +6 €. Restrictions unverändert.
+        </p>
+
+        <table class="rc-table">
+          <tr>
+            <td>DZK Pfingsten</td>
+            <td>119 €</td>
+            <td class="delta">+9 €</td>
+          </tr>
+          <tr>
+            <td>EZ Pfingsten</td>
+            <td>79 €</td>
+            <td class="delta">+6 €</td>
+          </tr>
+          <tr>
+            <td>Suite Pfingsten</td>
+            <td>219 €</td>
+            <td class="delta">+24 €</td>
+          </tr>
+          <tr>
+            <td>DZ KW 22</td>
+            <td>99 €</td>
+            <td class="delta">+4 €</td>
+          </tr>
+        </table>
+
+        <div class="cs-foot-note" style="margin-top: 22px;">
+          <span class="diamond"></span>
+          <div data-anna><strong>Geschätzter Mehrumsatz:</strong> ~ 3.200 € im Mai bei aktuellem Pickup-Pace.</div>
+          <div data-kai><strong>Prognose:</strong> RevPAR + 9,4 % vs. Plan, Pace +12 % vs. Vorjahr KW 21.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /canvas -->
+
+  <!-- ─── BOTTOM NAV ─────────────────────── -->
+  <div class="botbar">
+    <div class="botbar-inner">
+      <div class="bb-progress">
+        <span id="bb-step-counter">Start</span>
+        <div class="bb-track">
+          <span class="bb-step" data-jump="2"></span>
+          <span class="bb-step" data-jump="3"></span>
+          <span class="bb-step" data-jump="4"></span>
+          <span class="bb-step" data-jump="5"></span>
+          <span class="bb-step" data-jump="6"></span>
+          <span class="bb-step" data-jump="7"></span>
+          <span class="bb-step" data-jump="8"></span>
+          <span class="bb-step" data-jump="9"></span>
+          <span class="bb-step" data-jump="10"></span>
+          <span class="bb-step" data-jump="11"></span>
+        </div>
+      </div>
+      <div class="bb-mid">
+        <span data-anna>Profil <em>Hotelier</em></span>
+        <span data-kai>Profil <em>Revenue Manager</em></span>
+      </div>
+      <div class="bb-actions">
+        <button class="bb-back" id="bb-back" onclick="goBack()">Zurück</button>
+        <button class="bb-next" id="bb-next" onclick="goNext()">
+          Weiter <span class="arr">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /shell -->
+
+<!-- ─── CONCIERGE MODAL ─── -->
+<div class="pms-modal" id="protel-modal">
+  <div class="pms-modal-overlay" onclick="closeProtelModal()"></div>
+  <div class="pms-modal-card pmm-modal-card" id="pmm-card">
+    <button class="pms-modal-close" onclick="closeProtelModal()">×</button>
+
+    <!-- ─── State 1 · Booking ─── -->
+    <div class="pmm-state-booking">
+      <div class="pmm-avatar-row">
+        <div class="pmm-av">M</div>
+        <div>
+          <div class="pmm-av-name"><span class="diamond" style="margin-right:8px;"></span>Marc · Customer Success</div>
+          <div class="pmm-av-role" data-anna>Ich richte Hotels mit klassischen PMS persönlich ein.</div>
+          <div class="pmm-av-role" data-kai>Lead Onboarder · Concierge seit 2021.</div>
+        </div>
+      </div>
+
+      <h3 class="pmm-headline" data-anna><span id="pmm-name-anna">Protel</span> braucht <em>uns</em> dafür.</h3>
+      <h3 class="pmm-headline" data-kai><span id="pmm-name-kai">Protel</span>: <em>Live-Setup</em> mit Concierge.</h3>
+
+      <p class="pmm-narr" data-anna>
+        Manche Buchungssysteme können wir nicht per Klick verbinden, weil sie auf deinem Hotel-Rechner laufen oder besondere Schnittstellen brauchen. Damit nichts schief geht und keine falschen Preise an Booking.com fliegen, richte ich das gemeinsam mit dir in einem 30-Minuten-Termin ein.
+      </p>
+      <p class="pmm-narr" data-kai>
+        On-prem oder live-only Schnittstellen erfordern technische Konfiguration (z. B. IDS-Block, Stammdaten-Sync, Daily-Rate-Splits). 30–45 Min in einer Live-Session, danach läuft alles automatisch wie bei Cloud-PMS.
+      </p>
+
+      <span class="pmm-slots-label">Wann passt's dir?</span>
+      <div class="pmm-cal" id="pmm-cal">
+        <button class="cal-day" data-day="0" data-label="Heute" data-date="6.5" data-slots="3" onclick="pickDay(this)">
+          <span class="cd-dow">Heute</span>
+          <span class="cd-num">6</span>
+          <span class="cd-slots">3 frei</span>
+        </button>
+        <button class="cal-day selected" data-day="1" data-label="Di" data-date="7.5" data-slots="3" onclick="pickDay(this)">
+          <span class="cd-dow">Di</span>
+          <span class="cd-num">7</span>
+          <span class="cd-slots">3 frei</span>
+        </button>
+        <button class="cal-day" data-day="2" data-label="Mi" data-date="8.5" data-slots="4" onclick="pickDay(this)">
+          <span class="cd-dow">Mi</span>
+          <span class="cd-num">8</span>
+          <span class="cd-slots">4 frei</span>
+        </button>
+        <button class="cal-day" data-day="3" data-label="Do" data-date="9.5" data-slots="2" onclick="pickDay(this)">
+          <span class="cd-dow">Do</span>
+          <span class="cd-num">9</span>
+          <span class="cd-slots">2 frei</span>
+        </button>
+        <button class="cal-day" data-day="4" data-label="Fr" data-date="10.5" data-slots="3" onclick="pickDay(this)">
+          <span class="cd-dow">Fr</span>
+          <span class="cd-num">10</span>
+          <span class="cd-slots">3 frei</span>
+        </button>
+        <button class="cal-day disabled" data-day="5" data-label="Sa" data-date="11.5">
+          <span class="cd-dow">Sa</span>
+          <span class="cd-num">11</span>
+          <span class="cd-slots">—</span>
+        </button>
+        <button class="cal-day" data-day="6" data-label="Mo" data-date="13.5" data-slots="5" onclick="pickDay(this)">
+          <span class="cd-dow">Mo</span>
+          <span class="cd-num">13</span>
+          <span class="cd-slots">5 frei</span>
+        </button>
+      </div>
+
+      <span class="pmm-times-label">Verfügbar <em id="cal-day-label">Di 7. Mai</em></span>
+      <div class="pmm-times" id="pmm-times">
+        <button class="pmm-time" onclick="pickTime(this)">09:00</button>
+        <button class="pmm-time selected" onclick="pickTime(this)">10:00</button>
+        <button class="pmm-time" onclick="pickTime(this)">14:00</button>
+      </div>
+
+      <div class="pmm-actions">
+        <button class="pmm-skip" onclick="closeProtelModal()">Anderes PMS wählen</button>
+        <button class="btn-primary" onclick="bookProtel()">
+          Termin buchen <span class="arr">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── State 2 · Post-booking ─── -->
+    <div class="pmm-state-confirmed">
+      <div class="confirm-row">
+        <div class="confirm-icon"></div>
+        <div class="confirm-text">
+          <h4 class="serif">Termin <em id="confirm-slot">Di 7. Mai · 10:00</em></h4>
+          <p>mit Marc · Calendar-Invite kommt per Mail</p>
+        </div>
+      </div>
+
+      <div class="cuts-label">
+        <span class="diamond"></span>
+        <span data-anna>Was du bis dahin schon tun kannst</span>
+        <span data-kai>Pre-Onboarding-Tasks · ohne PMS-Daten möglich</span>
+      </div>
+
+      <div class="task-grid">
+        <button class="task-card" onclick="gotoTaskStep(6)">
+          <span class="tc-time">~ 2 Min</span>
+          <h5 class="serif">Strategie <em>wählen</em></h5>
+          <p data-anna>Worauf spielen wir? Mehr verdienen, voll bleiben, Premium halten.</p>
+          <p data-kai>Yield-Aggressivität festlegen, wirkt als Prior auf das Modell.</p>
+        </button>
+
+        <button class="task-card" onclick="gotoTaskStep(8)">
+          <span class="tc-time">~ 3 Min</span>
+          <h5 class="serif">Wettbewerb <em>vorschlagen</em></h5>
+          <p data-anna>Mit welchen Hotels in deiner Gegend vergleichst du dich.</p>
+          <p data-kai>Comp-Set definieren, Ray ergänzt aus geo-similarity.</p>
+        </button>
+
+        <button class="task-card" onclick="gotoTaskStep(9)">
+          <span class="tc-time">~ 2 Min</span>
+          <h5 class="serif">Vertrauen <em>festlegen</em></h5>
+          <p data-anna>Wie wir zusammenarbeiten — Beobachten, Empfehlen, Auto-Pilot.</p>
+          <p data-kai>Per-Dimension Trust-Konfiguration, default mid-stage.</p>
+        </button>
+
+        <button class="task-card" onclick="closeProtelModal()">
+          <span class="tc-time">jederzeit</span>
+          <h5 class="serif">Hotel <em>vorstellen</em></h5>
+          <p data-anna>Foto und 2–3 Sätze, damit Ray dein Haus versteht.</p>
+          <p data-kai>Brand-Tone Calibration über Beschreibung und Visuals.</p>
+        </button>
+      </div>
+
+      <div class="pause-row">
+        <div class="pause-text" data-anna>
+          Oder mach <em>Pause</em> bis zum Termin. Wir richten dann gemeinsam ein, danach läuft Ray automatisch.
+        </div>
+        <div class="pause-text" data-kai>
+          Pause-Mode: kein Funnel-Vorgriff, vollständiges Setup im Concierge-Termin.
+        </div>
+        <button class="pmm-skip" onclick="pauseToWaiting()">Pause</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── State ─────────────────────────────────────────────
+  const html = document.documentElement;
+  const TOTAL = 11;
+
+  function getStep() { return parseInt(html.getAttribute("data-step") || "1", 10); }
+  function getMode() { return html.getAttribute("data-mode") || ""; }
+
+  // ─── Navigation ────────────────────────────────────────
+  function goStep(n) {
+    if (n < 1 || n > TOTAL) return;
+    html.setAttribute("data-step", String(n));
+    syncProgress();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  function goNext() {
+    const cur = getStep();
+    if (cur === 3 && !getMode()) {
+      // require profile pick
+      flashProfileCards();
+      return;
+    }
+    if (cur < TOTAL) goStep(cur + 1);
+  }
+  function goBack() {
+    const cur = getStep();
+    if (cur > 1) goStep(cur - 1);
+  }
+  function goDashboard() {
+    alert("Demo-Onboarding fertig. In production: redirect to Daily Briefing / Preistabelle.");
+  }
+
+  function syncProgress() {
+    const cur = getStep();
+    document.getElementById("bb-step-counter").textContent =
+      cur === 1 ? "Start" : "Schritt " + (cur - 1) + " / 10";
+
+    // step dots
+    document.querySelectorAll(".bb-step").forEach(el => {
+      const j = parseInt(el.getAttribute("data-jump"), 10);
+      el.classList.remove("active", "done");
+      if (j === cur) el.classList.add("active");
+      else if (j < cur) el.classList.add("done");
+    });
+
+    // back button state
+    document.getElementById("bb-back").disabled = (cur === 1);
+
+    // next button label varies on screen 8
+    const nextBtn = document.getElementById("bb-next");
+    if (cur === TOTAL) {
+      nextBtn.style.display = "none";
+    } else {
+      nextBtn.style.display = "";
+      nextBtn.innerHTML = (cur === 10)
+        ? 'Ray einschalten <span class="arr">→</span>'
+        : 'Weiter <span class="arr">→</span>';
+    }
+  }
+
+  // step-track jumps
+  document.querySelectorAll(".bb-step").forEach(el => {
+    el.addEventListener("click", () => {
+      const j = parseInt(el.getAttribute("data-jump"), 10);
+      // require profile pick before going past step 3 if not chosen
+      if (j > 3 && !getMode()) { flashProfileCards(); return; }
+      goStep(j);
+    });
+  });
+
+  // ─── Profile branch ────────────────────────────────────
+  function setMode(mode) {
+    html.setAttribute("data-mode", mode);
+    document.getElementById("card-anna").classList.toggle("selected", mode === "anna");
+    document.getElementById("card-kai").classList.toggle("selected", mode === "kai");
+    setTimeout(() => goNext(), 320);
+  }
+  function flashProfileCards() {
+    goStep(3);
+    const a = document.getElementById("card-anna");
+    const k = document.getElementById("card-kai");
+    [a, k].forEach(el => {
+      el.style.transition = "transform 200ms ease, box-shadow 200ms ease";
+      el.style.transform = "translateY(-3px)";
+      el.style.boxShadow = "0 16px 32px -16px rgba(30, 58, 95, 0.3)";
+      setTimeout(() => { el.style.transform = ""; el.style.boxShadow = ""; }, 320);
+    });
+  }
+
+  // ─── Interactive bits ──────────────────────────────────
+  function connectPMS(card) {
+    const setup = card.dataset.setup || "instant";
+    if (setup === "concierge") {
+      openConciergeModal(card);
+      return;
+    }
+    document.querySelectorAll(".pms-card.connected").forEach(c => {
+      c.classList.remove("connected");
+      const meta = c.querySelector(".pms-meta");
+      if (meta) {
+        meta.classList.remove("connected");
+        meta.innerHTML = c.dataset.metaOriginal || meta.innerHTML;
+      }
+    });
+    card.classList.add("connected");
+    const meta = card.querySelector(".pms-meta");
+    if (meta) {
+      if (!meta.dataset.metaOriginal) meta.dataset.metaOriginal = meta.innerHTML;
+      meta.classList.add("connected");
+      meta.innerHTML = '<span class="live-dot"></span>Verbunden';
+    }
+  }
+
+  // ─── Concierge modal v2 (calendar + post-booking) ──────
+  let _conciergeCard = null;
+  let _selectedDayLabel = "Di 7. Mai";
+  let _selectedTime = "10:00";
+
+  function openConciergeModal(card) {
+    _conciergeCard = card;
+    const pmsName = (card.dataset.pms || "").trim();
+    const display = pmsName ? (pmsName.charAt(0).toUpperCase() + pmsName.slice(1)) : "Dein PMS";
+    const anna = document.getElementById("pmm-name-anna");
+    const kai  = document.getElementById("pmm-name-kai");
+    if (anna) anna.textContent = display;
+    if (kai)  kai.textContent  = display;
+    // reset to booking state
+    document.getElementById("pmm-card").classList.remove("confirmed");
+    document.getElementById("protel-modal").classList.add("open");
+  }
+  function closeProtelModal() {
+    document.getElementById("protel-modal").classList.remove("open");
+  }
+  function pickDay(btn) {
+    if (btn.classList.contains("disabled")) return;
+    btn.parentElement.querySelectorAll(".cal-day").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    const label = (btn.dataset.label || "") + " " + (btn.dataset.date || "");
+    _selectedDayLabel = label.trim() + ". Mai";
+    const lab = document.getElementById("cal-day-label");
+    if (lab) lab.textContent = _selectedDayLabel;
+  }
+  function pickTime(btn) {
+    btn.parentElement.querySelectorAll(".pmm-time").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    _selectedTime = btn.textContent.trim();
+  }
+  function bookProtel() {
+    const slotLabel = _selectedDayLabel + " · " + _selectedTime;
+    document.getElementById("confirm-slot").textContent = slotLabel;
+    if (_conciergeCard) {
+      _conciergeCard.classList.add("connected");
+      const meta = _conciergeCard.querySelector(".pms-meta");
+      if (meta) {
+        if (!meta.dataset.metaOriginal) meta.dataset.metaOriginal = meta.innerHTML;
+        meta.classList.add("connected");
+        meta.innerHTML = '<span class="live-dot"></span>Termin · ' + slotLabel;
+      }
+    }
+    document.getElementById("pmm-card").classList.add("confirmed");
+  }
+  function gotoTaskStep(stepNum) {
+    closeProtelModal();
+    if (typeof goStep === "function") goStep(stepNum);
+  }
+  function pauseToWaiting() {
+    closeProtelModal();
+    if (typeof goStep === "function") goStep(11);
+  }
+
+  function selectTrust(row) {
+    row.parentElement.querySelectorAll(".trust-row").forEach(r => r.classList.remove("selected"));
+    row.classList.add("selected");
+  }
+
+  function selectStrategy(card, key) {
+    card.parentElement.querySelectorAll(".strat-card").forEach(c => c.classList.remove("selected"));
+    card.classList.add("selected");
+  }
+
+  function pickTier(btn) {
+    btn.parentElement.querySelectorAll(".rs-tier-opt").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+  }
+
+  function selectTrustCard(card) {
+    card.parentElement.querySelectorAll(".trust-card").forEach(c => c.classList.remove("selected"));
+    card.classList.add("selected");
+  }
+
+  function fakeUpload(el) {
+    if (el.classList.contains("done")) return;
+    const icon = el.querySelector(".us-icon");
+    const action = el.querySelector(".us-action");
+    const h5 = el.querySelectorAll(".us-text h5");
+    const p = el.querySelectorAll(".us-text p");
+    if (action) action.textContent = "Verarbeite…";
+    if (icon) icon.textContent = "…";
+    setTimeout(() => {
+      el.classList.add("done");
+      if (icon) icon.textContent = "✓";
+      if (action) action.textContent = "preisliste-2026.xlsx";
+      const annaH = el.querySelector('h5[data-anna]');
+      const kaiH = el.querySelector('h5[data-kai]');
+      const annaP = el.querySelector('p[data-anna]');
+      const kaiP = el.querySelector('p[data-kai]');
+      if (annaH) annaH.innerHTML = 'Habe deine Preisliste gelesen. <em>79 / 119 / 189 €</em> für DZK übernommen.';
+      if (kaiH) kaiH.innerHTML = 'Pricing-Sheet importiert. Min/Basis/Max <em>vorausgefüllt</em>, Validation passed.';
+      if (annaP) annaP.textContent = "Du kannst die Spanne unten noch feinjustieren.";
+      if (kaiP) kaiP.textContent = "Spannen geladen, Floor-Validation passed, Discrepancy-Check OK.";
+    }, 900);
+  }
+
+  function toggleSpecial() {
+    document.getElementById("special-card").classList.toggle("expanded");
+  }
+
+  // Rate-group toggle (same per-row pattern as trust-dim)
+  document.querySelectorAll("[data-rg-toggle] .td-opt").forEach(opt => {
+    opt.addEventListener("click", () => {
+      opt.parentElement.querySelectorAll(".td-opt").forEach(o => o.classList.remove("on"));
+      opt.classList.add("on");
+    });
+  });
+
+  function cycleQuality(el) {
+    const dots = Array.from(el.querySelectorAll(".qd"));
+    const onCount = dots.filter(d => d.classList.contains("on")).length;
+    const next = onCount >= 5 ? 1 : onCount + 1;
+    dots.forEach((d, i) => d.classList.toggle("on", i < next));
+  }
+
+  // Kai per-dimension toggle
+  document.querySelectorAll(".td-toggle-3 .td-opt").forEach(opt => {
+    opt.addEventListener("click", () => {
+      opt.parentElement.querySelectorAll(".td-opt").forEach(o => o.classList.remove("on"));
+      opt.classList.add("on");
+    });
+  });
+
+  // Comp-set checkbox toggle
+  document.querySelectorAll(".cs-toggle").forEach(t => {
+    t.addEventListener("click", () => t.classList.toggle("on"));
+  });
+
+  // Keyboard
+  document.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+    if (e.key === "ArrowRight" || e.key === "Enter") goNext();
+    if (e.key === "ArrowLeft") goBack();
+  });
+
+  // Init
+  syncProgress();
+</script>
+</body>
+</html>

@@ -1,0 +1,4234 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>happyhotel · Revenue Management das vor dir aufsteht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --good:         #15803d;
+  --warn:         #a16207;
+  --shadow-card:  0 1px 2px rgba(20,22,30,0.04), 0 8px 24px rgba(20,22,30,0.04);
+  --font-display: 'EB Garamond', Georgia, serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; text-decoration: none; }
+
+em { font-style: normal; }
+
+/* ======== CLEAN NAV — schlicht, transparent, hairline (Linear/Vercel-Pattern) ======== */
+
+.nav-clean {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+  padding: 0 clamp(20px, 5vw, 80px);
+}
+.nav-clean-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.nav-clean-brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+}
+.nav-clean-brand svg {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+.nav-clean-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-clean-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 8px 14px;
+  transition: color 160ms ease;
+}
+.nav-clean-link:hover { color: var(--accent); }
+.nav-clean-cta {
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  transition: background 160ms ease;
+}
+.nav-clean-cta:hover { background: var(--accent-deep); }
+
+/* ======== GLASS PILL NAV (Mike-style) — alternativ, aktuell deaktiviert ======== */
+
+.nav-glass {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+  pointer-events: none;
+}
+.nav-glass-inner {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  pointer-events: auto;
+}
+.nav-glass-halo {
+  position: absolute;
+  inset: -8px -24px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.2);
+  filter: blur(32px);
+  pointer-events: none;
+}
+.nav-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px 6px 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, rgba(220, 222, 228, 0.5) 0%, rgba(200, 203, 210, 0.4) 100%);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.5) inset,
+    0 -1px 0 0 rgba(0, 0, 0, 0.03) inset,
+    0 1px 2px rgba(17, 24, 39, 0.04),
+    0 12px 32px -8px rgba(17, 24, 39, 0.08);
+}
+.nav-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0 16px auto 16px;
+  height: 50%;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(to bottom, rgba(211, 211, 211, 0.6), rgba(255, 255, 255, 0));
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+.nav-brand-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  color: var(--accent);
+  position: relative;
+  z-index: 1;
+}
+.nav-brand-pill svg {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+.nav-pill-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+.nav-link-pill {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background 160ms ease;
+}
+.nav-link-pill:hover { background: rgba(255, 255, 255, 0.3); }
+.nav-cta-pill {
+  font-size: 13.5px;
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  transition: background 160ms ease;
+}
+.nav-cta-pill:hover { background: var(--accent-deep); }
+
+/* ======== BUTTONS ======== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 160ms ease;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-deep); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border-2);
+}
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-link {
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 14px;
+  border-bottom: 1px dashed var(--accent-line);
+  padding-bottom: 1px;
+}
+.btn-link:hover { border-bottom-color: var(--accent); }
+
+.diamond {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+/* ======== SECTION HÜLLE ======== */
+
+.section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: clamp(20px, 4vw, 40px);
+  padding-right: clamp(20px, 4vw, 40px);
+}
+
+.mono-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+  color: var(--accent);
+}
+.mono-tag.muted { color: var(--muted); }
+.mono-tag .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.mono-tag .dot.live { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.18); }
+
+/* ======== HERO MONET ======== */
+
+.hero-monet {
+  position: relative;
+  height: 100vh;
+  min-height: 720px;
+  display: flex;
+  align-items: flex-start;
+  padding: 120px clamp(20px, 5vw, 80px) 0;
+  overflow: hidden;
+}
+.hero-monet-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../../assets/references/hero-bg.jpg');
+  background-size: cover;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+  transform: translateY(10%) scale(1.5);
+  transform-origin: center center;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-monet-tint {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%),
+    linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(246,245,241,0.0) 70%, var(--bg) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-monet > .hero-monet-grid {
+  position: relative;
+  /* no z-index: avoid creating a stacking context, so hero-copy (z:6) and chat-card (z:1)
+     can independently sit above/below the bottomfade (z:4) at the section level. */
+}
+.hero-monet > .image-credit { z-index: 3; }
+
+.hero-monet-grid {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: start;
+  z-index: 1;
+}
+.hero-copy {
+  padding-top: clamp(60px, 8vw, 120px);
+  position: relative;
+  z-index: 6;
+}
+
+.hero-monet-bottomfade {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 140px;
+  background: linear-gradient(to bottom,
+    rgba(246, 245, 241, 0) 0%,
+    rgba(246, 245, 241, 0.35) 60%,
+    var(--bg) 100%);
+  pointer-events: none;
+  z-index: 4;
+}
+.hero-monet > .image-credit { z-index: 5; }
+@media (max-width: 980px) {
+  .hero-monet-grid { grid-template-columns: 1fr; gap: 56px; }
+}
+
+.hero-copy h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 6vw + 0.5rem, 5.6rem);
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  max-width: 20ch;
+  margin: 0 0 26px;
+}
+.hero-copy h1 em { font-style: normal; color: var(--accent); }
+
+.hero-copy p {
+  font-size: clamp(1.05rem, 0.5vw + 0.95rem, 1.2rem);
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 50ch;
+  margin: 0 0 36px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-dark {
+  background: var(--accent);
+  color: #fff;
+  padding: 13px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 160ms ease;
+}
+.btn-dark:hover { background: var(--accent-deep); }
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ink);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 160ms ease;
+}
+.btn-glass:hover { background: rgba(255, 255, 255, 0.9); }
+
+.image-credit {
+  position: absolute;
+  bottom: 28px;
+  left: clamp(20px, 5vw, 80px);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 12.5px;
+  color: rgba(60, 60, 70, 0.55);
+  letter-spacing: 0.01em;
+  z-index: 2;
+}
+
+/* ======== CHAT CARD (Ray as buddy) ======== */
+
+.chat-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 22px 22px 140px;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.6) inset,
+    0 -1px 0 0 rgba(0, 0, 0, 0.03) inset,
+    0 8px 32px -4px rgba(17, 24, 39, 0.18),
+    0 32px 60px -12px rgba(17, 24, 39, 0.18);
+  max-width: 460px;
+  margin-left: auto;
+}
+@media (max-width: 980px) {
+  .chat-card { margin-left: 0; max-width: 520px; }
+}
+
+.chat-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.chat-bar span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.chat-head-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.chat-avatar .diamond {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  transform: rotate(45deg);
+}
+.chat-head-info { display: flex; flex-direction: column; gap: 2px; }
+.chat-head-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.1;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.chat-head-name em { color: var(--accent); font-style: normal; }
+.chat-head-role {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chat-head-role .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+}
+
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  animation: chatFadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.chat-msg + .chat-msg { margin-top: 14px; }
+.chat-msg.user { align-items: flex-end; }
+.chat-msg.ray { align-items: flex-start; }
+
+/* Sequential fade-in delays */
+.chat-card > .chat-msg:nth-child(2) { animation-delay: 0.6s; }   /* Ray: combined briefing (intro + card) */
+.chat-card > .chat-msg:nth-child(3) { animation-delay: 3.6s; }   /* Anna: Übernehmen */
+.chat-card > .chat-msg:nth-child(4) { animation-delay: 4.8s; }   /* Ray: Comp-Set */
+.chat-card > .chat-msg:nth-child(5) { animation-delay: 6.3s; }   /* Ray: typing */
+
+@keyframes chatFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button click pulse — fires right before Anna's Übernehmen message */
+.chat-rich-actions .rich-btn.solid {
+  animation: btnClickPulse 0.6s ease-out 2.9s 1;
+}
+@keyframes btnClickPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(30, 58, 95, 0.5); }
+  35% { transform: scale(0.95); box-shadow: 0 0 0 6px rgba(30, 58, 95, 0.25); }
+  100% { transform: scale(1); box-shadow: 0 0 0 14px rgba(30, 58, 95, 0); }
+}
+
+.chat-bubble {
+  max-width: 84%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.chat-msg.user .chat-bubble {
+  background: rgba(0, 0, 0, 0.06);
+  border-bottom-right-radius: 4px;
+}
+.chat-msg.ray .chat-bubble {
+  background: var(--accent-soft);
+  border: 1px solid rgba(30, 58, 95, 0.1);
+  border-bottom-left-radius: 4px;
+}
+.chat-bubble strong { font-weight: 500; }
+.chat-bubble .pos { color: var(--accent); font-weight: 500; }
+.chat-bubble .brief-greet {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.chat-bubble .brief-money {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.chat-bubble .trend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 99px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  border: 1px solid rgba(30, 58, 95, 0.15);
+  vertical-align: 2px;
+  letter-spacing: 0;
+}
+.chat-bubble .brief-detail {
+  color: var(--accent);
+  border-bottom: 1px dashed var(--accent-line);
+  text-decoration: none;
+  padding-bottom: 1px;
+  font-weight: 500;
+}
+
+/* Rich-card combined intro narrative — same size as chat-rich-text below */
+.chat-rich-intro {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.1);
+  margin-bottom: 4px;
+}
+.chat-rich-intro .brief-money {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13.5px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.chat-rich-intro .trend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 99px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  border: 1px solid rgba(30, 58, 95, 0.15);
+  vertical-align: 1px;
+}
+.chat-rich-intro .brief-detail {
+  color: var(--accent);
+  border-bottom: 1px dashed var(--accent-line);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.chat-ts {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.chat-msg.marc { align-items: flex-start; }
+.chat-msg.marc .chat-bubble {
+  background: rgba(161, 98, 7, 0.08);
+  border: 1px solid rgba(161, 98, 7, 0.2);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-handoff {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 10px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--muted);
+}
+.chat-handoff .line {
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+.chat-handoff .marker {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--warn);
+  transform: rotate(45deg);
+}
+
+.chat-typing-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(30, 58, 95, 0.1);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+}
+.chat-typing-bubble span {
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: chatTyping 1.4s infinite;
+}
+.chat-typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes chatTyping {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* RICH CHAT OUTPUT — Ray demonstrates depth */
+.chat-rich {
+  background: var(--accent-soft);
+  border: 1px solid rgba(30, 58, 95, 0.12);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  padding: 14px 16px;
+  width: 92%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.chat-rich-mtag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chat-rich-mtag .diamond { width: 5px; height: 5px; background: var(--accent); }
+.chat-rich-text {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.chat-rich-text strong { font-weight: 500; }
+.chat-rich-text .pos { color: var(--accent); font-weight: 500; }
+
+.chat-rich-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  padding: 10px 4px;
+}
+.chat-stat-mini { text-align: center; padding: 0 6px; }
+.chat-stat-mini + .chat-stat-mini {
+  border-left: 1px solid rgba(30, 58, 95, 0.1);
+}
+.chat-stat-mini .num {
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.05;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.chat-stat-mini .num em { font-style: normal; color: var(--accent); }
+.chat-stat-mini .num.pos { color: var(--accent); }
+.chat-stat-mini .lbl {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.chat-rich-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.rich-btn {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.rich-btn.solid {
+  background: var(--accent);
+  color: #fff;
+}
+.rich-btn .diamond { width: 4px; height: 4px; background: currentColor; }
+
+.chat-rich-bars-wrap { padding-bottom: 16px; position: relative; }
+.chat-rich-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 50px;
+  padding: 6px 8px 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.15);
+}
+.chat-rich-bars .b {
+  flex: 1;
+  background: var(--accent-line);
+  border-top: 1.5px solid var(--accent);
+  position: relative;
+}
+.chat-rich-bars .b.you {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.chat-rich-bars .b .lbl {
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+.chat-rich-bars .b.you .lbl { color: var(--accent); }
+
+.chat-rich-curve {
+  height: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 6px 8px;
+  position: relative;
+}
+.chat-rich-curve svg { width: 100%; height: 100%; display: block; }
+
+/* Comp-Set rows · kai-style */
+.comp-block-mini {
+  margin: 4px -16px;
+  border-top: 1px solid rgba(30, 58, 95, 0.1);
+}
+.comp-row-mini {
+  display: grid;
+  grid-template-columns: 1fr 80px auto;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 16px;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.08);
+  font-size: 12.5px;
+  letter-spacing: -0.01em;
+}
+.comp-row-mini:last-child { border-bottom: none; }
+.comp-row-mini.you { background: rgba(255, 255, 255, 0.55); }
+.comp-row-mini .comp-name { color: var(--ink-2); }
+.comp-row-mini.you .comp-name { color: var(--ink); font-weight: 500; }
+.comp-row-mini .comp-name em {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 13.5px;
+  margin-left: 2px;
+}
+.comp-row-mini .comp-bar {
+  height: 4px;
+  background: rgba(30, 58, 95, 0.12);
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.comp-row-mini .comp-fill {
+  height: 100%;
+  background: rgba(58, 58, 61, 0.65);
+  min-width: 2px;
+}
+.comp-row-mini.you .comp-fill { background: var(--accent); }
+.comp-row-mini .comp-price {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* ======== ACTIVITY TICKER ======== */
+
+.activity {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--shell);
+}
+.activity-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 22px clamp(20px, 4vw, 40px);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.2px;
+  color: var(--muted);
+}
+.activity-inner .label {
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.activity-inner .label .pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+  animation: pulse 1.6s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.9); }
+}
+.activity-inner .num {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+.activity-inner .pos { color: var(--accent); }
+.activity-inner .sep { color: var(--subtle); }
+
+/* ======== CUSTOMER PROOF ======== */
+
+.proof {
+  padding-top: clamp(72px, 10vw, 120px);
+  padding-bottom: clamp(72px, 10vw, 120px);
+}
+.proof-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.proof-head .left { max-width: 28ch; }
+.proof-head h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 2vw + 0.6rem, 2.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-top: 14px;
+}
+.proof-head h2 em { font-style: normal; color: var(--accent); }
+.proof-head .read-more {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.2px;
+  color: var(--accent);
+  border-bottom: 1px dashed var(--accent-line);
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) repeat(6, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+@media (max-width: 980px) {
+  .proof-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .proof-grid { grid-template-columns: 1fr 1fr; }
+}
+.proof-cell {
+  background: var(--bg);
+  padding: 28px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+}
+.proof-cell.quote {
+  grid-column: span 2;
+  text-align: left;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 28px 26px;
+}
+@media (max-width: 980px) {
+  .proof-cell.quote { grid-column: span 3; }
+}
+@media (max-width: 600px) {
+  .proof-cell.quote { grid-column: span 2; }
+}
+.proof-cell.quote p {
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.proof-cell.quote .author {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+.proof-cell.hotel {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-style: normal;
+  color: var(--ink-2);
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+.proof-cell.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--ink-2);
+}
+.proof-cell.logo svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--ink-2);
+}
+.proof-cell.logo span {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--ink-2);
+  letter-spacing: -0.01em;
+}
+.proof-cell.plus {
+  color: var(--subtle);
+  font-size: 22px;
+  font-weight: 200;
+}
+
+/* ======== PERSONAS — "Eine Plattform, beide Welten" ======== */
+
+.personas {
+  padding-top: clamp(72px, 10vw, 120px);
+  padding-bottom: clamp(72px, 10vw, 120px);
+  border-top: 1px solid var(--border);
+}
+.section-head {
+  margin-bottom: clamp(40px, 5vw, 56px);
+  max-width: 56ch;
+}
+.section-head h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 3vw + 0.6rem, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-top: 14px;
+  color: var(--ink);
+}
+.section-head h2 em { font-style: normal; color: var(--accent); }
+.section-head p {
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 50ch;
+}
+
+/* trinity top: 2 large cards, hairline divider */
+.trinity-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: transparent;
+}
+@media (max-width: 1000px) {
+  .trinity-top { grid-template-columns: 1fr; }
+}
+.trinity-half {
+  padding: clamp(32px, 3.5vw, 56px) clamp(28px, 3vw, 48px);
+  display: flex;
+  flex-direction: column;
+}
+.trinity-half + .trinity-half {
+  border-left: 1px solid var(--border);
+}
+@media (max-width: 1000px) {
+  .trinity-half + .trinity-half {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
+.trinity-half h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.2vw + 0.8rem, 1.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+.trinity-half .trinity-desc {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 clamp(36px, 4vw, 56px);
+  max-width: 42ch;
+}
+
+/* poly-stack: Tailark-pattern — wrapper padding 16, mask-fade bottom 35% */
+.poly-stack {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  margin: auto auto 0;
+  padding: 24px 16px 0;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
+}
+.poly-stack::before {
+  /* closer back card — narrower than front, peeks 8px above */
+  content: '';
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 16px;
+  bottom: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  z-index: 1;
+}
+.poly-stack::after {
+  /* further back card — even narrower, peeks 16px above */
+  content: '';
+  position: absolute;
+  left: 36px;
+  right: 36px;
+  top: 8px;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  z-index: 0;
+}
+.poly-card {
+  position: relative;
+  z-index: 10;
+  background: var(--surface);
+  border: 1px solid transparent;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow:
+    0 0 0 1px rgba(20, 22, 30, 0.075),
+    0 20px 25px -5px rgba(20, 22, 30, 0.065),
+    0 8px 10px -6px rgba(20, 22, 30, 0.065);
+}
+
+/* briefing-doc (left) — invoice-style layout */
+.bd-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.bd-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--accent-soft);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(30, 58, 95, 0.12);
+}
+.bd-icon .d {
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.bd-doc {
+  width: 32px;
+  height: 40px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  position: relative;
+  padding: 6px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.bd-doc .ln {
+  display: block;
+  height: 2px;
+  background: var(--border-2);
+  border-radius: 1px;
+}
+.bd-doc .ln:nth-child(1) { width: 70%; }
+.bd-doc .ln:nth-child(2) { width: 90%; }
+.bd-doc .ln:nth-child(3) { width: 60%; }
+.bd-doc .sig {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-family: var(--font-display);
+  font-size: 9px;
+  color: var(--muted);
+  font-style: normal;
+}
+.bd-meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.bd-headline {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.bd-body {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin-bottom: 16px;
+}
+.bd-body strong { color: var(--ink); font-weight: 500; }
+.bd-body .pos { color: var(--accent); font-weight: 500; }
+.bd-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 10px 4px;
+  margin-bottom: 14px;
+}
+.bd-stat { text-align: center; padding: 0 6px; }
+.bd-stat + .bd-stat { border-left: 1px solid var(--border); }
+.bd-stat .num {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.bd-stat .num.pos { color: var(--accent); }
+.bd-stat .lbl {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.bd-hr {
+  border: none;
+  border-top: 1px dashed var(--border-2);
+  margin: 0 0 14px;
+}
+.bd-decision {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.bd-decision-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--warn);
+  flex-shrink: 0;
+}
+.bd-decision strong { color: var(--ink); font-weight: 500; }
+.bd-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Night-activity timeline */
+.bd-night {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+}
+.bd-night-item {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 16px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+}
+.bd-night-item:last-child { border-bottom: none; }
+.bd-night-time {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  letter-spacing: 0;
+}
+.bd-night-text {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.bd-night-text .ndot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-2);
+  flex-shrink: 0;
+}
+.bd-night-item.current .ndot {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.15);
+}
+.bd-night-text strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* pricing-doc (right) — spending-limit style */
+.pd-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.pd-title mark {
+  background: rgba(245, 215, 110, 0.4);
+  color: var(--ink);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+.pd-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.pd-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--surface-2);
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  position: relative;
+}
+.pd-bar .seg-1 {
+  flex: 0 0 47%;
+  background: var(--accent-deep);
+  height: 100%;
+}
+.pd-bar .seg-2 {
+  flex: 0 0 40%;
+  background: var(--accent);
+  height: 100%;
+}
+.pd-bar .seg-3 {
+  flex: 1;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--surface-2),
+    var(--surface-2) 2px,
+    var(--border) 2px,
+    var(--border) 3px
+  );
+  height: 100%;
+}
+.pd-stats {
+  display: flex;
+  gap: clamp(28px, 4vw, 48px);
+  margin-bottom: 18px;
+}
+.pd-stat .num {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.pd-stat .lbl {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.pd-hr {
+  border: none;
+  border-top: 1px dashed var(--border-2);
+  margin: 0 0 14px;
+}
+.pd-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pd-metric {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+.pd-metric .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-deep);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.pd-metric .dot.soft { background: var(--accent-line); }
+.pd-metric strong { font-weight: 500; color: var(--ink); }
+
+/* calendar heatmap inside polished doc */
+.cal-doc-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin: 6px 0 18px;
+}
+.cal-doc-cell {
+  aspect-ratio: 1 / 1.15;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.cal-doc-cell .price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  line-height: 1;
+}
+.cal-doc-cell .day {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  line-height: 1;
+}
+.cal-doc-cell.lo { background: #f0eee7; }
+.cal-doc-cell.md { background: #d8dde9; }
+.cal-doc-cell.hi { background: var(--accent); }
+.cal-doc-cell.hi .price { color: #fff; }
+.cal-doc-cell.hi .day { color: rgba(255, 255, 255, 0.65); }
+
+/* bottom 4-col feature row */
+.feature-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(20px, 2.5vw, 36px);
+  border-top: 1px solid var(--border);
+  padding-top: clamp(36px, 4vw, 56px);
+  margin-top: clamp(48px, 5vw, 72px);
+}
+@media (max-width: 900px) {
+  .feature-row { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+}
+@media (max-width: 540px) {
+  .feature-row { grid-template-columns: 1fr; }
+}
+.feat-item .feat-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.feat-item .feat-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+  display: block;
+  flex-shrink: 0;
+}
+.feat-item .feat-head .nm {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.feat-item p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+  max-width: 30ch;
+}
+.persona-half {
+  padding: clamp(48px, 5vw, 80px) clamp(28px, 3.5vw, 56px);
+  display: flex;
+  flex-direction: column;
+}
+.persona-half + .persona-half {
+  border-left: 1px solid var(--border);
+}
+@media (max-width: 1100px) {
+  .persona-half + .persona-half {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* RAY snippet: avatar + name on top, single bubble below */
+.ray-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.ray-av {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+}
+.ray-name {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.ray-bubble {
+  background: var(--surface-2);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.ray-bubble strong { font-weight: 500; }
+.ray-bubble .pos { color: var(--accent); font-weight: 500; }
+
+/* CALENDAR snippet: cleaner heatmap */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.cal-cell {
+  aspect-ratio: 1 / 1.2;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+.cal-cell .price {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1;
+}
+.cal-cell .day {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+}
+.cal-cell.lo { background: #f0eee7; }
+.cal-cell.md { background: #d8dde9; }
+.cal-cell.hi {
+  background: var(--accent);
+}
+.cal-cell.hi .price { color: #fff; }
+.cal-cell.hi .day { color: rgba(255, 255, 255, 0.65); }
+
+/* TEAM snippet: cleaner row layout */
+.team-list {
+  display: flex;
+  flex-direction: column;
+}
+.team-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+}
+.team-row + .team-row { border-top: 1px solid var(--border); }
+.team-row .av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--accent);
+}
+.team-row .av.warn { background: var(--warn); }
+.team-row .nm { font-size: 14px; font-weight: 500; color: var(--ink); }
+.team-row .rl {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+}
+.persona-snippet-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: clamp(32px, 4vw, 56px);
+}
+.persona-snippet {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px 22px;
+  box-shadow:
+    0 1px 2px rgba(20, 22, 30, 0.04),
+    0 12px 28px -8px rgba(20, 22, 30, 0.08);
+  width: 100%;
+  max-width: 360px;
+}
+.persona-snippet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.persona-snippet-head .ttl {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.persona-snippet-head .meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--muted);
+}
+
+.persona-snippet .stats-mini {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 10px 4px;
+}
+.persona-snippet .ss { text-align: center; padding: 0 4px; }
+.persona-snippet .ss + .ss { border-left: 1px solid var(--border); }
+.persona-snippet .ss .num {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.persona-snippet .ss .num.pos { color: var(--accent); }
+.persona-snippet .ss .lbl {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.persona-snippet .bars-wrap { padding-bottom: 18px; }
+.persona-snippet .bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 60px;
+  padding: 6px 8px 0;
+  background: var(--surface-2);
+  border-radius: 8px;
+  border-bottom: 1px solid var(--border-2);
+}
+.persona-snippet .bars .b {
+  flex: 1;
+  background: var(--accent-line);
+  border-top: 1.5px solid var(--accent);
+  position: relative;
+}
+.persona-snippet .bars .b.you {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.persona-snippet .bars .b .lbl {
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+.persona-snippet .bars .b.you .lbl { color: var(--accent); }
+
+.persona-half h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.5vw + 0.7rem, 1.95rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.persona-half > p {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0 0 32px;
+  max-width: 44ch;
+}
+.persona-half > p strong { color: var(--ink); font-weight: 500; }
+
+.persona-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 24px 0 0;
+  border-top: 1px solid var(--border);
+}
+.persona-features li {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.persona-features li .d {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  margin-top: 9px;
+  display: block;
+}
+.persona-features li .feat-title {
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 15px;
+  display: block;
+  margin-bottom: 2px;
+}
+.persona-features li .feat-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+  display: block;
+}
+
+/* Anna mockup-snippet */
+.mockup-snippet {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.mockup-snippet .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 13px;
+}
+.mockup-snippet .row + .row { border-top: 1px solid var(--border); }
+.mockup-snippet .row .l { color: var(--muted); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1.4px; }
+.mockup-snippet .row .v { color: var(--ink); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.mockup-snippet .row .v.pos { color: var(--accent); }
+.mockup-snippet .header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.mockup-snippet .header-row h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* Kai mockup — bar chart */
+.bars-snippet {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.bars-snippet .axis {
+  position: relative;
+  height: 92px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-2);
+  padding-bottom: 1px;
+}
+.bars-snippet .bar {
+  flex: 1;
+  background:
+    repeating-linear-gradient(45deg,
+      var(--accent-line) 0,
+      var(--accent-line) 1px,
+      transparent 1px,
+      transparent 4px);
+  border: 1px solid var(--accent);
+  border-bottom: 0;
+  position: relative;
+}
+.bars-snippet .bar.you {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.bars-snippet .bar .lbl {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+}
+.bars-snippet .bar.you .lbl { color: var(--accent); }
+.bars-snippet .axis-label-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+}
+.bars-snippet .axis-label-row .v { color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+
+/* ======== RAY REASONING (Ramp-style) ======== */
+
+.reasoning {
+  padding-top: clamp(72px, 10vw, 120px);
+  padding-bottom: clamp(72px, 10vw, 120px);
+  background: var(--bg);
+  position: relative;
+}
+.reasoning .section-head { text-align: center; margin: 0 auto clamp(40px, 6vw, 64px); max-width: 780px; }
+.reasoning .section-head .mono-tag { justify-content: center; }
+.reasoning .section-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.6vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 14px 0 16px;
+}
+.reasoning .section-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.reasoning .section-head p {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.rr-stage {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 820px;
+}
+
+/* Side columns — anchored relative to CHAT CENTER for constant gap at any viewport */
+.rr-side {
+  position: absolute;
+  left: 50%;
+  width: 280px;
+  top: 0;
+  height: 100%;
+}
+.rr-left  { transform: translateX(calc(-50% - 400px)); }
+.rr-right { transform: translateX(calc(-50% + 400px)); }
+
+.rr-side-card {
+  position: absolute;
+  width: 280px;
+  height: 240px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgba(20, 22, 30, 0.025);
+  display: flex;
+  flex-direction: column;
+  /* overflow visible so the ::before/::after connection line can extend OUTSIDE the card */
+  opacity: 0.2;
+  transition: opacity 0.5s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.4s ease;
+}
+.rr-side-card.is-active {
+  opacity: 1;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 8px 32px rgba(30, 58, 95, 0.12);
+  transform: scale(1.015);
+}
+
+/* All 6 cards aligned in a 3×2 grid: 3 stacked left, 3 stacked right, all same height */
+.rr-side .rr-side-card:nth-child(1) { top: 60px;  }
+.rr-side .rr-side-card:nth-child(2) { top: 320px; }
+.rr-side .rr-side-card:nth-child(3) { top: 580px; }
+
+/* CONNECTION LINES — hidden by default, only visible for active card.
+   Line sits statically at the card's vertical middle, no JS / no slide animation. */
+.rr-left .rr-side-card::after,
+.rr-right .rr-side-card::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  margin-top: -0.5px;
+  width: 20px;
+  height: 1px;
+  border-top: 1px dashed var(--accent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease 0.1s;
+}
+.rr-left .rr-side-card::after { left: 100%; }
+.rr-right .rr-side-card::before { right: 100%; }
+.rr-side-card.is-active::after,
+.rr-side-card.is-active::before { opacity: 1; }
+
+.rr-side-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--ink);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.rr-side-row { display: flex; gap: 8px; padding: 3px 0; font-size: 12px; }
+.rr-side-k { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 1.2px; color: var(--muted); text-transform: uppercase; min-width: 60px; }
+.rr-side-body { color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11.5px; line-height: 1.5; }
+
+/* Mini stat rows used inside multiple side cards */
+.rr-mini-rows {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.rr-mini-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+.rr-mini-row span:first-child { color: var(--muted); }
+.rr-mini-row span:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.rr-mini-row span.pos { color: var(--accent); }
+
+/* Gmail attachment row */
+.rr-side-attach {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--ink-2);
+}
+.rr-attach-icon { font-size: 11px; }
+.rr-attach-size {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* PMS availability grid */
+.rr-avail-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.rr-avail-cell {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 4px;
+  text-align: center;
+}
+.rr-avail-d { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.8px; color: var(--muted); text-transform: uppercase; }
+.rr-avail-n { font-family: var(--font-mono); font-size: 18px; color: var(--ink); margin-top: 2px; font-variant-numeric: tabular-nums; font-weight: 500; }
+
+/* Pickup mini */
+.rr-pickup-svg { width: 100%; height: 50px; display: block; margin: 4px 0; }
+.rr-side-foot { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--accent); }
+
+/* Comp-Set mini in side */
+.rr-cs-row { display: grid; grid-template-columns: 50px 1fr 36px; align-items: center; gap: 8px; padding: 5px 0; font-size: 12px; }
+.rr-cs-name { color: var(--ink-2); }
+.rr-cs-bar { height: 4px; background: rgba(30,58,95,0.1); border-radius: 2px; overflow: hidden; }
+.rr-cs-fill { height: 100%; background: rgba(58,58,61,0.55); }
+.rr-cs-fill.you { background: var(--accent); }
+.rr-cs-p { font-family: var(--font-mono); font-size: 11px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Policy rows */
+.rr-policy-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 12px; border-bottom: 1px solid var(--border); }
+.rr-policy-row:last-child { border-bottom: none; }
+.rr-pol-k { color: var(--muted); }
+.rr-pol-v { font-family: var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; font-weight: 500; }
+
+/* Displacement */
+.rr-disp-num { font-family: var(--font-display); font-size: 44px; line-height: 1; color: var(--accent); margin: 4px 0 2px; font-style: italic; font-weight: 400; }
+.rr-disp-lbl { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.rr-disp-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12px; color: var(--ink-2); }
+.rr-disp-row span:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+
+/* CENTER reasoning */
+.rr-center {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  transform: translateX(-50%);
+  width: 480px;
+  max-width: calc(100% - 48px);
+  height: 760px;
+  background: var(--surface);
+  border: 1.5px solid var(--accent);
+  border-radius: 16px;
+  padding: 20px 22px;
+  box-shadow: 0 8px 40px rgba(30, 58, 95, 0.08), 0 1px 3px rgba(20, 22, 30, 0.04);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+}
+.rr-center .rr-flow {
+  flex: 1;
+  overflow-y: auto;
+}
+.rr-user-msg { display: flex; justify-content: flex-end; margin-bottom: 14px; }
+.rr-bubble {
+  background: rgba(20, 22, 30, 0.06);
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 14px;
+  border-bottom-right-radius: 4px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  max-width: 92%;
+}
+
+/* Mail trigger banner — kicks off the narrative */
+.rr-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(30, 58, 95, 0.18);
+  border-radius: 10px;
+  font-size: 12px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+.rr-trigger-mark { color: var(--accent); display: flex; }
+.rr-trigger-mark svg { width: 14px; height: 14px; }
+.rr-trigger-from { color: var(--ink); font-weight: 500; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2px; }
+.rr-trigger-subj { color: var(--ink-2); flex: 1; font-size: 12px; }
+.rr-trigger-time {
+  color: var(--muted);
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+/* Ray message bubble (left-aligned, starts the narrative) */
+.rr-ray-msg {
+  display: flex;
+  justify-content: flex-start;
+  margin: 4px 0 12px;
+}
+.rr-ray-bubble {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 94%;
+}
+.rr-ray-bubble strong { font-weight: 500; }
+
+/* Bridge sentences between reasoning steps — italic narrative thread */
+.rr-bridge {
+  padding-left: 26px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+
+/* Final recommendation bubble — hidden until reasoning completes, then snaps in */
+.rr-ray-final {
+  display: none;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+.rr-ray-final.is-revealed {
+  display: flex;
+  justify-content: flex-start;
+  animation: rrFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* When the final bubble takes over, the chain-of-thought fades — but the dots stay
+   bright enough that their white halo still masks the (now-dimmed) chain-line behind. */
+.rr-flow.is-final-shown .rr-step.is-shown,
+.rr-flow.is-final-shown .rr-step.is-shown + .rr-chips,
+.rr-flow.is-final-shown .rr-bridge.is-shown,
+.rr-flow.is-final-shown .rr-ray-msg:not(.rr-ray-final) {
+  animation: none !important;
+}
+.rr-flow.is-final-shown .rr-step.is-shown .rr-step-txt,
+.rr-flow.is-final-shown .rr-step.is-shown + .rr-chips,
+.rr-flow.is-final-shown .rr-bridge.is-shown,
+.rr-flow.is-final-shown .rr-ray-msg:not(.rr-ray-final) {
+  opacity: 0.26 !important;
+  transition: opacity 0.7s ease !important;
+}
+/* Dots stay at higher opacity so their white halo can mask the chain-line where they sit. */
+.rr-flow.is-final-shown .rr-step.is-shown .rr-step-dot {
+  opacity: 0.55 !important;
+  transition: opacity 0.7s ease;
+}
+/* Active card accent fades on final-shown */
+.rr-stage:has(.rr-flow.is-final-shown) .rr-side-card.is-active {
+  border-color: var(--border) !important;
+  box-shadow: 0 1px 2px rgba(20, 22, 30, 0.025) !important;
+  transform: none !important;
+}
+/* Chain-line still visible but subtle — low enough opacity that the dot halo can mask it. */
+.rr-flow.is-final-shown::before {
+  background: rgba(201, 200, 194, 0.32);
+  transition: background 0.7s ease, height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rr-ray-bubble-final {
+  background: var(--accent-soft);
+  border-color: rgba(30, 58, 95, 0.22);
+  width: 100%;
+  max-width: 100%;
+  padding: 14px 16px;
+}
+.rr-ray-mtag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.rr-ray-mtag .diamond { width: 5px; height: 5px; background: var(--accent); }
+.rr-ray-headline {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--ink);
+  font-weight: 400;
+  margin-bottom: 12px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.rr-ray-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: 12px 4px;
+  margin-bottom: 12px;
+}
+.rr-ray-stat { text-align: center; padding: 0 6px; border-right: 1px solid rgba(30,58,95,0.12); }
+.rr-ray-stat:last-child { border-right: none; }
+.rr-ray-stat .num {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.rr-ray-stat .num.pos { color: var(--accent); }
+.rr-ray-stat .lbl {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.rr-ray-actions { display: flex; gap: 8px; }
+.rr-final-btn {
+  flex: 1;
+  border: 1.5px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.rr-final-btn.solid {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.rr-final-btn .diamond {
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.rr-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 0 14px;
+  flex: 1;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  position: relative;
+}
+.rr-flow::-webkit-scrollbar { width: 0; }
+/* Chain-of-thought connecting line — extends only to the last visible step (height set by JS) */
+.rr-flow::before {
+  content: "";
+  position: absolute;
+  left: 7.25px;
+  top: var(--rr-line-top, 80px);
+  height: var(--rr-line-h, 0);
+  width: 1.5px;
+  background: var(--border-2);
+  z-index: 0;
+  border-radius: 1px;
+  pointer-events: none;
+  transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Steps, chips, bridges all hidden by default — JS reveals sequentially */
+.rr-step,
+.rr-chips,
+.rr-bridge {
+  display: none;
+}
+
+.rr-step.is-shown {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  animation: rrFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.rr-step.is-shown strong { font-weight: 500; }
+.rr-step-txt { padding-top: 1px; }
+.rr-step.is-done { opacity: 0.86; }
+
+/* Chip row appears alongside its step (adjacent sibling) */
+.rr-step.is-shown + .rr-chips {
+  display: flex;
+  padding-left: 26px;
+  padding-bottom: 4px;
+  gap: 6px;
+  flex-wrap: wrap;
+  animation: rrFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.rr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid rgba(30, 58, 95, 0.18);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+.rr-chip::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.rr-bridge.is-shown {
+  display: block;
+  padding-left: 26px;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  animation: rrFadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Step dot — default empty circle, spinner on active, filled check on done */
+.rr-step-dot {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-2);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  color: transparent;
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  /* white halo masks the chain-line for breathing room around each dot */
+  box-shadow: 0 0 0 5px var(--surface);
+}
+.rr-step-dot svg {
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.rr-step.is-active .rr-step-dot {
+  border-color: var(--accent);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  animation: rrSpin 0.7s linear infinite;
+}
+.rr-step.is-done .rr-step-dot {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  animation: none;
+}
+.rr-step.is-done .rr-step-dot svg { opacity: 1; }
+
+@keyframes rrSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes rrFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Input mock */
+.rr-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.rr-input-fake {
+  flex: 1;
+  font-size: 13px;
+  color: rgba(110, 110, 114, 0.7);
+}
+.rr-send {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(20, 22, 30, 0.08);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  cursor: pointer;
+}
+.rr-send svg { width: 13px; height: 13px; }
+
+/* Responsive */
+@media (max-width: 1180px) {
+  .rr-stage { height: auto; padding-bottom: 40px; }
+  .rr-side { display: none; }
+  .rr-center { position: static; transform: none; max-width: 540px; margin: 0 auto; width: 100%; height: auto; }
+}
+
+/* ======== CAPABILITIES ======== */
+
+.caps {
+  padding-top: clamp(72px, 10vw, 120px);
+  padding-bottom: clamp(72px, 10vw, 120px);
+  border-top: 1px solid var(--border);
+}
+.caps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+@media (max-width: 980px) {
+  .caps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .caps-grid { grid-template-columns: 1fr; }
+}
+.cap {
+  background: var(--bg);
+  padding: clamp(24px, 2.4vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 280px;
+}
+.cap h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 1.2vw + 0.6rem, 1.55rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-top: 14px;
+}
+.cap h3 em { font-style: normal; color: var(--accent); }
+.cap p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 36ch;
+}
+
+/* mini-mockups in caps */
+.cap-visual {
+  margin-top: auto;
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Shared foot row for all visuals */
+.cap-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.cap-foot span { overflow: hidden; text-overflow: ellipsis; }
+.cap-foot span { display: inline-flex; align-items: center; gap: 5px; }
+.cap-foot strong { color: var(--ink); font-weight: 500; }
+.cap-foot .alert { color: #c4515f; font-weight: 500; }
+.cap-foot .accent-text { color: var(--accent); font-weight: 500; }
+.cap-foot .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.cap-foot .dot.accent { background: var(--accent); }
+.cap-foot .dot.soft   { background: var(--accent-soft); border: 1px solid var(--accent-line); }
+.cap-foot .dot.dashed { background: transparent; border-top: 2px dashed var(--ink-2); border-radius: 0; height: 2px; width: 12px; }
+.cap-foot .dot.minlos { background: var(--accent); }
+.cap-foot .dot.cta    { background: #b08a3e; }
+.cap-foot .dot.ctd    { background: #6b6f99; }
+
+/* ── 1. Pricing — 7-day vertical bar chart (price per day) ─ */
+.cap-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 12px 12px;
+  height: 170px;
+  align-items: stretch;
+}
+.cap-strip-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+}
+.cap-strip-day .p {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+.cap-strip-day .bar-track {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.cap-strip-day .bar {
+  width: 100%;
+  background: rgba(58, 58, 61, 0.18);
+  border-top: 1.5px solid rgba(58, 58, 61, 0.4);
+  border-radius: 2px 2px 0 0;
+  min-height: 3px;
+}
+.cap-strip-day .d {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cap-strip-day.is-active .p { color: var(--accent); font-weight: 500; }
+.cap-strip-day.is-active .bar { background: var(--accent); border-top-color: var(--accent-deep); }
+.cap-strip-day.is-active .d  { color: var(--accent); font-weight: 500; }
+
+/* ── 2. Forecast — horizontal bars per week ──────────── */
+.cap-fcbars {
+  height: 170px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+.fcb-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 38px;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+.fcb-row:last-child { border-bottom: none; }
+.fcb-wk {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fcb-bar {
+  height: 6px;
+  background: rgba(30, 58, 95, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.fcb-fill {
+  height: 100%;
+  background: rgba(58, 58, 61, 0.45);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.fcb-pct {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 500;
+  text-align: right;
+}
+.fcb-row.is-today .fcb-wk  { color: var(--accent); font-weight: 500; }
+.fcb-row.is-today .fcb-fill { background: var(--accent); }
+.fcb-row.is-today .fcb-pct { color: var(--accent); }
+
+/* ── 3b. Comp-Set halfbars (dotted halftone) ──────────── */
+.cap-halfbars {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 12px 6px;
+  height: 170px;
+}
+.cap-halfbars svg { width: 100%; height: 100%; display: block; }
+
+/* SVG text styles — apply via class on <text> elements inside the chart */
+.chart-yax {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.4px;
+  fill: var(--muted);
+}
+.chart-cat {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  fill: var(--muted);
+}
+.chart-cat.accent { fill: var(--accent); font-weight: 500; }
+.chart-cat.drop   { fill: #c4515f; }
+.chart-val {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  fill: var(--ink-2);
+}
+.chart-val.accent { fill: var(--accent); }
+.chart-val.drop   { fill: #c4515f; }
+
+/* ── 3. Comp-Set — bars with hotel labels + prices ────── */
+.cap-compset {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 110px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 12px 8px;
+}
+.cs-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.cs-col .b {
+  width: 100%;
+  background: var(--accent-line);
+  border-top: 1.5px solid var(--accent);
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+}
+.cs-col .lbl {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cs-col .p {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 500;
+}
+.cs-col.is-you .b { background: var(--accent); border-color: var(--accent-deep); }
+.cs-col.is-you .lbl { color: var(--accent); font-weight: 500; }
+.cs-col.is-drop .b { background: rgba(196,81,95,0.25); border-color: #c4515f; }
+.cs-col.is-drop .p { color: #c4515f; }
+
+/* ── 4. Restrictions — week × stacked layers ──────────── */
+.cap-restrict {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 12px;
+  height: 170px;
+  align-content: stretch;
+}
+.rest-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.rest-col .d {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rest-col .r-cell {
+  width: 100%;
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+}
+.rest-col .r-cell.minlos { background: var(--accent-soft); border-color: var(--accent-line); }
+.rest-col .r-cell.minlos.cta::before {
+  content: "";
+  position: absolute;
+  top: 6px; left: 6px; right: 6px; height: 6px;
+  background: #b08a3e; border-radius: 2px;
+}
+.rest-col .r-cell.minlos.ctd::before {
+  content: "";
+  position: absolute;
+  bottom: 6px; left: 6px; right: 6px; height: 6px;
+  background: #6b6f99; border-radius: 2px;
+}
+.rest-col.is-active .d { color: var(--accent); font-weight: 500; }
+.rest-col.is-active .r-cell { box-shadow: 0 0 0 1.5px var(--accent); }
+
+/* ── 5. Events — timeline with named bars ─────────────── */
+.cap-events {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 14px 10px;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.evt-track {
+  position: relative;
+  flex: 1;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+  margin-top: 22px;
+}
+.evt-bar {
+  position: absolute;
+  bottom: 0;
+  background: var(--accent-line);
+  border: 1px solid var(--accent-line);
+  border-radius: 2px 2px 0 0;
+  min-width: 18px;
+}
+.evt-bar.is-now { background: var(--accent); border-color: var(--accent-deep); }
+.evt-bar .evt-name {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.evt-bar.is-now .evt-name { color: var(--accent); font-weight: 500; }
+.evt-axis {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+/* ── 6. Reports — structured snapshot card ────────────── */
+.cap-report {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 170px;
+  justify-content: center;
+}
+.cap-report-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.cap-report-head .title {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.cap-report-head .meta {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--subtle);
+  white-space: nowrap;
+}
+.cap-report-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.cap-report-stats .rs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 8px;
+  border-right: 1px solid var(--border);
+}
+.cap-report-stats .rs:first-child { padding-left: 0; }
+.cap-report-stats .rs:last-child  { padding-right: 0; border-right: none; }
+.cap-report-stats .rs .lbl {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cap-report-stats .rs .num {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.cap-report-stats .rs .delta {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+}
+.cap-report-stats .rs .delta.pos { color: var(--accent); font-weight: 500; }
+
+/* ======== HYBRID ======== */
+
+.hybrid {
+  padding-top: clamp(72px, 10vw, 120px);
+  padding-bottom: clamp(72px, 10vw, 120px);
+  border-top: 1px solid var(--border);
+}
+.hybrid-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .hybrid-grid { grid-template-columns: 1fr; }
+}
+
+.chat-mockup {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.chat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.chat-head .topic {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+.chat-head .topic em { font-style: normal; color: var(--accent); }
+.chat-head .ts {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--muted);
+}
+
+.msg {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.msg .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 16px;
+  color: #fff;
+  background: var(--accent);
+}
+.msg.user .avatar { background: var(--ink); }
+.msg.marc .avatar { background: var(--warn); color: #fff; }
+.msg .body { padding-top: 4px; }
+.msg .name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.msg .name .role {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.msg .text {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.msg .text strong { color: var(--ink); font-weight: 500; }
+
+.handoff-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface-2);
+  border: 1px dashed var(--accent-line);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--accent);
+}
+
+/* ======== PRICING ======== */
+
+.pricing {
+  padding-top: clamp(72px, 10vw, 120px);
+  padding-bottom: clamp(72px, 10vw, 120px);
+  border-top: 1px solid var(--border);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+}
+
+.tier {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: clamp(24px, 2.5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+.tier.featured {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-card);
+}
+.tier.featured::before {
+  content: 'Empfohlen';
+  position: absolute;
+  top: -10px;
+  left: 24px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.tier h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-top: 8px;
+}
+.tier h3 em { font-style: normal; color: var(--accent); }
+.tier .price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding-top: 6px;
+}
+.tier .price .num {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.tier .price .unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--muted);
+}
+.tier .min {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--muted);
+}
+.tier ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.tier ul li {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  line-height: 1.45;
+  padding-left: 18px;
+  position: relative;
+}
+.tier ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.tier .tier-cta {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+/* ======== FINAL CTA ======== */
+
+.final-cta {
+  padding-top: clamp(80px, 10vw, 130px);
+  padding-bottom: clamp(80px, 10vw, 130px);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.final-cta h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 4vw + 0.5rem, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  margin-top: 14px;
+  max-width: 18ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.final-cta h2 em { font-style: normal; color: var(--accent); }
+.final-cta p {
+  max-width: 44ch;
+  margin: 0 auto 32px;
+  color: var(--ink-2);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.final-cta .ctas {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ======== FOOTER ======== */
+
+.footer {
+  border-top: 1px solid var(--border);
+  background: var(--shell);
+  padding: 56px clamp(20px, 4vw, 40px) 32px;
+}
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 900px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+.footer-col h4 {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 2.2px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-col ul a {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+.footer-col ul a:hover { color: var(--accent); }
+.footer-brand p {
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 32ch;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+}
+.brand-icon {
+  height: 26px;
+  width: auto;
+  display: block;
+  color: var(--accent);
+}
+.footer-bottom {
+  max-width: 1280px;
+  margin: 48px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<!-- ======== CLEAN NAV (active) ======== -->
+<nav class="nav-clean">
+  <div class="nav-clean-inner">
+    <a href="#" class="nav-clean-brand" aria-label="happyhotel">
+      <svg viewBox="0 0 1224 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302ZM260.857 35.7541C283.501 35.7541 302.173 47.8708 302.173 82.4331V139.044H274.165V84.8167C274.165 68.1315 267.412 58.7957 253.508 58.7957C239.206 58.7957 230.665 69.1246 230.665 86.6044V139.044H202.657V0H230.665V49.4599C237.22 41.5145 246.357 35.7541 260.857 35.7541ZM889.501 82.4331C889.501 47.8708 870.829 35.7541 848.185 35.7541C833.685 35.7541 824.548 41.5145 817.993 49.4599V0H789.985V139.044H817.993V86.6044C817.993 69.1246 826.534 58.7957 840.836 58.7957C854.74 58.7957 861.494 68.1315 861.494 84.8167V139.044H889.501V82.4331ZM1195.6 139.044V0H1223.61V139.044H1195.6ZM1132.62 140.236C1098.66 140.236 1078.2 119.776 1078.2 88.1935C1078.2 56.4121 1099.06 35.7541 1130.64 35.7541C1161.23 35.7541 1181.89 54.823 1182.28 84.8167C1182.28 87.7962 1182.08 91.173 1181.49 94.3512H1107.4V95.7416C1107.99 110.242 1117.33 118.982 1131.43 118.982C1142.76 118.982 1150.7 114.016 1153.08 104.481H1180.69C1177.52 124.345 1159.84 140.236 1132.62 140.236ZM1107.99 76.0768H1154.08C1152.09 63.5629 1143.55 56.6107 1130.84 56.6107C1118.72 56.6107 1109.58 63.9602 1107.99 76.0768ZM1020.3 8.34264V109.845C1020.3 129.311 1030.03 139.044 1049.5 139.044H1072.74V115.406H1058.24C1051.09 115.406 1048.31 112.427 1048.31 105.276V60.5834H1071.55V36.9459H1048.31V8.34264H1020.3ZM954.631 140.236C922.055 140.236 900.802 119.379 900.802 87.9949C900.802 56.6107 922.055 35.7541 954.631 35.7541C987.207 35.7541 1008.46 56.6107 1008.46 87.9949C1008.46 119.578 987.207 140.236 954.631 140.236ZM954.631 117.393C970.324 117.393 980.057 105.276 980.057 87.9949C980.057 70.7137 970.324 58.597 954.631 58.597C938.939 58.597 929.405 70.7137 929.405 87.9949C929.405 105.276 938.939 117.393 954.631 117.393ZM744.492 86.803V36.9459H772.5V137.057C772.5 161.092 757.999 179.962 721.252 179.962C694.238 179.962 675.765 167.846 674.573 144.407H702.779C705.163 153.941 711.916 158.709 723.636 158.709C736.944 158.709 745.088 151.16 745.088 137.057V124.345C738.335 132.886 729.992 139.044 715.293 139.044C694.238 139.044 674.772 129.112 674.772 92.1662V36.9459H702.779V88.7894C702.779 106.666 708.937 115.605 722.643 115.605C736.348 115.605 744.492 105.475 744.492 86.803ZM662.793 88.1935C662.793 56.0148 642.93 35.5555 615.319 35.7541C600.819 35.7541 590.49 42.3091 583.935 51.049L581.154 36.9459H556.722V178.771H584.73V126.133C591.285 134.475 601.415 140.236 615.518 140.236C642.93 140.236 662.793 119.975 662.793 88.1935ZM634.388 87.7962C634.388 105.276 624.457 117.393 609.162 117.393C593.867 117.393 584.333 105.276 584.333 87.7962C584.333 70.5151 593.867 58.597 609.162 58.597C624.457 58.597 634.388 70.5151 634.388 87.7962ZM495.681 35.7541C523.291 35.5555 543.155 56.0148 543.155 88.1935C543.155 119.975 523.291 140.236 495.88 140.236C481.777 140.236 471.646 134.475 465.092 126.133V178.771H437.084V36.9459H461.516L464.297 51.049C470.852 42.3091 481.181 35.7541 495.681 35.7541ZM489.524 117.393C504.818 117.393 514.75 105.276 514.75 87.7962C514.75 70.5151 504.818 58.597 489.524 58.597C474.229 58.597 464.694 70.5151 464.694 87.7962C464.694 105.276 474.229 117.393 489.524 117.393ZM394.913 36.9459L392.132 50.453C385.577 41.7131 375.248 35.5555 360.748 35.5555C333.535 35.5555 313.473 56.2134 313.473 87.7962C313.473 120.174 333.535 140.236 360.947 140.037C375.447 140.037 385.577 133.283 392.331 124.742L394.714 139.044H419.544V36.9459H394.913ZM391.934 88.1935C391.934 105.475 382.399 117.393 367.104 117.393C351.809 117.393 342.076 105.475 342.076 88.1935C342.076 70.7137 351.809 58.597 367.104 58.597C382.399 58.597 391.934 70.7137 391.934 88.1935Z"/>
+      </svg>
+    </a>
+    <div class="nav-clean-actions">
+      <a href="#" class="nav-clean-link">Login</a>
+      <a href="../onboarding/onboarding-magic.html" class="nav-clean-cta">Jetzt starten</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ======== GLASS PILL NAV (Alternative · auskommentiert) ========
+<nav class="nav-glass">
+  <div class="nav-glass-inner">
+    <div class="nav-glass-halo" aria-hidden="true"></div>
+    <div class="nav-pill">
+      <a href="#" class="nav-brand-pill" aria-label="happyhotel">
+        <svg viewBox="0 0 1224 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302ZM260.857 35.7541C283.501 35.7541 302.173 47.8708 302.173 82.4331V139.044H274.165V84.8167C274.165 68.1315 267.412 58.7957 253.508 58.7957C239.206 58.7957 230.665 69.1246 230.665 86.6044V139.044H202.657V0H230.665V49.4599C237.22 41.5145 246.357 35.7541 260.857 35.7541ZM889.501 82.4331C889.501 47.8708 870.829 35.7541 848.185 35.7541C833.685 35.7541 824.548 41.5145 817.993 49.4599V0H789.985V139.044H817.993V86.6044C817.993 69.1246 826.534 58.7957 840.836 58.7957C854.74 58.7957 861.494 68.1315 861.494 84.8167V139.044H889.501V82.4331ZM1195.6 139.044V0H1223.61V139.044H1195.6ZM1132.62 140.236C1098.66 140.236 1078.2 119.776 1078.2 88.1935C1078.2 56.4121 1099.06 35.7541 1130.64 35.7541C1161.23 35.7541 1181.89 54.823 1182.28 84.8167C1182.28 87.7962 1182.08 91.173 1181.49 94.3512H1107.4V95.7416C1107.99 110.242 1117.33 118.982 1131.43 118.982C1142.76 118.982 1150.7 114.016 1153.08 104.481H1180.69C1177.52 124.345 1159.84 140.236 1132.62 140.236ZM1107.99 76.0768H1154.08C1152.09 63.5629 1143.55 56.6107 1130.84 56.6107C1118.72 56.6107 1109.58 63.9602 1107.99 76.0768ZM1020.3 8.34264V109.845C1020.3 129.311 1030.03 139.044 1049.5 139.044H1072.74V115.406H1058.24C1051.09 115.406 1048.31 112.427 1048.31 105.276V60.5834H1071.55V36.9459H1048.31V8.34264H1020.3ZM954.631 140.236C922.055 140.236 900.802 119.379 900.802 87.9949C900.802 56.6107 922.055 35.7541 954.631 35.7541C987.207 35.7541 1008.46 56.6107 1008.46 87.9949C1008.46 119.578 987.207 140.236 954.631 140.236ZM954.631 117.393C970.324 117.393 980.057 105.276 980.057 87.9949C980.057 70.7137 970.324 58.597 954.631 58.597C938.939 58.597 929.405 70.7137 929.405 87.9949C929.405 105.276 938.939 117.393 954.631 117.393ZM744.492 86.803V36.9459H772.5V137.057C772.5 161.092 757.999 179.962 721.252 179.962C694.238 179.962 675.765 167.846 674.573 144.407H702.779C705.163 153.941 711.916 158.709 723.636 158.709C736.944 158.709 745.088 151.16 745.088 137.057V124.345C738.335 132.886 729.992 139.044 715.293 139.044C694.238 139.044 674.772 129.112 674.772 92.1662V36.9459H702.779V88.7894C702.779 106.666 708.937 115.605 722.643 115.605C736.348 115.605 744.492 105.475 744.492 86.803ZM662.793 88.1935C662.793 56.0148 642.93 35.5555 615.319 35.7541C600.819 35.7541 590.49 42.3091 583.935 51.049L581.154 36.9459H556.722V178.771H584.73V126.133C591.285 134.475 601.415 140.236 615.518 140.236C642.93 140.236 662.793 119.975 662.793 88.1935ZM634.388 87.7962C634.388 105.276 624.457 117.393 609.162 117.393C593.867 117.393 584.333 105.276 584.333 87.7962C584.333 70.5151 593.867 58.597 609.162 58.597C624.457 58.597 634.388 70.5151 634.388 87.7962ZM495.681 35.7541C523.291 35.5555 543.155 56.0148 543.155 88.1935C543.155 119.975 523.291 140.236 495.88 140.236C481.777 140.236 471.646 134.475 465.092 126.133V178.771H437.084V36.9459H461.516L464.297 51.049C470.852 42.3091 481.181 35.7541 495.681 35.7541ZM489.524 117.393C504.818 117.393 514.75 105.276 514.75 87.7962C514.75 70.5151 504.818 58.597 489.524 58.597C474.229 58.597 464.694 70.5151 464.694 87.7962C464.694 105.276 474.229 117.393 489.524 117.393ZM394.913 36.9459L392.132 50.453C385.577 41.7131 375.248 35.5555 360.748 35.5555C333.535 35.5555 313.473 56.2134 313.473 87.7962C313.473 120.174 333.535 140.236 360.947 140.037C375.447 140.037 385.577 133.283 392.331 124.742L394.714 139.044H419.544V36.9459H394.913ZM391.934 88.1935C391.934 105.475 382.399 117.393 367.104 117.393C351.809 117.393 342.076 105.475 342.076 88.1935C342.076 70.7137 351.809 58.597 367.104 58.597C382.399 58.597 391.934 70.7137 391.934 88.1935Z"/>
+        </svg>
+      </a>
+      <div class="nav-pill-actions">
+        <a href="#" class="nav-link-pill">Login</a>
+        <a href="#" class="nav-cta-pill">Demo buchen</a>
+      </div>
+    </div>
+  </div>
+</nav>
+======== Ende Glass-Pill-Nav (auskommentiert) -->
+
+<!-- ======== HERO ======== -->
+<section class="hero-monet">
+  <div class="hero-monet-bg" aria-hidden="true"></div>
+  <div class="hero-monet-tint" aria-hidden="true"></div>
+
+  <div class="hero-monet-grid">
+    <div class="hero-copy">
+      <h1><em>Ray</em>, dein Revenue&nbsp;Manager.</h1>
+      <p>Eine Plattform für Hoteliers und Revenue Manager. Ray analysiert, entscheidet und handelt — jede Nacht, jeden Tag.</p>
+      <div class="hero-buttons">
+        <a href="../onboarding/onboarding-magic.html" class="btn-dark">Jetzt starten</a>
+        <a href="#" class="btn-glass">Live ansehen</a>
+      </div>
+    </div>
+
+    <!-- Chat Card: Ray as buddy -->
+    <div class="chat-card">
+      <div class="chat-head-row">
+        <div class="chat-avatar"><span class="diamond"></span></div>
+        <div class="chat-head-info">
+          <div class="chat-head-name"><em>Ray</em> · dein AI Revenue Manager</div>
+        </div>
+      </div>
+
+      <div class="chat-msg ray">
+        <div class="chat-rich">
+          <div class="chat-rich-intro">
+            Guten Morgen,<br>
+            du hast diesen Monat <span class="brief-money">28.420 €</span> <span class="trend-pill">↑ 12 %</span> verdient. Heute Nacht hab ich <a href="#" class="brief-detail">vier Tage angepasst</a>, eine Großgruppe wartet auf dein OK:
+          </div>
+          <div class="chat-rich-mtag"><span class="diamond"></span> Großgruppe Berlin · 26 Zimmer · 4 Nächte</div>
+          <div class="chat-rich-stats">
+            <div class="chat-stat-mini">
+              <div class="num">119 €</div>
+              <div class="lbl">Anker</div>
+            </div>
+            <div class="chat-stat-mini">
+              <div class="num">109 €</div>
+              <div class="lbl">Spielraum</div>
+            </div>
+            <div class="chat-stat-mini">
+              <div class="num pos">+2.840 €</div>
+              <div class="lbl">Netto</div>
+            </div>
+          </div>
+          <div class="chat-rich-actions">
+            <button class="rich-btn solid"><span class="diamond"></span> Übernehmen</button>
+            <button class="rich-btn">Anpassen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-msg user">
+        <div class="chat-bubble">Übernehmen</div>
+      </div>
+
+      <div class="chat-msg ray">
+        <div class="chat-rich">
+          <div class="chat-rich-mtag"><span class="diamond"></span> Pfingsten · Belegung 22.–25. Mai</div>
+          <div class="chat-rich-text">
+            Mit der Großgruppe stehst du bei <strong>84 %</strong> im Schnitt. Mein Vorschlag: Sa+So auf <strong>164 €</strong> anziehen, Mo bei <strong>129 €</strong> halten <span class="pos">— bringt +1.240 €</span>.
+          </div>
+          <div class="comp-block-mini">
+            <div class="comp-row-mini you">
+              <div class="comp-name">Sa · 23.5</div>
+              <div class="comp-bar"><div class="comp-fill" style="width:96%"></div></div>
+              <div class="comp-price">96 %</div>
+            </div>
+            <div class="comp-row-mini">
+              <div class="comp-name">So · 24.5</div>
+              <div class="comp-bar"><div class="comp-fill" style="width:88%"></div></div>
+              <div class="comp-price">88 %</div>
+            </div>
+            <div class="comp-row-mini">
+              <div class="comp-name">Mo · 25.5</div>
+              <div class="comp-bar"><div class="comp-fill" style="width:64%"></div></div>
+              <div class="comp-price">64 %</div>
+            </div>
+          </div>
+          <div class="chat-rich-actions">
+            <button class="rich-btn solid"><span class="diamond"></span> Übernehmen</button>
+            <button class="rich-btn">Anpassen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-msg ray">
+        <div class="chat-typing-bubble"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-monet-bottomfade" aria-hidden="true"></div>
+  <div class="image-credit">The Cliff Walk at Pourville · Claude Monet</div>
+</section>
+
+
+<!-- ======== CUSTOMER PROOF ======== -->
+<section class="section proof">
+  <div class="proof-head">
+    <div class="left">
+      <div class="mono-tag muted"><span class="diamond" style="color: var(--muted);"></span> 1.024 Hotels</div>
+      <h2>Die in jeder Nacht <em>weiterverdienen</em>.</h2>
+    </div>
+    <a href="#" class="read-more">Customer Stories →</a>
+  </div>
+
+  <div class="proof-grid">
+    <div class="proof-cell quote">
+      <p>"Ray hat unser Pricing übernommen. Mein Team hat den Kopf frei für die Gäste."</p>
+      <div class="author">Sandra Müller · Direktorin · Hotel Ascot München</div>
+    </div>
+    <div class="proof-cell logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 21 L12 3 L21 21 M7 16 L17 16"/>
+      </svg>
+      <span>Ascot</span>
+    </div>
+    <div class="proof-cell hotel">Romantik Schwarzwald</div>
+    <div class="proof-cell logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="8" height="8"/>
+        <rect x="13" y="3" width="8" height="8"/>
+        <rect x="3" y="13" width="8" height="8"/>
+        <rect x="13" y="13" width="8" height="8"/>
+      </svg>
+      <span>Wellem</span>
+    </div>
+    <div class="proof-cell plus">+</div>
+    <div class="proof-cell hotel">Strandhotel Sylt</div>
+    <div class="proof-cell logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 18 L4 8 L9 13 L12 5 L15 13 L20 8 L21 18 Z"/>
+        <line x1="3" y1="22" x2="21" y2="22"/>
+      </svg>
+      <span>Krone</span>
+    </div>
+
+    <div class="proof-cell hotel">Hotel Bergblick</div>
+    <div class="proof-cell hotel">Boutique Stuttgart</div>
+    <div class="proof-cell logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 21 L3 12 L7 12 L7 8 L11 8 L11 5 L15 5 L15 10 L19 10 L19 15 L21 15 L21 21 Z"/>
+      </svg>
+      <span>Metropol</span>
+    </div>
+    <div class="proof-cell plus">+</div>
+    <div class="proof-cell hotel">Park Inn Bremen</div>
+    <div class="proof-cell hotel">Stadthotel Köln</div>
+    <div class="proof-cell logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 14 L8 11 L12 14 L16 9 L21 14 L18 17 L12 17 L6 17 Z"/>
+        <line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+      <span>Adler Tirol</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PERSONAS / TRINITY ======== -->
+<section class="section personas" id="personas">
+  <div class="section-head">
+    <div class="mono-tag"><span class="diamond"></span> So arbeitet happyhotel</div>
+    <h2>AI. Tool. Mensch.</h2>
+    <p>Drei Säulen, ein Workflow. Ray analysiert, das Cockpit zeigt, Marc und Lisa übernehmen, wenn's eng wird.</p>
+  </div>
+
+  <div class="trinity-top">
+
+    <!-- LEFT — Ray Briefing-Doc -->
+    <div class="trinity-half">
+      <h3>Briefing zum Frühstück.</h3>
+      <p class="trinity-desc">Ray analysiert die Nacht durch. Du liest drei Zeilen zum Kaffee und entscheidest in zwei Minuten. Komplexes übergibt Ray an Marc oder Lisa.</p>
+      <div class="poly-stack">
+        <div class="poly-card">
+          <div class="bd-top">
+            <div class="bd-icon"><span class="d"></span></div>
+            <div class="bd-doc">
+              <span class="ln"></span>
+              <span class="ln"></span>
+              <span class="ln"></span>
+              <span class="sig">R</span>
+            </div>
+          </div>
+          <div class="bd-meta">RAY · NACHTSCHICHT · 17. MAI</div>
+          <div class="bd-headline">Heute Nacht erledigt.</div>
+          <div class="bd-night">
+            <div class="bd-night-item">
+              <span class="bd-night-time">22:14</span>
+              <span class="bd-night-text"><span class="ndot"></span><span><strong>Comp-Set</strong> · 6 Hotels gecheckt</span></span>
+            </div>
+            <div class="bd-night-item">
+              <span class="bd-night-time">02:30</span>
+              <span class="bd-night-text"><span class="ndot"></span><span><strong>Forecast</strong> · Pfingsten +18 % erkannt</span></span>
+            </div>
+            <div class="bd-night-item">
+              <span class="bd-night-time">04:48</span>
+              <span class="bd-night-text"><span class="ndot"></span><span><strong>Pricing</strong> · 47 Tage angepasst</span></span>
+            </div>
+            <div class="bd-night-item">
+              <span class="bd-night-time">05:12</span>
+              <span class="bd-night-text"><span class="ndot"></span><span><strong>Restriktionen</strong> · MinLOS 2 ab Do</span></span>
+            </div>
+            <div class="bd-night-item current">
+              <span class="bd-night-time">06:48</span>
+              <span class="bd-night-text"><span class="ndot"></span><span><strong>Briefing</strong> · für dich erstellt</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT — Cockpit Pricing-Doc -->
+    <div class="trinity-half">
+      <h3>Cockpit für alles dazwischen.</h3>
+      <p class="trinity-desc">Pricing, Comp-Set, Forecast, Restriktionen. Eine Fläche, editierbar, transparent, immer aktuell. Volle Tiefe wenn du sie brauchst.</p>
+      <div class="poly-stack">
+        <div class="poly-card">
+          <div class="pd-title"><mark>Pricing</mark>-Tabelle</div>
+          <div class="pd-sub">KW 21 · 17. – 23. Mai · Pfingsten getrackt</div>
+          <div class="cal-doc-grid">
+            <div class="cal-doc-cell lo"><span class="price">118 €</span><span class="day">Mo</span></div>
+            <div class="cal-doc-cell md"><span class="price">132 €</span><span class="day">Di</span></div>
+            <div class="cal-doc-cell md"><span class="price">138 €</span><span class="day">Mi</span></div>
+            <div class="cal-doc-cell hi"><span class="price">164 €</span><span class="day">Do</span></div>
+            <div class="cal-doc-cell hi"><span class="price">189 €</span><span class="day">Fr</span></div>
+            <div class="cal-doc-cell hi"><span class="price">175 €</span><span class="day">Sa</span></div>
+            <div class="cal-doc-cell md"><span class="price">124 €</span><span class="day">So</span></div>
+          </div>
+          <div class="bd-stats" style="margin-top: 4px; margin-bottom: 16px;">
+            <div class="bd-stat">
+              <div class="num">149 €</div>
+              <div class="lbl">Ø ADR</div>
+            </div>
+            <div class="bd-stat">
+              <div class="num">78 %</div>
+              <div class="lbl">Auslastung</div>
+            </div>
+            <div class="bd-stat">
+              <div class="num pos">116 €</div>
+              <div class="lbl">RevPAR</div>
+            </div>
+          </div>
+          <hr class="pd-hr">
+          <div class="pd-metrics">
+            <div class="pd-metric"><span class="dot"></span><span><strong>Pfingsten</strong> Do – Sa, ADR Ø <strong>176 €</strong></span></div>
+            <div class="pd-metric"><span class="dot soft"></span><span><strong>Restriktionen</strong> MinLOS 2 ab Do, CTA Sa</span></div>
+            <div class="pd-metric"><span class="dot"></span><span><strong>Comp-Set</strong> Adler −12 €, Boutique +8 €</span></div>
+            <div class="pd-metric"><span class="dot soft"></span><span><strong>Auto-Pricing</strong> 87 % übernommen</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 4-col supporting features -->
+  <div class="feature-row">
+    <div class="feat-item">
+      <div class="feat-head">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+          <polyline points="16 7 22 7 22 13"/>
+        </svg>
+        <span class="nm">Forecast</span>
+      </div>
+      <p>ML-Modelle pro Hotel, Segment, Tag mit Vorhersage-Intervall.</p>
+    </div>
+    <div class="feat-item">
+      <div class="feat-head">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6" y1="20" x2="6" y2="14"/>
+          <line x1="3" y1="20" x2="21" y2="20"/>
+        </svg>
+        <span class="nm">Comp-Set</span>
+      </div>
+      <p>Wettbewerber alle vier Stunden gecheckt. Alerts vor Buchungsverlusten.</p>
+    </div>
+    <div class="feat-item">
+      <div class="feat-head">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span class="nm">Restriktionen</span>
+      </div>
+      <p>MinLOS, CTA, CTD automatisch gesetzt. Keine Pflege mehr nötig.</p>
+    </div>
+    <div class="feat-item">
+      <div class="feat-head">
+        <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span class="nm">Marc &amp; Lisa</span>
+      </div>
+      <p>Echte Revenue Manager im selben Stream wie Ray. Hybrid für Komplexes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== RAY REASONING (Ramp-style) ======== -->
+<section class="section reasoning" id="reasoning">
+  <div class="section-head">
+    <div class="mono-tag"><span class="diamond"></span> Wie Ray denkt</div>
+    <h2>Sechs Quellen. <em>Ein</em> Vorschlag.</h2>
+    <p>Eine Großgruppen-Anfrage trifft ein. Sieh, wie Ray sie beantwortet — Schritt für Schritt, jeder Klick nachvollziehbar.</p>
+  </div>
+
+  <div class="rr-stage">
+
+    <!-- LEFT side-cards (peek in from the edge) -->
+    <div class="rr-side rr-left" aria-hidden="true">
+      <div class="rr-side-card">
+        <div class="rr-side-tag">Gmail · Inbox</div>
+        <div class="rr-side-row"><span class="rr-side-k">FROM:</span> events@boa-events.de</div>
+        <div class="rr-side-row"><span class="rr-side-k">SUBJECT:</span> Gruppenanfrage · Pfingsten</div>
+        <div class="rr-side-row"><span class="rr-side-k">DATE:</span> 7. Mai · 09:24</div>
+        <div class="rr-side-body">Hallo, wir suchen <strong>26 Zimmer</strong> für 4 Nächte vom 22.–25. Mai. Bitte um Angebot inkl. Verfügbarkeit und Frühstück. — BOA Events</div>
+        <div class="rr-side-attach">
+          <span class="rr-attach-icon">📎</span><span>Teilnehmerliste.pdf</span><span class="rr-attach-size">142 KB</span>
+        </div>
+      </div>
+
+      <div class="rr-side-card">
+        <div class="rr-side-tag">PMS · Mews · Verfügbarkeit</div>
+        <div class="rr-avail-grid">
+          <div class="rr-avail-cell"><div class="rr-avail-d">Fr 22.5</div><div class="rr-avail-n">31</div></div>
+          <div class="rr-avail-cell"><div class="rr-avail-d">Sa 23.5</div><div class="rr-avail-n">28</div></div>
+          <div class="rr-avail-cell"><div class="rr-avail-d">So 24.5</div><div class="rr-avail-n">29</div></div>
+          <div class="rr-avail-cell"><div class="rr-avail-d">Mo 25.5</div><div class="rr-avail-n">34</div></div>
+        </div>
+        <div class="rr-mini-rows">
+          <div class="rr-mini-row"><span>Gesamtbestand</span><span>72 Zimmer</span></div>
+          <div class="rr-mini-row"><span>Anfrage</span><span>26 Zimmer × 4</span></div>
+          <div class="rr-mini-row"><span>Puffer nach Buchung</span><span class="pos">≥ 5 Zimmer</span></div>
+        </div>
+      </div>
+
+      <div class="rr-side-card">
+        <div class="rr-side-tag">Pickup · 30 Tage</div>
+        <svg viewBox="0 0 200 50" class="rr-pickup-svg" preserveAspectRatio="none">
+          <path d="M 0 42 L 20 38 L 40 36 L 60 32 L 80 26 L 100 22 L 120 16 L 140 18 L 160 12 L 180 8 L 200 5" fill="none" stroke="rgba(30,58,95,0.55)" stroke-width="1.5"/>
+          <path d="M 0 42 L 20 38 L 40 36 L 60 32 L 80 26 L 100 22 L 120 16 L 140 18 L 160 12 L 180 8 L 200 5 L 200 50 L 0 50 Z" fill="rgba(30,58,95,0.06)"/>
+        </svg>
+        <div class="rr-mini-rows">
+          <div class="rr-mini-row"><span>Pickup heute</span><span>+ 12 Zimmer</span></div>
+          <div class="rr-mini-row"><span>Lead-Time Ø</span><span>21 Tage</span></div>
+          <div class="rr-mini-row"><span>vs. Vorjahr</span><span class="pos">+ 38 %</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER reasoning panel -->
+    <div class="rr-center">
+
+      <!-- Reasoning flow with narrative bridges -->
+      <div class="rr-flow">
+
+        <!-- Ray opens proactively -->
+        <div class="rr-ray-msg">
+          <div class="rr-ray-bubble">
+            Eine Gruppen-Anfrage über <strong>26 Zimmer × 4 Nächte</strong> für Pfingsten. Schau ich mir an.
+          </div>
+        </div>
+
+        <div class="rr-step" data-step="0">
+          <div class="rr-step-dot"><svg viewBox="0 0 12 12"><path d="M2 6.5 l3 3 l5 -6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="rr-step-txt">Mail gelesen, Eckdaten extrahiert</div>
+        </div>
+        <div class="rr-chips"><span class="rr-chip">Mail-Parser</span></div>
+
+        <div class="rr-bridge" data-bridge-after="0">Erstmal: sind die Zimmer überhaupt frei?</div>
+
+        <div class="rr-step" data-step="1">
+          <div class="rr-step-dot"><svg viewBox="0 0 12 12"><path d="M2 6.5 l3 3 l5 -6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="rr-step-txt">Alle vier Nächte frei, mit Puffer</div>
+        </div>
+        <div class="rr-chips"><span class="rr-chip">PMS · Mews</span></div>
+
+        <div class="rr-bridge" data-bridge-after="1">Wie ist die Nachfrage über das Wochenende?</div>
+
+        <div class="rr-step" data-step="2">
+          <div class="rr-step-dot"><svg viewBox="0 0 12 12"><path d="M2 6.5 l3 3 l5 -6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="rr-step-txt">Pickup <strong>+38 %</strong> ggü. Vorjahr — sehr stark</div>
+        </div>
+
+        <div class="rr-bridge" data-bridge-after="2">Was nehmen die Mitbewerber?</div>
+
+        <div class="rr-step" data-step="3">
+          <div class="rr-step-dot"><svg viewBox="0 0 12 12"><path d="M2 6.5 l3 3 l5 -6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="rr-step-txt">Median <strong>142 €</strong>, du auf <strong>156 €</strong> — Premium</div>
+        </div>
+        <div class="rr-chips"><span class="rr-chip">Rateshopper Pro</span></div>
+
+        <div class="rr-bridge" data-bridge-after="3">Die teure Frage: was verdrängt eine Großgruppe?</div>
+
+        <div class="rr-step" data-step="4">
+          <div class="rr-step-dot"><svg viewBox="0 0 12 12"><path d="M2 6.5 l3 3 l5 -6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="rr-step-txt"><strong>14 OTA-Buchungen</strong> verdrängt à 134 €, Brutto-Verlust 1.876 €</div>
+        </div>
+        <div class="rr-chips"><span class="rr-chip">Demand-Modell</span></div>
+
+        <div class="rr-bridge" data-bridge-after="4">Anker und Floor laut Group-Policy.</div>
+
+        <div class="rr-step" data-step="5">
+          <div class="rr-step-dot"><svg viewBox="0 0 12 12"><path d="M2 6.5 l3 3 l5 -6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="rr-step-txt">Anker <strong>119 €</strong>, Floor <strong>109 €</strong>, Mindestmarge erfüllt</div>
+        </div>
+        <div class="rr-chips"><span class="rr-chip">Group-Policy</span></div>
+
+        <!-- Ray's final recommendation bubble -->
+        <div class="rr-ray-msg rr-ray-final">
+          <div class="rr-ray-bubble rr-ray-bubble-final">
+            <div class="rr-ray-mtag"><span class="diamond"></span> Mein Vorschlag</div>
+            <div class="rr-ray-headline">Großgruppe Berlin · 26 Zimmer · 4 Nächte</div>
+            <div class="rr-ray-stats">
+              <div class="rr-ray-stat"><div class="num">119 €</div><div class="lbl">Anker</div></div>
+              <div class="rr-ray-stat"><div class="num">109 €</div><div class="lbl">Spielraum</div></div>
+              <div class="rr-ray-stat"><div class="num pos">+2.840 €</div><div class="lbl">Netto</div></div>
+            </div>
+            <div class="rr-ray-actions">
+              <button class="rr-final-btn solid"><span class="diamond"></span> Übernehmen</button>
+              <button class="rr-final-btn">Anpassen</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="rr-input-row">
+        <div class="rr-input-fake">Frag Ray etwas …</div>
+        <button class="rr-send" aria-label="senden"><svg viewBox="0 0 16 16"><path d="M8 13 V3 M3.5 7.5 L8 3 L12.5 7.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+
+    <!-- RIGHT side-cards (ordered to match reasoning steps 4 → 5 → 6) -->
+    <div class="rr-side rr-right" aria-hidden="true">
+      <div class="rr-side-card">
+        <div class="rr-side-tag">Comp-Set · Pfingsten</div>
+        <div class="rr-cs-row"><span class="rr-cs-name">Du</span><div class="rr-cs-bar"><div class="rr-cs-fill you" style="width:100%"></div></div><span class="rr-cs-p">156</span></div>
+        <div class="rr-cs-row"><span class="rr-cs-name">Adler</span><div class="rr-cs-bar"><div class="rr-cs-fill" style="width:91%"></div></div><span class="rr-cs-p">144</span></div>
+        <div class="rr-cs-row"><span class="rr-cs-name">Krone</span><div class="rr-cs-bar"><div class="rr-cs-fill" style="width:79%"></div></div><span class="rr-cs-p">124</span></div>
+        <div class="rr-cs-row"><span class="rr-cs-name">Wellem</span><div class="rr-cs-bar"><div class="rr-cs-fill" style="width:73%"></div></div><span class="rr-cs-p">115</span></div>
+        <div class="rr-mini-rows">
+          <div class="rr-mini-row"><span>Median</span><span>142 €</span></div>
+          <div class="rr-mini-row"><span>Dein Delta</span><span class="pos">+ 14 €</span></div>
+          <div class="rr-mini-row"><span>Position</span><span>1 / 4 · Premium</span></div>
+        </div>
+      </div>
+
+      <div class="rr-side-card">
+        <div class="rr-side-tag">Displacement-Modell</div>
+        <div class="rr-disp-num">14</div>
+        <div class="rr-disp-lbl">verdrängte OTA-Buchungen</div>
+        <div class="rr-disp-row"><span>Ø ADR OTA</span><span>134 €</span></div>
+        <div class="rr-disp-row"><span>Brutto-Verlust</span><span>1.876 €</span></div>
+        <div class="rr-disp-row"><span>OTA-Kommission gespart</span><span>+ 281 €</span></div>
+      </div>
+
+      <div class="rr-side-card">
+        <div class="rr-side-tag">Group-Pricing-Policy</div>
+        <div class="rr-policy-row"><span class="rr-pol-k">Mindestmarge</span><span class="rr-pol-v">≥ 22 %</span></div>
+        <div class="rr-policy-row"><span class="rr-pol-k">Anker (Median + 8 %)</span><span class="rr-pol-v">119 €</span></div>
+        <div class="rr-policy-row"><span class="rr-pol-k">Floor (Median − 5 %)</span><span class="rr-pol-v">109 €</span></div>
+        <div class="rr-policy-row"><span class="rr-pol-k">Stornofrist</span><span class="rr-pol-v">14 Tage</span></div>
+        <div class="rr-policy-row"><span class="rr-pol-k">Frühstück inkl.</span><span class="rr-pol-v">ab 20 Zi.</span></div>
+        <div class="rr-policy-row"><span class="rr-pol-k">Anzahlung</span><span class="rr-pol-v">30 % · 14 T</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======== CAPABILITIES ======== -->
+<section class="section caps" id="capabilities">
+  <div class="section-head">
+    <div class="mono-tag"><span class="diamond"></span> Was Ray für dich macht</div>
+    <h2>Routinen die <em>nicht warten</em>. Entscheidungen die du <em>nicht baust</em>.</h2>
+    <p>Sechs Routinen die heute Stunden kosten. Ray erledigt sie über Nacht. Du siehst nur das Ergebnis und sagst Ja, Nein oder Anders.</p>
+  </div>
+
+  <div class="caps-grid">
+
+    <div class="cap">
+      <div class="mono-tag"><span class="diamond"></span> Pricing</div>
+      <h3>Pricing das <em>nachts arbeitet</em>.</h3>
+      <p>47 Datenquellen, vier Mal pro Tag, ML-getriebene Empfehlung pro Tag und Zimmertyp. Du sagst nur "übernehmen" oder lässt Ray automatisch entscheiden.</p>
+      <div class="cap-visual">
+        <div class="cap-strip">
+          <div class="cap-strip-day"><span class="p">128</span><div class="bar-track"><div class="bar" style="height:30%"></div></div><span class="d">Mi</span></div>
+          <div class="cap-strip-day"><span class="p">132</span><div class="bar-track"><div class="bar" style="height:38%"></div></div><span class="d">Do</span></div>
+          <div class="cap-strip-day"><span class="p">158</span><div class="bar-track"><div class="bar" style="height:80%"></div></div><span class="d">Fr</span></div>
+          <div class="cap-strip-day is-active"><span class="p">164</span><div class="bar-track"><div class="bar" style="height:95%"></div></div><span class="d">Sa</span></div>
+          <div class="cap-strip-day"><span class="p">156</span><div class="bar-track"><div class="bar" style="height:72%"></div></div><span class="d">So</span></div>
+          <div class="cap-strip-day"><span class="p">142</span><div class="bar-track"><div class="bar" style="height:54%"></div></div><span class="d">Mo</span></div>
+          <div class="cap-strip-day"><span class="p">138</span><div class="bar-track"><div class="bar" style="height:46%"></div></div><span class="d">Di</span></div>
+        </div>
+        <div class="cap-foot"><span>4× pro Tag</span><span>412 Preise · diese Woche</span></div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="mono-tag"><span class="diamond"></span> Forecast</div>
+      <h3>Forecasts die <em>nicht raten</em>.</h3>
+      <p>Nachfrage-Modelle pro Hotel, pro Segment, pro Tag. Mit Vorhersage-Intervall. Du siehst nicht nur "wahrscheinlich", sondern wie sicher Ray sich ist.</p>
+      <div class="cap-visual">
+        <div class="cap-fcbars">
+          <div class="fcb-row">
+            <span class="fcb-wk">KW 21</span>
+            <div class="fcb-bar"><div class="fcb-fill" style="width: 62%"></div></div>
+            <span class="fcb-pct">62 %</span>
+          </div>
+          <div class="fcb-row is-today">
+            <span class="fcb-wk">KW 22</span>
+            <div class="fcb-bar"><div class="fcb-fill" style="width: 86%"></div></div>
+            <span class="fcb-pct">86 %</span>
+          </div>
+          <div class="fcb-row">
+            <span class="fcb-wk">KW 23</span>
+            <div class="fcb-bar"><div class="fcb-fill" style="width: 78%"></div></div>
+            <span class="fcb-pct">78 %</span>
+          </div>
+          <div class="fcb-row">
+            <span class="fcb-wk">KW 24</span>
+            <div class="fcb-bar"><div class="fcb-fill" style="width: 64%"></div></div>
+            <span class="fcb-pct">64 %</span>
+          </div>
+          <div class="fcb-row">
+            <span class="fcb-wk">KW 25</span>
+            <div class="fcb-bar"><div class="fcb-fill" style="width: 56%"></div></div>
+            <span class="fcb-pct">56 %</span>
+          </div>
+        </div>
+        <div class="cap-foot">
+          <span><strong class="accent-text">Pfingsten</strong> · Peak KW 22</span>
+          <span>± 3 % Konfidenz</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="mono-tag"><span class="diamond"></span> Comp-Set</div>
+      <h3>Wettbewerber <em>immer wach</em>.</h3>
+      <p>Comp-Set alle vier Stunden gecheckt. Wenn jemand seinen Preis senkt, weißt du es vor deinem Frühstück, nicht nach drei Tagen verlorener Buchungen.</p>
+      <div class="cap-visual">
+        <div class="cap-halfbars" aria-hidden="true">
+          <svg viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <defs>
+              <pattern id="dots-accent-cap" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="0.7" fill="#1e3a5f"/>
+              </pattern>
+              <pattern id="dots-muted-cap" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="0.7" fill="#a8a8ac"/>
+              </pattern>
+            </defs>
+            <line x1="32" y1="20"  x2="360" y2="20"  stroke="#d1cdc4" stroke-width="1" stroke-dasharray="2,3"/>
+            <line x1="32" y1="55"  x2="360" y2="55"  stroke="#d1cdc4" stroke-width="1" stroke-dasharray="2,3"/>
+            <line x1="32" y1="90"  x2="360" y2="90"  stroke="#d1cdc4" stroke-width="1" stroke-dasharray="2,3"/>
+            <text x="26" y="24" text-anchor="end" class="chart-yax">160</text>
+            <text x="26" y="59" text-anchor="end" class="chart-yax">140</text>
+            <text x="26" y="94" text-anchor="end" class="chart-yax">120</text>
+            <text x="26" y="129" text-anchor="end" class="chart-yax">100</text>
+            <!-- Krone 124 → bottom 124, scaled: y=88 -->
+            <rect x="48"  y="88"  width="48" height="37" fill="#ffffff"/>
+            <rect x="48"  y="88"  width="48" height="37" fill="url(#dots-muted-cap)"/>
+            <path d="M48,125 L48,88 L96,88 L96,125" fill="none" stroke="#a8a8ac" stroke-width="1.4"/>
+            <text x="72" y="80" text-anchor="middle" class="chart-val">124</text>
+            <!-- Du 156 → y=32 (active) -->
+            <rect x="112" y="32"  width="48" height="93" fill="#ffffff"/>
+            <rect x="112" y="32"  width="48" height="93" fill="url(#dots-accent-cap)"/>
+            <path d="M112,125 L112,32 L160,32 L160,125" fill="none" stroke="#1e3a5f" stroke-width="1.6"/>
+            <text x="136" y="24" text-anchor="middle" class="chart-val accent">156</text>
+            <!-- Adler 144 → y=53 -->
+            <rect x="176" y="53"  width="48" height="72" fill="#ffffff"/>
+            <rect x="176" y="53"  width="48" height="72" fill="url(#dots-muted-cap)"/>
+            <path d="M176,125 L176,53 L224,53 L224,125" fill="none" stroke="#a8a8ac" stroke-width="1.4"/>
+            <text x="200" y="45" text-anchor="middle" class="chart-val">144</text>
+            <!-- Astor 109 (drop) -->
+            <rect x="240" y="114" width="48" height="11" fill="#ffffff"/>
+            <rect x="240" y="114" width="48" height="11" fill="url(#dots-muted-cap)"/>
+            <path d="M240,125 L240,114 L288,114 L288,125" fill="none" stroke="#c4515f" stroke-width="1.4"/>
+            <text x="264" y="106" text-anchor="middle" class="chart-val drop">109</text>
+            <!-- Wellem 115 -->
+            <rect x="304" y="106" width="48" height="19" fill="#ffffff"/>
+            <rect x="304" y="106" width="48" height="19" fill="url(#dots-muted-cap)"/>
+            <path d="M304,125 L304,106 L352,106 L352,125" fill="none" stroke="#a8a8ac" stroke-width="1.4"/>
+            <text x="328" y="98" text-anchor="middle" class="chart-val">115</text>
+            <!-- Baseline -->
+            <line x1="32" y1="125" x2="360" y2="125" stroke="#c9c8c2" stroke-width="1"/>
+            <!-- Categories -->
+            <text x="72"  y="142" text-anchor="middle" class="chart-cat">Krone</text>
+            <text x="136" y="142" text-anchor="middle" class="chart-cat accent">Du</text>
+            <text x="200" y="142" text-anchor="middle" class="chart-cat">Adler</text>
+            <text x="264" y="142" text-anchor="middle" class="chart-cat drop">Astor</text>
+            <text x="328" y="142" text-anchor="middle" class="chart-cat">Wellem</text>
+          </svg>
+        </div>
+        <div class="cap-foot"><span>Astor <strong class="alert">↓ 12 €</strong> · vor 12 Min</span><span>5 Hotels · KW 18</span></div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="mono-tag"><span class="diamond"></span> Restriktionen</div>
+      <h3>MinLOS, CTA, CTD <em>ohne Pflege</em>.</h3>
+      <p>Ray erkennt wenn Auslastung dreht und setzt Restriktionen automatisch. Wochenende kommt, Mindestaufenthalt geht hoch. Du musst nichts mehr pflegen.</p>
+      <div class="cap-visual">
+        <div class="cap-restrict">
+          <div class="rest-col"><span class="d">Mo</span><div class="r-cell"></div></div>
+          <div class="rest-col"><span class="d">Di</span><div class="r-cell minlos"></div></div>
+          <div class="rest-col"><span class="d">Mi</span><div class="r-cell minlos"></div></div>
+          <div class="rest-col"><span class="d">Do</span><div class="r-cell minlos cta"></div></div>
+          <div class="rest-col is-active"><span class="d">Fr</span><div class="r-cell minlos cta"></div></div>
+          <div class="rest-col"><span class="d">Sa</span><div class="r-cell minlos ctd"></div></div>
+          <div class="rest-col"><span class="d">So</span><div class="r-cell"></div></div>
+        </div>
+        <div class="cap-foot">
+          <span><span class="dot minlos"></span>MinLOS 2</span>
+          <span><span class="dot cta"></span>CTA</span>
+          <span><span class="dot ctd"></span>CTD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="mono-tag"><span class="diamond"></span> Events</div>
+      <h3>Events <em>ohne Spreadsheet</em>.</h3>
+      <p>Schulferien, Messen, Konzerte, lokale Sport-Events. Automatisch erkannt, automatisch gewichtet, in der Demand-Kurve. Du musst nichts mehr anlegen.</p>
+      <div class="cap-visual">
+        <div class="cap-events">
+          <div class="evt-track">
+            <div class="evt-bar" style="left: 6%;  width: 8%; height: 38%"><span class="evt-name">Schulferien</span></div>
+            <div class="evt-bar" style="left: 26%; width: 8%; height: 56%"><span class="evt-name">Messe</span></div>
+            <div class="evt-bar is-now" style="left: 46%; width: 8%; height: 80%"><span class="evt-name">Konzert</span></div>
+            <div class="evt-bar" style="left: 66%; width: 8%; height: 48%"><span class="evt-name">Sport</span></div>
+            <div class="evt-bar" style="left: 86%; width: 8%; height: 44%"><span class="evt-name">Feiertag</span></div>
+          </div>
+          <div class="evt-axis"><span>Mai</span><span>Jun</span><span>Jul</span></div>
+        </div>
+        <div class="cap-foot"><span><strong class="accent-text">5 Events</strong> · auto-gewichtet · Demand +24 %</span></div>
+      </div>
+    </div>
+
+    <div class="cap">
+      <div class="mono-tag"><span class="diamond"></span> Reports</div>
+      <h3>Reports die du <em>nicht baust</em>.</h3>
+      <p>Wöchentliches Briefing als Mail. Monatlicher Snapshot fürs Owner-Meeting. Quartals-Review mit unserem RM. Alles automatisch, alles erklärt.</p>
+      <div class="cap-visual">
+        <div class="cap-report">
+          <div class="cap-report-head">
+            <span class="title">April · Snapshot</span>
+            <span class="meta">1. Mai · 09:00</span>
+          </div>
+          <div class="cap-report-stats">
+            <div class="rs"><span class="lbl">RevPAR</span><span class="num">134 €</span><span class="delta pos">+ 8 %</span></div>
+            <div class="rs"><span class="lbl">ADR</span><span class="num">164 €</span><span class="delta pos">+ 5 %</span></div>
+            <div class="rs"><span class="lbl">Auslast.</span><span class="num">82 %</span><span class="delta">± 0</span></div>
+          </div>
+        </div>
+        <div class="cap-foot"><span>412 Preise · <strong class="accent-text">387 auto</strong></span><span>monatlich</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ======== PRICING ======== -->
+<section class="section pricing" id="pricing">
+  <div class="section-head">
+    <div class="mono-tag"><span class="diamond"></span> Tarife</div>
+    <h2>Heuere deinen Revenue Manager. <em>Befördere ihn,</em> wenn nötig.</h2>
+    <p>Drei Tarife, gespiegelt nach RM-Seniorität. Wechsel jederzeit hoch, wie eine Beförderung. Pro Zimmer pro Monat. Kein Setup-Fee, kein Vertrag.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <div class="tier">
+      <div class="mono-tag muted"><span class="diamond" style="color: var(--muted);"></span> Tier 1</div>
+      <h3>Revenue <em>Manager</em></h3>
+      <div class="price">
+        <span class="num">8 €</span>
+        <span class="unit">/ Zimmer / Monat</span>
+      </div>
+      <div class="min">Ab 25 Zimmern · Jährlicher Review</div>
+      <ul>
+        <li>Monitoring & Alerts rund um die Uhr</li>
+        <li>Pricing-Empfehlungen mit Auto-Execute</li>
+        <li>Forecast & Comp-Set</li>
+        <li>Displacement-Analyse</li>
+        <li>E-Mail-Support</li>
+      </ul>
+      <div class="tier-cta"><a href="#" class="btn btn-ghost" style="width: 100%; justify-content: center;">Tier wählen</a></div>
+    </div>
+
+    <div class="tier featured">
+      <div class="mono-tag"><span class="diamond"></span> Tier 2</div>
+      <h3>Senior Revenue <em>Manager</em></h3>
+      <div class="price">
+        <span class="num">12 €</span>
+        <span class="unit">/ Zimmer / Monat</span>
+      </div>
+      <div class="min">Ab 35 Zimmern · Quartals-Review</div>
+      <ul>
+        <li>Alles aus Tier 1</li>
+        <li>Restriktions-Engine (MinLOS, CTA, CTD)</li>
+        <li>Distribution-Empfehlungen</li>
+        <li>Multi-Property Reporting</li>
+        <li>Rateshopper Pro</li>
+        <li>Priority SLA</li>
+      </ul>
+      <div class="tier-cta"><a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;"><span class="diamond"></span> Tier wählen</a></div>
+    </div>
+
+    <div class="tier">
+      <div class="mono-tag muted"><span class="diamond" style="color: var(--muted);"></span> Tier 3</div>
+      <h3>Revenue <em>Director</em></h3>
+      <div class="price">
+        <span class="num">20 €</span>
+        <span class="unit">/ Zimmer / Monat</span>
+      </div>
+      <div class="min">Ab 50 Zimmern · Monatlicher Review</div>
+      <ul>
+        <li>Alles aus Tier 2</li>
+        <li>Rate-Strategie-Optimierung</li>
+        <li>Budget & Group Contracts</li>
+        <li>Third-Party-Adjustments</li>
+        <li>Dedicated POC</li>
+        <li>Strategischer Quartals-Review</li>
+      </ul>
+      <div class="tier-cta"><a href="#" class="btn btn-ghost" style="width: 100%; justify-content: center;">Tier wählen</a></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======== FINAL CTA ======== -->
+<section class="section final-cta">
+  <div class="mono-tag" style="justify-content: center;"><span class="diamond"></span> Pilot in 14 Tagen · 30 Tage Probelauf</div>
+  <h2>Lass dein Hotel ab morgen <em>smarter pricen</em>.</h2>
+  <p>Wir setzen Ray gemeinsam mit dir auf, kalibrieren ihn auf dein Hotel und du sieht in zwei Wochen das erste Briefing in deinem Posteingang.</p>
+  <div class="ctas">
+    <a href="../onboarding/onboarding-magic.html" class="btn btn-primary"><span class="diamond"></span> Jetzt starten</a>
+    <a href="#" class="btn btn-ghost">Mit einem RM sprechen</a>
+  </div>
+</section>
+
+<!-- ======== FOOTER ======== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand">
+      <a href="#" class="brand" aria-label="happyhotel">
+        <svg class="brand-icon" viewBox="0 0 1224 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302ZM260.857 35.7541C283.501 35.7541 302.173 47.8708 302.173 82.4331V139.044H274.165V84.8167C274.165 68.1315 267.412 58.7957 253.508 58.7957C239.206 58.7957 230.665 69.1246 230.665 86.6044V139.044H202.657V0H230.665V49.4599C237.22 41.5145 246.357 35.7541 260.857 35.7541ZM889.501 82.4331C889.501 47.8708 870.829 35.7541 848.185 35.7541C833.685 35.7541 824.548 41.5145 817.993 49.4599V0H789.985V139.044H817.993V86.6044C817.993 69.1246 826.534 58.7957 840.836 58.7957C854.74 58.7957 861.494 68.1315 861.494 84.8167V139.044H889.501V82.4331ZM1195.6 139.044V0H1223.61V139.044H1195.6ZM1132.62 140.236C1098.66 140.236 1078.2 119.776 1078.2 88.1935C1078.2 56.4121 1099.06 35.7541 1130.64 35.7541C1161.23 35.7541 1181.89 54.823 1182.28 84.8167C1182.28 87.7962 1182.08 91.173 1181.49 94.3512H1107.4V95.7416C1107.99 110.242 1117.33 118.982 1131.43 118.982C1142.76 118.982 1150.7 114.016 1153.08 104.481H1180.69C1177.52 124.345 1159.84 140.236 1132.62 140.236ZM1107.99 76.0768H1154.08C1152.09 63.5629 1143.55 56.6107 1130.84 56.6107C1118.72 56.6107 1109.58 63.9602 1107.99 76.0768ZM1020.3 8.34264V109.845C1020.3 129.311 1030.03 139.044 1049.5 139.044H1072.74V115.406H1058.24C1051.09 115.406 1048.31 112.427 1048.31 105.276V60.5834H1071.55V36.9459H1048.31V8.34264H1020.3ZM954.631 140.236C922.055 140.236 900.802 119.379 900.802 87.9949C900.802 56.6107 922.055 35.7541 954.631 35.7541C987.207 35.7541 1008.46 56.6107 1008.46 87.9949C1008.46 119.578 987.207 140.236 954.631 140.236ZM954.631 117.393C970.324 117.393 980.057 105.276 980.057 87.9949C980.057 70.7137 970.324 58.597 954.631 58.597C938.939 58.597 929.405 70.7137 929.405 87.9949C929.405 105.276 938.939 117.393 954.631 117.393ZM744.492 86.803V36.9459H772.5V137.057C772.5 161.092 757.999 179.962 721.252 179.962C694.238 179.962 675.765 167.846 674.573 144.407H702.779C705.163 153.941 711.916 158.709 723.636 158.709C736.944 158.709 745.088 151.16 745.088 137.057V124.345C738.335 132.886 729.992 139.044 715.293 139.044C694.238 139.044 674.772 129.112 674.772 92.1662V36.9459H702.779V88.7894C702.779 106.666 708.937 115.605 722.643 115.605C736.348 115.605 744.492 105.475 744.492 86.803ZM662.793 88.1935C662.793 56.0148 642.93 35.5555 615.319 35.7541C600.819 35.7541 590.49 42.3091 583.935 51.049L581.154 36.9459H556.722V178.771H584.73V126.133C591.285 134.475 601.415 140.236 615.518 140.236C642.93 140.236 662.793 119.975 662.793 88.1935ZM634.388 87.7962C634.388 105.276 624.457 117.393 609.162 117.393C593.867 117.393 584.333 105.276 584.333 87.7962C584.333 70.5151 593.867 58.597 609.162 58.597C624.457 58.597 634.388 70.5151 634.388 87.7962ZM495.681 35.7541C523.291 35.5555 543.155 56.0148 543.155 88.1935C543.155 119.975 523.291 140.236 495.88 140.236C481.777 140.236 471.646 134.475 465.092 126.133V178.771H437.084V36.9459H461.516L464.297 51.049C470.852 42.3091 481.181 35.7541 495.681 35.7541ZM489.524 117.393C504.818 117.393 514.75 105.276 514.75 87.7962C514.75 70.5151 504.818 58.597 489.524 58.597C474.229 58.597 464.694 70.5151 464.694 87.7962C464.694 105.276 474.229 117.393 489.524 117.393ZM394.913 36.9459L392.132 50.453C385.577 41.7131 375.248 35.5555 360.748 35.5555C333.535 35.5555 313.473 56.2134 313.473 87.7962C313.473 120.174 333.535 140.236 360.947 140.037C375.447 140.037 385.577 133.283 392.331 124.742L394.714 139.044H419.544V36.9459H394.913ZM391.934 88.1935C391.934 105.475 382.399 117.393 367.104 117.393C351.809 117.393 342.076 105.475 342.076 88.1935C342.076 70.7137 351.809 58.597 367.104 58.597C382.399 58.597 391.934 70.7137 391.934 88.1935Z"/>
+        </svg>
+      </a>
+      <p>Eine Plattform für Hoteliers und Revenue Manager. Pricing, Forecasting, Comp-Set, Restriktionen. AI plus Mensch, in einem Stream.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Plattform</h4>
+      <ul>
+        <li><a href="#">Hotelier Mode</a></li>
+        <li><a href="#">Experten Mode</a></li>
+        <li><a href="#">Ray AI</a></li>
+        <li><a href="#">Hybrid Team</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Funktionen</h4>
+      <ul>
+        <li><a href="#">Pricing-Engine</a></li>
+        <li><a href="#">Forecast</a></li>
+        <li><a href="#">Comp-Set</a></li>
+        <li><a href="#">Reporting</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Unternehmen</h4>
+      <ul>
+        <li><a href="#">Über uns</a></li>
+        <li><a href="#">Kunden</a></li>
+        <li><a href="#">Karriere</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <ul>
+        <li><a href="../onboarding/onboarding-magic.html">Jetzt starten</a></li>
+        <li><a href="#">Support</a></li>
+        <li><a href="#">Sales</a></li>
+        <li><a href="#">Partner</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 happyhotel GmbH</span>
+    <span>Made in Germany</span>
+  </div>
+</footer>
+
+<!-- ======== RAY REASONING ANIMATION (Chain-of-Thought sequential reveal) ======== -->
+<script>
+(function () {
+  const section = document.getElementById('reasoning');
+  if (!section) return;
+
+  const flow       = section.querySelector('.rr-flow');
+  const steps      = Array.from(section.querySelectorAll('.rr-step[data-step]'));
+  const bridges    = Array.from(section.querySelectorAll('.rr-bridge[data-bridge-after]'));
+  const leftCards  = Array.from(section.querySelectorAll('.rr-left  .rr-side-card'));
+  const rightCards = Array.from(section.querySelectorAll('.rr-right .rr-side-card'));
+  const finalMsg   = section.querySelector('.rr-ray-final');
+
+  // step idx → side card mapping
+  const stepCard = [
+    leftCards[0],  leftCards[1],  leftCards[2],   // 0,1,2 = Mail / PMS / Pickup
+    rightCards[0], rightCards[1], rightCards[2],  // 3,4,5 = CompSet / Displacement / Policy
+  ];
+
+  const STEP_MS   = 1700;   // how long step shows the spinner before "done"
+  const POST_DONE = 250;    // small beat after done before bridge reveals
+  const BRIDGE_MS = 1000;   // read time for the bridge sentence
+  const START_MS  = 700;    // initial delay after entering viewport
+  const FINAL_MS  = 700;    // delay before final bubble after last step
+  const LOOP_MS   = 6500;   // pause showing recommendation before restart
+
+  let timer = null;
+
+  function clear(el, ...cls) { cls.forEach(c => el.classList.remove(c)); }
+
+  function scrollToEl(el) {
+    if (!flow || !el) return;
+    const flowRect = flow.getBoundingClientRect();
+    const elRect   = el.getBoundingClientRect();
+    const offset   = (elRect.top - flowRect.top) - (flow.clientHeight / 2) + (el.offsetHeight / 2);
+    flow.scrollTo({ top: flow.scrollTop + offset, behavior: 'smooth' });
+  }
+
+  // Dynamic chain-line: extends only to the mid of the last visible step's dot
+  function updateChainLine() {
+    if (!flow) return;
+    const shown = Array.from(section.querySelectorAll('.rr-step.is-shown'));
+    if (shown.length === 0) {
+      flow.style.setProperty('--rr-line-h', '0px');
+      return;
+    }
+    const firstDot = shown[0].querySelector('.rr-step-dot');
+    const lastDot  = shown[shown.length - 1].querySelector('.rr-step-dot');
+    if (!firstDot || !lastDot) return;
+    const flowRect  = flow.getBoundingClientRect();
+    const firstRect = firstDot.getBoundingClientRect();
+    const lastRect  = lastDot.getBoundingClientRect();
+    // Y in flow content coords (account for scroll)
+    const startY = (firstRect.top - flowRect.top + flow.scrollTop) + firstRect.height / 2;
+    const endY   = (lastRect.top  - flowRect.top + flow.scrollTop) + lastRect.height  / 2;
+    flow.style.setProperty('--rr-line-top', startY + 'px');
+    flow.style.setProperty('--rr-line-h',   Math.max(0, endY - startY) + 'px');
+  }
+
+  function showStep(idx) {
+    const step = steps[idx];
+    const card = stepCard[idx];
+    if (!step) return;
+    step.classList.add('is-shown', 'is-active');
+    if (card) card.classList.add('is-active');
+    scrollToEl(step);
+    // Update chain-line after the fade-in has placed the new step
+    requestAnimationFrame(() => requestAnimationFrame(updateChainLine));
+    timer = setTimeout(() => completeStep(idx), STEP_MS);
+  }
+
+  function completeStep(idx) {
+    const step = steps[idx];
+    const card = stepCard[idx];
+    if (step) {
+      clear(step, 'is-active');
+      step.classList.add('is-done');
+    }
+    if (card) {
+      clear(card, 'is-active');
+      card.classList.add('is-done');
+    }
+    timer = setTimeout(() => revealBridgeAndAdvance(idx), POST_DONE);
+  }
+
+  function revealBridgeAndAdvance(idx) {
+    const bridge = bridges.find(b => b.dataset.bridgeAfter === String(idx));
+    if (bridge) {
+      bridge.classList.add('is-shown');
+      scrollToEl(bridge);
+      timer = setTimeout(() => advance(idx + 1), BRIDGE_MS);
+    } else {
+      advance(idx + 1);
+    }
+  }
+
+  function advance(idx) {
+    if (idx >= steps.length) {
+      // All steps done — Ray's final bubble
+      timer = setTimeout(() => {
+        if (finalMsg) {
+          finalMsg.classList.add('is-revealed');
+          if (flow) flow.classList.add('is-final-shown');
+          setTimeout(() => flow.scrollTo({ top: flow.scrollHeight, behavior: 'smooth' }), 80);
+        }
+      }, FINAL_MS);
+      // Schedule loop
+      timer = setTimeout(() => {
+        reset();
+        timer = setTimeout(() => showStep(0), START_MS);
+      }, LOOP_MS);
+      return;
+    }
+    showStep(idx);
+  }
+
+  function reset() {
+    steps.forEach(s => clear(s, 'is-shown', 'is-active', 'is-done'));
+    stepCard.forEach(c => {
+      if (!c) return;
+      clear(c, 'is-active', 'is-done');
+    });
+    bridges.forEach(b => clear(b, 'is-shown'));
+    if (finalMsg) clear(finalMsg, 'is-revealed');
+    if (flow) {
+      flow.classList.remove('is-final-shown');
+      flow.scrollTo({ top: 0, behavior: 'auto' });
+    }
+    flow.style.setProperty('--rr-line-h', '0px');
+  }
+
+  // Recalculate line on resize (font-load shifts can change positions)
+  window.addEventListener('resize', () => requestAnimationFrame(updateChainLine));
+
+  let started = false;
+  const stage = section.querySelector('.rr-stage');
+  const observeTarget = stage || section;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      // Only start when ≥ 55% of the stage is in view — gives the user time to see
+      // the layout (chat + cards) before the reasoning starts animating.
+      if (e.isIntersecting && e.intersectionRatio >= 0.55 && !started) {
+        started = true;
+        timer = setTimeout(() => showStep(0), START_MS);
+        io.disconnect();
+      }
+    });
+  }, { threshold: [0, 0.25, 0.4, 0.55, 0.7, 0.85, 1] });
+  io.observe(observeTarget);
+})();
+</script>
+
+</body>
+</html>

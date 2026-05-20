@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel · Ray Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Tokens — happyhotel · Ray */
+  --paper:        #f6f5f1;
+  --shell:        #fafaf7;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --good:         #166534;
+  --bad:          #8c2f2f;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-sans:    "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", "SF Mono", Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background-color: #0d0e16;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1.2px);
+  background-size: 18px 18px;
+  background-position: 0 0;
+  min-height: 100vh;
+  padding: 32px;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Header ──────────────────────────────────────── */
+.ds-head {
+  max-width: 1440px;
+  margin: 0 auto 20px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ds-head-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid #6c7eff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-head-mark::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: #6c7eff;
+  transform: rotate(45deg);
+}
+.ds-head-title {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 500;
+  color: #f4f4f7;
+  letter-spacing: -0.01em;
+}
+.ds-head-title em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: #a4adff;
+  margin: 0 4px;
+}
+
+/* ─── Outer Frame ──────────────────────────────────── */
+.ds-frame {
+  max-width: 1440px;
+  margin: 0 auto;
+  background: var(--paper);
+  border: 2.5px solid #6c7eff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 0 0 1px rgba(108, 126, 255, 0.15);
+}
+
+.ds-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 18px;
+}
+
+.ds-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ─── Card Base ────────────────────────────────────── */
+.ds-card {
+  background: var(--surface-2);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+}
+.ds-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+.ds-card-label {
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.ds-card-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+/* ─── Color Card ───────────────────────────────────── */
+.ds-color-card {
+  background: var(--surface-2);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ds-color-block {
+  height: 64px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+.ds-color-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.ds-color-hex {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.ds-color-scale {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 1px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ds-color-scale > div {
+  height: 24px;
+}
+
+/* ─── Typography Card ─────────────────────────────── */
+.ds-type-card {
+  background: var(--surface-2);
+  border-radius: 14px;
+  padding: 18px 22px 22px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+.ds-type-aa {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 96px;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  margin-top: 10px;
+}
+.ds-type-aa.serif { font-family: var(--font-display); font-weight: 400; }
+.ds-type-aa.serif em { font-style: italic; color: var(--accent); }
+.ds-type-aa.sans { font-family: var(--font-sans); font-weight: 500; }
+.ds-type-aa.mono { font-family: var(--font-mono); font-weight: 500; font-size: 80px; }
+
+/* ─── Component samples ────────────────────────────── */
+.ds-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+}
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border-2);
+}
+.btn-ray {
+  background: var(--surface);
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-ray-mark {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* Mono tag */
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.mono-tag .mark {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.mono-tag.accent { color: var(--accent); }
+
+/* Trend pill */
+.trend-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 3px 10px;
+  background: var(--accent-soft);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0;
+}
+.trend-pill.down { background: #fbeded; color: var(--bad); }
+
+/* Status dot */
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+.status-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.status-dot.live::before { background: #22c55e; }
+.status-dot.waiting::before { background: var(--accent); }
+.status-dot.idle::before { background: var(--subtle); }
+
+/* Stat */
+.stat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+}
+.stat-value {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.stat-value em { font-style: italic; color: var(--accent); }
+
+/* Decision card sample */
+.sample-decision {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.sample-dec-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sample-dec-tag::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.sample-dec-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* Input sample */
+.sample-input {
+  width: 100%;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  color: var(--muted);
+}
+
+/* Headline sample */
+.sample-headline {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.sample-headline em {
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Mini diamond block */
+.diamond-grid {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  justify-content: center;
+  padding: 18px 0;
+}
+.diamond {
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.diamond.s { width: 6px; height: 6px; }
+.diamond.m { width: 10px; height: 10px; }
+.diamond.l { width: 16px; height: 16px; }
+.diamond.xl { width: 24px; height: 24px; }
+
+/* Hairline */
+.hairline {
+  border-top: 1px solid var(--border);
+  margin: 12px 0;
+}
+
+/* Bar chart mini */
+.chart-mini {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 80px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.chart-bar {
+  width: 28px;
+  position: relative;
+  background: var(--surface);
+  border: 1.5px solid var(--accent);
+  border-bottom: none;
+  background-image: radial-gradient(circle at 50% 50%, var(--accent) 0.7px, transparent 1px);
+  background-size: 4px 4px;
+}
+.chart-bar.muted {
+  border-color: var(--border-2);
+  background-image: radial-gradient(circle at 50% 50%, var(--subtle) 0.7px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+/* Status dots cluster */
+.dots-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Detail link sample */
+.sample-detail-link {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: underline dashed var(--accent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+/* Footer note */
+.ds-footer-note {
+  max-width: 1440px;
+  margin: 14px auto 0;
+  padding: 0 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.3px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>
+</head>
+<body>
+
+<div class="ds-head">
+  <div class="ds-head-mark"></div>
+  <div class="ds-head-title">happyhotel <em>· Ray Design</em></div>
+</div>
+
+<div class="ds-frame">
+  <div class="ds-grid">
+
+    <!-- ═══ COL 1 — COLORS ═══ -->
+    <div class="ds-col">
+
+      <div class="ds-color-card">
+        <div class="ds-color-block" style="background: var(--ink); color: #f4f4f7;">
+          <span class="ds-color-name">Ink</span>
+          <span class="ds-color-hex">#18181A</span>
+        </div>
+        <div class="ds-color-scale">
+          <div style="background:#18181a"></div>
+          <div style="background:#28282b"></div>
+          <div style="background:#3a3a3d"></div>
+          <div style="background:#52525a"></div>
+          <div style="background:#6e6e72"></div>
+          <div style="background:#8e8e94"></div>
+          <div style="background:#a8a8ac"></div>
+          <div style="background:#c9c8c2"></div>
+          <div style="background:#e6e5df"></div>
+          <div style="background:#f7f6f2"></div>
+        </div>
+      </div>
+
+      <div class="ds-color-card">
+        <div class="ds-color-block" style="background: var(--accent); color: #ebf0f6;">
+          <span class="ds-color-name">Accent</span>
+          <span class="ds-color-hex">#1E3A5F</span>
+        </div>
+        <div class="ds-color-scale">
+          <div style="background:#0c1d34"></div>
+          <div style="background:#14294a"></div>
+          <div style="background:#1e3a5f"></div>
+          <div style="background:#2a5180"></div>
+          <div style="background:#3e6aa1"></div>
+          <div style="background:#6385b8"></div>
+          <div style="background:#8aa3c8"></div>
+          <div style="background:#b8c4d4"></div>
+          <div style="background:#d4dce8"></div>
+          <div style="background:#ebf0f6"></div>
+        </div>
+      </div>
+
+      <div class="ds-color-card">
+        <div class="ds-color-block" style="background: var(--muted); color: #fff;">
+          <span class="ds-color-name">Muted</span>
+          <span class="ds-color-hex">#6E6E72</span>
+        </div>
+        <div class="ds-color-scale">
+          <div style="background:#3a3a3d"></div>
+          <div style="background:#52525a"></div>
+          <div style="background:#6e6e72"></div>
+          <div style="background:#84848a"></div>
+          <div style="background:#9a9a9f"></div>
+          <div style="background:#a8a8ac"></div>
+          <div style="background:#bcbcc0"></div>
+          <div style="background:#c9c8c2"></div>
+          <div style="background:#dfded8"></div>
+          <div style="background:#ededea"></div>
+        </div>
+      </div>
+
+      <div class="ds-color-card">
+        <div class="ds-color-block" style="background: var(--paper); color: var(--ink); border: 1px solid var(--border);">
+          <span class="ds-color-name">Paper</span>
+          <span class="ds-color-hex">#F6F5F1</span>
+        </div>
+        <div class="ds-color-scale">
+          <div style="background:#ededea"></div>
+          <div style="background:#f0eee9"></div>
+          <div style="background:#f3f1ed"></div>
+          <div style="background:#f6f5f1"></div>
+          <div style="background:#f8f6f3"></div>
+          <div style="background:#fafaf7"></div>
+          <div style="background:#fbfbf9"></div>
+          <div style="background:#fcfcfa"></div>
+          <div style="background:#fdfdfc"></div>
+          <div style="background:#ffffff"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ COL 2 — TYPOGRAPHY ═══ -->
+    <div class="ds-col">
+
+      <div class="ds-type-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Display</span>
+          <span class="ds-card-meta">Instrument Serif</span>
+        </div>
+        <div class="ds-type-aa serif">A<em>a</em></div>
+      </div>
+
+      <div class="ds-type-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Body</span>
+          <span class="ds-card-meta">Inter</span>
+        </div>
+        <div class="ds-type-aa sans">Aa</div>
+      </div>
+
+      <div class="ds-type-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Mono</span>
+          <span class="ds-card-meta">JetBrains Mono</span>
+        </div>
+        <div class="ds-type-aa mono">Aa</div>
+      </div>
+
+    </div>
+
+    <!-- ═══ COL 3 — COMPONENTS A ═══ -->
+    <div class="ds-col">
+
+      <!-- Headline sample -->
+      <div class="ds-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Headline</span>
+          <span class="ds-card-meta">italic accent</span>
+        </div>
+        <div class="sample-headline">Pfingsten war ein <em>Volltreffer.</em></div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="ds-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Buttons</span>
+          <span class="ds-card-meta">primary · ghost · ray</span>
+        </div>
+        <div class="ds-row">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-ghost">Ghost</button>
+        </div>
+        <div class="ds-row" style="margin-top:10px">
+          <button class="btn btn-ray"><span class="btn-ray-mark"></span>Ray</button>
+        </div>
+      </div>
+
+      <!-- Stat sample -->
+      <div class="ds-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Stat</span>
+          <span class="ds-card-meta">display + mono delta</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-label">Mai bisher</span>
+          <span class="stat-value"><em>28.420</em> €</span>
+        </div>
+        <div class="hairline"></div>
+        <span class="mono-tag" style="font-size:11px; letter-spacing:0.06em; color:var(--accent)">+ 12 % vs. Vorjahr</span>
+      </div>
+
+    </div>
+
+    <!-- ═══ COL 4 — COMPONENTS B ═══ -->
+    <div class="ds-col">
+
+      <!-- Mono tags + diamonds -->
+      <div class="ds-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Markers</span>
+          <span class="ds-card-meta">mono-tag · diamond</span>
+        </div>
+        <div class="ds-row" style="flex-direction:column; align-items:flex-start; gap:10px">
+          <span class="mono-tag accent"><span class="mark"></span>Ray erklärt</span>
+          <span class="mono-tag"><span class="mark" style="background:var(--muted)"></span>KW 18 · Briefing</span>
+        </div>
+        <div class="diamond-grid">
+          <div class="diamond s"></div>
+          <div class="diamond m"></div>
+          <div class="diamond l"></div>
+          <div class="diamond xl"></div>
+        </div>
+      </div>
+
+      <!-- Trend pills + status -->
+      <div class="ds-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Indicators</span>
+          <span class="ds-card-meta">trend · status</span>
+        </div>
+        <div class="ds-row">
+          <span class="trend-pill"><span>↑</span>12 %</span>
+          <span class="trend-pill"><span>↑</span>+1.016 €</span>
+          <span class="trend-pill down"><span>↓</span>4 %</span>
+        </div>
+        <div class="hairline"></div>
+        <div class="dots-cluster">
+          <span class="status-dot live">Live · aktiv</span>
+          <span class="status-dot waiting">Wartet auf dich</span>
+          <span class="status-dot idle">Idle · vor 2 Std</span>
+        </div>
+      </div>
+
+      <!-- Bar chart + detail link -->
+      <div class="ds-card">
+        <div class="ds-card-head">
+          <span class="ds-card-label">Charts</span>
+          <span class="ds-card-meta">dotted bar + link</span>
+        </div>
+        <div class="chart-mini">
+          <div class="chart-bar" style="height:72%"></div>
+          <div class="chart-bar muted" style="height:58%"></div>
+          <div class="chart-bar muted" style="height:38%"></div>
+        </div>
+        <div class="ds-row" style="justify-content:space-between; margin-top:8px">
+          <span class="mono-tag" style="font-size:9px; letter-spacing:1.5px">Aktuell · Plan · Vorjahr</span>
+        </div>
+        <div class="hairline"></div>
+        <a href="#" class="sample-detail-link">heute Nacht 23 Preise angepasst</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Bottom row: Decision card + Modal preview -->
+  <div class="ds-grid" style="margin-top:18px; grid-template-columns: 1.2fr 1fr 1fr 1.2fr;">
+
+    <!-- Decision card -->
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Decision Card</span>
+        <span class="ds-card-meta">Pattern</span>
+      </div>
+      <div class="sample-decision">
+        <div class="sample-dec-tag">Deine Freigabe nötig</div>
+        <div class="sample-dec-title">Großgruppe Berlin · 24 Zimmer</div>
+        <div style="margin-top:12px; display:flex; gap:6px">
+          <button class="btn btn-primary" style="font-size:11px; padding:6px 12px">Annehmen</button>
+          <button class="btn btn-ghost" style="font-size:11px; padding:6px 12px">Ablehnen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Input</span>
+        <span class="ds-card-meta">Text Field</span>
+      </div>
+      <input class="sample-input" placeholder="Frag Ray etwas..." />
+      <div class="hairline"></div>
+      <div class="ds-row">
+        <span class="mono-tag muted"><span class="mark" style="background:var(--accent)"></span>Kontext</span>
+        <span style="font-size:11px; color:var(--ink-2)">Großgruppe Berlin</span>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Tabs</span>
+        <span class="ds-card-meta">Multi-Session</span>
+      </div>
+      <div style="display:flex; gap:0; padding:8px 6px 0; background:var(--surface); border-radius:8px 8px 0 0; border:1px solid var(--border); border-bottom:none;">
+        <button style="font-family:inherit; font-size:11px; font-weight:600; padding:7px 10px; border-radius:6px 6px 0 0; border:1px solid var(--border); border-bottom:none; background:var(--surface-2); color:var(--ink); display:flex; align-items:center; gap:5px; margin-bottom:-1px;">
+          <span style="width:5px;height:5px;background:var(--accent);transform:rotate(45deg);"></span>
+          Großgruppe
+        </button>
+        <button style="font-family:inherit; font-size:11px; font-weight:500; padding:7px 10px; border-radius:6px 6px 0 0; border:1px solid transparent; background:transparent; color:var(--muted); display:flex; align-items:center; gap:5px;">
+          <span style="width:5px;height:5px;background:var(--accent);transform:rotate(45deg); opacity:0.5;"></span>
+          MinLOS
+        </button>
+        <button style="margin-left:auto; width:24px; height:24px; border-radius:5px; border:1.5px solid var(--accent); background:var(--surface); display:flex; align-items:center; justify-content:center; cursor:pointer; align-self:center;">
+          <span style="width:6px;height:6px;background:var(--accent);transform:rotate(45deg);"></span>
+        </button>
+      </div>
+      <div style="height:54px; background:var(--surface-2); border-radius:0 0 8px 8px; border:1px solid var(--border); border-top:none;"></div>
+    </div>
+
+    <!-- Mini briefing -->
+    <div class="ds-card">
+      <div class="ds-card-head">
+        <span class="ds-card-label">Briefing Sample</span>
+        <span class="ds-card-meta">Hotelier Mode</span>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+        <span class="mono-tag" style="font-size:9px; margin-bottom:8px"><span class="mark"></span>KW 18</span>
+        <div style="font-family:var(--font-display); font-weight:400; font-size:18px; letter-spacing:-0.025em; color:var(--ink); line-height:1.2; margin-top:6px;">
+          Pfingsten war ein <em style="font-style:italic; color:var(--accent); font-weight:500">Volltreffer.</em>
+        </div>
+        <div style="font-size:12px; color:var(--ink-2); line-height:1.55; margin-top:8px;">
+          Du hast <span style="font-family:var(--font-mono); font-weight:700; font-size:11px;">28.420 €</span> verdient, +12 % vs. Vorjahr.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="ds-footer-note">
+  <span>happyhotel · Ray · Wireframe v4 · Design System</span>
+  <span>Tally-style · Editorial Premium</span>
+</div>
+
+</body>
+</html>

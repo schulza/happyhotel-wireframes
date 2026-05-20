@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel · Mission Control · v8 Hybrid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --shell-2:      #efeeea;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --border-3:     #a6a5a0;
+
+  --good:         #1e3a5f;
+  --bad:          #8c2f2f;
+  --warn:         #8a6a3a;
+  --warn-soft:    #f1ece3;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+em { font-style: normal; }
+html, body { height: 100%; }
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.5;
+  background: var(--shell);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ═══ APP SHELL ═══════════════════════════════════════ */
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 56px 1fr;
+}
+
+/* Topbar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  gap: 16px;
+}
+.tb-brand { display: inline-flex; align-items: center; color: var(--accent); }
+.tb-brand svg { height: 20px; width: auto; display: block; }
+.tb-sep { width: 1px; height: 18px; background: var(--border-2); }
+.tb-hotel { font-size: 13px; color: var(--muted); }
+.tb-hotel strong { color: var(--ink); font-weight: 500; }
+.tb-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.tb-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 5px 11px;
+  font-weight: 600;
+}
+.tb-pulse .tbp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.tier-pill {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 100px;
+  background: var(--shell-2);
+  color: var(--muted);
+}
+.tb-av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: "EB Garamond", serif;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Body */
+.body {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  align-items: start;
+}
+
+/* Rail */
+.rail {
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rail-item {
+  padding: 14px 6px 12px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  position: relative;
+  transition: background 0.15s ease;
+}
+.rail-item .rail-glyph {
+  font-family: "EB Garamond", serif;
+  font-size: 22px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--subtle);
+  line-height: 1;
+}
+.rail-item:hover { background: var(--surface-2); }
+.rail-item.active {
+  background: var(--accent);
+  color: var(--accent-soft);
+}
+.rail-item.active .rail-glyph { color: #fff; }
+.rail-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: var(--ink);
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rail-item.active .rail-badge { background: #fff; color: var(--accent); }
+.rail-spacer { flex: 1; }
+
+/* Main */
+.main {
+  padding: 24px 32px 48px;
+  background: var(--shell);
+  min-height: calc(100vh - 56px);
+  max-width: 1440px;
+}
+
+/* ═══ PULSE HEADER (compact) ═══ */
+.pulse {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.pulse-greet {
+  font-family: "EB Garamond", serif;
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.pulse-greet em { color: var(--accent); }
+.pulse-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.pulse-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+}
+.pulse-stat b {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 12px;
+}
+.pulse-stat.urgent b {
+  color: var(--accent);
+}
+.pulse-stat .ps-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+.pulse-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* ═══ SECTION HEAD ═══ */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 16px;
+}
+.section-head h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.section-head h2::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.head-meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+section + section { margin-top: 22px; }
+
+/* ═══ KPI STRIP with sparklines ═══ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+.kpi:hover { border-color: var(--border-2); }
+.kpi-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.kpi-left { min-width: 0; flex: 1; }
+.kpi-label {
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.kpi-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.05;
+  white-space: nowrap;
+}
+.kpi-delta {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 10.5px;
+  color: var(--accent);
+  margin-top: 4px;
+}
+.kpi-delta.neg { color: var(--bad); }
+.kpi-spark {
+  width: 78px;
+  height: 36px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.kpi-spark svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.kpi-spark .sp-area { fill: var(--accent); opacity: 0.12; }
+.kpi-spark .sp-line { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linejoin: round; }
+.kpi-spark .sp-dot {
+  fill: var(--accent);
+}
+.kpi-spark.neg .sp-area { fill: var(--bad); }
+.kpi-spark.neg .sp-line { stroke: var(--bad); }
+.kpi-spark.neg .sp-dot { fill: var(--bad); }
+
+/* ═══ ACTION QUEUE — compact rows ═══ */
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.action {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  column-gap: 24px;
+  row-gap: 6px;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+.action.urgent { border-color: var(--accent-line); }
+.action.urgent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.action-head-row {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+.action-tag {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.action-tag.warn { color: var(--bad); }
+.action-tag.idea { color: var(--warn); }
+.action-tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+.action-deadline {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.action.urgent .action-deadline {
+  color: var(--accent);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.action.urgent .action-deadline .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+.action-title {
+  grid-column: 1 / -1;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 14.5px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+.action-data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11.5px;
+  color: var(--ink-2);
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.action-data .ad-pair {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+.action-data .ad-key {
+  color: var(--muted);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+.action-data .ad-val {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 12px;
+}
+.action-data .ad-val.accent { color: var(--accent); }
+.action-data .ad-sep {
+  width: 3px;
+  height: 3px;
+  background: var(--border-3);
+  border-radius: 50%;
+  display: inline-block;
+}
+.action-rec {
+  grid-column: 1 / -1;
+  font-family: "EB Garamond", serif;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.action-rec::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.action-buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* Buttons */
+.btn {
+  font-family: "Inter", inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-primary:hover { background: #000; }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-2);
+  border: 1px solid var(--border-2);
+}
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-ray {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  margin-left: auto;
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-family: "Inter";
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-ray:hover { background: var(--accent-soft); }
+.btn-ray .ray-rune {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+
+/* ═══ ROW: Performance Chart + Activity Log ═══ */
+.row-2 {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+
+/* Performance chart */
+.perf-tabs {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+.perf-tab {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -9px;
+}
+.perf-tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+.perf-chart {
+  height: 160px;
+  position: relative;
+  padding-top: 6px;
+}
+.perf-chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.perf-chart .pc-bar { fill: var(--accent); }
+.perf-chart .pc-bar.forecast { fill: var(--accent); opacity: 0.22; }
+.perf-chart .pc-bar.actual { fill: var(--accent); }
+.perf-chart .pc-axis-line { stroke: var(--border); stroke-width: 1; }
+.perf-chart .pc-axis-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  fill: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.perf-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.perf-legend .pl-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  vertical-align: -1px;
+}
+.perf-legend .pl-actual { background: var(--accent); }
+.perf-legend .pl-forecast { background: var(--accent); opacity: 0.22; }
+
+/* Activity log compact */
+.log-list {
+  display: flex;
+  flex-direction: column;
+}
+.log-row {
+  display: grid;
+  grid-template-columns: 60px 38px 1fr;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.log-row:last-child { border-bottom: none; padding-bottom: 0; }
+.log-row .lr-time {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 10.5px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.log-row .lr-actor {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.log-row.marc .lr-actor { color: var(--muted); }
+.log-row.anna .lr-actor { color: var(--ink); }
+.log-row .lr-action {
+  font-size: 12px;
+  color: var(--ink-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+.log-row .lr-text { color: var(--ink); flex: 1; min-width: 0; }
+.log-row .lr-text .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--ink);
+}
+.log-row .lr-reason {
+  font-family: "EB Garamond", serif;
+  color: var(--muted);
+  font-size: 12.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.log-foot {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.log-more {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+.log-more:hover { text-decoration: underline; }
+.log-plan {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.log-plan b { color: var(--accent); font-weight: 600; }
+
+/* ═══ WEEK OUTLOOK with bars ═══ */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+.day {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 12px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+.day:hover { border-color: var(--border-2); }
+.day.event {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.day.event .d-dow,
+.day.event .d-status,
+.day.event .d-occ { color: rgba(255,255,255,0.85); }
+.day.event .d-bar { background: rgba(255,255,255,0.2); }
+.day.event .d-bar-fill { background: rgba(255,255,255,0.95); }
+
+.d-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.d-dow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.d-occ {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 10.5px;
+  color: var(--ink);
+  font-weight: 600;
+}
+.d-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.d-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.d-status {
+  font-family: "EB Garamond", serif;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* ═══ RAY BAR ═══ */
+.ray-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+.ray-mark {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.ray-text {
+  font-family: "EB Garamond", serif;
+  font-size: 15px;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.ray-text em { color: var(--accent); }
+.ray-input {
+  flex: 1;
+  border: 1px solid var(--border-2);
+  background: var(--surface-2);
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  color: var(--ink);
+  border-radius: 6px;
+}
+.ray-input::placeholder { color: var(--subtle); }
+.ray-input:focus { border-color: var(--accent); background: var(--surface); }
+.ray-send {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: var(--accent);
+  color: var(--surface);
+  cursor: pointer;
+  border-radius: 6px;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.ray-suggestions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.rs-pill {
+  font-family: "Inter", inherit;
+  font-size: 11px;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent-line);
+  padding: 4px 10px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+.rs-pill:hover { background: var(--accent-soft); }
+
+/* Responsive */
+@media (max-width: 1280px) {
+  .row-2 { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1080px) {
+  .body { grid-template-columns: 64px 1fr; }
+  .main { padding: 18px 18px 36px; }
+  .week-grid { grid-template-columns: repeat(7, minmax(60px, 1fr)); overflow-x: auto; }
+  .action { grid-template-columns: 1fr; }
+  .kpi-spark { width: 60px; height: 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <span class="tb-brand" aria-label="happyhotel">
+      <svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/>
+      </svg>
+    </span>
+    <div class="tb-sep"></div>
+    <span class="tb-hotel"><strong>Hotel Seeblick</strong> · Berlin · 80 Zimmer</span>
+    <div class="tb-right">
+      <span class="tb-pulse"><span class="tbp-dot"></span>Ray aktiv · Autopilot</span>
+      <span class="tier-pill">Senior RM</span>
+      <div class="tb-av">A</div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- Rail -->
+    <nav class="rail">
+      <div class="rail-item active">
+        <span class="rail-glyph">B</span>
+        Briefing
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">P</span>
+        Preise
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">A</span>
+        Analyse
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">M</span>
+        Mitb.
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">K</span>
+        Kalend.
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">L</span>
+        Audit
+      </div>
+      <div class="rail-spacer"></div>
+      <div class="rail-item">
+        <span class="rail-glyph">S</span>
+        Setup
+      </div>
+    </nav>
+
+    <main class="main">
+
+      <!-- ═══ PULSE HEADER ═══ -->
+      <header class="pulse">
+        <div>
+          <div class="pulse-greet">Guten Morgen, <em>Anna.</em></div>
+          <div class="pulse-strip">
+            <span class="pulse-stat"><span>Aktionen 24h</span><b>23</b></span>
+            <span class="pulse-stat"><span>Freigaben</span><b>3</b></span>
+            <span class="pulse-stat urgent"><span class="ps-dot"></span><span>Frist heute</span><b>17:00</b></span>
+            <span class="pulse-stat"><span>Marc gegengelesen</span><b>2</b></span>
+          </div>
+        </div>
+        <div class="pulse-date">07. Mai 2026 · 08:15</div>
+      </header>
+
+      <!-- ═══ KPI STRIP ═══ -->
+      <section>
+        <div class="kpi-grid">
+
+          <div class="kpi">
+            <div class="kpi-row">
+              <div class="kpi-left">
+                <div class="kpi-label">Mai bisher</div>
+                <div class="kpi-value">28.420 €</div>
+                <div class="kpi-delta">+ 12 % vs. Plan</div>
+              </div>
+              <div class="kpi-spark">
+                <svg viewBox="0 0 80 36" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="sp-area" d="M 0 30 L 6 28 L 12 26 L 18 22 L 24 24 L 30 18 L 36 14 L 42 16 L 48 12 L 54 10 L 60 8 L 66 11 L 72 6 L 78 4 L 80 4 L 80 36 L 0 36 Z"/>
+                  <path class="sp-line" d="M 0 30 L 6 28 L 12 26 L 18 22 L 24 24 L 30 18 L 36 14 L 42 16 L 48 12 L 54 10 L 60 8 L 66 11 L 72 6 L 78 4"/>
+                  <circle class="sp-dot" cx="78" cy="4" r="2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-row">
+              <div class="kpi-left">
+                <div class="kpi-label">Forecast Mai</div>
+                <div class="kpi-value">64.000 €</div>
+                <div class="kpi-delta">+ 14 % vs. Plan</div>
+              </div>
+              <div class="kpi-spark">
+                <svg viewBox="0 0 80 36" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="sp-area" d="M 0 26 L 6 24 L 12 22 L 18 20 L 24 18 L 30 16 L 36 14 L 42 12 L 48 12 L 54 10 L 60 8 L 66 6 L 72 6 L 78 4 L 80 4 L 80 36 L 0 36 Z"/>
+                  <path class="sp-line" d="M 0 26 L 6 24 L 12 22 L 18 20 L 24 18 L 30 16 L 36 14 L 42 12 L 48 12 L 54 10 L 60 8 L 66 6 L 72 6 L 78 4"/>
+                  <circle class="sp-dot" cx="78" cy="4" r="2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-row">
+              <div class="kpi-left">
+                <div class="kpi-label">Belegung heute</div>
+                <div class="kpi-value">88 %</div>
+                <div class="kpi-delta">+ 14 vs. Vorjahr</div>
+              </div>
+              <div class="kpi-spark">
+                <svg viewBox="0 0 80 36" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="sp-area" d="M 0 22 L 6 20 L 12 24 L 18 22 L 24 18 L 30 20 L 36 14 L 42 16 L 48 10 L 54 14 L 60 10 L 66 8 L 72 6 L 78 6 L 80 6 L 80 36 L 0 36 Z"/>
+                  <path class="sp-line" d="M 0 22 L 6 20 L 12 24 L 18 22 L 24 18 L 30 20 L 36 14 L 42 16 L 48 10 L 54 14 L 60 10 L 66 8 L 72 6 L 78 6"/>
+                  <circle class="sp-dot" cx="78" cy="6" r="2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-row">
+              <div class="kpi-left">
+                <div class="kpi-label">Pickup KW 20</div>
+                <div class="kpi-value">+ 18 %</div>
+                <div class="kpi-delta">über Forecast</div>
+              </div>
+              <div class="kpi-spark">
+                <svg viewBox="0 0 80 36" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="sp-area" d="M 0 28 L 6 26 L 12 24 L 18 26 L 24 20 L 30 22 L 36 16 L 42 14 L 48 12 L 54 8 L 60 10 L 66 6 L 72 4 L 78 2 L 80 2 L 80 36 L 0 36 Z"/>
+                  <path class="sp-line" d="M 0 28 L 6 26 L 12 24 L 18 26 L 24 20 L 30 22 L 36 16 L 42 14 L 48 12 L 54 8 L 60 10 L 66 6 L 72 4 L 78 2"/>
+                  <circle class="sp-dot" cx="78" cy="2" r="2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══ ACTION QUEUE ═══ -->
+      <section>
+        <div class="section-head">
+          <h2>Du musst entscheiden</h2>
+          <span class="head-meta">3 offen · 1 Frist heute</span>
+        </div>
+
+        <div class="queue-list">
+
+          <article class="action urgent">
+            <div class="action-head-row">
+              <span class="action-tag">Freigabe nötig</span>
+              <span class="action-deadline"><span class="pulse-dot"></span>Frist heute 17:00</span>
+            </div>
+            <div class="action-title">Großgruppe Berlin · 14.–17. Mai · 24 Zi · 119 €</div>
+            <div class="action-data">
+              <span class="ad-pair"><span class="ad-key">Brutto</span><span class="ad-val">+ 8.568 €</span></span>
+              <span class="ad-sep"></span>
+              <span class="ad-pair"><span class="ad-key">Verdr.</span><span class="ad-val">− 7.552 €</span></span>
+              <span class="ad-sep"></span>
+              <span class="ad-pair"><span class="ad-key">Netto</span><span class="ad-val accent">+ 1.016 €</span></span>
+              <span class="ad-sep"></span>
+              <span class="ad-pair"><span class="ad-key">Vertrauen</span><span class="ad-val">0,84</span></span>
+            </div>
+            <div class="action-rec">Ray empfiehlt: Annehmen · Mai schließt als Bestmonat seit 2019</div>
+            <div class="action-buttons">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn btn-ghost">Ablehnen</button>
+              <button class="btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </article>
+
+          <article class="action">
+            <div class="action-head-row">
+              <span class="action-tag warn">Anomalie</span>
+              <span class="action-deadline">Vorschlag heute 14:30</span>
+            </div>
+            <div class="action-title">Pickup KW 21 fällt ab</div>
+            <div class="action-data">
+              <span class="ad-pair"><span class="ad-key">Δ Plan</span><span class="ad-val">− 4,1 %</span></span>
+              <span class="ad-sep"></span>
+              <span class="ad-pair"><span class="ad-key">Ursache</span><span class="ad-val">Comp-City − 12 €</span></span>
+              <span class="ad-sep"></span>
+              <span class="ad-pair"><span class="ad-key">Ray prüft</span><span class="ad-val">12:00</span></span>
+            </div>
+            <div class="action-rec">Ray vermutet Comp-Set-Reaktion · Vorschlag um 14:30</div>
+            <div class="action-buttons">
+              <button class="btn btn-primary">Ray analysieren lassen</button>
+              <button class="btn btn-ghost">Selbst prüfen</button>
+              <button class="btn btn-ghost">Ignorieren</button>
+            </div>
+          </article>
+
+          <article class="action">
+            <div class="action-head-row">
+              <span class="action-tag idea">Vorschlag</span>
+              <span class="action-deadline">vor 13. Mai</span>
+            </div>
+            <div class="action-title">MinLOS 3 · Pfingsten 13.–15. Mai aktivieren?</div>
+            <div class="action-data">
+              <span class="ad-pair"><span class="ad-key">Auslastung</span><span class="ad-val">96 %</span></span>
+              <span class="ad-sep"></span>
+              <span class="ad-pair"><span class="ad-key">Vorjahr</span><span class="ad-val">8 verlor. 2-N</span></span>
+              <span class="ad-sep"></span>
+              <span class="ad-pair"><span class="ad-key">Schutz</span><span class="ad-val">3 Nächte</span></span>
+            </div>
+            <div class="action-rec">Ray empfiehlt MinLOS 3 für die drei Nächte</div>
+            <div class="action-buttons">
+              <button class="btn btn-primary">Aktivieren</button>
+              <button class="btn btn-ghost">Anpassen</button>
+              <button class="btn btn-ghost">Ablehnen</button>
+              <button class="btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ═══ Performance + Activity Log ═══ -->
+      <section>
+        <div class="row-2">
+
+          <!-- Performance Chart -->
+          <article class="card">
+            <div class="section-head">
+              <h2>Performance</h2>
+              <span class="head-meta">Mai bis Sep · Forecast eingeblendet</span>
+            </div>
+            <div class="perf-tabs">
+              <span class="perf-tab active">Umsatz</span>
+              <span class="perf-tab">RevPAR</span>
+              <span class="perf-tab">Auslastung</span>
+              <span class="perf-tab">ADR</span>
+              <span class="perf-tab">Pickup</span>
+            </div>
+            <div class="perf-chart">
+              <svg viewBox="0 0 600 160" preserveAspectRatio="none" aria-hidden="true">
+                <!-- gridlines -->
+                <line class="pc-axis-line" x1="0" y1="20" x2="600" y2="20"/>
+                <line class="pc-axis-line" x1="0" y1="60" x2="600" y2="60"/>
+                <line class="pc-axis-line" x1="0" y1="100" x2="600" y2="100"/>
+                <line class="pc-axis-line" x1="0" y1="140" x2="600" y2="140"/>
+
+                <!-- 5 monatliche Bars (Mai-Sep, x-positionen 30..570) -->
+                <!-- Mai: actual + forecast cap -->
+                <rect class="pc-bar actual" x="30" y="44" width="60" height="96"/>
+                <rect class="pc-bar forecast" x="30" y="32" width="60" height="12"/>
+
+                <!-- Juni -->
+                <rect class="pc-bar actual" x="150" y="56" width="60" height="84"/>
+                <rect class="pc-bar forecast" x="150" y="36" width="60" height="20"/>
+
+                <!-- Juli -->
+                <rect class="pc-bar actual" x="270" y="34" width="60" height="106"/>
+                <rect class="pc-bar forecast" x="270" y="20" width="60" height="14"/>
+
+                <!-- Aug -->
+                <rect class="pc-bar actual" x="390" y="48" width="60" height="92"/>
+                <rect class="pc-bar forecast" x="390" y="30" width="60" height="18"/>
+
+                <!-- Sep -->
+                <rect class="pc-bar actual" x="510" y="68" width="60" height="72"/>
+                <rect class="pc-bar forecast" x="510" y="44" width="60" height="24"/>
+
+                <!-- Achsenlabels -->
+                <text class="pc-axis-label" x="60" y="156" text-anchor="middle">Mai</text>
+                <text class="pc-axis-label" x="180" y="156" text-anchor="middle">Juni</text>
+                <text class="pc-axis-label" x="300" y="156" text-anchor="middle">Juli</text>
+                <text class="pc-axis-label" x="420" y="156" text-anchor="middle">Aug</text>
+                <text class="pc-axis-label" x="540" y="156" text-anchor="middle">Sep</text>
+              </svg>
+            </div>
+            <div class="perf-legend">
+              <span><span class="pl-swatch pl-actual"></span>Umsatz Plan</span>
+              <span><span class="pl-swatch pl-forecast"></span>Forecast Zusatz</span>
+            </div>
+          </article>
+
+          <!-- Activity Log compact -->
+          <article class="card">
+            <div class="section-head">
+              <h2>Was Ray gemacht hat</h2>
+              <span class="head-meta">letzte 24 h</span>
+            </div>
+            <div class="log-list">
+              <div class="log-row">
+                <span class="lr-time">02:14</span>
+                <span class="lr-actor">Ray</span>
+                <span class="lr-action">
+                  <span class="lr-text">Sa 09.05. <span class="num">142 → 148 €</span></span>
+                  <span class="lr-reason">Pickup-Anomalie</span>
+                </span>
+              </div>
+              <div class="log-row">
+                <span class="lr-time">03:45</span>
+                <span class="lr-actor">Ray</span>
+                <span class="lr-action">
+                  <span class="lr-text">MinLOS <span class="num">2N</span> KW 21 aktiv</span>
+                  <span class="lr-reason">Pfingsten-Druck</span>
+                </span>
+              </div>
+              <div class="log-row">
+                <span class="lr-time">06:12</span>
+                <span class="lr-actor">Ray</span>
+                <span class="lr-action">
+                  <span class="lr-text">Channel-Sync flexible Rate</span>
+                  <span class="lr-reason">routine</span>
+                </span>
+              </div>
+              <div class="log-row">
+                <span class="lr-time">06:48</span>
+                <span class="lr-actor">Ray</span>
+                <span class="lr-action">
+                  <span class="lr-text">Mi 13.05. <span class="num">188 → 196 €</span></span>
+                  <span class="lr-reason">Pickup + 24 %</span>
+                </span>
+              </div>
+              <div class="log-row">
+                <span class="lr-time">07:32</span>
+                <span class="lr-actor">Ray</span>
+                <span class="lr-action">
+                  <span class="lr-text">CTA Restriktion 13.05.</span>
+                  <span class="lr-reason">Hochsaison-Schutz</span>
+                </span>
+              </div>
+              <div class="log-row marc">
+                <span class="lr-time">−1d 14:30</span>
+                <span class="lr-actor">Marc</span>
+                <span class="lr-action">
+                  <span class="lr-text">DEC-026 gegengelesen</span>
+                  <span class="lr-reason">ok</span>
+                </span>
+              </div>
+            </div>
+            <div class="log-foot">
+              <a class="log-more">Alle 23 Aktionen →</a>
+              <span class="log-plan">Nächster Sweep <b>12:00</b></span>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ═══ WEEK OUTLOOK with bars ═══ -->
+      <section>
+        <div class="section-head">
+          <h2>Nächste 7 Tage</h2>
+          <span class="head-meta">Belegung · Status</span>
+        </div>
+        <div class="week-grid">
+          <div class="day">
+            <div class="d-top"><span class="d-dow">Do</span><span class="d-occ">42 %</span></div>
+            <div class="d-bar"><div class="d-bar-fill" style="width: 42%"></div></div>
+            <div class="d-status">ruhig</div>
+          </div>
+          <div class="day">
+            <div class="d-top"><span class="d-dow">Fr</span><span class="d-occ">68 %</span></div>
+            <div class="d-bar"><div class="d-bar-fill" style="width: 68%"></div></div>
+            <div class="d-status">normal</div>
+          </div>
+          <div class="day">
+            <div class="d-top"><span class="d-dow">Sa</span><span class="d-occ">88 %</span></div>
+            <div class="d-bar"><div class="d-bar-fill" style="width: 88%"></div></div>
+            <div class="d-status">stark</div>
+          </div>
+          <div class="day">
+            <div class="d-top"><span class="d-dow">So</span><span class="d-occ">76 %</span></div>
+            <div class="d-bar"><div class="d-bar-fill" style="width: 76%"></div></div>
+            <div class="d-status">stark</div>
+          </div>
+          <div class="day">
+            <div class="d-top"><span class="d-dow">Mo</span><span class="d-occ">38 %</span></div>
+            <div class="d-bar"><div class="d-bar-fill" style="width: 38%"></div></div>
+            <div class="d-status">ruhig</div>
+          </div>
+          <div class="day">
+            <div class="d-top"><span class="d-dow">Di</span><span class="d-occ">52 %</span></div>
+            <div class="d-bar"><div class="d-bar-fill" style="width: 52%"></div></div>
+            <div class="d-status">normal</div>
+          </div>
+          <div class="day event">
+            <div class="d-top"><span class="d-dow">Mi</span><span class="d-occ">99 %</span></div>
+            <div class="d-bar"><div class="d-bar-fill" style="width: 99%"></div></div>
+            <div class="d-status">Pfingsten</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ FRAG RAY ═══ -->
+      <section>
+        <div class="ray-bar">
+          <span class="ray-mark"></span>
+          <div class="ray-text">Frag <em>Ray</em></div>
+          <input class="ray-input" type="text" placeholder="Was hast du heute Nacht für mich gemacht?">
+          <button class="ray-send" aria-label="Senden">→</button>
+        </div>
+        <div class="ray-suggestions">
+          <button class="rs-pill">Warum Sa-Preis + 6 €?</button>
+          <button class="rs-pill">KW 21 Stand jetzt?</button>
+          <button class="rs-pill">Pfingsten-Strategie</button>
+          <button class="rs-pill">Großgruppe-Verdrängung erklären</button>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // Suggestion pill prefill
+  document.querySelectorAll('.rs-pill').forEach(function(p) {
+    p.addEventListener('click', function() {
+      var input = document.querySelector('.ray-input');
+      if (input) { input.value = p.textContent; input.focus(); }
+    });
+  });
+
+  // Performance tabs (visual only)
+  document.querySelectorAll('.perf-tab').forEach(function(t) {
+    t.addEventListener('click', function() {
+      document.querySelectorAll('.perf-tab').forEach(function(x) { x.classList.remove('active'); });
+      t.classList.add('active');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

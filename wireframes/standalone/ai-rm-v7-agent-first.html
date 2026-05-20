@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel · Mission Control · v7 Agent First</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --shell-2:      #efeeea;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --border-3:     #a6a5a0;
+
+  --good:         #1e3a5f;
+  --bad:          #8c2f2f;
+  --warn:         #8a6a3a;
+  --warn-soft:    #f1ece3;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+em { font-style: normal; }
+html, body { height: 100%; }
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.5;
+  background: var(--shell);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ═══ APP SHELL ═══════════════════════════════════════ */
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 56px 1fr;
+}
+
+/* Topbar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  gap: 16px;
+}
+.tb-brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+}
+.tb-brand svg { height: 20px; width: auto; display: block; }
+.tb-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border-2);
+}
+.tb-hotel { font-size: 13px; color: var(--muted); }
+.tb-hotel strong { color: var(--ink); font-weight: 500; }
+.tb-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tb-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 5px 11px;
+  font-weight: 600;
+}
+.tb-pulse .tbp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.tier-pill {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 100px;
+  background: var(--shell-2);
+  color: var(--muted);
+}
+.tb-av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: "EB Garamond", serif;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Body */
+.body {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  align-items: start;
+}
+
+/* Rail */
+.rail {
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rail-item {
+  padding: 14px 6px 12px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  position: relative;
+  transition: background 0.15s ease;
+}
+.rail-item .rail-glyph {
+  font-family: "EB Garamond", serif;
+  font-size: 22px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--subtle);
+  line-height: 1;
+}
+.rail-item:hover { background: var(--surface-2); }
+.rail-item.active {
+  background: var(--accent);
+  color: var(--accent-soft);
+}
+.rail-item.active .rail-glyph { color: #fff; }
+.rail-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: var(--ink);
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rail-item.active .rail-badge { background: #fff; color: var(--accent); }
+.rail-spacer { flex: 1; }
+
+/* Main canvas */
+.main {
+  padding: 28px 40px 56px;
+  background: var(--shell);
+  min-height: calc(100vh - 56px);
+  max-width: 1320px;
+}
+
+/* ═══ PULSE HEADER ═══ */
+.pulse {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: start;
+  margin-bottom: 32px;
+}
+.pulse-greet {
+  font-family: "EB Garamond", serif;
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.pulse-greet em {
+  color: var(--accent);
+}
+.pulse-status {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 720px;
+}
+.pulse-status b { color: var(--ink); font-weight: 600; }
+.pulse-status .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 13px;
+}
+.pulse-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding-top: 6px;
+}
+
+/* ═══ SECTION HEAD ═══ */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 16px;
+}
+.section-head h2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 14.5px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-head h2::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.head-meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+section + section { margin-top: 28px; }
+
+/* ═══ ACTION QUEUE ═══ */
+.queue { }
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.action {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 26px;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+.action.urgent {
+  border-color: var(--accent-line);
+}
+.action.urgent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+.action-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.action-tag {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.action-tag.warn { color: var(--bad); }
+.action-tag.idea { color: var(--warn); }
+.action-tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+.action-deadline {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.action.urgent .action-deadline {
+  color: var(--accent);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.action.urgent .action-deadline .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+.action h3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.action-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin-bottom: 16px;
+  max-width: 720px;
+}
+.action-body b { color: var(--ink); font-weight: 600; }
+.action-body .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 12.5px;
+}
+
+.action-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.action-stat {
+  padding: 0 18px;
+  border-right: 1px solid var(--border);
+}
+.action-stat:first-child { padding-left: 0; }
+.action-stat:last-child { border-right: none; padding-right: 0; }
+.action-stat .as-key {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.action-stat .as-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.action-stat.highlight .as-val { color: var(--accent); }
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  font-family: "Inter", inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-primary:hover { background: #000; }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-2);
+  border: 1px solid var(--border-2);
+}
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-ray {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  margin-left: auto;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: "Inter";
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-ray:hover { background: var(--accent-soft); }
+.btn-ray .ray-rune {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+
+/* ═══ KPI STRIP ═══ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px 12px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+.kpi:hover { border-color: var(--border-2); }
+.kpi-label {
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+.kpi-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.kpi-delta {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 10.5px;
+  color: var(--accent);
+  margin-top: 4px;
+}
+.kpi-delta.neg { color: var(--bad); }
+
+/* ═══ ROW · LOG + PLAN ═══ */
+.row-2 {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.log, .plan {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 26px;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+
+/* Log timeline */
+.log-events {
+  list-style: none;
+  position: relative;
+  padding-left: 24px;
+}
+.log-events::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--border);
+}
+.log-event {
+  position: relative;
+  padding: 10px 0 12px;
+  border-bottom: 1px solid var(--border);
+}
+.log-event:last-child { border-bottom: none; padding-bottom: 4px; }
+.log-event::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 14px;
+  width: 11px;
+  height: 11px;
+  background: var(--accent);
+  transform: translateX(0) rotate(45deg);
+}
+.log-event.actor-marc::before { background: var(--muted); }
+.log-event.actor-anna::before { background: var(--ink); }
+.log-event.actor-lisa::before { background: var(--warn); }
+
+.log-stamp {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.log-time {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.log-actor {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+}
+.log-event.actor-marc .log-actor { color: var(--muted); }
+.log-event.actor-anna .log-actor { color: var(--ink); }
+.log-event.actor-lisa .log-actor { color: var(--warn); }
+
+.log-action {
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.log-action .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 12.5px;
+}
+.log-reason {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+}
+.log-reason em { font-style: italic; }
+
+.log-more {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.log-more:hover { text-decoration: underline; }
+
+/* Plan list */
+.plan-events {
+  list-style: none;
+}
+.plan-event {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.plan-event:first-child { padding-top: 4px; }
+.plan-event:last-child { border-bottom: none; padding-bottom: 4px; }
+.plan-time {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--accent);
+  letter-spacing: 0;
+  padding-top: 1px;
+}
+.plan-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.plan-reason {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.plan-week {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.pw-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.pw-tag::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.pw-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  font-size: 12.5px;
+}
+.pw-row .pw-key { color: var(--ink); font-weight: 500; }
+.pw-row .pw-val {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ═══ RAY BAR ═══ */
+.ray-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(45,41,32,0.03);
+}
+.ray-mark {
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.ray-text {
+  font-family: "EB Garamond", serif;
+  font-size: 16px;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.ray-text em { color: var(--accent); }
+.ray-input {
+  flex: 1;
+  border: 1px solid var(--border-2);
+  background: var(--surface-2);
+  padding: 9px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  color: var(--ink);
+  border-radius: 6px;
+}
+.ray-input::placeholder { color: var(--subtle); }
+.ray-input:focus { border-color: var(--accent); background: var(--surface); }
+.ray-send {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--accent);
+  color: var(--surface);
+  cursor: pointer;
+  border-radius: 6px;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+.ray-suggestions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.rs-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rs-pill {
+  font-family: "Inter", inherit;
+  font-size: 11.5px;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent-line);
+  padding: 5px 12px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.rs-pill:hover { background: var(--accent-soft); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 1280px) {
+  .row-2 { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .action-stats { grid-template-columns: repeat(2, 1fr); gap: 8px 16px; }
+  .action-stat:nth-child(2) { border-right: none; padding-right: 0; }
+  .action-stat:nth-child(3) { padding-left: 0; }
+}
+@media (max-width: 1080px) {
+  .body { grid-template-columns: 64px 1fr; }
+  .main { padding: 20px 20px 40px; }
+  .pulse { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <span class="tb-brand" aria-label="happyhotel">
+      <svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/>
+      </svg>
+    </span>
+    <div class="tb-sep"></div>
+    <span class="tb-hotel"><strong>Hotel Seeblick</strong> · Berlin · 80 Zimmer</span>
+    <div class="tb-right">
+      <span class="tb-pulse"><span class="tbp-dot"></span>Ray aktiv · Autopilot</span>
+      <span class="tier-pill">Senior RM</span>
+      <div class="tb-av">A</div>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- Rail -->
+    <nav class="rail">
+      <div class="rail-item active">
+        <span class="rail-glyph">B</span>
+        Briefing
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">P</span>
+        Preise
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">A</span>
+        Analyse
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">M</span>
+        Mitb.
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">K</span>
+        Kalend.
+      </div>
+      <div class="rail-item">
+        <span class="rail-glyph">L</span>
+        Audit
+      </div>
+      <div class="rail-spacer"></div>
+      <div class="rail-item">
+        <span class="rail-glyph">S</span>
+        Setup
+      </div>
+    </nav>
+
+    <!-- Main canvas -->
+    <main class="main">
+
+      <!-- ═══ PULSE HEADER ═══ -->
+      <header class="pulse">
+        <div>
+          <div class="pulse-greet">Guten Morgen, <em>Anna.</em></div>
+          <div class="pulse-status">
+            Ray hat heute Nacht <b>23 Aktionen</b> für dich erledigt, davon <b>3 Freigaben</b> die dich brauchen. Eine läuft heute um <b>17 Uhr</b> ab. Marc hat <span class="num">2</span> Decisions gegengelesen und freigegeben.
+          </div>
+        </div>
+        <div class="pulse-date">07. Mai 2026 · 08:15</div>
+      </header>
+
+      <!-- ═══ ACTION QUEUE · the hero ═══ -->
+      <section class="queue">
+        <div class="section-head">
+          <h2>Du musst entscheiden</h2>
+          <span class="head-meta">3 offen · 1 mit Frist heute</span>
+        </div>
+
+        <div class="queue-list">
+
+          <!-- Urgent: Großgruppe -->
+          <article class="action urgent">
+            <div class="action-meta">
+              <span class="action-tag">Freigabe nötig</span>
+              <span class="action-deadline"><span class="pulse-dot"></span>Frist heute 17:00</span>
+            </div>
+            <h3>Großgruppe Berlin · 14.–17. Mai · 24 Zimmer · 119 €</h3>
+            <p class="action-body">
+              Drei Nächte über das Maiwochenende, Reisegruppe gleicher Auftraggeber wie 2024 (Stornorate damals <span class="num">2 %</span>). Mit dieser Annahme schließt der Mai bei rund <b>64.000 €</b> ab, dein bester seit 2019. Ray empfiehlt: <b>Annehmen</b>.
+            </p>
+            <div class="action-stats">
+              <div class="action-stat">
+                <div class="as-key">Brutto</div>
+                <div class="as-val">+ 8.568 €</div>
+              </div>
+              <div class="action-stat">
+                <div class="as-key">Verdrängung</div>
+                <div class="as-val">− 7.552 €</div>
+              </div>
+              <div class="action-stat highlight">
+                <div class="as-key">Netto</div>
+                <div class="as-val">+ 1.016 €</div>
+              </div>
+              <div class="action-stat">
+                <div class="as-key">Vertrauen Ray</div>
+                <div class="as-val">0,84</div>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn btn-ghost">Ablehnen</button>
+              <button class="btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </article>
+
+          <!-- Anomaly -->
+          <article class="action">
+            <div class="action-meta">
+              <span class="action-tag warn">Anomalie</span>
+              <span class="action-deadline">Ray analysiert · Vorschlag heute</span>
+            </div>
+            <h3>Pickup-Geschwindigkeit KW 21 fällt ab</h3>
+            <p class="action-body">
+              Pickup für die Woche nach Pfingsten liegt <b>− 4,1 %</b> hinter Plan. Ray vermutet Ursache: Comp-Set-Hotel City hat seit gestern <span class="num">12 €</span> gesenkt. Ray prüft heute Mittag und schlägt eine Reaktion vor (Preis runter, MinLOS lockern, oder beides).
+            </p>
+            <div class="action-buttons">
+              <button class="btn btn-primary">Ray analysieren lassen</button>
+              <button class="btn btn-ghost">Selbst prüfen</button>
+              <button class="btn btn-ghost">Ignorieren</button>
+            </div>
+          </article>
+
+          <!-- Suggestion -->
+          <article class="action">
+            <div class="action-meta">
+              <span class="action-tag idea">Vorschlag</span>
+              <span class="action-deadline">vor 13. Mai entscheiden</span>
+            </div>
+            <h3>MinLOS 3 für Pfingsten 13.–15. Mai aktivieren?</h3>
+            <p class="action-body">
+              Auslastungsdruck zu Pfingsten liegt bei <b>96 %</b>, ohne MinLOS-Schutz blockieren 1-Nacht-Buchungen die Folgenächte. Vorjahr: 8 verlorene 2-Nacht-Buchungen aus diesem Grund. Ray empfiehlt MinLOS 3 für die drei Nächte.
+            </p>
+            <div class="action-buttons">
+              <button class="btn btn-primary">Aktivieren</button>
+              <button class="btn btn-ghost">Anpassen</button>
+              <button class="btn btn-ghost">Ablehnen</button>
+              <button class="btn-ray"><span class="ray-rune"></span>Ray fragen</button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ═══ KPI STRIP · auf einen Blick ═══ -->
+      <section>
+        <div class="section-head">
+          <h2>Auf einen Blick</h2>
+          <span class="head-meta">heute · KW 19</span>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-label">Mai bisher</div>
+            <div class="kpi-value">28.420 €</div>
+            <div class="kpi-delta">+ 12 % vs. Plan</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Forecast Mai</div>
+            <div class="kpi-value">64.000 €</div>
+            <div class="kpi-delta">+ 14 % vs. Plan</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Belegung heute</div>
+            <div class="kpi-value">88 %</div>
+            <div class="kpi-delta">+ 14 vs. Vorjahr</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Pickup KW 20</div>
+            <div class="kpi-value">+ 18 %</div>
+            <div class="kpi-delta">über Forecast</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ LOG + PLAN ═══ -->
+      <section>
+        <div class="row-2">
+
+          <!-- Was Ray gemacht hat -->
+          <article class="log">
+            <div class="section-head">
+              <h2>Was Ray gemacht hat</h2>
+              <span class="head-meta">letzte 24 h · 23 Aktionen</span>
+            </div>
+
+            <ul class="log-events">
+              <li class="log-event actor-ray">
+                <div class="log-stamp">
+                  <span class="log-time">02:14</span>
+                  <span class="log-actor">Ray</span>
+                </div>
+                <div class="log-action">Preis Sa 09.05. von <span class="num">142 €</span> → <span class="num">148 €</span></div>
+                <div class="log-reason">Pickup-Anomalie + 14 %, Comp-Set-Spielraum 28 €</div>
+              </li>
+              <li class="log-event actor-ray">
+                <div class="log-stamp">
+                  <span class="log-time">03:45</span>
+                  <span class="log-actor">Ray</span>
+                </div>
+                <div class="log-action">MinLOS 2 Nächte für KW 21 aktiviert</div>
+                <div class="log-reason">Pfingsten-Druck, Schutz vor 1-Nacht-Buchungen</div>
+              </li>
+              <li class="log-event actor-ray">
+                <div class="log-stamp">
+                  <span class="log-time">06:12</span>
+                  <span class="log-actor">Ray</span>
+                </div>
+                <div class="log-action">Channel-Sync flexible Rate · OTA aktualisiert</div>
+                <div class="log-reason">routine, alle 6 Kanäle in Sync</div>
+              </li>
+              <li class="log-event actor-ray">
+                <div class="log-stamp">
+                  <span class="log-time">06:48</span>
+                  <span class="log-actor">Ray</span>
+                </div>
+                <div class="log-action">Preis Mi 13.05. von <span class="num">188 €</span> → <span class="num">196 €</span></div>
+                <div class="log-reason">Pfingsten · Pickup + 24 % über Plan</div>
+              </li>
+              <li class="log-event actor-ray">
+                <div class="log-stamp">
+                  <span class="log-time">07:32</span>
+                  <span class="log-actor">Ray</span>
+                </div>
+                <div class="log-action">CTA-Restriktion für 13.05. aktiviert</div>
+                <div class="log-reason">Hochsaison-Schutz, Anreise nur ab So</div>
+              </li>
+              <li class="log-event actor-marc">
+                <div class="log-stamp">
+                  <span class="log-time">gestern 14:30</span>
+                  <span class="log-actor">Marc</span>
+                </div>
+                <div class="log-action">DEC-026 Rate-Override Sa 02.05. gegengelesen</div>
+                <div class="log-reason">korrekt, Ray hat richtig auf Pickup reagiert</div>
+              </li>
+              <li class="log-event actor-marc">
+                <div class="log-stamp">
+                  <span class="log-time">gestern 14:42</span>
+                  <span class="log-actor">Marc</span>
+                </div>
+                <div class="log-action">DEC-024 Channel-Hygiene gegengelesen</div>
+                <div class="log-reason">ok, kein Eingriff nötig</div>
+              </li>
+            </ul>
+
+            <a class="log-more" href="#">Alle 23 Aktionen anzeigen →</a>
+          </article>
+
+          <!-- Was Ray plant -->
+          <article class="plan">
+            <div class="section-head">
+              <h2>Was Ray plant</h2>
+              <span class="head-meta">heute</span>
+            </div>
+
+            <ul class="plan-events">
+              <li class="plan-event">
+                <div class="plan-time">12:00</div>
+                <div>
+                  <div class="plan-title">Comp-Set-Sweep</div>
+                  <div class="plan-reason">Mittagsabgleich, prüfen ob Wettbewerber Preise geändert haben</div>
+                </div>
+              </li>
+              <li class="plan-event">
+                <div class="plan-time">14:30</div>
+                <div>
+                  <div class="plan-title">Pickup-Anomalie KW 21 prüfen</div>
+                  <div class="plan-reason">wenn Anomalie persistiert, Reaktionsvorschlag in Action Queue</div>
+                </div>
+              </li>
+              <li class="plan-event">
+                <div class="plan-time">17:00</div>
+                <div>
+                  <div class="plan-title">Frist Großgruppe Berlin auswerten</div>
+                  <div class="plan-reason">Annahme oder Auto-Eskalation an Marc, je nach deiner Antwort</div>
+                </div>
+              </li>
+              <li class="plan-event">
+                <div class="plan-time">23:30</div>
+                <div>
+                  <div class="plan-title">Nightly-Sweep</div>
+                  <div class="plan-reason">Pricing-Engine über alle 90 Tage, Restriktionen, Channel-Sync</div>
+                </div>
+              </li>
+            </ul>
+
+            <div class="plan-week">
+              <div class="pw-tag">Diese Woche</div>
+              <div class="pw-row">
+                <span class="pw-key">Pfingsten · 13.–15. Mai</span>
+                <span class="pw-val">MinLOS · CTA · Premium</span>
+              </div>
+              <div class="pw-row">
+                <span class="pw-key">Sommerstrategie · Ende KW 19</span>
+                <span class="pw-val">Ray bereitet Vorschlag vor</span>
+              </div>
+              <div class="pw-row">
+                <span class="pw-key">Marc-Review · Mi 14:30</span>
+                <span class="pw-val">alle KW 18 Decisions</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ═══ FRAG RAY ═══ -->
+      <section>
+        <div class="section-head">
+          <h2>Frag Ray</h2>
+          <span class="head-meta">offene Sessions · 0</span>
+        </div>
+
+        <div class="ray-bar">
+          <span class="ray-mark"></span>
+          <div class="ray-text">Frag <em>Ray</em></div>
+          <input class="ray-input" type="text" placeholder="Was hast du heute Nacht für mich gemacht?">
+          <button class="ray-send" aria-label="Senden">→</button>
+        </div>
+
+        <div class="ray-suggestions">
+          <span class="rs-label">Vorschläge:</span>
+          <button class="rs-pill">Warum hast du den Sa-Preis erhöht?</button>
+          <button class="rs-pill">Wie ist KW 21 Stand jetzt?</button>
+          <button class="rs-pill">Was rätst du fürs Wochenende?</button>
+          <button class="rs-pill">Erklär mir die Großgruppe-Verdrängung</button>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+</div>
+
+<script>
+(function() {
+
+  // KPI tile click — could trigger drilldown later
+  document.querySelectorAll('.kpi').forEach(function(k) {
+    k.addEventListener('click', function() {
+      // hook for future drilldown to detail view
+    });
+  });
+
+  // Suggestion pill click — could prefill input
+  document.querySelectorAll('.rs-pill').forEach(function(p) {
+    p.addEventListener('click', function() {
+      var input = document.querySelector('.ray-input');
+      if (input) {
+        input.value = p.textContent;
+        input.focus();
+      }
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>

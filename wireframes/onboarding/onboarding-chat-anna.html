@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="de" data-beat="1">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel — Onboarding Chat (Anna)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:           #f6f5f1;
+  --shell:        #fafaf7;
+  --surface:      #ffffff;
+  --surface-2:    #f7f6f2;
+
+  --ink:          #18181a;
+  --ink-2:        #3a3a3d;
+  --muted:        #6e6e72;
+  --subtle:       #a8a8ac;
+
+  --accent:       #1e3a5f;
+  --accent-soft:  #ebf0f6;
+  --accent-line:  #b8c4d4;
+  --accent-deep:  #14294a;
+
+  --border:       #e6e5df;
+  --border-2:     #c9c8c2;
+  --live:         #22c55e;
+
+  --font-mono:    "JetBrains Mono", "SF Mono", Menlo, monospace;
+  --font-serif:   "EB Garamond", Georgia, serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.serif { font-family: var(--font-serif); letter-spacing: -0.02em; }
+em { font-style: normal; }
+.num   { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; letter-spacing: -0.02em; }
+
+/* ─── Shell ─────────────────────────────── */
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar */
+.topbar {
+  height: 60px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.tb-brand { display: inline-flex; align-items: center; color: var(--accent); }
+.tb-brand svg { height: 20px; width: auto; display: block; }
+.tb-sep { width: 1px; height: 16px; background: var(--border-2); }
+.tb-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.tb-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.tb-progress {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.tb-progress em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+  font-size: 14px;
+  padding: 0 2px;
+}
+.tb-help {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+/* Chat thread */
+.thread-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 32px 24px 200px;
+}
+.thread {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Date marker (entry point eyebrow) */
+.thread-eyebrow {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 8px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+.thread-eyebrow .line {
+  height: 1px;
+  width: 36px;
+  background: var(--border);
+}
+
+/* Beat — every step in the conversation */
+.beat {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  animation: bubblein 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.beat.visible { display: flex; }
+@keyframes bubblein {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Ray bubble */
+.ray-row {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 12px;
+  align-items: flex-end;
+}
+.ray-av {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.ray-av::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 9px;
+  height: 9px;
+  background: var(--live);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+}
+.ray-row.no-av { grid-template-columns: 36px 1fr; }
+.ray-row.no-av .ray-av { visibility: hidden; }
+
+.ray-bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px 16px 16px 16px;
+  padding: 14px 18px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 540px;
+  box-shadow: 0 1px 2px rgba(20, 20, 22, 0.03);
+}
+.ray-row.no-av .ray-bubble {
+  border-radius: 16px;
+}
+.ray-bubble em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+  font-size: 17px;
+}
+.ray-bubble strong { font-weight: 600; }
+.ray-bubble .trend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 1px 7px;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.ray-name-line {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ray-name-line .diamond {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* User bubble */
+.user-row {
+  display: flex;
+  justify-content: flex-end;
+}
+.user-bubble {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 16px 16px 4px 16px;
+  padding: 12px 18px;
+  font-size: 15px;
+  line-height: 1.45;
+  max-width: 480px;
+  font-weight: 500;
+}
+
+/* Typing indicator */
+.typing {
+  display: none;
+  grid-template-columns: 36px 1fr;
+  gap: 12px;
+  align-items: flex-end;
+}
+.typing.on { display: grid; }
+.typing-dots {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px 16px 16px 16px;
+  padding: 16px 20px;
+  display: inline-flex;
+  gap: 5px;
+  align-self: flex-start;
+}
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--subtle);
+  animation: typing 1200ms infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 200ms; }
+.typing-dot:nth-child(3) { animation-delay: 400ms; }
+@keyframes typing {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* ─── RICH UI BUBBLES ─────────────────────── */
+.rich-bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px 16px 16px 16px;
+  padding: 22px 22px 20px;
+  max-width: 540px;
+  box-shadow: 0 1px 2px rgba(20, 20, 22, 0.03);
+}
+.rich-bubble .rb-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rich-bubble .rb-meta .diamond {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* PMS chips */
+.pms-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+.pms-chip {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 100px;
+  padding: 9px 16px;
+  cursor: pointer;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 200ms ease;
+  font-family: var(--font-serif);
+  font-size: 16px;
+}
+.pms-chip:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+.pms-chip[data-setup="concierge"] { border-style: dashed; }
+.pms-chip .chip-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* PMS confirmed bubble */
+.pms-confirmed {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  align-items: center;
+  margin-top: 4px;
+}
+.pms-confirmed .check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.pms-confirmed .check::after {
+  content: "";
+  width: 5px;
+  height: 9px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+.pms-confirmed-text {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 500;
+}
+.pms-confirmed-text span {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+/* Hotel summary card */
+.hotel-summary h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.hotel-summary h4 em { font-style: normal; color: var(--accent); }
+.hs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+.hs-stat {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.hs-stat .hs-key {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 4px;
+}
+.hs-stat .hs-val {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* Strategy cards inline */
+.strat-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.strat-mini {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  align-items: center;
+  transition: all 200ms ease;
+}
+.strat-mini:hover {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+.strat-mini.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.strat-glyph {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 18px;
+  color: var(--accent);
+}
+.strat-mini h5 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 17px;
+  letter-spacing: -0.015em;
+  margin-bottom: 2px;
+}
+.strat-mini h5 em { font-style: normal; color: var(--accent); }
+.strat-mini p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+/* Price slider rich bubble */
+.price-rich .pr-stage { padding: 12px 0 4px; }
+.price-rich .pr-track {
+  position: relative;
+  height: 48px;
+  background: linear-gradient(90deg, var(--accent-soft) 0%, #f4ecdf 100%);
+  border-radius: 6px;
+  margin: 18px 0 8px;
+}
+.price-rich .pr-mark {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  width: 2px;
+  background: var(--accent);
+}
+.price-rich .pr-mark::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -5px;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.price-rich .pr-mark.min { left: 18%; }
+.price-rich .pr-mark.base { left: 42%; opacity: 0.55; }
+.price-rich .pr-mark.max { left: 78%; }
+.price-rich .pr-val {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.price-rich .pr-lab {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.price-rich .pr-outcome {
+  margin-top: 36px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+.price-rich .pr-outcome em { font-style: normal; color: var(--accent); }
+
+/* Comp-set inline */
+.cs-list { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+.cs-item {
+  display: grid;
+  grid-template-columns: 1fr 70px 22px;
+  gap: 14px;
+  align-items: center;
+  padding: 11px 0;
+  border-top: 1px solid var(--border);
+}
+.cs-item:first-of-type { border-top: 0; }
+.cs-item .cs-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.cs-item .cs-name span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 1px;
+}
+.cs-item .cs-rate {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  text-align: right;
+}
+.cs-item .cs-rate em {
+  font-family: var(--font-serif);
+  font-style: normal;
+  color: var(--accent);
+  font-size: 15px;
+}
+.cs-toggle {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border-2);
+  cursor: pointer;
+  position: relative;
+}
+.cs-toggle.on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.cs-toggle.on::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  left: 6px;
+  top: 2px;
+  transform: rotate(45deg);
+}
+
+/* Trust mini cards */
+.trust-stack-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.trust-mini {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.trust-mini:hover { border-color: var(--accent-line); background: var(--accent-soft); }
+.trust-mini.selected { border-color: var(--accent); background: var(--accent-soft); }
+.trust-mini h5 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.015em;
+  margin-bottom: 2px;
+}
+.trust-mini h5 em { font-style: normal; color: var(--accent); }
+.trust-mini .tm-sample {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-style: normal;
+}
+
+/* Final briefing preview */
+.final-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  max-width: 540px;
+  margin-top: 4px;
+}
+.final-card h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.final-card h4 em { font-style: normal; color: var(--accent); }
+.final-card .fc-body {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.final-card .fc-stack {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.final-card .fc-stat { padding-right: 10px; border-right: 1px solid var(--border); }
+.final-card .fc-stat:last-child { border-right: 0; padding-right: 0; padding-left: 10px; }
+.final-card .fc-stat:nth-child(2) { padding-left: 10px; }
+.final-card .fc-stat .lab {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: block;
+}
+.final-card .fc-stat .val {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 22px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* Team strip mini */
+.team-mini {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: center;
+  margin-top: 8px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.team-mini-avs { display: flex; }
+.team-mini-av {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--surface);
+  margin-left: -8px;
+}
+.team-mini-av:first-child { margin-left: 0; background: var(--accent); }
+.team-mini-av:nth-child(2) { background: #5a4632; }
+.team-mini-av:nth-child(3) { background: #6a4a4a; }
+.team-mini-text {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+.team-mini-text em { font-family: var(--font-serif); font-style: normal; color: var(--accent); font-size: 14px; }
+
+/* ─── COMPOSER (sticky bottom) ──────────── */
+.composer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 14px 24px 18px;
+  z-index: 60;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.composer-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.quick-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.quick-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 4px;
+}
+.quick-chip {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  border-radius: 100px;
+  padding: 8px 16px;
+  cursor: pointer;
+  color: var(--ink);
+  transition: all 200ms ease;
+}
+.quick-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.quick-chip.primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.quick-chip.primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+
+.input-row {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 100px;
+  padding: 4px 4px 4px 18px;
+  gap: 12px;
+  transition: border-color 200ms ease;
+}
+.input-row:focus-within { border-color: var(--accent); }
+.input-row input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 14px;
+  border: 0;
+  background: transparent;
+  outline: none;
+  color: var(--ink);
+  padding: 6px 0;
+}
+.input-row input::placeholder { color: var(--subtle); }
+.send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+}
+.send-btn:hover { background: var(--accent-deep); }
+.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.composer.hidden { display: none; }
+
+/* Final CTA replaces composer at end */
+.final-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 20px 24px 24px;
+  display: none;
+  z-index: 70;
+  box-shadow: 0 -8px 24px -8px rgba(20, 20, 22, 0.08);
+}
+.final-cta.on { display: block; }
+.final-cta-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  justify-content: flex-end;
+}
+.final-cta-text {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  letter-spacing: -0.015em;
+  flex: 1;
+}
+.final-cta-text em { font-style: normal; color: var(--accent); }
+.btn-primary {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 13px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-primary:hover { background: var(--accent-deep); }
+.btn-primary .arr { font-family: var(--font-serif); font-style: normal; font-size: 16px; line-height: 1; }
+.btn-ghost {
+  font-family: inherit;
+  font-size: 14px;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline dashed;
+  text-underline-offset: 5px;
+}
+.btn-ghost:hover { color: var(--accent); }
+
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="topbar">
+    <span class="tb-brand" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+    <span class="tb-sep"></span>
+    <span class="tb-eyebrow">Onboarding · Anna</span>
+    <div class="tb-right">
+      <span class="tb-progress">Schritt <em id="progress-num">1</em> / 9</span>
+      <span class="tb-help">Pause</span>
+    </div>
+  </div>
+
+  <div class="thread-wrap">
+    <div class="thread">
+      <div class="thread-eyebrow">
+        <span class="line"></span>
+        <span>Heute · 11:04</span>
+        <span class="line"></span>
+      </div>
+
+      <!-- ─── BEAT 1 · Hi ─── -->
+      <div class="beat visible" data-beat="1">
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-name-line"><span class="diamond"></span>Ray · gerade eben</div>
+            <div class="ray-bubble">
+              Hi, ich bin <em>Ray</em>. Ich werde dein Revenue Manager. In den nächsten 5 Minuten richten wir dein Hotel zusammen ein. Soll ich loslegen?
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── BEAT 2 · Hotel name ─── -->
+      <div class="beat" data-beat="2">
+        <div class="user-row">
+          <div class="user-bubble">Ja, los.</div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble">
+              Wie heißt dein <em>Hotel?</em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── BEAT 3 · PMS pick ─── -->
+      <div class="beat" data-beat="3">
+        <div class="user-row">
+          <div class="user-bubble">Hotel Seeblick</div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble">
+              Schön. Damit ich Zimmer, Preise und Buchungen sehen kann, verbinde dein <em>Buchungssystem</em>. Welches nutzt du?
+            </div>
+          </div>
+        </div>
+        <div class="ray-row no-av">
+          <div class="ray-av"></div>
+          <div class="rich-bubble">
+            <div class="rb-meta"><span class="diamond"></span>Tipp auf dein PMS</div>
+            <div class="pms-chips">
+              <button class="pms-chip" data-setup="instant" data-pms="apaleo" onclick="pickPMS(this)">apaleo</button>
+              <button class="pms-chip" data-setup="instant" data-pms="Mews" onclick="pickPMS(this)">Mews</button>
+              <button class="pms-chip" data-setup="instant" data-pms="hotline" onclick="pickPMS(this)">hotline</button>
+              <button class="pms-chip" data-setup="instant" data-pms="3RPMS" onclick="pickPMS(this)">3RPMS</button>
+              <button class="pms-chip" data-setup="concierge" data-pms="protel" onclick="pickPMS(this)">protel <span class="chip-tag">· Concierge</span></button>
+              <button class="pms-chip" data-setup="concierge" data-pms="clock" onclick="pickPMS(this)">clock <span class="chip-tag">· Concierge</span></button>
+              <button class="pms-chip" data-pms="other" onclick="pickPMS(this)">Anderes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── BEAT 4 · Hotel autodetect ─── -->
+      <div class="beat" data-beat="4">
+        <div class="user-row">
+          <div class="user-bubble" id="pms-user-echo">Mews</div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble" id="pms-ray-response">
+              Verbinde mich mit Mews… <span class="trend-pill">verbunden</span>
+            </div>
+          </div>
+        </div>
+        <div class="ray-row no-av">
+          <div class="ray-av"></div>
+          <div class="rich-bubble hotel-summary">
+            <div class="rb-meta"><span class="diamond"></span>was ich gefunden habe</div>
+            <h4 class="serif"><em>Hotel Seeblick</em> · Berlin</h4>
+            <div class="hs-grid">
+              <div class="hs-stat">
+                <span class="hs-key">Zimmer</span>
+                <span class="hs-val">80</span>
+              </div>
+              <div class="hs-stat">
+                <span class="hs-key">Kategorien</span>
+                <span class="hs-val">4</span>
+              </div>
+              <div class="hs-stat">
+                <span class="hs-key">Buchungen 12 M</span>
+                <span class="hs-val">12.840</span>
+              </div>
+              <div class="hs-stat">
+                <span class="hs-key">Aktueller Preis</span>
+                <span class="hs-val">112 €</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble">
+              Stimmt das so?
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── BEAT 5 · Strategy ─── -->
+      <div class="beat" data-beat="5">
+        <div class="user-row">
+          <div class="user-bubble">Stimmt.</div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble">
+              Bevor ich Preise vorschlage, sollte ich wissen, <em>worauf wir spielen</em>. Was ist dir wichtiger?
+            </div>
+          </div>
+        </div>
+        <div class="ray-row no-av">
+          <div class="ray-av"></div>
+          <div class="rich-bubble">
+            <div class="rb-meta"><span class="diamond"></span>tipp dein Ziel</div>
+            <div class="strat-stack">
+              <div class="strat-mini" onclick="pickStrategy(this, 'Mehr verdienen pro Zimmer')">
+                <div class="strat-glyph">↑</div>
+                <div>
+                  <h5>Mehr verdienen <em>pro Zimmer</em></h5>
+                  <p>Höhere Preise, auch wenn ein paar Zimmer leer bleiben.</p>
+                </div>
+              </div>
+              <div class="strat-mini" onclick="pickStrategy(this, 'Voll bleiben')">
+                <div class="strat-glyph">≡</div>
+                <div>
+                  <h5>Voll <em>bleiben</em></h5>
+                  <p>Lieber günstiger und voll als teurer und halbvoll.</p>
+                </div>
+              </div>
+              <div class="strat-mini" onclick="pickStrategy(this, 'Premium halten')">
+                <div class="strat-glyph">◆</div>
+                <div>
+                  <h5>Premium <em>halten</em></h5>
+                  <p>Niemals zu billig wirken, auch wenn Lücken bleiben.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── BEAT 6 · Price range ─── -->
+      <div class="beat" data-beat="6">
+        <div class="user-row">
+          <div class="user-bubble" id="strat-user-echo">Mehr verdienen pro Zimmer</div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble">
+              Stark. Auf Basis deiner letzten 12 Monate Buchungen und dem Comp-Set würde ich für dein <em>Doppelzimmer Komfort</em> diese Spanne vorschlagen:
+            </div>
+          </div>
+        </div>
+        <div class="ray-row no-av">
+          <div class="ray-av"></div>
+          <div class="rich-bubble price-rich">
+            <div class="rb-meta"><span class="diamond"></span>Preisspanne · DZK</div>
+            <div class="pr-stage">
+              <div class="pr-track">
+                <div class="pr-mark min">
+                  <span class="pr-val">79 €</span>
+                  <span class="pr-lab">Min</span>
+                </div>
+                <div class="pr-mark base">
+                  <span class="pr-val">119 €</span>
+                  <span class="pr-lab">Basis</span>
+                </div>
+                <div class="pr-mark max">
+                  <span class="pr-val">189 €</span>
+                  <span class="pr-lab">Premium</span>
+                </div>
+              </div>
+            </div>
+            <div class="pr-outcome">
+              In einem starken Mai macht das voraussichtlich <em>+ 3.200 €</em> mehr als bei einem festen 99 € Preis.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── BEAT 7 · Comp-set ─── -->
+      <div class="beat" data-beat="7">
+        <div class="user-row">
+          <div class="user-bubble">Passt für mich.</div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble">
+              Ich habe in deiner Gegend <em>4 Hotels</em> gefunden, mit denen wir uns vergleichen sollten. Pass an, wenn ich daneben liege.
+            </div>
+          </div>
+        </div>
+        <div class="ray-row no-av">
+          <div class="ray-av"></div>
+          <div class="rich-bubble">
+            <div class="rb-meta"><span class="diamond"></span>Comp-Set · 4 Hotels</div>
+            <div class="cs-list">
+              <div class="cs-item">
+                <div class="cs-name">Hotel Adlon Charlottenburg<span>4★ · Mitte</span></div>
+                <div class="cs-rate"><em>149 €</em></div>
+                <div class="cs-toggle on" onclick="toggleCS(this)"></div>
+              </div>
+              <div class="cs-item">
+                <div class="cs-name">Mövenpick Berlin<span>4★ · 1.2 km</span></div>
+                <div class="cs-rate"><em>134 €</em></div>
+                <div class="cs-toggle on" onclick="toggleCS(this)"></div>
+              </div>
+              <div class="cs-item">
+                <div class="cs-name">Park Plaza Wallstreet<span>4★ · Mitte</span></div>
+                <div class="cs-rate"><em>128 €</em></div>
+                <div class="cs-toggle on" onclick="toggleCS(this)"></div>
+              </div>
+              <div class="cs-item">
+                <div class="cs-name">25hours Bikini<span>Boutique · 2.4 km</span></div>
+                <div class="cs-rate"><em>165 €</em></div>
+                <div class="cs-toggle on" onclick="toggleCS(this)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── BEAT 8 · Trust ─── -->
+      <div class="beat" data-beat="8">
+        <div class="user-row">
+          <div class="user-bubble">Sieht gut aus.</div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble">
+              Letzte Frage. Wie wollen wir <em>zusammenarbeiten</em>?
+            </div>
+          </div>
+        </div>
+        <div class="ray-row no-av">
+          <div class="ray-av"></div>
+          <div class="rich-bubble">
+            <div class="rb-meta"><span class="diamond"></span>tipp deinen Modus</div>
+            <div class="trust-stack-mini">
+              <div class="trust-mini" onclick="pickTrust(this, 'Beobachten')">
+                <h5>Beobachten</h5>
+                <div class="tm-sample">"Pfingsten zieht stark an. Du <em>könntest</em> auf + 9 € gehen."</div>
+              </div>
+              <div class="trust-mini selected" onclick="pickTrust(this, 'Empfehlen')">
+                <h5>Empfehlen <em>· empfohlen</em></h5>
+                <div class="tm-sample">"Ich würde Pfingsten auf + 9 € ziehen. <em>OK?</em>"</div>
+              </div>
+              <div class="trust-mini" onclick="pickTrust(this, 'Auto-Pilot')">
+                <h5>Auto-Pilot</h5>
+                <div class="tm-sample">"Habe Pfingsten auf + 9 € gesetzt. Hier dein Briefing."</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── BEAT 9 · Ready ─── -->
+      <div class="beat" data-beat="9">
+        <div class="user-row">
+          <div class="user-bubble" id="trust-user-echo">Empfehlen</div>
+        </div>
+        <div class="ray-row">
+          <div class="ray-av">R</div>
+          <div>
+            <div class="ray-bubble">
+              Bin bereit. Hier wäre dein <em>erstes Briefing</em>, wenn ich heute Nacht für dich gearbeitet hätte:
+            </div>
+          </div>
+        </div>
+        <div class="ray-row no-av">
+          <div class="ray-av"></div>
+          <div class="final-card">
+            <h4 class="serif">14 Preise <em>justiert</em>, Pfingsten ist deine Chance.</h4>
+            <p class="fc-body">
+              Ich hätte heute Nacht 14 Preise nach oben gezogen. Pfingsten zieht stark an, dein Comp-Set ist im Schnitt <span style="background:var(--accent-soft);color:var(--accent);font-family:var(--font-mono);font-size:11px;font-weight:500;padding:1px 6px;">↑ 8 €</span> über deinem Niveau.
+            </p>
+            <div class="fc-stack">
+              <div class="fc-stat">
+                <span class="lab">Mehr Mai</span>
+                <span class="val">~3.200 €</span>
+              </div>
+              <div class="fc-stat">
+                <span class="lab">Pfingsten</span>
+                <span class="val">78 %</span>
+              </div>
+              <div class="fc-stat">
+                <span class="lab">Anpassungen</span>
+                <span class="val">14</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ray-row no-av">
+          <div class="ray-av"></div>
+          <div class="team-mini">
+            <div class="team-mini-avs">
+              <div class="team-mini-av">R</div>
+              <div class="team-mini-av">M</div>
+              <div class="team-mini-av">L</div>
+            </div>
+            <div class="team-mini-text">
+              <em>Marc</em> und <em>Lisa</em> sind dabei, wenn's mal knifflig wird. Direkt hier im Chat, kein extra Kanal.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- typing indicator (universal) -->
+      <div class="typing" id="typing">
+        <div class="ray-av">R</div>
+        <div class="typing-dots">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Composer ─── -->
+  <div class="composer" id="composer">
+    <div class="composer-inner">
+      <div class="quick-row" id="quick-row">
+        <span class="quick-label">Schnellantwort</span>
+        <button class="quick-chip primary" onclick="advanceFromQuick('Ja, los.')">Ja, los.</button>
+        <button class="quick-chip" onclick="advanceFromQuick('Lieber später')">Lieber später</button>
+      </div>
+      <div class="input-row">
+        <input id="input-field" type="text" placeholder="oder schreib mir was…" onkeydown="if(event.key==='Enter') sendInput()">
+        <button class="send-btn" onclick="sendInput()">→</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Final CTA (replaces composer at end) ─── -->
+  <div class="final-cta" id="final-cta">
+    <div class="final-cta-inner">
+      <div class="final-cta-text">
+        <em>Ray</em> ist eingestellt. Soll ich loslegen?
+      </div>
+      <button class="btn-ghost">Tour starten</button>
+      <button class="btn-primary" onclick="alert('Demo-Onboarding fertig. In production: redirect to Daily Briefing.');">
+        Zum Briefing <span class="arr">→</span>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const html = document.documentElement;
+  const TOTAL = 9;
+
+  function getBeat() { return parseInt(html.getAttribute("data-beat") || "1", 10); }
+  function setBeat(n) {
+    html.setAttribute("data-beat", String(n));
+    document.querySelectorAll(".beat").forEach(b => {
+      const num = parseInt(b.getAttribute("data-beat"), 10);
+      b.classList.toggle("visible", num <= n);
+    });
+    document.getElementById("progress-num").textContent = String(n);
+    setQuickReplies(n);
+    if (n >= TOTAL) {
+      document.getElementById("composer").classList.add("hidden");
+      document.getElementById("final-cta").classList.add("on");
+    }
+    setTimeout(() => {
+      const last = document.querySelector(`.beat[data-beat="${n}"]`);
+      if (last) last.scrollIntoView({ behavior: "smooth", block: "end" });
+    }, 50);
+  }
+
+  function showTyping(ms = 700) {
+    return new Promise(resolve => {
+      const t = document.getElementById("typing");
+      t.classList.add("on");
+      setTimeout(() => {
+        t.classList.remove("on");
+        resolve();
+      }, ms);
+    });
+  }
+
+  // ─── Quick-reply maps per beat ────────────────────────
+  const quickReplies = {
+    1: [["Ja, los.", true], ["Lieber später", false]],
+    2: null, // free text
+    3: null, // PMS chips
+    4: [["Stimmt.", true], ["Stimmt nicht ganz", false]],
+    5: null, // strategy mini cards
+    6: [["Passt für mich.", true], ["Anders rum"], ["Anpassen"]],
+    7: [["Sieht gut aus.", true], ["Ich kenne andere Hotels"]],
+    8: null, // trust mini cards
+    9: null
+  };
+
+  function setQuickReplies(beat) {
+    const row = document.getElementById("quick-row");
+    const map = quickReplies[beat];
+    row.innerHTML = '';
+    if (!map) {
+      row.style.display = "none";
+      return;
+    }
+    row.style.display = "flex";
+    const label = document.createElement("span");
+    label.className = "quick-label";
+    label.textContent = "Schnellantwort";
+    row.appendChild(label);
+    map.forEach(([text, primary]) => {
+      const btn = document.createElement("button");
+      btn.className = "quick-chip" + (primary ? " primary" : "");
+      btn.textContent = text;
+      btn.onclick = () => advanceFromQuick(text);
+      row.appendChild(btn);
+    });
+  }
+
+  // ─── Advancement handlers ─────────────────────────────
+  async function advanceFromQuick(text) {
+    const cur = getBeat();
+    if (cur >= TOTAL) return;
+    await showTyping(600);
+    setBeat(cur + 1);
+  }
+
+  async function sendInput() {
+    const input = document.getElementById("input-field");
+    const v = (input.value || "").trim();
+    if (!v) return;
+    input.value = '';
+    const cur = getBeat();
+    // For beat 2 (hotel name) update echo
+    if (cur === 2) {
+      // hotel name — would propagate, but for demo just advance
+    }
+    await showTyping(600);
+    setBeat(cur + 1);
+  }
+
+  async function pickPMS(chip) {
+    const name = chip.dataset.pms || "PMS";
+    const setup = chip.dataset.setup || "instant";
+    document.getElementById("pms-user-echo").textContent = name === "other" ? "Anderes" : (name.charAt(0).toUpperCase() + name.slice(1));
+    if (setup === "concierge") {
+      document.getElementById("pms-ray-response").innerHTML = name + " ist on-prem, ich brauche kurz <em>Marc</em> dafür. Termin gebucht für <em>Mo 10:00</em>. Ab da läuft alles automatisch wie bei Cloud-PMS, ich mache hier weiter, als wäre's verbunden.";
+    } else {
+      document.getElementById("pms-ray-response").innerHTML = "Verbinde mich mit " + (name.charAt(0).toUpperCase() + name.slice(1)) + "… <span class=\"trend-pill\">verbunden</span>";
+    }
+    await showTyping(700);
+    setBeat(4);
+  }
+
+  async function pickStrategy(card, label) {
+    card.parentElement.querySelectorAll(".strat-mini").forEach(c => c.classList.remove("selected"));
+    card.classList.add("selected");
+    document.getElementById("strat-user-echo").textContent = label;
+    await showTyping(750);
+    setBeat(6);
+  }
+
+  async function pickTrust(card, label) {
+    card.parentElement.querySelectorAll(".trust-mini").forEach(c => c.classList.remove("selected"));
+    card.classList.add("selected");
+    document.getElementById("trust-user-echo").textContent = label;
+    await showTyping(800);
+    setBeat(9);
+  }
+
+  function toggleCS(t) {
+    t.classList.toggle("on");
+  }
+
+  // Init
+  setQuickReplies(1);
+</script>
+</body>
+</html>

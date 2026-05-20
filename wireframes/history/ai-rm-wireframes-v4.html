@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>happyhotel — AI Revenue Manager · Wireframes v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500;1,9..40,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-paper:        #faf9f6;
+  --color-warm:         #f0ede6;
+  --color-warm-2:       #e6e2d9;
+  --color-ink:          #1a1a2e;
+  --color-ink-2:        #2c2c40;
+  --color-accent:       #2d5016;
+  --color-accent-bg:    #e6ede2;
+  --color-accent-line:  #b9c5ad;
+  --color-muted-text:   #7a7568;
+  --color-subtle:       #a8a39a;
+  --color-border-muted: #d1cdc4;
+
+  --color-purple:       #4c1d95;
+  --color-purple-bg:    #ede9fc;
+  --color-amber:        #7c4a03;
+  --color-amber-bg:     #fdf4e1;
+  --color-blue:         #1a3f6f;
+  --color-blue-bg:      #e4ecf5;
+
+  --font-display:       "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-sans:          "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:          "JetBrains Mono", "SF Mono", Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ─── Mono Tag — DNA ─────────────────────────────────── */
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-accent);
+}
+.mono-tag.muted {
+  color: var(--color-muted-text);
+}
+.mono-tag.ink {
+  color: var(--color-ink);
+}
+
+.mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Page header ────────────────────────────────────── */
+.page-head {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+.page-brand {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+.page-meta-row {
+  display: flex;
+  gap: 32px;
+  align-items: baseline;
+}
+.page-meta-row .mono-tag { font-size: 10px; }
+
+/* ─── Frame section ──────────────────────────────────── */
+.frame-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(5rem, 10vw, 8rem) clamp(1.25rem, 5vw, 4rem);
+}
+
+.frame-head {
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+.frame-tag {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+.frame-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5vw + 0.5rem, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+  max-width: 18ch;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+.frame-h2 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+.frame-desc {
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.125rem);
+  line-height: 1.7;
+  color: var(--color-muted-text);
+  max-width: 38rem;
+}
+
+.frame-meta {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.fm-item {
+  padding: 20px 32px 0 0;
+  border-top: 1px solid var(--color-border-muted);
+}
+.fm-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-muted-text);
+  margin-bottom: 10px;
+}
+.fm-val {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+.fm-val em { font-style: italic; color: var(--color-accent); }
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* APP FRAME — sharp edges, no shadow                                   */
+/* ═══════════════════════════════════════════════════════════════════ */
+.app-frame {
+  background: var(--color-warm);
+  border: 1px solid var(--color-border-muted);
+  /* No border-radius. No shadow. */
+}
+
+/* Topbar */
+.topbar {
+  height: 60px;
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-border-muted);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 18px;
+}
+.tb-brand {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+.tb-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--color-border-muted);
+}
+.tb-hotel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+}
+.tb-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.tb-tier {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--color-accent);
+}
+.tb-av {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tb-nav {
+  display: flex;
+  gap: 24px;
+}
+.tb-nav-item {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--color-muted-text);
+  cursor: pointer;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+}
+.tb-nav-item:hover { color: var(--color-ink); }
+.tb-nav-item.active {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* HOTELIER MODE                                                        */
+/* ═══════════════════════════════════════════════════════════════════ */
+.h-body {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+}
+
+/* Left rail */
+.h-rail {
+  background: var(--color-paper);
+  border-right: 1px solid var(--color-border-muted);
+  padding: 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.rail-item {
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  position: relative;
+  transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rail-item:hover { background: var(--color-warm); }
+.rail-item + .rail-item { border-top: 1px solid var(--color-border-muted); }
+.rail-glyph {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-subtle);
+}
+.rail-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-muted-text);
+}
+.rail-item.active .rail-glyph { color: var(--color-accent); }
+.rail-item.active .rail-label { color: var(--color-ink); }
+.rail-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-accent);
+}
+.rail-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rail-spacer { flex: 1; }
+
+/* Hotelier main */
+.h-main {
+  padding: 56px 56px 72px;
+  background: var(--color-warm);
+}
+.h-greet {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border-muted);
+  margin-bottom: 48px;
+}
+.h-greet-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2rem);
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+.h-greet-text em { font-style: italic; color: var(--color-accent); font-weight: 500; }
+.h-greet-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-muted-text);
+}
+
+/* The Briefing — flat, hairlines, no card */
+.brief {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border-muted);
+  padding: 56px 64px 48px;
+}
+
+.brief-meta-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.brief-headline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.25rem, 4vw + 0.5rem, 3.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+  margin-bottom: 40px;
+  max-width: 20ch;
+}
+.brief-headline em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.brief-narrative {
+  font-size: clamp(1rem, 1.2vw + 0.4rem, 1.125rem);
+  line-height: 1.75;
+  color: var(--color-ink-2);
+  max-width: 38rem;
+  margin-bottom: 48px;
+}
+.brief-narrative b { font-weight: 600; color: var(--color-ink); }
+
+/* Stat row — Stat-Card-Stack pattern, alternating warm */
+.brief-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--color-border-muted);
+  border-bottom: 1px solid var(--color-border-muted);
+  margin-bottom: 56px;
+}
+.bs-cell {
+  padding: 32px 28px;
+  border-right: 1px solid var(--color-border-muted);
+}
+.bs-cell:last-child { border-right: none; }
+.bs-cell:nth-child(2) { background: var(--color-warm); }
+.bs-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-muted-text);
+  margin-bottom: 16px;
+}
+.bs-value {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+}
+.bs-value em { font-style: italic; font-weight: 500; color: var(--color-accent); }
+.bs-delta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-top: 12px;
+}
+
+/* Inline decision — flat block */
+.brief-decision {
+  background: var(--color-warm);
+  border: 1px solid var(--color-border-muted);
+  padding: 28px 32px;
+  margin-bottom: 56px;
+}
+.bd-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-muted);
+  margin-bottom: 20px;
+}
+.bd-deadline {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-muted-text);
+}
+.bd-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-bottom: 10px;
+}
+.bd-sub {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-muted-text);
+  margin-bottom: 22px;
+  max-width: 42rem;
+}
+.bd-sub b { color: var(--color-ink); font-weight: 600; }
+.bd-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Buttons (no border-radius — Tally style) */
+.btn {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: 1px solid var(--color-ink);
+  background: transparent;
+  color: var(--color-ink);
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn:hover { background: var(--color-ink); color: var(--color-paper); }
+.btn-primary {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.btn-primary:hover { background: #000; }
+.btn-link {
+  border: none;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-border-muted);
+  text-underline-offset: 3px;
+  background: transparent;
+}
+.btn-link:hover {
+  background: transparent;
+  color: var(--color-ink);
+  border-bottom-color: var(--color-ink);
+}
+
+/* Week outlook — stat-style row */
+.brief-week {
+  margin-bottom: 56px;
+}
+.bw-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid var(--color-border-muted);
+  border-bottom: 1px solid var(--color-border-muted);
+}
+.bw-day {
+  padding: 22px 12px;
+  text-align: center;
+  border-right: 1px solid var(--color-border-muted);
+}
+.bw-day:last-child { border-right: none; }
+.bw-day.event { background: var(--color-accent-bg); }
+.bw-day.strong { background: var(--color-warm); }
+.bw-dow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--color-muted-text);
+  margin-bottom: 14px;
+}
+.bw-day.event .bw-dow { color: var(--color-accent); }
+.bw-status {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-muted-text);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+.bw-day.event .bw-status,
+.bw-day.strong .bw-status { color: var(--color-accent); }
+.bw-price {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+/* Marc — italic pull-quote pattern */
+.brief-marc {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: start;
+  padding: 32px 0 0;
+  border-top: 1px solid var(--color-border-muted);
+}
+.marc-av {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.marc-content { padding-top: 2px; }
+.marc-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1rem, 1.2vw + 0.4rem, 1.25rem);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-bottom: 14px;
+}
+.marc-attr {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.marc-hairline {
+  width: 32px;
+  height: 1px;
+  background: var(--color-border-muted);
+}
+.marc-name {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--color-muted-text);
+}
+
+/* Numbered features below the wireframe */
+.features {
+  margin-top: clamp(4rem, 8vw, 6rem);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.feat {
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border-muted);
+}
+.feat-num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  margin-bottom: 10px;
+}
+.feat-num em { font-style: italic; font-weight: 500; color: var(--color-accent); }
+.feat-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-muted-text);
+  margin-bottom: 16px;
+}
+.feat-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border-muted);
+  padding-bottom: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* EXPERTEN MODE                                                        */
+/* ═══════════════════════════════════════════════════════════════════ */
+.e-body {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+}
+
+.e-main {
+  padding: 48px 48px 56px;
+  background: var(--color-warm);
+  border-right: 1px solid var(--color-border-muted);
+}
+.e-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border-muted);
+  margin-bottom: 36px;
+}
+.e-tb-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2rem);
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+  margin-bottom: 8px;
+}
+.e-tb-title em { font-style: italic; font-weight: 500; color: var(--color-accent); }
+.e-tb-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-muted-text);
+}
+.e-tb-actions {
+  display: flex;
+  gap: 24px;
+}
+.e-tb-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--color-muted-text);
+  background: transparent;
+  border: none;
+  padding: 8px 0;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
+.e-tb-btn:hover { color: var(--color-ink); }
+.e-tb-btn.active {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-accent);
+}
+.e-tb-btn.ai {
+  color: var(--color-accent);
+}
+
+/* Price grid — radically minimal */
+.price-grid {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-paper);
+  border: 1px solid var(--color-border-muted);
+}
+.price-grid th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--color-muted-text);
+  padding: 16px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border-muted);
+  background: var(--color-warm);
+}
+.price-grid th:first-child {
+  text-align: left;
+  padding-left: 24px;
+  width: 90px;
+}
+.price-grid td {
+  padding: 0;
+  text-align: center;
+  border-right: 1px solid var(--color-border-muted);
+  border-bottom: 1px solid var(--color-border-muted);
+}
+.price-grid td:last-child { border-right: none; }
+.price-grid tr:last-child td { border-bottom: none; }
+.price-grid td:first-child {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-muted-text);
+  text-align: left;
+  padding: 0 0 0 24px;
+}
+.price-grid tr.current td:first-child {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.pc {
+  padding: 18px 8px 16px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.pc:hover { background: var(--color-warm); }
+.pc.event {
+  background: var(--color-accent-bg);
+}
+.pc.event:hover { background: #dde6d3; }
+.ai-mark {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--color-accent);
+}
+.pc-price {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.pc-occ {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: var(--color-muted-text);
+}
+.pc.event .pc-occ { color: var(--color-accent); }
+
+.grid-legend {
+  display: flex;
+  gap: 32px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border-muted);
+}
+.gl-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gl-sw {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.gl-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-muted-text);
+}
+
+/* Lower split */
+.e-lower {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border-muted);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.eb-tag {
+  margin-bottom: 20px;
+}
+
+/* Pickup chart — minimal, no fill */
+.pickup-chart {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border-muted);
+  padding: 20px;
+}
+.pickup-chart svg {
+  width: 100%;
+  height: 140px;
+  display: block;
+}
+.chart-axis {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--color-muted-text);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.chart-legend-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 12px;
+}
+.cl-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+}
+.cl-line {
+  width: 18px;
+  height: 1.5px;
+  background: var(--color-accent);
+}
+.cl-line.dashed {
+  background: linear-gradient(to right, var(--color-muted-text) 50%, transparent 50%);
+  background-size: 5px 1px;
+  background-repeat: repeat-x;
+  height: 1px;
+}
+
+/* Comp set — no bars, mono numbers */
+.comp-set {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border-muted);
+}
+.comp-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--color-border-muted);
+  align-items: baseline;
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-row.you {
+  background: var(--color-accent-bg);
+}
+.comp-name {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-muted-text);
+}
+.comp-row.you .comp-name {
+  color: var(--color-ink);
+  font-weight: 500;
+}
+.comp-name em {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-accent);
+}
+.comp-price {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+.comp-warn {
+  color: var(--color-amber);
+}
+
+/* Sidebar */
+.e-side {
+  background: var(--color-paper);
+  padding: 48px 28px;
+}
+.es-section + .es-section {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border-muted);
+}
+.es-tag {
+  margin-bottom: 20px;
+}
+
+/* AI rec — flat, sharp edges */
+.ai-rec {
+  padding: 24px 0 28px;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+.ai-rec:last-child { border-bottom: none; padding-bottom: 0; }
+.ar-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-accent);
+  margin-bottom: 14px;
+}
+.ar-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+  margin-bottom: 10px;
+}
+.ar-title em { font-style: italic; font-weight: 500; color: var(--color-accent); }
+.ar-sub {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-muted-text);
+  margin-bottom: 18px;
+}
+.ar-actions { display: flex; gap: 14px; }
+.ar-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-ink);
+  padding: 4px 0;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.ar-btn.muted {
+  color: var(--color-muted-text);
+  border-bottom-color: var(--color-border-muted);
+}
+
+/* Page foot */
+.page-foot {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px clamp(1.25rem, 5vw, 4rem) 80px;
+  border-top: 1px solid var(--color-border-muted);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--color-muted-text);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .e-body { grid-template-columns: 1fr; }
+  .e-side { border-top: 1px solid var(--color-border-muted); }
+  .h-body { grid-template-columns: 72px 1fr; }
+  .h-main, .e-main { padding: 36px; }
+  .brief { padding: 36px; }
+  .features { grid-template-columns: 1fr 1fr; }
+  .e-lower { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ PAGE HEAD ═══════════════════════════════════════════════ -->
+<header class="page-head">
+  <span class="page-brand">happyhotel</span>
+  <div class="page-meta-row">
+    <span class="mono-tag muted">AI Revenue Manager</span>
+    <span class="mono-tag muted">Wireframe v4</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 01 · HOTELIER MODE                                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section">
+  <div class="frame-head">
+    <div class="frame-tag">
+      <span class="mono-tag">01 — Hotelier Mode</span>
+    </div>
+    <h2 class="frame-h2">Ergebnisse lesen, nicht <em>analysieren.</em></h2>
+    <p class="frame-desc">Anna ist Owner eines 80-Zimmer-Hotels und hat keinen dedizierten Revenue Manager. Sie öffnet das Tool morgens und liest, was die letzte Nacht passiert ist — wie eine Übergabe, nicht wie ein Dashboard.</p>
+
+    <div class="frame-meta">
+      <div class="fm-item">
+        <div class="fm-key">Persona</div>
+        <div class="fm-val"><em>Anna</em>, Owner / GM</div>
+      </div>
+      <div class="fm-item">
+        <div class="fm-key">Front Door</div>
+        <div class="fm-val">Tägliches Briefing</div>
+      </div>
+      <div class="fm-item">
+        <div class="fm-key">Sprache</div>
+        <div class="fm-val"><em>Outcome</em>, kein Jargon</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wireframe -->
+  <div class="app-frame">
+
+    <div class="topbar">
+      <span class="tb-brand">happyhotel</span>
+      <div class="tb-sep"></div>
+      <span class="tb-hotel">Hotel Seeblick · Berlin</span>
+      <div class="tb-right">
+        <span class="tb-tier">Senior RM</span>
+        <div class="tb-av">A</div>
+      </div>
+    </div>
+
+    <div class="h-body">
+
+      <!-- Rail nav -->
+      <nav class="h-rail">
+        <div class="rail-item active">
+          <span class="rail-glyph">B</span>
+          <span class="rail-label">Briefing</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">U</span>
+          <span class="rail-label">Umsatz</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-glyph">E</span>
+          <span class="rail-label">Entsch.</span>
+          <span class="rail-badge">3</span>
+        </div>
+        <div class="rail-spacer"></div>
+        <div class="rail-item">
+          <span class="rail-glyph">S</span>
+          <span class="rail-label">Setup</span>
+        </div>
+      </nav>
+
+      <!-- Main canvas -->
+      <main class="h-main">
+
+        <div class="h-greet">
+          <div class="h-greet-text">Guten Morgen, <em>Anna.</em></div>
+          <div class="h-greet-date">Mi · 29. April 2026</div>
+        </div>
+
+        <article class="brief">
+
+          <div class="brief-meta-row">
+            <span class="mono-tag">KW 18 · Dein Revenue Manager</span>
+            <span class="mono-tag muted">29. 04. 2026</span>
+          </div>
+
+          <h1 class="brief-headline">Pfingsten war ein Volltreffer. Nächste Woche wird <em>interessant.</em></h1>
+
+          <p class="brief-narrative">
+            Du hast diesen Monat <b>28.420&nbsp;€</b> verdient — 12&nbsp;% mehr als im Mai 2025 und vier Punkte über deinem Plan. Ich habe heute Nacht 23 Preise angepasst, nachdem die Frankfurter Messe für das Pfingstwochenende bestätigt wurde. Wenn das Tempo hält, schließen wir den Monat bei rund <b>64.000&nbsp;€</b> ab — dein bester Mai seit 2019.
+          </p>
+
+          <!-- Stat Stack -->
+          <div class="brief-stats">
+            <div class="bs-cell">
+              <div class="bs-label">Forecast Mai</div>
+              <div class="bs-value"><em>64.000</em><span style="font-size:0.7em">&nbsp;€</span></div>
+              <div class="bs-delta">+ 14 % vs. Plan</div>
+            </div>
+            <div class="bs-cell">
+              <div class="bs-label">Mai bisher</div>
+              <div class="bs-value mono-num">28.420<span style="font-size:0.7em">&nbsp;€</span></div>
+              <div class="bs-delta">+ 12 % vs. Vorjahr</div>
+            </div>
+            <div class="bs-cell">
+              <div class="bs-label">Auto-Aktionen</div>
+              <div class="bs-value mono-num">23</div>
+              <div class="bs-delta">letzte Nacht</div>
+            </div>
+          </div>
+
+          <!-- Inline decision -->
+          <div class="brief-decision">
+            <div class="bd-meta">
+              <span class="mono-tag">Deine Freigabe nötig</span>
+              <span class="bd-deadline">Frist · 17:00 Uhr</span>
+            </div>
+            <div class="bd-title">Großgruppe Berlin · 3.–5. Juni · 24 Zimmer</div>
+            <p class="bd-sub">+2.856 € Brutto, abzüglich −1.840 € geschätzte Verdrängung regulärer Gäste. Netto <b>+1.016 €</b>. Marc empfiehlt anzunehmen.</p>
+            <div class="bd-actions">
+              <button class="btn btn-primary">Annehmen</button>
+              <button class="btn">Ablehnen</button>
+              <button class="btn btn-link">Marc fragen</button>
+            </div>
+          </div>
+
+          <!-- Week outlook -->
+          <div class="brief-week">
+            <div style="margin-bottom:16px">
+              <span class="mono-tag muted">Diese Woche</span>
+            </div>
+            <div class="bw-grid">
+              <div class="bw-day">
+                <div class="bw-dow">Do</div>
+                <div class="bw-status">stabil</div>
+                <div class="bw-price">109&nbsp;€</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">Fr</div>
+                <div class="bw-status">stark</div>
+                <div class="bw-price">152&nbsp;€</div>
+              </div>
+              <div class="bw-day event">
+                <div class="bw-dow">Sa</div>
+                <div class="bw-status">Pfingsten</div>
+                <div class="bw-price">168&nbsp;€</div>
+              </div>
+              <div class="bw-day strong">
+                <div class="bw-dow">So</div>
+                <div class="bw-status">stark</div>
+                <div class="bw-price">162&nbsp;€</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mo</div>
+                <div class="bw-status">leise</div>
+                <div class="bw-price">102&nbsp;€</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Di</div>
+                <div class="bw-status">leise</div>
+                <div class="bw-price">98&nbsp;€</div>
+              </div>
+              <div class="bw-day">
+                <div class="bw-dow">Mi</div>
+                <div class="bw-status">stabil</div>
+                <div class="bw-price">99&nbsp;€</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Marc — italic pull-quote with hairline -->
+          <div class="brief-marc">
+            <div class="marc-av">M</div>
+            <div class="marc-content">
+              <blockquote class="marc-quote">"Für den Sommer würde ich den Direktkanal nochmal pushen — ich habe drei konkrete Ideen vorbereitet."</blockquote>
+              <div class="marc-attr">
+                <div class="marc-hairline"></div>
+                <span class="marc-name">Marc · Senior Revenue Manager</span>
+              </div>
+            </div>
+            <button class="btn btn-link" style="margin-top:6px">Antworten</button>
+          </div>
+
+        </article>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Numbered features -->
+  <div class="features">
+    <div class="feat">
+      <div class="feat-num"><em>1.</em> Briefing-Eingang</div>
+      <div class="feat-desc">Tägliches narratives Briefing in Owner-Sprache. Geld, Wachstum, was zu tun ist — kein Dashboard, kein Jargon.</div>
+      <a href="#" class="feat-link">Mehr erfahren</a>
+    </div>
+    <div class="feat">
+      <div class="feat-num"><em>2.</em> Inline-Entscheidungen</div>
+      <div class="feat-desc">Genehmigungen erscheinen direkt im Briefing-Flow. Wie eine Unterschrift, nicht wie ein Task.</div>
+      <a href="#" class="feat-link">Mehr erfahren</a>
+    </div>
+    <div class="feat">
+      <div class="feat-num"><em>3.</em> Marc &amp; Lisa, sichtbar</div>
+      <div class="feat-desc">Menschliche RM-Experten erscheinen im selben Stream wie der AI — nicht in einem Support-Channel.</div>
+      <a href="#" class="feat-link">Mehr erfahren</a>
+    </div>
+    <div class="feat">
+      <div class="feat-num"><em>4.</em> Bringschuld</div>
+      <div class="feat-desc">Das System kommt zum Hotelier — per Push, E-Mail, Briefing. Dashboards bleiben Drilldown.</div>
+      <a href="#" class="feat-link">Mehr erfahren</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- 02 · EXPERTEN MODE                                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="frame-section" style="border-top:1px solid var(--color-border-muted)">
+  <div class="frame-head">
+    <div class="frame-tag">
+      <span class="mono-tag">02 — Experten Mode</span>
+    </div>
+    <h2 class="frame-h2">Volle Kontrolle, AI als <em>Copilot.</em></h2>
+    <p class="frame-desc">Kai ist Senior Revenue Manager und betreut sechs Häuser im Cluster. Er braucht Tiefe, schnelle Iteration, und einen AI, der ihm Zeit spart — nicht ihm den Job abnimmt.</p>
+
+    <div class="frame-meta">
+      <div class="fm-item">
+        <div class="fm-key">Persona</div>
+        <div class="fm-val"><em>Kai</em>, Senior RM</div>
+      </div>
+      <div class="fm-item">
+        <div class="fm-key">Front Door</div>
+        <div class="fm-val">Preistabelle</div>
+      </div>
+      <div class="fm-item">
+        <div class="fm-key">Sprache</div>
+        <div class="fm-val"><em>RevPAR</em>, Pickup, Comp-Set</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-frame">
+
+    <div class="topbar">
+      <span class="tb-brand">happyhotel</span>
+      <div class="tb-sep"></div>
+      <div class="tb-nav">
+        <span class="tb-nav-item active">Preistabelle</span>
+        <span class="tb-nav-item">Pickup</span>
+        <span class="tb-nav-item">Mitbewerber</span>
+        <span class="tb-nav-item">Kalender</span>
+        <span class="tb-nav-item">Analyse</span>
+      </div>
+      <div class="tb-right">
+        <span class="tb-tier">6 Häuser</span>
+        <div class="tb-av">K</div>
+      </div>
+    </div>
+
+    <div class="e-body">
+
+      <main class="e-main">
+
+        <div class="e-toolbar">
+          <div>
+            <div class="e-tb-title">Hotel Seeblick · <em>KW 18</em></div>
+            <div class="e-tb-meta">Mai 2026 · Doppelzimmer · letzter Sync vor 4 Min</div>
+          </div>
+          <div class="e-tb-actions">
+            <button class="e-tb-btn active">Woche</button>
+            <button class="e-tb-btn">Monat</button>
+            <button class="e-tb-btn">Quartal</button>
+            <button class="e-tb-btn ai">Empfehlungen · 4</button>
+          </div>
+        </div>
+
+        <table class="price-grid">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Mo</th>
+              <th>Di</th>
+              <th>Mi</th>
+              <th>Do</th>
+              <th>Fr</th>
+              <th>Sa</th>
+              <th>So</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>KW 17</td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">98&nbsp;€</div><div class="pc-occ">44 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">95&nbsp;€</div><div class="pc-occ">38 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">97&nbsp;€</div><div class="pc-occ">41 %</div></div></td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">109&nbsp;€</div><div class="pc-occ">52 %</div></div></td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">138&nbsp;€</div><div class="pc-occ">74 %</div></div></td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">148&nbsp;€</div><div class="pc-occ">81 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">135&nbsp;€</div><div class="pc-occ">69 %</div></div></td>
+            </tr>
+            <tr class="current">
+              <td>KW 18 ▸</td>
+              <td><div class="pc"><div class="pc-price">102&nbsp;€</div><div class="pc-occ">35 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">98&nbsp;€</div><div class="pc-occ">28 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">99&nbsp;€</div><div class="pc-occ">31 %</div></div></td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">109&nbsp;€</div><div class="pc-occ">42 %</div></div></td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">152&nbsp;€</div><div class="pc-occ">58 %</div></div></td>
+              <td><div class="pc event"><span class="ai-mark">AI</span><div class="pc-price">168&nbsp;€</div><div class="pc-occ">71 %</div></div></td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">162&nbsp;€</div><div class="pc-occ">68 %</div></div></td>
+            </tr>
+            <tr>
+              <td>KW 19</td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">112&nbsp;€</div><div class="pc-occ">46 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">108&nbsp;€</div><div class="pc-occ">39 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">110&nbsp;€</div><div class="pc-occ">42 %</div></div></td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">118&nbsp;€</div><div class="pc-occ">55 %</div></div></td>
+              <td><div class="pc event"><span class="ai-mark">AI</span><div class="pc-price">172&nbsp;€</div><div class="pc-occ">82 %</div></div></td>
+              <td><div class="pc event"><span class="ai-mark">AI</span><div class="pc-price">178&nbsp;€</div><div class="pc-occ">88 %</div></div></td>
+              <td><div class="pc"><span class="ai-mark">AI</span><div class="pc-price">165&nbsp;€</div><div class="pc-occ">76 %</div></div></td>
+            </tr>
+            <tr>
+              <td>KW 20</td>
+              <td><div class="pc"><div class="pc-price">115&nbsp;€</div><div class="pc-occ">48 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">110&nbsp;€</div><div class="pc-occ">41 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">112&nbsp;€</div><div class="pc-occ">44 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">120&nbsp;€</div><div class="pc-occ">52 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">142&nbsp;€</div><div class="pc-occ">62 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">152&nbsp;€</div><div class="pc-occ">67 %</div></div></td>
+              <td><div class="pc"><div class="pc-price">128&nbsp;€</div><div class="pc-occ">54 %</div></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-legend">
+          <div class="gl-item">
+            <div class="gl-sw" style="background:var(--color-accent-bg)"></div>
+            <span class="gl-label">Event · Pfingsten</span>
+          </div>
+          <div class="gl-item">
+            <div class="gl-sw" style="background:var(--color-paper);border:1px solid var(--color-border-muted)"></div>
+            <span class="gl-label">Standard</span>
+          </div>
+          <div class="gl-item">
+            <span class="gl-label" style="color:var(--color-accent)">AI · automatisch angepasst</span>
+          </div>
+        </div>
+
+        <!-- Lower split: Pickup + Comp -->
+        <div class="e-lower">
+          <div>
+            <div class="eb-tag">
+              <span class="mono-tag muted">Pickup · KW 18 vs. Vorjahr</span>
+            </div>
+            <div class="pickup-chart">
+              <svg viewBox="0 0 320 140" preserveAspectRatio="none">
+                <!-- Hairline grid -->
+                <line x1="0" y1="30" x2="320" y2="30" stroke="#d1cdc4" stroke-width="1" stroke-dasharray="2,4"/>
+                <line x1="0" y1="70" x2="320" y2="70" stroke="#d1cdc4" stroke-width="1" stroke-dasharray="2,4"/>
+                <line x1="0" y1="110" x2="320" y2="110" stroke="#d1cdc4" stroke-width="1"/>
+
+                <!-- Subtle area fill under accent line -->
+                <polygon fill="#e6ede2" fill-opacity="0.6"
+                  points="0,86 50,77 100,66 150,55 200,42 250,30 300,18 300,110 0,110"/>
+
+                <!-- Vorjahr (dashed muted) -->
+                <polyline fill="none" stroke="#7a7568" stroke-width="1" stroke-dasharray="4,3"
+                  points="0,95 50,90 100,84 150,77 200,70 250,63 300,56"/>
+
+                <!-- Aktuell (accent solid) -->
+                <polyline fill="none" stroke="#2d5016" stroke-width="1.75"
+                  points="0,86 50,77 100,66 150,55 200,42 250,30 300,18"/>
+
+                <!-- Today marker -->
+                <circle cx="300" cy="18" r="3.5" fill="#2d5016"/>
+                <circle cx="300" cy="18" r="6" fill="none" stroke="#2d5016" stroke-width="1" stroke-opacity="0.3"/>
+
+                <!-- Axis labels -->
+                <text x="0" y="135" class="chart-axis">D-30</text>
+                <text x="155" y="135" class="chart-axis">D-15</text>
+                <text x="295" y="135" class="chart-axis" text-anchor="end">heute</text>
+              </svg>
+            </div>
+            <div class="chart-legend-row">
+              <div class="cl-item">
+                <span class="cl-line"></span> Aktuell
+              </div>
+              <div class="cl-item">
+                <span class="cl-line dashed"></span> Vorjahr
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="eb-tag">
+              <span class="mono-tag muted">Comp-Set · heute</span>
+            </div>
+            <div class="comp-set">
+              <div class="comp-row you">
+                <div class="comp-name"><em>Hotel Seeblick</em>&nbsp;· du</div>
+                <div class="comp-price mono-num">142&nbsp;€</div>
+              </div>
+              <div class="comp-row">
+                <div class="comp-name">Hotel Zentrum</div>
+                <div class="comp-price mono-num">128&nbsp;€</div>
+              </div>
+              <div class="comp-row">
+                <div class="comp-name">Hotel Mitte</div>
+                <div class="comp-price mono-num">120&nbsp;€</div>
+              </div>
+              <div class="comp-row">
+                <div class="comp-name comp-warn">Hotel Adler · Anomalie</div>
+                <div class="comp-price comp-warn mono-num">59&nbsp;€</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="e-side">
+
+        <div class="es-section">
+          <div class="es-tag">
+            <span class="mono-tag">Empfehlungen · 4</span>
+          </div>
+
+          <div class="ai-rec">
+            <div class="ar-meta">Pickup-Pattern · KW 19</div>
+            <div class="ar-title">Pfingstmontag auf <em>185 €</em> erhöhen</div>
+            <p class="ar-sub">Pickup 3× über Schnitt. Comp-Set bei 158 €. Forecast deckt +17 € locker.</p>
+            <div class="ar-actions">
+              <button class="ar-btn">Ausführen</button>
+              <button class="ar-btn muted">Begründung</button>
+            </div>
+          </div>
+
+          <div class="ai-rec">
+            <div class="ar-meta">Soft-Demand · KW 18</div>
+            <div class="ar-title">Frühbucher Mo–Mi anbieten</div>
+            <p class="ar-sub">28–35 % Occ. −10 % Frühbucher schätze ich auf +8 Buchungen.</p>
+            <div class="ar-actions">
+              <button class="ar-btn">Aktivieren</button>
+              <button class="ar-btn muted">Ablehnen</button>
+            </div>
+          </div>
+
+          <div class="ai-rec">
+            <div class="ar-meta">Restriction · KW 21</div>
+            <div class="ar-title"><em>MinLOS 3</em> für Festwochenende</div>
+            <p class="ar-sub">14.–17. August. Geschätzte Wirkung: +480 € RevPAR über das Wochenende.</p>
+            <div class="ar-actions">
+              <button class="ar-btn">Aktivieren</button>
+              <button class="ar-btn muted">Nur Booking</button>
+            </div>
+          </div>
+
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Numbered features -->
+  <div class="features">
+    <div class="feat">
+      <div class="feat-num"><em>1.</em> Volle Preistabelle</div>
+      <div class="feat-desc">Komplette Dichte ohne Vereinfachung. Wochen-, Monats-, Quartalsansicht. Alle Restrictions und Channels.</div>
+      <a href="#" class="feat-link">Mehr erfahren</a>
+    </div>
+    <div class="feat">
+      <div class="feat-num"><em>2.</em> AI-Empfehlungen</div>
+      <div class="feat-desc">Vorschläge mit Begründung, Pickup-Daten, Comp-Set-Kontext. Ein Klick zur Ausführung — oder ignorieren.</div>
+      <a href="#" class="feat-link">Mehr erfahren</a>
+    </div>
+    <div class="feat">
+      <div class="feat-num"><em>3.</em> Multi-Property</div>
+      <div class="feat-desc">Cluster-Ansicht, Cross-Property-Analyse, Group-Displacement-Berechnung über mehrere Häuser hinweg.</div>
+      <a href="#" class="feat-link">Mehr erfahren</a>
+    </div>
+    <div class="feat">
+      <div class="feat-num"><em>4.</em> Marc &amp; Lisa als Peers</div>
+      <div class="feat-desc">Statt als Service-Layer: als Kollegen. Gemeinsame Reviews, geteilte Decision Logs, abgestimmte Strategien.</div>
+      <a href="#" class="feat-link">Mehr erfahren</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOT ═════════════════════════════════════════════════ -->
+<footer class="page-foot">
+  <span>happyhotel · AI Revenue Manager · Wireframe v4</span>
+  <span>Eine Plattform · Zwei Erfahrungen</span>
+</footer>
+
+</body>
+</html>
