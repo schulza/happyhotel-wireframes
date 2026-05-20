@@ -511,6 +511,94 @@ body {
 .cl-sw.w  { background: #fdd4a8; }
 .cl-sw.ev { background: #e3e89c; }
 
+/* ─── Slide 00 · Deckblatt · Cover ─── */
+.s00 {
+  justify-content: center;
+  align-items: center;
+}
+.s00-inner {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(20px, 2vw, 36px);
+  transform: translateY(-24px);
+}
+.s00-logo {
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: clamp(4px, 0.6vw, 12px);
+}
+.s00-logo svg {
+  height: clamp(48px, 5vw, 88px);
+  width: auto;
+  display: block;
+}
+.s00-eyebrow {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1vw, 14px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.s00-eyebrow::before {
+  content: "";
+  width: 8px; height: 8px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.s00-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(48px, 6.8vw, 124px);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0;
+  max-width: 18ch;
+}
+.s00-title em { color: var(--accent); font-weight: 500; }
+.s00-meta {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: clamp(40px, 5vw, 96px);
+  margin-top: clamp(16px, 2vw, 32px);
+  padding-top: clamp(16px, 1.6vw, 28px);
+  border-top: 1px solid var(--border);
+  width: 100%;
+  max-width: 720px;
+}
+.s00-meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.s00-meta-key {
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 0.75vw, 11px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.s00-meta-val {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(15px, 1.4vw, 22px);
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.s00-meta-val em { color: var(--accent); font-weight: 500; }
+
 /* ─── Slide · Strategie & Vertrauen · 2 Decision Cards (aus deck2) ─── */
 .s06 {
   padding-top: clamp(48px, 5vw, 80px);
@@ -2749,8 +2837,27 @@ body {
 
 <div class="deck">
 
-  <!-- ═════════════ 01 · DAMALS · WERKZEUG ═════════════ -->
-  <section class="slide s01 active" data-slide="1">
+  <!-- ═════════════ 00 · DECKBLATT ═════════════ -->
+  <section class="slide s00 active" data-slide="1">
+    <div class="s00-inner">
+      <span class="s00-logo" aria-label="happyhotel"><svg viewBox="0 0 145 145" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.8302 0C5.7443 0 0 5.7443 0 12.8302V35.2832C0 42.3691 5.7443 48.1134 12.8302 48.1134H48.1134V83.3966C48.1134 90.4825 53.8577 96.2268 60.9437 96.2268H83.3966C90.4825 96.2268 96.2268 101.971 96.2268 109.057V131.51C96.2268 138.596 101.971 144.34 109.057 144.34H131.51C138.596 144.34 144.34 138.596 144.34 131.51V96.2268V48.1134V12.8302C144.34 5.7443 138.596 0 131.51 0H109.057C101.971 0 96.2268 5.7443 96.2268 12.8302V35.2832C96.2268 42.3691 90.4825 48.1134 83.3966 48.1134H48.1134V12.8302C48.1134 5.7443 42.3691 0 35.2832 0H12.8302Z"/></svg></span>
+      <span class="s00-eyebrow">Vision &amp; Vino · Mai 2026</span>
+      <h1 class="s00-title">Project <em>Ray.</em></h1>
+      <div class="s00-meta">
+        <div class="s00-meta-block">
+          <span class="s00-meta-key">Vortrag</span>
+          <span class="s00-meta-val">Sebastian Kuhnhardt<br><em>CEO · happyhotel</em></span>
+        </div>
+        <div class="s00-meta-block">
+          <span class="s00-meta-key">Thema</span>
+          <span class="s00-meta-val">Der nächste Schritt<br>im Revenue Management</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 02 · DAMALS · WERKZEUG ═════════════ -->
+  <section class="slide s01" data-slide="2">
     <div class="s01-cols">
 
       <!-- LEFT: Text -->
@@ -2910,11 +3017,11 @@ body {
   </section>
 
   <!-- ═════════════ 02 · HANDOFF · Strategie + Vertrauen ═════ -->
-  <section class="slide s06" data-slide="2">
+  <section class="slide s06" data-slide="3">
 
     <div class="s06-head">
       <p class="s06-lede"><span class="s06-diamond"></span>Ein Werkzeug, das mitdenkt</p>
-      <h2 class="s06-h2">Braucht zwei Dinge <em>von euch.</em></h2>
+      <h2 class="s06-h2">Jetzt brauchen wir zwei Dinge <em>von euch.</em></h2>
     </div>
 
     <div class="s06-cards">
@@ -3025,7 +3132,7 @@ body {
   </section>
 
   <!-- ═════════════ 03 · PIVOT + BRIEFING (merged) ═════ -->
-  <section class="slide s03" data-slide="3">
+  <section class="slide s03" data-slide="4">
     <div class="s01-cols">
 
       <!-- LEFT: Text aus altem S02 -->
@@ -3181,7 +3288,7 @@ body {
   </section>
 
   <!-- ═════════════ 03 · PROAKTIVITÄT · Cal Hintergrund + Panel rechts ═════════════ -->
-  <section class="slide s-pro" data-slide="4">
+  <section class="slide s-pro" data-slide="5">
 
     <!-- TEXT · top-left über Cal -->
     <div class="s-pro-text">
@@ -3336,7 +3443,7 @@ body {
   </section>
 
   <!-- ═════════════ 04 · REASONING · SIMPLIFIED (3 statt 6 Steps) ═════════════ -->
-  <section class="slide s04 s04-simple" data-slide="5">
+  <section class="slide s04 s04-simple" data-slide="6">
 
     <!-- Headline above stage -->
     <div class="s04-head">
@@ -3461,7 +3568,7 @@ body {
   </section>
 
   <!-- ═════════════ 05 · OUTLOOK · Hero + Ray Card ═════════════ -->
-  <section class="slide s05" data-slide="6">
+  <section class="slide s05" data-slide="7">
     <div class="s05-cols">
 
       <!-- LEFT: Hero Text -->
