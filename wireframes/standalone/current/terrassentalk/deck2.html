@@ -511,184 +511,6 @@ body {
 .cl-sw.w  { background: #fdd4a8; }
 .cl-sw.ev { background: #e3e89c; }
 
-/* ─── Slide · Strategie & Vertrauen · 2 Decision Cards (aus deck2) ─── */
-.s06 {
-  padding-top: clamp(48px, 5vw, 80px);
-  padding-bottom: clamp(48px, 5vw, 80px);
-  justify-content: center;
-}
-.s06-head {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto clamp(20px, 2vw, 32px);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(10px, 1vw, 14px);
-}
-.s06-lede {
-  font-family: var(--font-mono);
-  font-size: clamp(11px, 1vw, 14px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-.s06-h2 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(28px, 3.2vw, 48px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  margin: 0;
-  white-space: nowrap;
-}
-.s06-h2 em { color: var(--accent); font-weight: 500; }
-.s06-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(16px, 1.6vw, 24px);
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  min-height: 0;
-  align-items: stretch;
-}
-.s06-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px 24px 18px;
-  height: 380px;
-  display: flex;
-  flex-direction: column;
-  box-shadow:
-    0 1px 3px rgba(45, 41, 32, 0.04),
-    0 14px 36px -18px rgba(20, 20, 22, 0.10);
-}
-.s06-card-head {
-  padding-bottom: 18px;
-  margin-bottom: 14px;
-  border-bottom: 1px solid var(--border);
-}
-.s06-card-tag {
-  font-family: var(--font-mono);
-  font-size: clamp(9px, 0.75vw, 11px);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: clamp(4px, 0.5vw, 7px);
-}
-.s06-diamond {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  transform: rotate(45deg);
-  display: inline-block;
-  flex-shrink: 0;
-}
-.s06-card-title {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(17px, 1.6vw, 26px);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--ink);
-}
-.s06-card-title em { color: var(--accent); font-weight: 500; }
-.s06-opts {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-}
-.s06-opt {
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  gap: 12px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  padding: 0 14px;
-  align-items: center;
-  flex: 1;
-}
-.s06-opt.selected {
-  background: var(--surface);
-  border: 1.5px solid var(--accent);
-  box-shadow: 0 6px 20px -10px rgba(30, 58, 95, 0.18);
-}
-.s06-opt-glyph {
-  color: var(--subtle);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.s06-opt.selected .s06-opt-glyph { color: var(--accent); }
-.s06-opt-glyph svg {
-  width: clamp(14px, 1.3vw, 18px);
-  height: clamp(14px, 1.3vw, 18px);
-  display: block;
-}
-.s06-opt-body {
-  display: flex;
-  align-items: baseline;
-  gap: clamp(6px, 0.7vw, 10px);
-  flex-wrap: wrap;
-  min-width: 0;
-}
-.s06-opt-name {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(13px, 1.2vw, 18px);
-  letter-spacing: -0.01em;
-  color: var(--ink-2);
-  line-height: 1.2;
-  white-space: nowrap;
-}
-.s06-opt.selected .s06-opt-name {
-  color: var(--ink);
-  font-weight: 500;
-}
-.s06-opt-desc {
-  font-family: var(--font-sans);
-  font-size: clamp(10px, 0.8vw, 12px);
-  color: var(--subtle);
-  line-height: 1.45;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.s06-opt.selected .s06-opt-desc { color: var(--muted); }
-.s06-opt-badge {
-  font-family: var(--font-mono);
-  font-size: clamp(8px, 0.7vw, 10px);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  display: none;
-  align-items: center;
-  gap: 5px;
-  white-space: nowrap;
-}
-.s06-opt-badge::before {
-  content: "";
-  width: 4px; height: 4px;
-  background: var(--accent);
-  transform: rotate(45deg);
-  display: inline-block;
-}
-.s06-opt.selected .s06-opt-badge { display: none; }
-
 /* ─── Slide 02 · Pivot · 2-col mit Persona-Card ───────── */
 .s02 {
   padding-top: clamp(48px, 5vw, 80px);
@@ -1186,687 +1008,6 @@ body {
 }
 .brief-pre-stream { opacity: 0; }
 
-/* ─── Panel: Ray-Header + Action Cards ─── */
-.pz-ray-header {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(20px, 2vw, 30px);
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: clamp(10px, 1vw, 14px);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: clamp(10px, 1vw, 14px);
-}
-.pz-ray-header::before {
-  content: "";
-  width: 9px; height: 9px;
-  background: var(--accent);
-  transform: rotate(45deg);
-  flex-shrink: 0;
-}
-.pz-action {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  flex: 0 0 auto;
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-  /* max-height groß genug für jeden Card-Content, animierbar zu 0 */
-  max-height: 800px;
-  margin-bottom: 0;
-  transition:
-    max-height 0.78s cubic-bezier(0.7, 0, 0.4, 1),
-    opacity 0.5s ease,
-    transform 0.7s cubic-bezier(0.7, 0, 0.4, 1),
-    margin-top 0.78s cubic-bezier(0.7, 0, 0.4, 1),
-    padding 0.78s cubic-bezier(0.7, 0, 0.4, 1),
-    box-shadow 0.5s ease,
-    border-width 0.4s ease 0.35s;
-}
-.pz-action-inner {
-  padding: clamp(12px, 1.2vw, 18px);
-  display: flex;
-  flex-direction: column;
-  gap: clamp(8px, 0.8vw, 12px);
-  height: 100%;
-}
-/* Alle nicht-erledigten Cards: gleiches Aussehen, voll sichtbar */
-.pz-action.is-active,
-.pz-action.is-peek-1,
-.pz-action.is-peek-2 {
-  flex: 0 0 auto;
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-}
-
-/* Erledigt: kollabiert nach oben weg, andere rutschen nach */
-.pz-action.is-done {
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(-12px) scale(0.96);
-  pointer-events: none;
-  border-width: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.pz-action.is-done .pz-action-inner,
-.pz-action.is-entering .pz-action-inner {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-/* Eintritt: kommt von unten · spiegelbildlich zu is-done */
-.pz-action.is-entering {
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(14px) scale(0.96);
-  pointer-events: none;
-  border-width: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.pz-action-tag {
-  font-family: var(--font-mono);
-  font-size: clamp(8px, 0.7vw, 10px);
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-.pz-action-tag::before {
-  content: "";
-  width: 5px; height: 5px;
-  background: var(--accent);
-  transform: rotate(45deg);
-}
-.pz-action-title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(15px, 1.5vw, 22px);
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  line-height: 1.15;
-  margin: 0;
-}
-.pz-action-title em { color: var(--accent); font-weight: 500; }
-.pz-action-body {
-  font-family: var(--font-sans);
-  font-size: clamp(10px, 0.88vw, 12px);
-  color: var(--ink-2);
-  line-height: 1.5;
-}
-.pz-action-body b { color: var(--ink); font-weight: 600; }
-.pz-action-btns { display: flex; gap: 6px; }
-.pz-action-btn {
-  font-family: var(--font-sans);
-  font-size: clamp(10px, 0.88vw, 12px);
-  font-weight: 500;
-  padding: clamp(5px, 0.6vw, 8px) clamp(10px, 1vw, 14px);
-  border-radius: 7px;
-  border: none;
-  cursor: pointer;
-  line-height: 1;
-}
-.pz-action-btn.primary { background: var(--ink); color: #fff; }
-.pz-action-btn.ghost { background: transparent; color: var(--ink-2); border: 1px solid var(--border-2); }
-
-/* Auto-click pulse animation · wie in der Landing Page */
-@keyframes pzBtnPulse {
-  0%   { transform: scale(1);    box-shadow: 0 0 0 0px rgba(24,24,26,0.55); }
-  35%  { transform: scale(0.94); box-shadow: 0 0 0 6px rgba(24,24,26,0.20); }
-  100% { transform: scale(1);    box-shadow: 0 0 0 14px rgba(24,24,26,0); }
-}
-.pz-action-btn.primary.is-pulsing {
-  animation: pzBtnPulse 0.6s ease-out forwards;
-}
-
-/* Mini Week Strip */
-.pz-week-strip { display: flex; gap: 3px; height: clamp(22px, 2.2vw, 32px); }
-.pz-week-day {
-  flex: 1; border-radius: 3px;
-  background: var(--surface); border: 1px solid var(--border);
-  font-family: var(--font-mono); font-size: clamp(7px, 0.65vw, 9px);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--subtle); font-weight: 500;
-}
-.pz-week-day.event { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-/* Mini Channel Bar */
-.pz-channel-bar {
-  display: flex; height: clamp(16px, 1.6vw, 22px);
-  border-radius: 4px; overflow: hidden;
-}
-.pz-channel-seg {
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-mono); font-size: clamp(7px, 0.65vw, 9px);
-  font-weight: 600; color: #fff; letter-spacing: 0;
-}
-.pz-channel-seg.bkg { background: #2563eb; width: 80%; }
-.pz-channel-seg.dir { background: var(--accent); width: 12%; }
-.pz-channel-seg.oth { background: var(--subtle); width: 8%; }
-
-/* Mini Comp-Set Bars */
-.pz-comp { display: flex; flex-direction: column; gap: clamp(4px, 0.5vw, 6px); }
-.pz-comp-row { display: grid; grid-template-columns: clamp(52px, 5vw, 70px) 1fr auto; gap: 6px; align-items: center; }
-.pz-comp-name { font-family: var(--font-sans); font-size: clamp(8px, 0.7vw, 10px); color: var(--muted); }
-.pz-comp-row.you .pz-comp-name { color: var(--ink); font-weight: 600; }
-.pz-comp-bar-bg { height: clamp(6px, 0.7vw, 9px); background: var(--border); border-radius: 2px; overflow: hidden; }
-.pz-comp-bar-fill { height: 100%; background: var(--muted); border-radius: 2px; }
-.pz-comp-row.you .pz-comp-bar-fill { background: var(--accent); }
-.pz-comp-row.warn .pz-comp-bar-fill { background: #8c2f2f; }
-.pz-comp-price { font-family: var(--font-mono); font-size: clamp(8px, 0.7vw, 10px); font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; text-align: right; }
-
-/* ─── Slide · Proaktivität · Cal im Hintergrund, Panel rechts schwebend ─── */
-.s-pro {
-  position: absolute;
-  inset: 0;
-}
-/* Auf Viewports > 1560px werden Positionen an einen zentrierten 1560-Bereich gepinnt,
-   damit Text/Cal/Panel nicht weiter auseinanderdriften — wie .s01-cols max-width Behavior */
-.s-pro-text {
-  position: absolute;
-  /* 1:1 wie .s01-cols: bis 1560 Slide-Padding, danach am 1560-Container links gepinnt */
-  left: max(clamp(72px, 9vw, 160px), calc((100% - 1560px) / 2));
-  top: 50%;
-  transform: translateY(calc(-50% - 40px));
-  z-index: 3;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-}
-.s-pro-text .eyebrow { margin-bottom: clamp(24px, 2.4vw, 40px); }
-.s-pro-text .s01-headline { margin-bottom: clamp(20px, 2.1vw, 32px); }
-.s-pro-text .s01-sub { max-width: 44ch; }
-
-/* Neue Preistabelle · Simple UI · rechts-bündig als BG · ohne Card */
-.pro-cal-bg {
-  position: absolute;
-  right: 10%;
-  top: 55%;
-  transform: translateY(-50%);
-  width: clamp(680px, 64vw, 1080px);
-  height: auto;
-  opacity: 0.42;
-  z-index: 1;
-  /* Linke Kante fadet zum Text hin aus */
-  -webkit-mask-image: linear-gradient(to right,
-    transparent 0%,
-    rgba(0,0,0,0.15) 12%,
-    rgba(0,0,0,0.55) 24%,
-    #000 38%,
-    #000 100%);
-          mask-image: linear-gradient(to right,
-    transparent 0%,
-    rgba(0,0,0,0.15) 12%,
-    rgba(0,0,0,0.55) 24%,
-    #000 38%,
-    #000 100%);
-}
-.pro-cal-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: clamp(10px, 1vw, 16px);
-  padding-bottom: clamp(8px, 0.8vw, 12px);
-  border-bottom: 1px solid var(--border);
-}
-.pro-cal-title {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: clamp(11px, 0.95vw, 14px);
-  color: var(--ink);
-  letter-spacing: -0.005em;
-}
-.pro-cal-meta {
-  font-family: var(--font-mono);
-  font-size: clamp(8px, 0.7vw, 10px);
-  color: var(--muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-/* KW-Grid table */
-.kc-simple {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: clamp(3px, 0.35vw, 5px);
-  table-layout: fixed;
-}
-.kc-simple thead th {
-  font-family: var(--font-sans);
-  font-size: clamp(8px, 0.7vw, 10px);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  padding: 0 0 clamp(6px, 0.7vw, 10px);
-  text-align: center;
-}
-.kc-simple thead th:first-child {
-  text-align: left;
-  font-family: var(--font-mono);
-  color: var(--subtle);
-  width: clamp(32px, 3.5vw, 50px);
-}
-.kc-simple tbody td {
-  padding: clamp(2px, 0.25vw, 3px);
-  vertical-align: top;
-}
-.kc-simple tbody td:first-child {
-  font-family: var(--font-mono);
-  font-size: clamp(7px, 0.65vw, 9px);
-  color: var(--subtle);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  vertical-align: middle;
-  text-align: left;
-  padding-right: clamp(4px, 0.5vw, 8px);
-}
-/* Individual day cell */
-.kcc {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: clamp(4px, 0.45vw, 7px);
-  padding: clamp(5px, 0.6vw, 9px) clamp(4px, 0.5vw, 7px) clamp(8px, 0.9vw, 13px);
-  position: relative;
-  overflow: hidden;
-  min-height: clamp(40px, 5vw, 72px);
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2px, 0.25vw, 3px);
-}
-/* Auslastungs-Fill-Bar am unteren Rand */
-.kcc-fill {
-  position: absolute;
-  bottom: 0; left: 0;
-  height: clamp(3px, 0.4vw, 5px);
-  background: var(--accent);
-  border-radius: 0;
-  opacity: 0.6;
-}
-.kcc.l1 .kcc-fill { width: 25%; opacity: 0.25; }
-.kcc.l2 .kcc-fill { width: 42%; opacity: 0.4; }
-.kcc.l3 .kcc-fill { width: 62%; opacity: 0.55; }
-.kcc.l4 .kcc-fill { width: 80%; opacity: 0.75; }
-.kcc.l5 .kcc-fill { width: 95%; opacity: 0.9; }
-/* States */
-.kcc.past { opacity: 0.55; }
-.kcc.today { border: 1.5px solid var(--accent); border-radius: clamp(5px, 0.55vw, 8px); }
-.kcc.event { background: var(--accent); border-color: var(--accent); }
-.kcc.event .kcc-fill { background: rgba(255,255,255,0.35); }
-/* Ray hat diese Zelle angefasst */
-.kcc.ray::after {
-  content: "";
-  position: absolute;
-  top: clamp(4px, 0.5vw, 6px);
-  right: clamp(4px, 0.5vw, 6px);
-  width: clamp(4px, 0.45vw, 6px);
-  height: clamp(4px, 0.45vw, 6px);
-  background: var(--accent);
-  border-radius: 50%;
-}
-.kcc.event.ray::after { background: rgba(255,255,255,0.7); }
-/* Cell content */
-.kcc-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.kcc-dow {
-  font-family: var(--font-sans);
-  font-size: clamp(6px, 0.6vw, 8px);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.kcc.event .kcc-dow { color: rgba(255,255,255,0.65); }
-.kcc-num {
-  font-family: var(--font-sans);
-  font-size: clamp(6px, 0.6vw, 8px);
-  color: var(--subtle);
-}
-.kcc.event .kcc-num { color: rgba(255,255,255,0.65); }
-.kcc-price {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: clamp(9px, 0.9vw, 13px);
-  letter-spacing: -0.025em;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  margin-top: auto;
-  line-height: 1;
-}
-.kcc.event .kcc-price { color: #fff; }
-.kcc.past .kcc-price { color: var(--ink-2); }
-
-/* Weißer Fade-out links: Text-Lesbarkeit sichern */
-.s-pro::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 32%;
-  height: 100%;
-  background: linear-gradient(to right, var(--bg) 45%, transparent);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Proactivity Panel · floating right · sharp */
-.pz-panel {
-  position: absolute;
-  right: clamp(72px, 9vw, 160px);
-  bottom: -20px;
-  z-index: 5;
-  /* Fixe Höhe — kein Springen */
-  height: 88vh;
-  width: clamp(300px, 26vw, 440px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: clamp(10px, 1vw, 14px);
-  padding: clamp(14px, 1.4vw, 22px) clamp(16px, 1.8vw, 26px);
-  box-shadow:
-    0 1px 3px rgba(45,41,32,0.05),
-    0 28px 64px -24px rgba(20,20,22,0.22),
-    0 60px 120px -40px rgba(20,20,22,0.18);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.pz-panel .pz-action { margin-top: 16px; }
-.pz-panel .pz-ray-header + .pz-action { margin-top: 0; }
-.pz-panel .pz-action.is-done,
-.pz-panel .pz-action.is-entering { margin-top: 0; }
-
-/* Stack-Effekt: Cards bleiben gut lesbar, Top-Card lifted via shadow */
-.pz-action { position: relative; }
-
-/* Top-Card: lifted, klare drop-shadow */
-.pz-panel .pz-action:not(.is-done):not(.is-entering) {
-  box-shadow:
-    0 14px 28px -12px rgba(20,20,22,0.18),
-    0 4px 10px -4px rgba(20,20,22,0.12);
-  z-index: 2;
-}
-/* Cards dahinter: deutlich zurückgenommen, ohne Overlay-Dreck */
-.pz-action:not(.is-done):not(.is-entering)
-  ~ .pz-action:not(.is-done):not(.is-entering) {
-  opacity: 0.32;
-  transform: scale(0.975);
-  box-shadow: none;
-  z-index: 1;
-}
-.pz-action:not(.is-done):not(.is-entering)
-  ~ .pz-action:not(.is-done):not(.is-entering)
-  ~ .pz-action:not(.is-done):not(.is-entering) {
-  opacity: 0.12;
-  transform: scale(0.955);
-}
-.pz-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding-bottom: clamp(12px, 1.2vw, 18px);
-  border-bottom: 1px solid var(--border);
-}
-.pz-head h3 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(15px, 1.4vw, 22px);
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-.pz-head h3::before {
-  content: "";
-  width: 7px; height: 7px;
-  background: var(--accent);
-  transform: rotate(45deg);
-}
-.pz-meta {
-  font-family: var(--font-mono);
-  font-size: clamp(9px, 0.8vw, 11px);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* Hero Empfehlung */
-.pah {
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-line);
-  border-radius: clamp(10px, 1vw, 14px);
-  padding: clamp(16px, 1.8vw, 26px);
-}
-.pah-kicker {
-  font-family: var(--font-mono);
-  font-size: clamp(9px, 0.8vw, 11px);
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: clamp(8px, 0.8vw, 12px);
-}
-.pah-kicker::before {
-  content: "";
-  width: 6px; height: 6px;
-  background: var(--accent);
-  transform: rotate(45deg);
-}
-.pah-kicker .pah-day { color: var(--muted); font-weight: 500; }
-.pah-headline {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(18px, 1.8vw, 28px);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  margin: 0 0 clamp(8px, 0.9vw, 12px);
-}
-.pah-headline em { color: var(--accent); font-weight: 500; }
-.pah-narrative {
-  font-family: var(--font-sans);
-  font-size: clamp(11px, 1vw, 14px);
-  line-height: 1.55;
-  color: var(--ink-2);
-  margin-bottom: clamp(12px, 1.2vw, 18px);
-}
-.pah-narrative b { color: var(--ink); font-weight: 600; }
-.pah-narrative .num {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-}
-.pah-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(12px, 1.2vw, 18px);
-  padding: clamp(10px, 1vw, 14px) 0;
-  border-top: 1px solid var(--accent-line);
-  border-bottom: 1px solid var(--accent-line);
-  margin-bottom: clamp(12px, 1.2vw, 18px);
-}
-.pah-stat .pahs-key {
-  font-family: var(--font-mono);
-  font-size: clamp(8px, 0.7vw, 10px);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: clamp(3px, 0.3vw, 5px);
-}
-.pah-stat .pahs-val {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: clamp(13px, 1.2vw, 18px);
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-.pah-stat.accent .pahs-val { color: var(--accent); }
-.pah-stat .pahs-sub {
-  font-family: var(--font-sans);
-  font-size: clamp(8px, 0.7vw, 10px);
-  color: var(--muted);
-  margin-top: 2px;
-}
-.pah-actions {
-  display: flex;
-  align-items: center;
-  gap: clamp(6px, 0.6vw, 10px);
-}
-.pah-actions .btn {
-  font-family: var(--font-sans);
-  font-size: clamp(11px, 1vw, 14px);
-  font-weight: 500;
-  padding: clamp(6px, 0.7vw, 10px) clamp(12px, 1.2vw, 18px);
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-.pah-actions .btn-primary { background: var(--ink); color: #fff; }
-.pah-actions .btn-ghost { background: transparent; color: var(--ink-2); border: 1px solid var(--border-2); }
-.pah-actions .btn-ray {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  background: transparent;
-  padding: clamp(6px, 0.7vw, 10px) clamp(12px, 1.2vw, 18px);
-  border-radius: 8px;
-  font-family: var(--font-sans);
-  font-size: clamp(11px, 1vw, 14px);
-  font-weight: 500;
-  cursor: pointer;
-}
-.pah-actions .btn-ray .ray-rune {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  transform: rotate(45deg);
-}
-
-/* Compact rows */
-.pz-rows { display: flex; flex-direction: column; }
-.pz-row {
-  display: grid;
-  grid-template-columns: auto 1fr auto auto;
-  gap: clamp(10px, 1vw, 16px);
-  align-items: center;
-  padding: clamp(10px, 1vw, 14px) 0;
-  border-bottom: 1px solid var(--border);
-}
-.pz-row:last-child { border-bottom: none; }
-.pz-row-tag {
-  font-family: var(--font-mono);
-  font-size: clamp(8px, 0.75vw, 10px);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  min-width: 7em;
-}
-.pz-row-tag.warn { color: var(--warn); }
-.pz-row-tag .pz-row-day { color: var(--muted); font-weight: 500; margin-left: 2px; }
-.pz-row-title {
-  font-family: var(--font-sans);
-  font-size: clamp(11px, 1vw, 14px);
-  color: var(--ink-2);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.pz-row-title .pzr-detail {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.92em;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-.pz-row-delta {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: clamp(10px, 0.9vw, 13px);
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-.pz-row-delta.neg { color: var(--bad); }
-.pz-row-delta.muted { color: var(--muted); font-weight: 500; }
-.pz-row-arrow {
-  font-family: var(--font-sans);
-  color: var(--subtle);
-  font-size: clamp(11px, 1vw, 14px);
-}
-
-/* Audit timeline */
-.pz-audit {
-  border-top: 1px solid var(--border);
-  padding-top: clamp(12px, 1.2vw, 18px);
-}
-.pz-audit-head {
-  font-family: var(--font-mono);
-  font-size: clamp(9px, 0.8vw, 11px);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-  margin-bottom: clamp(8px, 0.8vw, 12px);
-}
-.pz-audit-head em { font-style: normal; color: var(--accent); }
-.par-row {
-  display: grid;
-  grid-template-columns: auto auto 1fr auto;
-  gap: clamp(8px, 1vw, 14px);
-  align-items: baseline;
-  padding: clamp(4px, 0.5vw, 7px) 0;
-  font-family: var(--font-sans);
-  font-size: clamp(10px, 0.9vw, 13px);
-  color: var(--ink-2);
-}
-.par-time {
-  font-family: var(--font-mono);
-  color: var(--accent);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-.par-day {
-  font-family: var(--font-mono);
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-}
-.par-text b {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-}
-.par-delta {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-
 /* ─── Slide 04 · Decision + Hybrid ────────────────────── */
 .s04 { justify-content: flex-start; padding-top: clamp(56px, 6vw, 96px); }
 .s04 .eyebrow { margin-bottom: clamp(16px, 1.5vw, 24px); }
@@ -2138,6 +1279,185 @@ body {
   text-transform: uppercase;
   color: var(--muted);
 }
+
+/* ─── Slide · Zwei Entscheidungen (headline oben · cards nebeneinander) ─── */
+.s06 {
+  padding-top: clamp(48px, 5vw, 80px);
+  padding-bottom: clamp(48px, 5vw, 80px);
+  justify-content: center;
+}
+.s06-head {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto clamp(20px, 2vw, 32px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 1vw, 14px);
+}
+.s06-lede {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1vw, 14px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.s06-h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0;
+  white-space: nowrap;
+}
+.s06-h2 em { color: var(--accent); font-weight: 500; }
+/* grid container for the two side-by-side decision cards */
+.s06-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 1.6vw, 24px);
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  min-height: 0;
+  align-items: stretch;
+}
+.s06-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px 18px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 1px 3px rgba(45, 41, 32, 0.04),
+    0 14px 36px -18px rgba(20, 20, 22, 0.10);
+}
+.s06-card-head {
+  padding-bottom: 18px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.s06-card-tag {
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 0.75vw, 11px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: clamp(4px, 0.5vw, 7px);
+}
+.s06-diamond {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+  flex-shrink: 0;
+}
+.s06-card-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(17px, 1.6vw, 26px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.s06-card-title em { color: var(--accent); font-weight: 500; }
+.s06-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.s06-opt {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 0 14px;
+  align-items: center;
+  flex: 1;
+}
+.s06-opt.selected {
+  background: var(--surface);
+  border: 1.5px solid var(--accent);
+  box-shadow: 0 6px 20px -10px rgba(30, 58, 95, 0.18);
+}
+.s06-opt-glyph {
+  color: var(--subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.s06-opt.selected .s06-opt-glyph { color: var(--accent); }
+.s06-opt-glyph svg {
+  width: clamp(14px, 1.3vw, 18px);
+  height: clamp(14px, 1.3vw, 18px);
+  display: block;
+}
+.s06-opt-body {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(6px, 0.7vw, 10px);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.s06-opt-name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(13px, 1.2vw, 18px);
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.s06-opt.selected .s06-opt-name {
+  color: var(--ink);
+  font-weight: 500;
+}
+.s06-opt-desc {
+  font-family: var(--font-sans);
+  font-size: clamp(10px, 0.8vw, 12px);
+  color: var(--subtle);
+  line-height: 1.45;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.s06-opt.selected .s06-opt-desc { color: var(--muted); }
+.s06-opt-badge {
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 0.7vw, 10px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  display: none;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.s06-opt-badge::before {
+  content: "";
+  width: 4px; height: 4px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.s06-opt.selected .s06-opt-badge { display: none; }
 
 /* ─── Hint overlay (first load) ──────────────────────── */
 .hint {
@@ -2759,7 +2079,7 @@ body {
         <h1 class="s01-headline">Wir waren<br><em>euer Werkzeug.</em></h1>
         <p class="s01-sub">
           Ihr loggt euch ein, ihr klickt durch Tabs,<br>
-          ihr überprüft Preise. Ihr seid die, die reagieren.
+          ihr setzt Preise. Ihr seid die, die reagieren.
         </p>
       </div>
 
@@ -2909,123 +2229,8 @@ body {
     </div><!-- /.s01-cols -->
   </section>
 
-  <!-- ═════════════ 02 · HANDOFF · Strategie + Vertrauen ═════ -->
-  <section class="slide s06" data-slide="2">
-
-    <div class="s06-head">
-      <p class="s06-lede"><span class="s06-diamond"></span>Ein Werkzeug, das mitdenkt</p>
-      <h2 class="s06-h2">Braucht zwei Dinge <em>von euch.</em></h2>
-    </div>
-
-    <div class="s06-cards">
-
-        <!-- 01 · STRATEGIE -->
-        <div class="s06-card">
-          <div class="s06-card-head">
-            <h3 class="s06-card-title">Worauf <em>spielen</em> wir?</h3>
-          </div>
-          <div class="s06-opts">
-
-            <div class="s06-opt">
-              <div class="s06-opt-glyph">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
-                  <path d="M 3 18 L 9 12 L 13 15 L 21 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M 15 5 L 21 5 L 21 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div class="s06-opt-body">
-                <span class="s06-opt-name">Mehr verdienen</span>
-                <span class="s06-opt-desc">Höhere Preise, auch wenn Zimmer leer bleiben</span>
-                <span class="s06-opt-badge">Aktiv</span>
-              </div>
-            </div>
-
-            <div class="s06-opt selected">
-              <div class="s06-opt-glyph">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="4" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
-                  <rect x="10" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
-                  <rect x="16" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
-                </svg>
-              </div>
-              <div class="s06-opt-body">
-                <span class="s06-opt-name">Voll bleiben</span>
-                <span class="s06-opt-desc">Günstiger und ausgebucht schlägt teurer und halbleer</span>
-                <span class="s06-opt-badge">Aktiv</span>
-              </div>
-            </div>
-
-            <div class="s06-opt">
-              <div class="s06-opt-glyph">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 12 2 L 22 12 L 12 22 L 2 12 Z" fill="currentColor"/>
-                </svg>
-              </div>
-              <div class="s06-opt-body">
-                <span class="s06-opt-name">Premium halten</span>
-                <span class="s06-opt-desc">Image vor Auslastung, keine Last-Minute-Schnäppchen</span>
-                <span class="s06-opt-badge">Aktiv</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- 02 · ZUSAMMENARBEIT -->
-        <div class="s06-card">
-          <div class="s06-card-head">
-            <h3 class="s06-card-title">Was läuft <em>automatisch</em>?</h3>
-          </div>
-          <div class="s06-opts">
-
-            <div class="s06-opt">
-              <div class="s06-opt-glyph">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-                </svg>
-              </div>
-              <div class="s06-opt-body">
-                <span class="s06-opt-name">Beobachten</span>
-                <span class="s06-opt-desc">Ray analysiert und meldet — du entscheidest alles selbst</span>
-                <span class="s06-opt-badge">Aktiv</span>
-              </div>
-            </div>
-
-            <div class="s06-opt selected">
-              <div class="s06-opt-glyph">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-                  <path d="M 12 3 A 9 9 0 0 1 12 21 Z" fill="currentColor"/>
-                </svg>
-              </div>
-              <div class="s06-opt-body">
-                <span class="s06-opt-name">Empfehlen</span>
-                <span class="s06-opt-desc">Preise, Restrictions, Kanalaktionen — du genehmigst per Klick</span>
-                <span class="s06-opt-badge">Aktiv</span>
-              </div>
-            </div>
-
-            <div class="s06-opt">
-              <div class="s06-opt-glyph">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
-                </svg>
-              </div>
-              <div class="s06-opt-body">
-                <span class="s06-opt-name">Handeln</span>
-                <span class="s06-opt-desc">Preise, Restrictions, Kanäle — Ray handelt, du bist informiert</span>
-                <span class="s06-opt-badge">Aktiv</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-    </div><!-- /.s06-cards -->
-  </section>
-
-  <!-- ═════════════ 03 · PIVOT + BRIEFING (merged) ═════ -->
-  <section class="slide s03" data-slide="3">
+  <!-- ═════════════ 02 · PIVOT + BRIEFING (merged) ═════ -->
+  <section class="slide s03" data-slide="2">
     <div class="s01-cols">
 
       <!-- LEFT: Text aus altem S02 -->
@@ -3180,163 +2385,8 @@ body {
     </div><!-- /.s01-cols -->
   </section>
 
-  <!-- ═════════════ 03 · PROAKTIVITÄT · Cal Hintergrund + Panel rechts ═════════════ -->
-  <section class="slide s-pro" data-slide="4">
-
-    <!-- TEXT · top-left über Cal -->
-    <div class="s-pro-text">
-      <span class="eyebrow">Drei Hebel · heute Morgen</span>
-      <h1 class="s01-headline">Schon vorbereitet,<br><em>bevor du fragst.</em></h1>
-      <p class="s01-sub">
-        Restriktion fürs Festwochenende, Hebel im Direktkanal.<br>
-        Wettbewerber neu eingeordnet.
-      </p>
-    </div>
-
-    <!-- Neue Preistabelle · Simple UI (kc-grid-Stil aus preise.html) · gedimmt -->
-    <div class="pro-cal-bg">
-      <table class="kc-simple">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th><th>Sa</th><th>So</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>KW 17</td>
-            <td><div class="kcc l2 past"><div class="kcc-top"><span class="kcc-dow">Mo</span><span class="kcc-num">27</span></div><div class="kcc-price">125 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2 past"><div class="kcc-top"><span class="kcc-dow">Di</span><span class="kcc-num">28</span></div><div class="kcc-price">122 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2 past"><div class="kcc-top"><span class="kcc-dow">Mi</span><span class="kcc-num">29</span></div><div class="kcc-price">128 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l3 past"><div class="kcc-top"><span class="kcc-dow">Do</span><span class="kcc-num">30</span></div><div class="kcc-price">138 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l4 past"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">1</span></div><div class="kcc-price">158 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l5 past"><div class="kcc-top"><span class="kcc-dow">Sa</span><span class="kcc-num">2</span></div><div class="kcc-price">175 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l4 past"><div class="kcc-top"><span class="kcc-dow">So</span><span class="kcc-num">3</span></div><div class="kcc-price">155 €</div><div class="kcc-fill"></div></div></td>
-          </tr>
-          <tr>
-            <td>KW 18</td>
-            <td><div class="kcc l2 past"><div class="kcc-top"><span class="kcc-dow">Mo</span><span class="kcc-num">4</span></div><div class="kcc-price">119 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l1 past"><div class="kcc-top"><span class="kcc-dow">Di</span><span class="kcc-num">5</span></div><div class="kcc-price">115 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l1 past"><div class="kcc-top"><span class="kcc-dow">Mi</span><span class="kcc-num">6</span></div><div class="kcc-price">118 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2 today"><div class="kcc-top"><span class="kcc-dow">Do</span><span class="kcc-num">7</span></div><div class="kcc-price">132 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l3 ray"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">8</span></div><div class="kcc-price">148 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l4 event"><div class="kcc-top"><span class="kcc-dow">Sa</span><span class="kcc-num">9</span></div><div class="kcc-price">165 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l4"><div class="kcc-top"><span class="kcc-dow">So</span><span class="kcc-num">10</span></div><div class="kcc-price">155 €</div><div class="kcc-fill"></div></div></td>
-          </tr>
-          <tr>
-            <td>KW 19</td>
-            <td><div class="kcc l2 ray"><div class="kcc-top"><span class="kcc-dow">Mo</span><span class="kcc-num">11</span></div><div class="kcc-price">129 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2 ray"><div class="kcc-top"><span class="kcc-dow">Di</span><span class="kcc-num">12</span></div><div class="kcc-price">122 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2 ray"><div class="kcc-top"><span class="kcc-dow">Mi</span><span class="kcc-num">13</span></div><div class="kcc-price">125 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l3"><div class="kcc-top"><span class="kcc-dow">Do</span><span class="kcc-num">14</span></div><div class="kcc-price">138 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l5 event"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">15</span></div><div class="kcc-price">175 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l5 event"><div class="kcc-top"><span class="kcc-dow">Sa</span><span class="kcc-num">16</span></div><div class="kcc-price">185 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l4"><div class="kcc-top"><span class="kcc-dow">So</span><span class="kcc-num">17</span></div><div class="kcc-price">165 €</div><div class="kcc-fill"></div></div></td>
-          </tr>
-          <tr>
-            <td>KW 20</td>
-            <td><div class="kcc l2"><div class="kcc-top"><span class="kcc-dow">Mo</span><span class="kcc-num">18</span></div><div class="kcc-price">132 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2"><div class="kcc-top"><span class="kcc-dow">Di</span><span class="kcc-num">19</span></div><div class="kcc-price">125 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2"><div class="kcc-top"><span class="kcc-dow">Mi</span><span class="kcc-num">20</span></div><div class="kcc-price">128 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l3"><div class="kcc-top"><span class="kcc-dow">Do</span><span class="kcc-num">21</span></div><div class="kcc-price">142 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l5 event ray"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">22</span></div><div class="kcc-price">185 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l5 event ray"><div class="kcc-top"><span class="kcc-dow">Sa</span><span class="kcc-num">23</span></div><div class="kcc-price">195 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l5 event"><div class="kcc-top"><span class="kcc-dow">So</span><span class="kcc-num">24</span></div><div class="kcc-price">188 €</div><div class="kcc-fill"></div></div></td>
-          </tr>
-          <tr>
-            <td>KW 21</td>
-            <td><div class="kcc l4 event ray"><div class="kcc-top"><span class="kcc-dow">Mo</span><span class="kcc-num">25</span></div><div class="kcc-price">165 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2"><div class="kcc-top"><span class="kcc-dow">Di</span><span class="kcc-num">26</span></div><div class="kcc-price">128 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l2"><div class="kcc-top"><span class="kcc-dow">Mi</span><span class="kcc-num">27</span></div><div class="kcc-price">132 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l3"><div class="kcc-top"><span class="kcc-dow">Do</span><span class="kcc-num">28</span></div><div class="kcc-price">138 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l3"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">29</span></div><div class="kcc-price">158 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l4"><div class="kcc-top"><span class="kcc-dow">Sa</span><span class="kcc-num">30</span></div><div class="kcc-price">168 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l3"><div class="kcc-top"><span class="kcc-dow">So</span><span class="kcc-num">31</span></div><div class="kcc-price">145 €</div><div class="kcc-fill"></div></div></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- PANEL · floating right -->
-    <div class="pz-panel">
-
-      <!-- Header: Ray -->
-      <div class="pz-ray-header">Ray</div>
-
-      <!-- Action 1: MinLOS Restriction -->
-      <div class="pz-action">
-        <div class="pz-action-inner">
-          <span class="pz-action-tag">Restriction · KW 21</span>
-          <h3 class="pz-action-title">MinLOS 3 für <em>Festwochenende</em></h3>
-          <div class="pz-week-strip">
-            <div class="pz-week-day">Do</div>
-            <div class="pz-week-day event">Fr</div>
-            <div class="pz-week-day event">Sa</div>
-            <div class="pz-week-day event">So</div>
-            <div class="pz-week-day">Mo</div>
-          </div>
-          <p class="pz-action-body">14.–17. August. Geschätzte Wirkung: <b>+480 € RevPAR</b> über das Wochenende.</p>
-          <div class="pz-action-btns">
-            <button class="pz-action-btn primary">Aktivieren</button>
-            <button class="pz-action-btn ghost">Nur Booking</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Action 2: Channel Mix -->
-      <div class="pz-action">
-        <div class="pz-action-inner">
-          <span class="pz-action-tag">Channel Mix</span>
-          <h3 class="pz-action-title"><em>80 %</em> der Buchungen via Booking</h3>
-          <div class="pz-channel-bar">
-            <div class="pz-channel-seg bkg">Booking 80 %</div>
-            <div class="pz-channel-seg dir">12 %</div>
-            <div class="pz-channel-seg oth"></div>
-          </div>
-          <p class="pz-action-body">Jedes Zimmer kostet <b>~18 € Provision</b>. Direktkanal-Push könnte <b>+2.400 €</b> Netto/Monat bringen.</p>
-          <div class="pz-action-btns">
-            <button class="pz-action-btn primary">Direktkanal stärken</button>
-            <button class="pz-action-btn ghost">Jetzt nicht</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Action 3: Comp-Set -->
-      <div class="pz-action">
-        <div class="pz-action-inner">
-          <span class="pz-action-tag">Comp-Set · Analyse</span>
-          <h3 class="pz-action-title">Hotel Adler passt nicht mehr</h3>
-          <div class="pz-comp">
-            <div class="pz-comp-row warn">
-              <span class="pz-comp-name">Hotel Adler</span>
-              <div class="pz-comp-bar-bg"><div class="pz-comp-bar-fill" style="width:88%"></div></div>
-              <span class="pz-comp-price">188 €</span>
-            </div>
-            <div class="pz-comp-row you">
-              <span class="pz-comp-name">Du</span>
-              <div class="pz-comp-bar-bg"><div class="pz-comp-bar-fill" style="width:66%"></div></div>
-              <span class="pz-comp-price">142 €</span>
-            </div>
-            <div class="pz-comp-row">
-              <span class="pz-comp-name">Seepark</span>
-              <div class="pz-comp-bar-bg"><div class="pz-comp-bar-fill" style="width:70%"></div></div>
-              <span class="pz-comp-price">148 €</span>
-            </div>
-          </div>
-          <p class="pz-action-body">Seit März <b>+22 € über euch</b>. Anderes Segment. Seepark wäre ein besserer Benchmark.</p>
-          <div class="pz-action-btns">
-            <button class="pz-action-btn primary">Ersetzen</button>
-            <button class="pz-action-btn ghost">Behalten</button>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /.pz-panel -->
-
-  </section>
-
-  <!-- ═════════════ 04 · REASONING · SIMPLIFIED (3 statt 6 Steps) ═════════════ -->
-  <section class="slide s04 s04-simple" data-slide="5">
+  <!-- ═════════════ 03 · REASONING · SIMPLIFIED (3 statt 6 Steps) ═════════════ -->
+  <section class="slide s04 s04-simple" data-slide="3">
 
     <!-- Headline above stage -->
     <div class="s04-head">
@@ -3460,8 +2510,123 @@ body {
     </div><!-- /.rr-stage -->
   </section>
 
+  <!-- ═════════════ 04 · DECISIONS · Zwei Entscheidungen ═════════════ -->
+  <section class="slide s06" data-slide="4">
+
+    <div class="s06-head">
+      <p class="s06-lede"><span class="s06-diamond"></span>Strategie und Vertrauen.</p>
+      <h2 class="s06-h2">Du gibst Ray <em>zwei Dinge</em> mit.</h2>
+    </div>
+
+    <div class="s06-cards">
+
+        <!-- 01 · STRATEGIE -->
+        <div class="s06-card">
+          <div class="s06-card-head">
+            <h3 class="s06-card-title">Worauf <em>spielen</em> wir?</h3>
+          </div>
+          <div class="s06-opts">
+
+            <div class="s06-opt">
+              <div class="s06-opt-glyph">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+                  <path d="M 3 18 L 9 12 L 13 15 L 21 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M 15 5 L 21 5 L 21 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="s06-opt-body">
+                <span class="s06-opt-name">Mehr verdienen</span>
+                <span class="s06-opt-desc">Höhere Preise, auch wenn Zimmer leer bleiben</span>
+                <span class="s06-opt-badge">Aktiv</span>
+              </div>
+            </div>
+
+            <div class="s06-opt selected">
+              <div class="s06-opt-glyph">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
+                  <rect x="10" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
+                  <rect x="16" y="6" width="4" height="14" rx="0.5" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="s06-opt-body">
+                <span class="s06-opt-name">Voll bleiben</span>
+                <span class="s06-opt-desc">Günstiger und ausgebucht schlägt teurer und halbleer</span>
+                <span class="s06-opt-badge">Aktiv</span>
+              </div>
+            </div>
+
+            <div class="s06-opt">
+              <div class="s06-opt-glyph">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M 12 2 L 22 12 L 12 22 L 2 12 Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="s06-opt-body">
+                <span class="s06-opt-name">Premium halten</span>
+                <span class="s06-opt-desc">Image vor Auslastung, keine Last-Minute-Schnäppchen</span>
+                <span class="s06-opt-badge">Aktiv</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 02 · ZUSAMMENARBEIT -->
+        <div class="s06-card">
+          <div class="s06-card-head">
+            <h3 class="s06-card-title">Was darf <em>Ray</em> selbst tun?</h3>
+          </div>
+          <div class="s06-opts">
+
+            <div class="s06-opt">
+              <div class="s06-opt-glyph">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="s06-opt-body">
+                <span class="s06-opt-name">Beobachten</span>
+                <span class="s06-opt-desc">Ray analysiert und meldet — du entscheidest alles selbst</span>
+                <span class="s06-opt-badge">Aktiv</span>
+              </div>
+            </div>
+
+            <div class="s06-opt selected">
+              <div class="s06-opt-glyph">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <path d="M 12 3 A 9 9 0 0 1 12 21 Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="s06-opt-body">
+                <span class="s06-opt-name">Empfehlen</span>
+                <span class="s06-opt-desc">Preise, Restrictions, Kanalaktionen — du genehmigst per Klick</span>
+                <span class="s06-opt-badge">Aktiv</span>
+              </div>
+            </div>
+
+            <div class="s06-opt">
+              <div class="s06-opt-glyph">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="s06-opt-body">
+                <span class="s06-opt-name">Handeln</span>
+                <span class="s06-opt-desc">Preise, Restrictions, Kanäle — Ray handelt, du bist informiert</span>
+                <span class="s06-opt-badge">Aktiv</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+    </div><!-- /.s06-cards -->
+  </section>
+
   <!-- ═════════════ 05 · OUTLOOK · Hero + Ray Card ═════════════ -->
-  <section class="slide s05" data-slide="6">
+  <section class="slide s05" data-slide="5">
     <div class="s05-cols">
 
       <!-- LEFT: Hero Text -->
@@ -3932,107 +3097,6 @@ function getReasoningForSlide(slide) {
       setTimeout(runStream, 200);
     }
   }
-})();
-
-// ═══ Proaktivität-Slide · Infinity-Loop Card-Rotation ═══
-(function() {
-  var slide = document.querySelector('.slide.s-pro');
-  if (!slide) return;
-
-  var panel = slide.querySelector('.pz-panel');
-  if (!panel) return;
-
-  var autoTimer = null;
-  var AUTO_DELAY  = 4200;   // ms Lesezeit, bis Button pulsiert
-  var PULSE_DUR   = 700;    // ms Pulse-Animation
-  var COLLAPSE_DUR = 780;   // ms is-done max-height transition
-  var ENTER_PAUSE = 350;    // ms zusätzliche Pause nach Re-Entry, bevor nächste Card pulsiert
-
-  function topCard() {
-    // erste Card die nicht gerade collapsed oder gerade entering ist
-    return panel.querySelector('.pz-action:not(.is-done):not(.is-entering)');
-  }
-
-  function advance() {
-    clearTimeout(autoTimer);
-    autoTimer = null;
-
-    var card = topCard();
-    if (!card) return;
-
-    // 1) Card oben kollabiert weg
-    card.classList.add('is-done');
-
-    setTimeout(function() {
-      // 2) An Ende der Liste hängen, kollabiert
-      panel.appendChild(card);
-      card.classList.remove('is-done');
-      card.classList.add('is-entering');
-
-      // 3) Zwei Frames warten, dann expandieren (kommt von unten rein)
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          card.classList.remove('is-entering');
-        });
-      });
-
-      // 4) Nächste Card vorbereiten
-      scheduleNext();
-    }, COLLAPSE_DUR);
-  }
-
-  function scheduleNext() {
-    clearTimeout(autoTimer);
-    autoTimer = setTimeout(function() {
-      var card = topCard();
-      if (!card) return;
-      var btn = card.querySelector('.pz-action-btn.primary');
-      if (btn) {
-        btn.classList.add('is-pulsing');
-        autoTimer = setTimeout(function() {
-          btn.classList.remove('is-pulsing');
-          advance();
-        }, PULSE_DUR);
-      } else {
-        advance();
-      }
-    }, AUTO_DELAY);
-  }
-
-  function resetDeck() {
-    clearTimeout(autoTimer);
-    autoTimer = null;
-    // Alle states clearen
-    panel.querySelectorAll('.pz-action').forEach(function(c) {
-      c.classList.remove('is-done', 'is-entering', 'is-active', 'is-peek-1', 'is-peek-2');
-    });
-    scheduleNext();
-  }
-
-  // Manuell vorzeitig weiterklicken
-  panel.addEventListener('click', function(e) {
-    if (e.target.closest('.pz-action-btn')) {
-      advance();
-      e.stopPropagation();
-    }
-  });
-
-  // Slide aktiviert → Loop starten · deaktiviert → stoppen
-  var observer = new MutationObserver(function(muts) {
-    muts.forEach(function(m) {
-      if (m.attributeName === 'class') {
-        if (slide.classList.contains('active')) {
-          setTimeout(resetDeck, 200);
-        } else {
-          clearTimeout(autoTimer);
-          autoTimer = null;
-        }
-      }
-    });
-  });
-  observer.observe(slide, { attributes: true });
-
-  if (slide.classList.contains('active')) setTimeout(resetDeck, 200);
 })();
 </script>
 
