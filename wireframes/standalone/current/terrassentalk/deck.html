@@ -1304,17 +1304,18 @@ body {
   opacity: 1;
   transform: none;
   pointer-events: auto;
-  /* max-height groß genug für jeden Card-Content, animierbar zu 0 */
-  max-height: 800px;
+  /* max-height nicht zu groß: weniger Phantom-Distanz beim Collapse */
+  max-height: 520px;
   margin-bottom: 0;
+  /* GPU-Hints für smoothere Animation */
+  will-change: max-height, opacity, transform, margin-top;
+  /* Konsistente Ease-Out-Kurve (ease-out-quint) für alle Eigenschaften */
   transition:
-    max-height 0.78s cubic-bezier(0.7, 0, 0.4, 1),
-    opacity 0.5s ease,
-    transform 0.7s cubic-bezier(0.7, 0, 0.4, 1),
-    margin-top 0.78s cubic-bezier(0.7, 0, 0.4, 1),
-    padding 0.78s cubic-bezier(0.7, 0, 0.4, 1),
-    box-shadow 0.5s ease,
-    border-width 0.4s ease 0.35s;
+    max-height 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
 }
 .pz-action-inner {
   padding: clamp(12px, 1.2vw, 18px);
@@ -1337,26 +1338,15 @@ body {
 .pz-action.is-done {
   max-height: 0;
   opacity: 0;
-  transform: translateY(-12px) scale(0.96);
+  transform: translateY(-10px);
   pointer-events: none;
-  border-width: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.pz-action.is-done .pz-action-inner,
-.pz-action.is-entering .pz-action-inner {
-  padding-top: 0;
-  padding-bottom: 0;
 }
 /* Eintritt: kommt von unten · spiegelbildlich zu is-done */
 .pz-action.is-entering {
   max-height: 0;
   opacity: 0;
-  transform: translateY(14px) scale(0.96);
+  transform: translateY(10px);
   pointer-events: none;
-  border-width: 0;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 .pz-action-tag {
   font-family: var(--font-mono);
@@ -1477,7 +1467,8 @@ body {
 /* Neue Preistabelle · Simple UI · rechts-bündig als BG · ohne Card */
 .pro-cal-bg {
   position: absolute;
-  right: 10%;
+  /* Bis 1560+padding viewport-relativ, danach am 1560-Container rechts gepinnt */
+  right: max(10%, calc((100% - 1560px) / 2));
   top: 55%;
   transform: translateY(-50%);
   width: clamp(680px, 64vw, 1080px);
@@ -1601,6 +1592,17 @@ body {
   border-radius: 50%;
 }
 .kcc.event.ray::after { background: rgba(255,255,255,0.7); }
+/* Auf der Proaktiv-Slide: blaue Ray-Punkte ausblenden */
+.pro-cal-bg .kcc.ray::after { display: none; }
+/* Auf der Proaktiv-Slide: heutige Cell voll-blau hervorheben */
+.pro-cal-bg .kcc.today {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.pro-cal-bg .kcc.today .kcc-fill { background: rgba(255,255,255,0.35); }
+.pro-cal-bg .kcc.today .kcc-dow,
+.pro-cal-bg .kcc.today .kcc-num { color: rgba(255,255,255,0.65); }
+.pro-cal-bg .kcc.today .kcc-price { color: #fff; }
 /* Cell content */
 .kcc-top {
   display: flex;
@@ -1651,7 +1653,8 @@ body {
 /* Proactivity Panel · floating right · sharp */
 .pz-panel {
   position: absolute;
-  right: clamp(72px, 9vw, 160px);
+  /* Bis 1560+padding viewport-relativ, danach am 1560-Container rechts gepinnt */
+  right: max(clamp(72px, 9vw, 160px), calc((100% - 1560px) / 2));
   bottom: -20px;
   z-index: 5;
   /* Fixe Höhe — kein Springen */
@@ -2863,10 +2866,10 @@ body {
       <!-- LEFT: Text -->
       <div class="s01-text">
         <span class="eyebrow">happyhotel · 2017–2025</span>
-        <h1 class="s01-headline">Wir waren<br><em>euer Werkzeug.</em></h1>
+        <h1 class="s01-headline">Wir waren<br><em>nur ein Werkzeug.</em></h1>
         <p class="s01-sub">
-          Ihr loggt euch ein, ihr klickt durch Tabs,<br>
-          ihr überprüft Preise. Ihr seid die, die reagieren.
+          Einloggen. Tabs durchklicken. Preise überprüfen.<br>
+          Reagieren statt vorausdenken.
         </p>
       </div>
 
@@ -3021,7 +3024,7 @@ body {
 
     <div class="s06-head">
       <p class="s06-lede"><span class="s06-diamond"></span>Ein Werkzeug, das mitdenkt</p>
-      <h2 class="s06-h2">Jetzt brauchen wir zwei Dinge <em>von euch.</em></h2>
+      <h2 class="s06-h2">Jetzt braucht es <em>zwei Dinge.</em></h2>
     </div>
 
     <div class="s06-cards">
@@ -3140,8 +3143,8 @@ body {
         <span class="eyebrow accent">2025 → 2026</span>
         <h1 class="s01-headline">Aus Werkzeug wird<br><em>ein Mitarbeiter.</em></h1>
         <p class="s01-sub">
-          Nicht etwas, mit dem ihr arbeitet.<br>
-          Jemand, der für euch <em>arbeitet.</em>
+          Kein Tool zum Bedienen.<br>
+          Jemand, der die Arbeit <em>macht.</em>
         </p>
       </div>
 
@@ -3292,11 +3295,11 @@ body {
 
     <!-- TEXT · top-left über Cal -->
     <div class="s-pro-text">
-      <span class="eyebrow">Drei Hebel · heute Morgen</span>
-      <h1 class="s01-headline">Schon vorbereitet,<br><em>bevor du fragst.</em></h1>
+      <span class="eyebrow">Endlich Vorsprung</span>
+      <h1 class="s01-headline">Vorne dran.<br><em>Nicht hinterher.</em></h1>
       <p class="s01-sub">
-        Restriktion fürs Festwochenende, Hebel im Direktkanal.<br>
-        Wettbewerber neu eingeordnet.
+        Erkannt. Durchgerechnet. Vorgeschlagen.<br>
+        Vorlauf statt Aufholjagd.
       </p>
     </div>
 
@@ -3336,7 +3339,7 @@ body {
             <td><div class="kcc l2 ray"><div class="kcc-top"><span class="kcc-dow">Di</span><span class="kcc-num">12</span></div><div class="kcc-price">122 €</div><div class="kcc-fill"></div></div></td>
             <td><div class="kcc l2 ray"><div class="kcc-top"><span class="kcc-dow">Mi</span><span class="kcc-num">13</span></div><div class="kcc-price">125 €</div><div class="kcc-fill"></div></div></td>
             <td><div class="kcc l3"><div class="kcc-top"><span class="kcc-dow">Do</span><span class="kcc-num">14</span></div><div class="kcc-price">138 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l5 event"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">15</span></div><div class="kcc-price">175 €</div><div class="kcc-fill"></div></div></td>
+            <td><div class="kcc l5"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">15</span></div><div class="kcc-price">175 €</div><div class="kcc-fill"></div></div></td>
             <td><div class="kcc l5 event"><div class="kcc-top"><span class="kcc-dow">Sa</span><span class="kcc-num">16</span></div><div class="kcc-price">185 €</div><div class="kcc-fill"></div></div></td>
             <td><div class="kcc l4"><div class="kcc-top"><span class="kcc-dow">So</span><span class="kcc-num">17</span></div><div class="kcc-price">165 €</div><div class="kcc-fill"></div></div></td>
           </tr>
@@ -3346,7 +3349,7 @@ body {
             <td><div class="kcc l2"><div class="kcc-top"><span class="kcc-dow">Di</span><span class="kcc-num">19</span></div><div class="kcc-price">125 €</div><div class="kcc-fill"></div></div></td>
             <td><div class="kcc l2"><div class="kcc-top"><span class="kcc-dow">Mi</span><span class="kcc-num">20</span></div><div class="kcc-price">128 €</div><div class="kcc-fill"></div></div></td>
             <td><div class="kcc l3"><div class="kcc-top"><span class="kcc-dow">Do</span><span class="kcc-num">21</span></div><div class="kcc-price">142 €</div><div class="kcc-fill"></div></div></td>
-            <td><div class="kcc l5 event ray"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">22</span></div><div class="kcc-price">185 €</div><div class="kcc-fill"></div></div></td>
+            <td><div class="kcc l5 ray"><div class="kcc-top"><span class="kcc-dow">Fr</span><span class="kcc-num">22</span></div><div class="kcc-price">185 €</div><div class="kcc-fill"></div></div></td>
             <td><div class="kcc l5 event ray"><div class="kcc-top"><span class="kcc-dow">Sa</span><span class="kcc-num">23</span></div><div class="kcc-price">195 €</div><div class="kcc-fill"></div></div></td>
             <td><div class="kcc l5 event"><div class="kcc-top"><span class="kcc-dow">So</span><span class="kcc-num">24</span></div><div class="kcc-price">188 €</div><div class="kcc-fill"></div></div></td>
           </tr>
@@ -4052,7 +4055,7 @@ function getReasoningForSlide(slide) {
   var autoTimer = null;
   var AUTO_DELAY  = 4200;   // ms Lesezeit, bis Button pulsiert
   var PULSE_DUR   = 700;    // ms Pulse-Animation
-  var COLLAPSE_DUR = 780;   // ms is-done max-height transition
+  var COLLAPSE_DUR = 720;   // ms is-done max-height transition (matched CSS)
   var ENTER_PAUSE = 350;    // ms zusätzliche Pause nach Re-Entry, bevor nächste Card pulsiert
 
   function topCard() {
