@@ -152,6 +152,49 @@ body {
   padding-top: clamp(48px, 5vw, 80px);
   padding-bottom: clamp(48px, 5vw, 80px);
 }
+
+/* ─── Slide 01 · Entry-Animation · dezenter fade-up Stagger ─── */
+@keyframes s01-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes s01-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.s01.active .s01-text > * {
+  opacity: 0;
+  animation: s01-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.s01.active .s01-text > *:nth-child(1) { animation-delay: 0.12s; }
+.s01.active .s01-text > *:nth-child(2) { animation-delay: 0.28s; }
+.s01.active .s01-text > *:nth-child(3) { animation-delay: 0.48s; }
+
+/* UI-Spalte · Preistabelle zuerst, dann die zwei Float-Cards von oben + unten */
+@keyframes s01-fly-from-top {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes s01-fly-from-bottom {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.s01.active .s01-ui > .cal {
+  opacity: 0;
+  animation: s01-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+}
+.s01.active .s01-ui > .bx.ch {
+  opacity: 0;
+  animation: s01-fly-from-top 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.95s forwards;
+}
+.s01.active .s01-ui > .bx.au {
+  opacity: 0;
+  animation: s01-fly-from-bottom 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.1s forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .s01.active .s01-text > *,
+  .s01.active .s01-ui > * { animation: none; opacity: 1; transform: none; }
+}
 .s01-cols {
   flex: 1;
   display: grid;
@@ -776,6 +819,66 @@ body {
   display: inline-block;
 }
 .s06-opt.selected .s06-opt-badge { display: none; }
+
+/* ─── Slide s06 · Entry-Animation · Decision Reveal ─── */
+@keyframes s06-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes s06-card-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes s06-selected-pulse {
+  0%, 100% { box-shadow: 0 6px 20px -10px rgba(30, 58, 95, 0.18); }
+  50%      { box-shadow: 0 12px 30px -6px rgba(30, 58, 95, 0.32); }
+}
+
+/* 1) Head · eyebrow + headline */
+.s06.active .s06-head > * {
+  opacity: 0;
+  animation: s06-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.s06.active .s06-head > *:nth-child(1) { animation-delay: 0.12s; }
+.s06.active .s06-head > *:nth-child(2) { animation-delay: 0.28s; }
+
+/* 2) Beide Cards slide-up · leichter Stagger */
+.s06.active .s06-card {
+  opacity: 0;
+  animation: s06-card-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.s06.active .s06-cards > .s06-card:nth-child(1) { animation-delay: 0.50s; }
+.s06.active .s06-cards > .s06-card:nth-child(2) { animation-delay: 0.60s; }
+
+/* 3) Optionen staggered innerhalb jeder Card */
+.s06.active .s06-opt {
+  opacity: 0;
+  animation: s06-fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.s06.active .s06-cards > .s06-card:nth-child(1) .s06-opt:nth-child(1) { animation-delay: 0.90s; }
+.s06.active .s06-cards > .s06-card:nth-child(1) .s06-opt:nth-child(2) { animation-delay: 1.05s; }
+.s06.active .s06-cards > .s06-card:nth-child(1) .s06-opt:nth-child(3) { animation-delay: 1.20s; }
+.s06.active .s06-cards > .s06-card:nth-child(2) .s06-opt:nth-child(1) { animation-delay: 1.00s; }
+.s06.active .s06-cards > .s06-card:nth-child(2) .s06-opt:nth-child(2) { animation-delay: 1.15s; }
+.s06.active .s06-cards > .s06-card:nth-child(2) .s06-opt:nth-child(3) { animation-delay: 1.30s; }
+
+/* 4) Decision-Moment · Selected pulst nach allen Optionen */
+.s06.active .s06-cards > .s06-card:nth-child(1) .s06-opt.selected {
+  animation:
+    s06-fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.05s forwards,
+    s06-selected-pulse 0.9s ease-out 1.85s 1;
+}
+.s06.active .s06-cards > .s06-card:nth-child(2) .s06-opt.selected {
+  animation:
+    s06-fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.15s forwards,
+    s06-selected-pulse 0.9s ease-out 1.95s 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s06.active .s06-head > *,
+  .s06.active .s06-card,
+  .s06.active .s06-opt { animation: none; opacity: 1; transform: none; }
+}
 
 /* ─── Slide 02 · Pivot · 2-col mit Persona-Card ───────── */
 .s02 {
@@ -1463,6 +1566,82 @@ body {
 .s-pro-text .eyebrow { margin-bottom: clamp(24px, 2.4vw, 40px); }
 .s-pro-text .s01-headline { margin-bottom: clamp(20px, 2.1vw, 32px); }
 .s-pro-text .s01-sub { max-width: 44ch; }
+
+/* ─── Slide s-pro · Entry-Animation · Cal → Panel → Cards ─── */
+@keyframes s-pro-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes s-pro-cal-in {
+  from { opacity: 0; transform: translateY(-50%) translateY(8px); }
+  to   { opacity: 0.42; transform: translateY(-50%); }
+}
+@keyframes s-pro-panel-in {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: none; }
+}
+/* Drei Keyframes mit positionsspezifischem End-Zustand,
+   damit nach der Entry-Animation der CSS-Stack-Effekt nahtlos weitergreift */
+@keyframes s-pro-card-in-top {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes s-pro-card-in-mid {
+  from { opacity: 0; transform: translateY(12px) scale(0.975); }
+  to   { opacity: 0.32; transform: scale(0.975); }
+}
+@keyframes s-pro-card-in-bot {
+  from { opacity: 0; transform: translateY(12px) scale(0.955); }
+  to   { opacity: 0.12; transform: scale(0.955); }
+}
+
+/* Animations nur während des Entry-Phase aktiv (s-pro-entry).
+   JS entfernt die Klasse nach ~2.5s — danach übernimmt die normale Rotation-Logik
+   die Cards ohne Interferenz von nth-of-type-Animations */
+
+/* 1) Text · staggered fade-up */
+.s-pro.s-pro-entry .s-pro-text > * {
+  opacity: 0;
+  animation: s-pro-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.s-pro.s-pro-entry .s-pro-text > *:nth-child(1) { animation-delay: 0.12s; }
+.s-pro.s-pro-entry .s-pro-text > *:nth-child(2) { animation-delay: 0.28s; }
+.s-pro.s-pro-entry .s-pro-text > *:nth-child(3) { animation-delay: 0.48s; }
+
+/* 2) Calendar erscheint zuerst (vor dem Panel) */
+.s-pro.s-pro-entry .pro-cal-bg {
+  opacity: 0;
+  animation: s-pro-cal-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.50s forwards;
+}
+
+/* 3) Panel slidet sanft von rechts rein */
+.s-pro.s-pro-entry .pz-panel {
+  opacity: 0;
+  animation: s-pro-panel-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 1.05s forwards;
+}
+
+/* 4) Cards staggered einblenden — nur initial, danach übernimmt CSS-Stack + JS-Rotation */
+.s-pro.s-pro-entry .pz-panel > .pz-action:nth-of-type(1) {
+  animation: s-pro-card-in-top 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.55s backwards;
+}
+.s-pro.s-pro-entry .pz-panel > .pz-action:nth-of-type(2) {
+  animation: s-pro-card-in-mid 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.70s backwards;
+}
+.s-pro.s-pro-entry .pz-panel > .pz-action:nth-of-type(3) {
+  animation: s-pro-card-in-bot 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.85s backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s-pro.s-pro-entry .s-pro-text > *,
+  .s-pro.s-pro-entry .pro-cal-bg,
+  .s-pro.s-pro-entry .pz-panel,
+  .s-pro.s-pro-entry .pz-panel > .pz-action {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .s-pro.s-pro-entry .pro-cal-bg { opacity: 0.42; transform: translateY(-50%); }
+}
 
 /* Neue Preistabelle · Simple UI · rechts-bündig als BG · ohne Card */
 .pro-cal-bg {
@@ -2866,7 +3045,7 @@ body {
       <!-- LEFT: Text -->
       <div class="s01-text">
         <span class="eyebrow">happyhotel · 2017–2025</span>
-        <h1 class="s01-headline">Wir waren<br><em>nur ein Werkzeug.</em></h1>
+        <h1 class="s01-headline">Wir waren<br><em>ein Werkzeug.</em></h1>
         <p class="s01-sub">
           Einloggen. Tabs durchklicken. Preise überprüfen.<br>
           Reagieren statt vorausdenken.
@@ -4127,22 +4306,50 @@ function getReasoningForSlide(slide) {
     }
   });
 
-  // Slide aktiviert → Loop starten · deaktiviert → stoppen
+  // Entry-Animation triggern: Klasse beim Aktivieren setzen und nach Choreo-Ende entfernen,
+  // damit nth-of-type-Animations die Card-Rotation nicht später re-triggern
+  var entryTimer = null;
+  function startEntry() {
+    clearTimeout(entryTimer);
+    slide.classList.remove('s-pro-entry');
+    // force reflow → Animation startet sauber neu
+    void slide.offsetWidth;
+    slide.classList.add('s-pro-entry');
+    entryTimer = setTimeout(function() {
+      slide.classList.remove('s-pro-entry');
+    }, 2600);
+  }
+  function stopEntry() {
+    clearTimeout(entryTimer);
+    entryTimer = null;
+    slide.classList.remove('s-pro-entry');
+  }
+
+  // Slide aktiviert → Loop + Entry starten · deaktiviert → stoppen
+  // Wichtig: nur auf Übergang reagieren (sonst Endlosschleife durch eigene Klassen-Mods)
+  var wasActive = slide.classList.contains('active');
   var observer = new MutationObserver(function(muts) {
     muts.forEach(function(m) {
-      if (m.attributeName === 'class') {
-        if (slide.classList.contains('active')) {
-          setTimeout(resetDeck, 200);
-        } else {
-          clearTimeout(autoTimer);
-          autoTimer = null;
-        }
+      if (m.attributeName !== 'class') return;
+      var isActive = slide.classList.contains('active');
+      if (isActive === wasActive) return;
+      wasActive = isActive;
+      if (isActive) {
+        startEntry();
+        setTimeout(resetDeck, 200);
+      } else {
+        clearTimeout(autoTimer);
+        autoTimer = null;
+        stopEntry();
       }
     });
   });
   observer.observe(slide, { attributes: true });
 
-  if (slide.classList.contains('active')) setTimeout(resetDeck, 200);
+  if (wasActive) {
+    startEntry();
+    setTimeout(resetDeck, 200);
+  }
 })();
 </script>
 
